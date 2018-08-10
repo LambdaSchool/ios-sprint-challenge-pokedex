@@ -9,10 +9,63 @@
 import UIKit
 
 class PokemonViewController: UIViewController {
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateViews()
+    }
+    
+    // MARK: - Functions
+    
+    func updateViews() {
+        guard let thisPokemon = pokemon else {
+            nameLabel.isHidden = true
+            idLabel.isHidden = true
+            pokemonIDLabel.isHidden = true
+            typesLabel.isHidden = true
+            pokemonTypesLabel.isHidden = true
+            abilitiesLabel.isHidden = true
+            pokemonAbilitiesLabel.isHidden = true
+            saveButton.isHidden = true
+            return
+        }
+        
+        nameLabel.text = thisPokemon.name
+        pokemonIDLabel.text = thisPokemon.id
+        pokemonTypesLabel.text = thisPokemon.types
+        pokemonAbilitiesLabel.text = thisPokemon.abilities
+    }
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
     
     // MARK: - Properties
     
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                updateViews()
+            }
+        }
+    }
     var pokemonController: PokemonController?
+    
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var pokemonTypesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
+    
 }

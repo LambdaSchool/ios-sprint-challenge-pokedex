@@ -34,6 +34,8 @@ class PokemonController: Codable {
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             
+            let pokemon: Pokemon
+            
             if let error = error {
                 NSLog("Error getting data: \(error)")
                 completion(error, nil)
@@ -45,8 +47,6 @@ class PokemonController: Codable {
                 return
             }
             
-            let pokemon: Pokemon
-            
             do {
                 pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
             } catch {
@@ -54,7 +54,8 @@ class PokemonController: Codable {
                 completion(error, nil)
                 return
             }
+            
             completion(nil, pokemon)
-        }
+        }.resume()
     }
 }
