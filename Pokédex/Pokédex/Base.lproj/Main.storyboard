@@ -93,7 +93,7 @@
             <objects>
                 <viewController id="QM4-8U-EUm" customClass="PokemonViewController" customModule="Poke_dex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cxn-kd-yQO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="495"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iKn-ef-4LG">
@@ -175,14 +175,10 @@
                         <viewLayoutGuide key="safeArea" id="wPh-yv-SWQ"/>
                     </view>
                     <connections>
-                        <outlet property="abilitiesLabel" destination="kCO-7I-psa" id="wkc-wG-UxD"/>
-                        <outlet property="idLabel" destination="6gF-i2-SKQ" id="Ulu-SA-dR9"/>
                         <outlet property="nameLabel" destination="fd8-dr-wdX" id="0ld-d1-eVZ"/>
                         <outlet property="pokemonAbilitiesLabel" destination="fvq-D2-0tD" id="9zv-cs-ioG"/>
                         <outlet property="pokemonIDLabel" destination="DwO-Fm-Eb8" id="Hv2-Wc-wxT"/>
                         <outlet property="pokemonTypesLabel" destination="0lV-VO-2tz" id="zRw-22-zmR"/>
-                        <outlet property="saveButton" destination="Ljz-9A-10C" id="Nc8-ZW-frN"/>
-                        <outlet property="typesLabel" destination="iDC-Nb-ENi" id="mlZ-9v-WUI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVf-QE-Zdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,6 +212,9 @@
                             <searchBar contentMode="redraw" placeholder="Search by name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="NAg-8N-Q8o">
                                 <rect key="frame" x="0.0" y="116" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rFd-vV-66n" id="kTM-e2-n52"/>
+                                </connections>
                             </searchBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bh-jT-sfX">
                                 <rect key="frame" x="0.0" y="172" width="375" height="495"/>
@@ -238,6 +237,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokémon search" id="eBl-Re-qhe"/>
                     <connections>
+                        <outlet property="pokemonView" destination="3Bh-jT-sfX" id="sCq-yF-Gs6"/>
+                        <outlet property="searchBar" destination="NAg-8N-Q8o" id="Zol-f4-f40"/>
                         <outlet property="searchDisplayController" destination="31T-5y-4fF" id="vJ8-eU-kZu"/>
                     </connections>
                 </viewController>
@@ -255,6 +256,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="K4f-3a-rxo"/>
+        <segue reference="OME-kq-ic4"/>
     </inferredMetricsTieBreakers>
 </document>

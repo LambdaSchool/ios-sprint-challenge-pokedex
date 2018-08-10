@@ -28,6 +28,7 @@ class PokemonController: Codable {
     
     // MARK: - Networking
     
+    // TODO: Fix this
     func get(nameOrID: String, completion: @escaping (Error?, Pokemon?) -> Void) {
         
         let url = PokemonController.baseURL.appendingPathComponent(nameOrID)

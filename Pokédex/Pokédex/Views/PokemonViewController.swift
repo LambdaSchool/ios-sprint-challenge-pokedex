@@ -19,17 +19,8 @@ class PokemonViewController: UIViewController {
     // MARK: - Functions
     
     func updateViews() {
-        guard let thisPokemon = pokemon else {
-            nameLabel.isHidden = true
-            idLabel.isHidden = true
-            pokemonIDLabel.isHidden = true
-            typesLabel.isHidden = true
-            pokemonTypesLabel.isHidden = true
-            abilitiesLabel.isHidden = true
-            pokemonAbilitiesLabel.isHidden = true
-            saveButton.isHidden = true
-            return
-        }
+        
+        guard let thisPokemon = pokemon else { return }
         
         nameLabel.text = thisPokemon.name
         pokemonIDLabel.text = thisPokemon.id
@@ -60,12 +51,8 @@ class PokemonViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var pokemonIDLabel: UILabel!
-    @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var pokemonTypesLabel: UILabel!
-    @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
-    @IBOutlet weak var saveButton: UIButton!
     
 }
