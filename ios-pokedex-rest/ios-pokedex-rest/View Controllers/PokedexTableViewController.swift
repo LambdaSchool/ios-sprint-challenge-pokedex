@@ -9,7 +9,7 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -17,11 +17,11 @@ class PokedexTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokemons.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
@@ -29,6 +29,15 @@ class PokedexTableViewController: UITableViewController {
         cell.textLabel?.text = pokemon.name
         
         return cell
+    }
+    
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.pokemons.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
