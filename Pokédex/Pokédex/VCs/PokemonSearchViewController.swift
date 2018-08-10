@@ -28,10 +28,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
                 return
             }
             
-            guard let thisPokemon = pokemon else {
-                return
-            }
-            
+            guard let thisPokemon = pokemon else { return }
             self.pokemon = thisPokemon
         })
     }
