@@ -10,18 +10,10 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        pokemonController.create(name: "Andrew", id: "00", abilities: "Eating", types: "Human")
-
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
- 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 

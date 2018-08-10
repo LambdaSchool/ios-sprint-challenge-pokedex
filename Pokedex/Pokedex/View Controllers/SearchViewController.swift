@@ -32,10 +32,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             guard let pokemon = pokemon else {return}
             
             DispatchQueue.main.async {
+                guard let types = pokemon.pokeTypes,
+                    let abilities = pokemon.pokeAbilities else {return}
                 self.nameLabel.text = pokemon.name
                 self.idLabel.text = "ID: \(pokemon.id)"
-                self.typeLabel.text = "Type(s): \(pokemon.types)"
-                self.abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+                self.typeLabel.text = "Type(s): \(types)"
+                self.abilitiesLabel.text = "Abilities: \(abilities)"
                 self.pokemon = pokemon
                 self.saveOutlet.setTitle("Save Pokemon", for: .normal)
             }

@@ -16,9 +16,9 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokemon else {return}
         
         nameLabel.text = pokemon.name
-        idLabel.text = pokemon.id
-        typeLabel.text = pokemon.types
-        abilitiesLabel.text = pokemon.abilities
+        idLabel.text = String(pokemon.id)
+        typeLabel.text = pokemon.pokeTypes
+        abilitiesLabel.text = pokemon.pokeAbilities
     }
     
     @IBOutlet weak var nameLabel: UILabel!
