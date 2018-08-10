@@ -37,6 +37,12 @@ class PokedexTableViewController: UITableViewController {
             if let vc = segue.destination as? PokedexSearchViewController {
                 vc.pokemonController = pokemonController
             }
+        } else if segue.identifier == "ShowPokemonDetailSegue" {
+            if let vc = segue.destination as? PokemonDetailViewController {
+                if let indexPath = self.tableView.indexPathForSelectedRow {
+                    vc.pokemon = pokemonController.pokemons[indexPath.row]
+                }
+            }
         }
     }
     

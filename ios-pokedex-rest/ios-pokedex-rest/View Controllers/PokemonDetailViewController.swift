@@ -12,6 +12,12 @@ class PokemonDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let pokemon = pokemon {
+            pokemonNameLabel.text = pokemon.name
+        }
     }
     
+    @IBOutlet var pokemonNameLabel: UILabel!
+    
+    var pokemon: Pokemon?
 }
