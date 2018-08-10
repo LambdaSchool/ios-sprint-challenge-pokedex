@@ -29,8 +29,16 @@ class PokemonDetailViewController: UIViewController {
         }
     }
     var searchBarHidden = false
+    @IBOutlet weak var buttonText: UIButton!
     
+
     //MARK: - Methods
+    
+    @IBAction func save(_ sender: Any) {
+        pokemonController?.savePokemon()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func updateViews() {
         DispatchQueue.main.async {
             if let pokemon = self.pokemon {
@@ -48,7 +56,9 @@ class PokemonDetailViewController: UIViewController {
                     types.append(type.type.name)
                 }
                 self.typeLabel.text = "Type(s): \(types.joined(separator: ", "))"
+                self.buttonText.setTitle("Save Pokemon", for: .normal)
             }
+            
         }
     }
 }

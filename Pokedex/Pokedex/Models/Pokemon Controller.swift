@@ -15,6 +15,7 @@ class PokemonController {
     
     //MARK: - Properties
     private(set) var pokemon = [Pokemon]()
+    var aPokemon: Pokemon?
     
     
     //MARK: - Methods
@@ -22,6 +23,11 @@ class PokemonController {
     func delete(thePokemon: Pokemon) {
         guard let index = pokemon.index(of: thePokemon) else {return}
         pokemon.remove(at: index)
+    }
+    
+    func savePokemon() {
+        guard let aPokemon = aPokemon else {return}
+        pokemon.append(aPokemon)
     }
     
     
@@ -50,7 +56,7 @@ class PokemonController {
             do {
                 let decodedEntries = try jsonDecoder.decode(Pokemon.self, from: data)
                 print(decodedEntries)
-                self.pokemon.append(decodedEntries)
+                self.aPokemon = decodedEntries
                 completion(decodedEntries, nil)
             } catch {
                 NSLog("Error decoding recieved data: \(error)")
@@ -59,8 +65,4 @@ class PokemonController {
             }
         }.resume()
     }
-    
-    
-    
-    
 }
