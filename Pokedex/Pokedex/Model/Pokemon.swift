@@ -13,8 +13,8 @@ struct Pokemon: Codable
     let abilities: [Abilities]?
     let name: String?
     let id: Int?
-//    let types: [Type]?
-    let sprites : Sprites?
+    let types: [Types]?
+    let sprites: Sprites?
     
     enum CodingKeys: String, CodingKey
     {
@@ -22,7 +22,7 @@ struct Pokemon: Codable
         case name = "name"
         case id = "id"
         case sprites = "sprites"
-//        case types = "types"
+        case types = "types"
     }
     
     init(from decoder: Decoder) throws
@@ -32,60 +32,63 @@ struct Pokemon: Codable
         name = try values.decodeIfPresent(String.self, forKey: .name)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         sprites = try values.decodeIfPresent(Sprites.self, forKey: .sprites)
-//        types = try values.decodeIfPresent([Types].self, forKey: .types)
+        types = try values.decodeIfPresent([Types].self, forKey: .types)
     }
     
-    struct Sprites : Codable
+    struct Sprites: Codable
     {
-        let front_default : String?
-
+        let back_default: String?
+        let front_default: String?
+        
         enum CodingKeys: String, CodingKey
         {
+            case back_default = "back_default"
             case front_default = "front_default"
         }
         
         init(from decoder: Decoder) throws
         {
             let values = try decoder.container(keyedBy: CodingKeys.self)
+            back_default = try values.decodeIfPresent(String.self, forKey: .back_default)
             front_default = try values.decodeIfPresent(String.self, forKey: .front_default)
         }
     }
     
-//    struct Types: Codable
-//    {
-//        let type: Type?
-//
-//        enum CodingKeys: String, CodingKey
-//        {
-//            case type = "type"
-//        }
-//
-//        init(from decoder: Decoder) throws
-//        {
-//            let values = try decoder.container(keyedBy: CodingKeys.self)
-//            type = try values.decodeIfPresent(Type.self, forKey: .type)
-//        }
-//
-//        struct Type: Codable
-//        {
-//            let name: String?
-//
-//            enum CodingKeys: String, CodingKey
-//            {
-//                case name = "name"
-//            }
-//
-//            init(from decoder: Decoder) throws
-//            {
-//                let values = try decoder.container(keyedBy: CodingKeys.self)
-//                name = try values.decodeIfPresent(String.self, forKey: .name)
-//            }
-//        }
-//    }
-    
-    struct Abilities : Codable
+    struct Types: Codable
     {
-        let ability : Ability?
+        let type: PokemonType?
+        
+        enum CodingKeys: String, CodingKey
+        {
+            case type = "type"
+        }
+        
+        init(from decoder: Decoder) throws
+        {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            type = try values.decodeIfPresent(PokemonType.self, forKey: .type)
+        }
+        
+        struct PokemonType : Codable
+        {
+            let name: String?
+            
+            enum CodingKeys: String, CodingKey
+            {
+                case name = "name"
+            }
+            
+            init(from decoder: Decoder) throws
+            {
+                let values = try decoder.container(keyedBy: CodingKeys.self)
+                name = try values.decodeIfPresent(String.self, forKey: .name)
+            }
+        }
+    }
+    
+    struct Abilities: Codable
+    {
+        let ability: Ability?
         
         enum CodingKeys: String, CodingKey
         {
@@ -98,9 +101,9 @@ struct Pokemon: Codable
             ability = try values.decodeIfPresent(Ability.self, forKey: .ability)
         }
         
-        struct Ability : Codable
+        struct Ability: Codable
         {
-            let name : String?
+            let name: String?
             
             enum CodingKeys: String, CodingKey
             {

@@ -112,6 +112,8 @@ class PokemonViewController: UIViewController, UISearchBarDelegate
     {
         guard let searchTerm = searchBar.text else { return }
         
+        searchBar.resignFirstResponder()
+        
         pokemonController?.searchPokemon(with: searchTerm, completion: { (pokemon, error) in
             
             if let error = error
@@ -145,9 +147,26 @@ class PokemonViewController: UIViewController, UISearchBarDelegate
         }
         
         nameLabel.text = pokemon.name
+        
+        var abilityString = "Abilities: "
+        for ability in pokemon.abilities!
+        {
+            let string = "\(ability.ability?.name ?? ""), "
+            abilityString.append(string)
+        }
+        abilitiesLabel.text = abilityString
+        
+        var typeString = "Types: "
+        for type in pokemon.types!
+        {
+            let string = "\(type.type?.name ?? ""), "
+            typeString.append(string)
+        }
+        typesLabel.text = typeString
+        
         if let idString = pokemon.id
         {
-            idLabel.text = String(idString)
+            idLabel.text = "ID: \(String(idString))"
         }
         
         if let urlString = pokemon.sprites?.front_default
@@ -168,7 +187,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate
     
     private func setupUI()
     {
-        let stackView = UIStackView(arrangedSubviews: [idLabel, typesLabel, abilitiesLabel])
+        let stackView = UIStackView(arrangedSubviews: [idLabel, abilitiesLabel, typesLabel])
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.distribution = .fillEqually
@@ -181,15 +200,15 @@ class PokemonViewController: UIViewController, UISearchBarDelegate
         
         searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 0, height: 40)
         
-        nameLabel.anchor(top: searchBar.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 0, height: 0)
+        nameLabel.anchor(top: searchBar.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 0, height: 0)
         nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        pokemonImageView.anchor(top: nameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 150, height: 150)
+        pokemonImageView.anchor(top: nameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 100, height: 100)
         pokemonImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        stackView.anchor(top: pokemonImageView.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20, paddingBottom: 0, width: 0, height: 200)
+        stackView.anchor(top: pokemonImageView.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, paddingTop: 12, paddingLeft: 20, paddingRight: 20, paddingBottom: 0, width: 0, height: 100)
         
-        saveButton.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 120, height: 40)
+        saveButton.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 12, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, width: 120, height: 40)
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }

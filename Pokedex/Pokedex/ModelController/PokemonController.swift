@@ -27,19 +27,9 @@ class PokemonController
     
     func searchPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> ())
     {
-        let url = baseURL.appendingPathComponent("pokemon")
+        let url = baseURL.appendingPathComponent("pokemon").appendingPathComponent(searchTerm.lowercased())
         
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-        let searchTermQueryItem = URLQueryItem(name: "name", value: searchTerm)
-        urlComponents.queryItems = [searchTermQueryItem]
-        
-        guard let urlRequest = urlComponents.url else {
-            NSLog("Failed to create url request from urlComponents")
-            completion(nil, NSError())
-            return
-        }
-        
-        var request = URLRequest(url: urlRequest)
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
@@ -60,7 +50,9 @@ class PokemonController
             do
             {
                 let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                print(pokemon)
                 completion(pokemon, nil)
                 
             } catch {
