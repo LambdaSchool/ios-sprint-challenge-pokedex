@@ -13,6 +13,7 @@ struct Pokemon: Codable, Equatable {
     var id: Int
     var abilities: [String]
     var types: [String]
+    var sprites: [String: String?]
     
     struct Ability: Equatable, Codable {
         var ability: String
@@ -53,6 +54,8 @@ struct Pokemon: Codable, Equatable {
         let abilityObjects = try container.decodeIfPresent([Ability].self, forKey: .abilities)
         let pokemonTypeObjects = try container.decodeIfPresent([PokemonType].self, forKey: .types)
         
+        let spriteNames = try container.decodeIfPresent([String: String?].self, forKey: .sprites)
+        
         // 3
         let abilities = abilityObjects?.map { $0.ability } ?? []
         let types = pokemonTypeObjects?.map { $0.type } ?? []
@@ -62,5 +65,6 @@ struct Pokemon: Codable, Equatable {
         self.id = id
         self.abilities = abilities
         self.types = types
+        self.sprites = spriteNames ?? [:]
     }
 }

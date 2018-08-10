@@ -6,7 +6,7 @@
 //  Copyright © 2018 Linh Bouniol. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PokemonController {
     
@@ -71,6 +71,33 @@ class PokemonController {
                     completion(nil, error)
                 }
                 return
+            }
+        }.resume()
+    }
+    
+    func fetchImage(url: URL, completion: @escaping (UIImage?, Error?) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                NSLog("Error retrieving pokemon names from server: \(error)")
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                return
+            }
+            
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                return
+            }
+            
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                completion(image, nil)
             }
         }.resume()
     }
