@@ -11,8 +11,8 @@ import Foundation
 struct Pokemon: Codable, Equatable {
     
     let name: String
-    let id: String
-    let abilities: [String]
-    let types: [String]
+    let id: Int
+    //let abilities: [String]
+    //let types: [String]
     
 }

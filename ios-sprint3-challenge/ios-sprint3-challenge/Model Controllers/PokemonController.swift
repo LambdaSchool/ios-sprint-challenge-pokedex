@@ -10,6 +10,13 @@ import Foundation
 
 class PokemonController {
     
+    private enum HTTPMethod: String {
+        case get = "GET"
+        case put = "PUT"
+        case post = "POST"
+        case delete = "DELETE"
+    }
+    
     // MARK: - Methods
     
     func save(pokemon: Pokemon) {
@@ -22,9 +29,9 @@ class PokemonController {
     }
     
     func fetchPokemons(for name: String, completion: @escaping (Error?) -> Void) {
-        let url = baseURL.appendingPathComponent(name)
+        let url = baseURL.appendingPathComponent(name).appendingPathExtension("json")
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
@@ -42,12 +49,12 @@ class PokemonController {
             do {
                 let decodedData = try JSONDecoder().decode(Pokemon.self, from: data)
                 self.pokemon = decodedData
+                completion(nil)
             } catch {
                 NSLog("Error while decoding pokemon: \(error)")
                 completion(error)
                 return
             }
-            completion(nil)
         }.resume()
     }
     

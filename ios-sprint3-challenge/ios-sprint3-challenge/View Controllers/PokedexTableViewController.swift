@@ -12,6 +12,7 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -21,18 +22,15 @@ class PokedexTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return pokemonController.pokemons.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
-        // Configure the cell...
+        let pokemon = pokemonController.pokemons[indexPath.row]
+        cell.textLabel?.text = pokemon.name
 
         return cell
     }
@@ -40,7 +38,8 @@ class PokedexTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            let pokemon = pokemonController.pokemons[indexPath.row]
+            pokemonController.delete(pokemon: pokemon)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -49,7 +48,17 @@ class PokedexTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowPokemonSearchDetail" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
+//            if let indexPath = tableView.indexPathForSelectedRow {
+//                let pokemon = pokemonController.pokemons[indexPath.row]
+//                searchVC.pokemon = pokemon
+//            }
+            searchVC.pokemonController = pokemonController
+        }
     }
     
     // MARK: - Properties
+    
+    let pokemonController = PokemonController()
 }
