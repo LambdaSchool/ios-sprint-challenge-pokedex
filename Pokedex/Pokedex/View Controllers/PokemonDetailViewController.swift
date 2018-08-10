@@ -41,9 +41,14 @@ class PokemonDetailViewController: UIViewController {
                 for abilitiy in pokemon.abilities {
                     abilities.append(abilitiy.ability.name)
                 }
-                self.abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
+                self.abilitiesLabel.text = "Abilitie(s): \(abilities.joined(separator: ", "))"
+                
+                var types = [String]()
+                for type in pokemon.types {
+                    types.append(type.type.name)
+                }
+                self.typeLabel.text = "Type(s): \(types.joined(separator: ", "))"
             }
-
         }
     }
 }

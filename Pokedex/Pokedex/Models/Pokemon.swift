@@ -13,7 +13,7 @@ struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
     let abilities: [PokemonAbilities]
-//    let types: [String]
+    let types: [PokemonType]
 
     struct PokemonAbilities: Codable, Equatable {
         
@@ -21,6 +21,15 @@ struct Pokemon: Codable, Equatable {
         
         
         struct Abilities: Codable, Equatable {
+            var name: String
+        }
+    }
+    
+    
+    struct PokemonType: Codable, Equatable {
+        var type: SpecificType
+        
+        struct SpecificType: Codable, Equatable {
             var name: String
         }
     }
