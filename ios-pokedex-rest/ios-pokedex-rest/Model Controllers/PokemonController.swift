@@ -9,7 +9,7 @@
 import Foundation
 
 class PokemonController {
-    func getPokemon(searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func getPokemon(searchTerm: String, completion: @escaping (Pokemon, Error?) -> Void) {
         let url = baseURL
             .appendingPathComponent("pokemon")
             .appendingPathComponent(searchTerm.lowercased())
@@ -27,15 +27,13 @@ class PokemonController {
                 do {
                     let decoder = JSONDecoder()
                     let pokemon = try decoder.decode(Pokemon.self, from: data)
-                    self.pokemons.append(pokemon)
-                    completion(nil)
+                    completion(pokemon, nil)
                 } catch let error {
                     NSLog("Error decoding data from GET: \(error)")
                 }
             }
         }.resume()
     }
-    
     
     var pokemons: [Pokemon] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
