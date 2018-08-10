@@ -36,6 +36,18 @@ class PokemonTableViewController: UITableViewController {
     }
     
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let pokemon = pokemonController.pokemon[indexPath.row]
+            pokemonController.delete(thePokemon: pokemon)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    
+    //MARK: - Methods
+    
+    
     //MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {

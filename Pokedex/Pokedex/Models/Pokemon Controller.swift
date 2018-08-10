@@ -13,14 +13,19 @@ private let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController {
     
-    
-    
-    
     //MARK: - Properties
     private(set) var pokemon = [Pokemon]()
     
     
     //MARK: - Methods
+    
+    func delete(thePokemon: Pokemon) {
+        guard let index = pokemon.index(of: thePokemon) else {return}
+        pokemon.remove(at: index)
+    }
+    
+    
+    
     func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         let url = baseURL.appendingPathComponent(searchTerm).appendingPathExtension("json")
         
@@ -54,4 +59,8 @@ class PokemonController {
             }
         }.resume()
     }
+    
+    
+    
+    
 }
