@@ -11,11 +11,8 @@ import UIKit
 
 class SavedPokemonTVC:UITableViewController
 {
-	override func viewDidLoad() {
-		App.controller.query("altaria") {
-			error in
-			print(error ?? "No error")
-		}
+	override func viewWillAppear(_ animated: Bool) {
+		tableView.reloadData()
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,7 +66,41 @@ class PokemonDetailVC:UIViewController
 {
 	var poke:Pokemon!
 
-	func viewWillAppear(_ animated: Bool) {
-		<#code#>
+	@IBOutlet weak var idLabel: UILabel!
+	@IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var typeLabel: UILabel!
+	@IBOutlet weak var abilityLabel: UILabel!
+	override func viewWillAppear(_ animated: Bool) {
+
+		nameLabel.text = poke.name
+		idLabel.text = "ID: \(poke.id)"
+		var types:[String] = []
+		for type in poke.types {
+			if let type = type.type {
+				types.append(type.name)
+			}
+		}
+
+		typeLabel.text = "Types: \(types.joined(separator: ", "))"
+
+		var abilities:[String] = []
+		for abil in poke.abilities  {
+			if let ability = abil.ability {
+				if abil.is_hidden ?? false {
+					abilities.append("\(ability.name) (hidden)")
+				} else {
+					abilities.append(ability.name)
+				}
+			}
+		}
+		abilityLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
+
+
+
+
+	}
+	@IBAction func savePokemon(_ sender: Any) {
+		App.controller.save(poke!)
+		navigationController?.popViewController(animated: true)
 	}
 }

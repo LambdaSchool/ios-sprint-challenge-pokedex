@@ -69,6 +69,9 @@ class PokemonController
 
 	func save(_ poke:Pokemon)
 	{
+		if savedPokemon.index(of:poke) != nil {
+			return
+		}
 		savedPokemon.append(poke)
 		savedPokemon.sort()
 	}

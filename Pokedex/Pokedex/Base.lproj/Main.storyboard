@@ -52,7 +52,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="686-ep-95m" kind="show" identifier="DetailSegue" id="D0O-EP-Sdk"/>
+                                    <segue destination="686-ep-95m" kind="show" identifier="" id="D0O-EP-Sdk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -62,7 +62,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Saved Pokemon" id="Xri-HY-lKm">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="ET7-oj-hpM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ET7-oj-hpM">
                             <connections>
                                 <segue destination="yb3-QK-jZt" kind="show" id="Zwx-ng-8aH"/>
                             </connections>
@@ -88,6 +88,9 @@
                                 <searchBar contentMode="redraw" placeholder="Search for Pokemon by name or ID" translatesAutoresizingMaskIntoConstraints="NO" id="LDY-7W-VFe">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="yb3-QK-jZt" id="F2p-xw-9g5"/>
+                                    </connections>
                                 </searchBar>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -139,43 +142,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Arceus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHb-TT-FVK">
-                                <rect key="frame" x="16" y="82" width="54" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arceus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHb-TT-FVK">
+                                <rect key="frame" x="15" y="79" width="345" height="29"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="National Dex: -1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPe-3H-VQw">
-                                <rect key="frame" x="16" y="111" width="121" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Types: Dragon, Ice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNY-NY-ErT">
-                                <rect key="frame" x="16" y="140" width="143" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Abilities: pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPx-Gv-nEp">
-                                <rect key="frame" x="16" y="169" width="136" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="248" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GOg-d4-JrN">
+                                <rect key="frame" x="15" y="123" width="345" height="77.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="National Dex: -1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPe-3H-VQw">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types: Dragon, Ice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNY-NY-ErT">
+                                        <rect key="frame" x="0.0" y="28.5" width="345" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities: pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPx-Gv-nEp">
+                                        <rect key="frame" x="0.0" y="57" width="345" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0Iy-Yi-B84" firstAttribute="trailing" secondItem="GOg-d4-JrN" secondAttribute="trailing" constant="15" id="1ev-cm-5dw"/>
+                            <constraint firstItem="GOg-d4-JrN" firstAttribute="top" secondItem="FHb-TT-FVK" secondAttribute="bottom" constant="15" id="QcR-R1-XZ8"/>
+                            <constraint firstItem="GOg-d4-JrN" firstAttribute="leading" secondItem="0Iy-Yi-B84" secondAttribute="leading" constant="15" id="W4F-Ex-zNz"/>
+                            <constraint firstItem="FHb-TT-FVK" firstAttribute="leading" secondItem="0Iy-Yi-B84" secondAttribute="leading" constant="15" id="az6-Ur-7Bb"/>
+                            <constraint firstItem="FHb-TT-FVK" firstAttribute="top" secondItem="0Iy-Yi-B84" secondAttribute="top" constant="15" id="i35-Xs-vax"/>
+                            <constraint firstItem="0Iy-Yi-B84" firstAttribute="trailing" secondItem="FHb-TT-FVK" secondAttribute="trailing" constant="15" id="wo1-uF-ffQ"/>
+                            <constraint firstItem="0Iy-Yi-B84" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GOg-d4-JrN" secondAttribute="bottom" constant="15" id="zXV-Ut-wQ6"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0Iy-Yi-B84"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokemon Detail" id="PHo-0i-2SR"/>
+                    <navigationItem key="navigationItem" title="Pokemon Detail" id="PHo-0i-2SR">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="LrM-2a-9FI">
+                            <connections>
+                                <action selector="savePokemon:" destination="686-ep-95m" id="wa0-gC-Ysr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="abilityLabel" destination="VPx-Gv-nEp" id="97A-2c-hTv"/>
+                        <outlet property="idLabel" destination="iPe-3H-VQw" id="j3h-U6-YoT"/>
+                        <outlet property="nameLabel" destination="FHb-TT-FVK" id="pXS-Ra-Eq1"/>
+                        <outlet property="typeLabel" destination="DNY-NY-ErT" id="Rp7-VY-SOO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIA-iJ-w9n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2678" y="-89"/>
+            <point key="canvasLocation" x="2677.5999999999999" y="-89.505247376311857"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
