@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokemonController {
     
@@ -58,6 +59,16 @@ class PokemonController {
                 completion(error)
                 return
             }
+        }.resume()
+    }
+    
+    func getDataFromURL(url: URL, completion: @escaping (Data?, Error?) -> Void) {
+        let jsonURL = url.appendingPathExtension("json")
+        var request = URLRequest(url: jsonURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            completion(data, error)
         }.resume()
     }
     

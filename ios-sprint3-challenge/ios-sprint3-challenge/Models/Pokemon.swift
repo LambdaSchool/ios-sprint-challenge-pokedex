@@ -14,13 +14,14 @@ struct Pokemon: Codable, Equatable {
     let id: Int
     let abilities: [Abilities]
     let types: [Types]
+    let sprites: Sprites
+    var spriteImage: Data?
     
     struct Abilities: Codable, Equatable {
         let ability: Ability
         struct Ability: Codable, Equatable {
             let name: String
         }
-        
     }
     
     struct Types: Codable, Equatable {
@@ -29,5 +30,10 @@ struct Pokemon: Codable, Equatable {
             let name: String
         }
     }
+    
+    struct Sprites: Codable, Equatable {
+        let front_default: String
+    }
+    
     
 }

@@ -42,13 +42,18 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         
         if let pokemon = pokemon {
+                        
             title = pokemon.name
             nameTextLabel?.text = pokemon.name
+            
             identifierTextLabel?.text = "ID: \(String(pokemon.id))"
+            
             let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
             typeTextLabel?.text = "Types: \(types)"
+            
             let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
             abilitiesTextLabel?.text = "Abilities: \(abilities)"
+            
             buttonTextLabel?.setTitle("Save Pokemon", for: .normal)
         } else {
             title = "Pokemon Search"
