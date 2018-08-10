@@ -36,12 +36,16 @@ class PokemonDetailViewController: UIViewController {
             if let pokemon = self.pokemon {
                 self.pokemonNameLabel.text = pokemon.name
                 self.idLabel.text = "ID: \(pokemon.id)"
+                
+                var abilities = [String]()
+                for abilitiy in pokemon.abilities {
+                    abilities.append(abilitiy.ability.name)
+                }
+                self.abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
             }
 
         }
     }
-    
-    
 }
 
 
