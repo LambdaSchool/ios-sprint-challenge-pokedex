@@ -23,9 +23,14 @@ class PokemonViewController: UIViewController {
         guard let thisPokemon = pokemon else { return }
         
         nameLabel.text = thisPokemon.name
-        pokemonIDLabel.text = thisPokemon.id
-        pokemonTypesLabel.text = thisPokemon.types
-        pokemonAbilitiesLabel.text = thisPokemon.abilities
+        pokemonIDLabel.text = "\(thisPokemon.id)"
+        
+        if let types = thisPokemon.allTypes,
+            let abilities = thisPokemon.allAbilities {
+            
+            pokemonTypesLabel.text = types
+            pokemonAbilitiesLabel.text = abilities
+        }
     }
     
     
