@@ -19,7 +19,8 @@ class PokemonController {
     
     // MARK: - Methods
     
-    func save(pokemon: Pokemon) {
+    func save() {
+        guard let pokemon = pokemon else { return }
         pokemons.append(pokemon)
     }
     

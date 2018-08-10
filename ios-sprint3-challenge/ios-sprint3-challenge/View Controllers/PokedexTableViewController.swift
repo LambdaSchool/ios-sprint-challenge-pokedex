@@ -49,11 +49,14 @@ class PokedexTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowPokemonSearchDetail" {
-            guard let searchVC = segue.destination as? PokemonSearchViewController else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                let pokemon = pokemonController.pokemons[indexPath.row]
-//                searchVC.pokemon = pokemon
-//            }
+            guard let searchVC = segue.destination as? PokemonSearchViewController
+                else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
+            
+            searchVC.pokemonController = pokemonController
+        } else if segue.identifier == "ShowPokemonDetail" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController
+                else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
+            
             searchVC.pokemonController = pokemonController
         }
     }

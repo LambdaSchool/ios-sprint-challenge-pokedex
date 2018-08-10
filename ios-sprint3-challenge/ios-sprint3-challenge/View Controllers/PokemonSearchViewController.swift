@@ -35,7 +35,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        pokemonController?.save()
+        navigationController?.popViewController(animated: true)
     }
     
     private func updateViews() {
