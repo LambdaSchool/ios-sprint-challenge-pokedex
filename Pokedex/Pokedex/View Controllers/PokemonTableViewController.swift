@@ -12,29 +12,38 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonController.create(name: "Andrew", id: "00", abilities: "Eating", types: "Human")
 
     }
 
  
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+
+        return pokemonController.pokemons.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
+        cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name
         return cell
     }
     
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchPokemon"{
+            let destinationVC = segue.destination as! SearchViewController
+            destinationVC.pokemonController = pokemonController
+        }
+        if segue.identifier == "ViewPokemon"{
+            let destinationVC = segue.destination as! DetailViewController
+            destinationVC.pokemonController = pokemonController
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            destinationVC.pokemon = pokemonController.pokemons[indexPath.row]
+        }
 
     }
 
-
+    let pokemonController = PokemonController()
 }

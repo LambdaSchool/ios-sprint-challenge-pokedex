@@ -13,5 +13,9 @@ struct Pokemon: Codable, Equatable {
     let id: String
     let abilities: String
     let types: String
+    
+    
+    
+    
 }
 

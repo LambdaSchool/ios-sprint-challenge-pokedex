@@ -10,11 +10,23 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let pokemon = pokemon else {return}
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = pokemon.id
+        typeLabel.text = pokemon.types
+        abilitiesLabel.text = pokemon.abilities
+    }
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    var pokemonController: PokemonController?
+    var pokemon:Pokemon?
     
 }

@@ -12,11 +12,16 @@ private let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController{
     
-    func create(name: String, id: String, abilities: String, types: String) -> Pokemon{
+    func create(name: String, id: String, abilities: String, types: String) {
         let newPokemon = Pokemon(name: name, id: id, abilities: abilities, types: types)
         pokemons.append(newPokemon)
-        return newPokemon
     }
+    
+    func create(newPokemon:Pokemon){
+        pokemons.append(newPokemon)
+
+    }
+    
     
     func delete(pokemon:Pokemon){
         guard let index = pokemons.index(of: pokemon) else {return}
@@ -44,15 +49,15 @@ class PokemonController{
             do{
                 //FIX: May not work. Can not use "Any" as value type since not decodable
                 //However, we only need the values that can be converted to String so should be okay.
-                let dictionary = try decoder.decode([String:String].self, from: data)
+                let dictionary = try decoder.decode([String:String?].self, from: data)
                 guard let name = dictionary["name"],
                     let id = dictionary["id"] else {return}
                 //FIX: need to add abilities and types. checking fetching first.
 
-                let pokemon = Pokemon(name: name, id: id, abilities: "PLACEHOLDER", types: "PLACEHOLDER")
+                let pokemon = Pokemon(name: name!, id: id!, abilities: "PLACEHOLDER", types: "PLACEHOLDER")
                 completion(pokemon,nil)
             } catch {
-                
+                NSLog("Error Decoding: \(error)")
             }
             
         }.resume()
