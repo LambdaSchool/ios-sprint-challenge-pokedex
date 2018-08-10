@@ -23,6 +23,7 @@ class PokemonController {
         guard let pokemon = pokemon else { return }
         pokemons.append(pokemon)
         pokemons = pokemons.sorted { $0.id < $1.id }
+        self.pokemon = nil
     }
     
     func delete(pokemon: Pokemon) {
