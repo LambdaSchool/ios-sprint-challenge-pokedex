@@ -26,12 +26,11 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+        
 
         return cell
     }
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
@@ -39,11 +38,23 @@ class PokedexTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Properties
+    
+    var pokemonController = PokemonController()
+    
     
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "ShowSearch" {
+            let destVC = segue.destination as! PokemonSearchViewController
+            destVC.pokemonController = pokemonController
+        } else if segue.identifier == "ShowDetails" {
+            let destVC = segue.destination as! PokemonDetailViewController
+            guard let index = tableView.indexPathForSelectedRow?.row else { return }
+            destVC.pokemon = pokemonController.pokemons[index]
+            destVC.pokemonController = pokemonController
+        }
     }
 
 }

@@ -32,7 +32,8 @@ class PokemonViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
-        
+        guard let thisPokemon = pokemon else { return }
+        pokemonController?.create(pokemon: thisPokemon)
     }
     
     
@@ -41,7 +42,7 @@ class PokemonViewController: UIViewController {
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
-                updateViews()
+                self.updateViews()
             }
         }
     }

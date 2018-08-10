@@ -29,7 +29,6 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             }
             
             guard let thisPokemon = pokemon else {
-                NSLog("Error, no pokemon returned from request: \(error)")
                 return
             }
             
@@ -41,8 +40,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     // MARK: - Functions
     
     func updateViews() {
-        guard let thisPokemon = pokemon else {
+        guard let _ = pokemon else {
             pokemonView.isHidden = true
+            return
         }
         pokemonView.isHidden = false
     }
@@ -54,7 +54,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
-                updateViews()
+                self.updateViews()
             }
         }
     }
@@ -66,4 +66,14 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonView: UIView!
     
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EmbedSearch" {
+            let destVC = segue.destination as! PokemonViewController
+            guard let thisController = pokemonController else { fatalError("PokemonSearchViewController has no pokemonController property") }
+            destVC.pokemonController = thisController
+        }
+    }
 }
