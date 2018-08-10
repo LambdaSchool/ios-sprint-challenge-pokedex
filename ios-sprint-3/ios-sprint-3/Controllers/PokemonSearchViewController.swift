@@ -12,6 +12,8 @@ private let key = "savePokemon"
 
 class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
+    var pokemon : Pokemon?
+    
     let pokemonController = PokemonController()
     
 
@@ -28,8 +30,15 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func savePokemonButton(_ sender: Any) {
         
+        guard let pokemon = pokemon else { return }
+        
+        pokemonLabel.text = pokemon.name
+        pokemonID.text = pokemon.id
+        pokemonType.text = pokemon.type
+        pokemonAbility.text = pokemon.abilities
+        
         let defaults = UserDefaults.standard
-        defaults.setValue("savePokemon", forKey: key)
+        defaults.setValue(pokemon, forKey: key)
         
         navigationController?.popViewController(animated: true)
     }
@@ -41,9 +50,11 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             if let error = error {
                 NSLog("\(error)")
             }
+            guard let pokemon = self.pokemon else { return }
+            self.title = self.pokemon?.name
+            self.pokemon = pokemon
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

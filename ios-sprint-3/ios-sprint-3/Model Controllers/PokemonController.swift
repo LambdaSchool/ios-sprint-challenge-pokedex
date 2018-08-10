@@ -19,6 +19,7 @@ class PokemonController {
         case delete = "DELETE"
     }
     
+    
     func performSearch(with searchTerm: String, completion: @escaping (Error?) -> Void) {
         
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
@@ -27,16 +28,15 @@ class PokemonController {
         
         let typeQueryItem = URLQueryItem(name: "type", value: searchTerm)
         
-        let abilityQueryItem = URLQueryItem(name: "ability", value: searchTerm)
+        let abilitiesQueryItem = URLQueryItem(name: "ability", value: searchTerm)
         
-        urlComponents.queryItems = [searchQueryItem, typeQueryItem, abilityQueryItem]
+        urlComponents.queryItems = [searchQueryItem, typeQueryItem, abilitiesQueryItem]
         
         
         guard let requestURL = urlComponents.url else {
             NSLog("Problem constructing URL for \(searchTerm)")
             return
         }
-        
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -66,6 +66,31 @@ class PokemonController {
                 NSLog("Unable to decode data")
                 completion(NSError())
             }
+        }.resume()
+    }
+    
+    
+    func delete(pokemon: Pokemon, completion: @escaping (Error?) -> Void) {
+        
+        guard let index = self.pokemons.index(of: pokemon) else { return }
+        
+        self.pokemons.remove(at: index)
+        
+        let url = baseURL
+            .appendingPathComponent(pokemon.id)
+            .appendingPathExtension("json")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error: \(error)")
+                completion(error)
+                return
+            }
+            completion(nil)
         }.resume()
     }
 }
