@@ -9,5 +9,34 @@
 import Foundation
 
 class PokemonController {
+    func getPokemon(searchTerm: String, completion: @escaping (Error?) -> Void) {
+        let url = baseURL
+            .appendingPathComponent("pokemon")
+            .appendingPathComponent(searchTerm.lowercased())
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                NSLog("Error GET pokemon: \(error)")
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let pokemon = try decoder.decode(Pokemon.self, from: data)
+                    self.pokemons.append(pokemon)
+                    completion(nil)
+                } catch let error {
+                    NSLog("Error decoding data from GET: \(error)")
+                }
+            }
+        }.resume()
+    }
     
+    
+    var pokemons: [Pokemon] = []
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
 }

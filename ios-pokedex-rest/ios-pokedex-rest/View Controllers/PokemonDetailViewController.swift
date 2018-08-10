@@ -13,4 +13,5 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
 }
