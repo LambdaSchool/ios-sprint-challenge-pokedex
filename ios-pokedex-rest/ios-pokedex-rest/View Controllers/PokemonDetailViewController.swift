@@ -13,6 +13,7 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let pokemon = pokemon {
+            title = pokemon.name.capitalized
             pokemonNameLabel.text = pokemon.name.capitalized
             pokemonIDLabel.text = String(pokemon.id)
             pokemonTypesLabel.text = pokemon.types.map { $0.type.name }.joined(separator: ", ")
