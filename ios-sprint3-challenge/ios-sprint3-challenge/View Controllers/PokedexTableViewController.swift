@@ -53,11 +53,15 @@ class PokedexTableViewController: UITableViewController {
                 else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
             
             searchVC.pokemonController = pokemonController
+            pokemonController.pokemon = nil
         } else if segue.identifier == "ShowPokemonDetail" {
-            guard let searchVC = segue.destination as? PokemonSearchViewController
+            guard let searchVC = segue.destination as? PokemonSearchViewController,
+                let indexPath = tableView.indexPathForSelectedRow
                 else { fatalError("Something really really bad just happened in your prepare segue for destination: \(segue.destination)") }
             
+            pokemonController.pokemon = pokemonController.pokemons[indexPath.row]
             searchVC.pokemonController = pokemonController
+            
         }
     }
     

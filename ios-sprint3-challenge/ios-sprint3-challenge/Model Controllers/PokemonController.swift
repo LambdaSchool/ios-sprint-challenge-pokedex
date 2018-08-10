@@ -52,6 +52,7 @@ class PokemonController {
             
             do {
                 let decodedData = try JSONDecoder().decode(Pokemon.self, from: data)
+                
                 self.pokemon = decodedData
                 completion(nil)
             } catch {
@@ -63,7 +64,7 @@ class PokemonController {
     }
     
     func getDataFromURL(url: URL, completion: @escaping (Data?, Error?) -> Void) {
-        let jsonURL = url.appendingPathExtension("json")
+        let jsonURL = url
         var request = URLRequest(url: jsonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         

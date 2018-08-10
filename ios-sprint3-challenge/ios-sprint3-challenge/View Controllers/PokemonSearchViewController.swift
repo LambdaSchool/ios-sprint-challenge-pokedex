@@ -39,10 +39,22 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+    private func fetchImage(_ pokemon: Pokemon) {
+        pokemonController?.getDataFromURL(url: URL(string: pokemon.sprites.front_default)!, completion: { (data, error) in
+            guard let data = data else { return }
+            
+            DispatchQueue.main.async {
+                self.imageView?.image = UIImage(data: data)
+                self.updateViews()
+            }
+        })
+    }
+    
     private func updateViews() {
         
         if let pokemon = pokemon {
-                        
+            fetchImage(pokemon)
+            
             title = pokemon.name
             nameTextLabel?.text = pokemon.name
             
@@ -78,4 +90,5 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typeTextLabel: UILabel!
     @IBOutlet weak var abilitiesTextLabel: UILabel!
     @IBOutlet weak var buttonTextLabel: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
 }

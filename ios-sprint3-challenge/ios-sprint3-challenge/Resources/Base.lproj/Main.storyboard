@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -64,12 +65,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search by name or id:" translatesAutoresizingMaskIntoConstraints="NO" id="T9T-Gm-FIR">
-                                <rect key="frame" x="0.0" y="116" width="375" height="56"/>
+                            <searchBar contentMode="redraw" verticalCompressionResistancePriority="751" placeholder="Search by name or id:" translatesAutoresizingMaskIntoConstraints="NO" id="T9T-Gm-FIR">
+                                <rect key="frame" x="0.0" y="116" width="375" height="50.5"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="WND-5l-Q14">
-                                <rect key="frame" x="30" y="188" width="315" height="251"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WND-5l-Q14">
+                                <rect key="frame" x="30" y="182.5" width="315" height="444.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RST-nl-ADb">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="31.5"/>
@@ -77,26 +78,29 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xbc-SX-Zdi">
+                                        <rect key="frame" x="0.0" y="39.5" width="315" height="242"/>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsH-iO-rKZ">
-                                        <rect key="frame" x="0.0" y="63.5" width="315" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="289.5" width="315" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2i-9h-Dl7">
-                                        <rect key="frame" x="0.0" y="116" width="315" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="318" width="315" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Re2-pM-tGr">
-                                        <rect key="frame" x="0.0" y="168.5" width="315" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="346.5" width="315" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0l-Bl-PTf">
-                                        <rect key="frame" x="0.0" y="221" width="315" height="30"/>
+                                        <rect key="frame" x="0.0" y="375" width="315" height="69.5"/>
                                         <state key="normal" title="Save Pokemon"/>
                                         <connections>
                                             <action selector="save:" destination="waR-by-VdP" eventType="touchUpInside" id="Xb4-KE-sjH"/>
@@ -109,8 +113,10 @@
                         <constraints>
                             <constraint firstItem="iOi-mm-yBI" firstAttribute="trailing" secondItem="WND-5l-Q14" secondAttribute="trailing" constant="30" id="8z1-gt-ozw"/>
                             <constraint firstItem="T9T-Gm-FIR" firstAttribute="trailing" secondItem="iOi-mm-yBI" secondAttribute="trailing" id="J59-KT-u5z"/>
+                            <constraint firstItem="iOi-mm-yBI" firstAttribute="bottom" secondItem="WND-5l-Q14" secondAttribute="bottom" constant="40" id="Lqk-TC-xGS"/>
                             <constraint firstItem="T9T-Gm-FIR" firstAttribute="leading" secondItem="iOi-mm-yBI" secondAttribute="leading" id="Q9N-wl-keP"/>
                             <constraint firstItem="T9T-Gm-FIR" firstAttribute="top" secondItem="iOi-mm-yBI" secondAttribute="top" id="R53-jg-k2x"/>
+                            <constraint firstItem="WND-5l-Q14" firstAttribute="height" secondItem="zTA-hI-42r" secondAttribute="height" multiplier="1:1.5" id="k2s-Ea-rBg"/>
                             <constraint firstItem="WND-5l-Q14" firstAttribute="top" secondItem="T9T-Gm-FIR" secondAttribute="bottom" constant="16" id="rZm-fU-IfS"/>
                             <constraint firstItem="WND-5l-Q14" firstAttribute="leading" secondItem="iOi-mm-yBI" secondAttribute="leading" constant="30" id="uoR-A0-hXP"/>
                         </constraints>
@@ -120,6 +126,7 @@
                         <outlet property="abilitiesTextLabel" destination="Re2-pM-tGr" id="BZi-Cm-HJO"/>
                         <outlet property="buttonTextLabel" destination="g0l-Bl-PTf" id="Acx-H6-s9R"/>
                         <outlet property="identifierTextLabel" destination="XsH-iO-rKZ" id="eCf-Tg-ohP"/>
+                        <outlet property="imageView" destination="xbc-SX-Zdi" id="iCc-0P-PNJ"/>
                         <outlet property="nameTextLabel" destination="RST-nl-ADb" id="9vf-6T-CHl"/>
                         <outlet property="searchBar" destination="T9T-Gm-FIR" id="WqM-mW-guW"/>
                         <outlet property="typeTextLabel" destination="v2i-9h-Dl7" id="f8H-WV-2QY"/>
@@ -127,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ZT-kJ-mHw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1633" y="43"/>
+            <point key="canvasLocation" x="1632.8" y="42.728635682158924"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1y5-qi-wcH">
