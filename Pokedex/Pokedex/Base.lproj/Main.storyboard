@@ -29,7 +29,7 @@
         <!--Saved Pokemon-->
         <scene sceneID="WW4-Es-dFk">
             <objects>
-                <tableViewController id="PCd-H0-t74" sceneMemberID="viewController">
+                <tableViewController id="PCd-H0-t74" customClass="SavedPokemonTVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZwO-Ts-SEk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,7 +52,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="686-ep-95m" kind="show" id="D0O-EP-Sdk"/>
+                                    <segue destination="686-ep-95m" kind="show" identifier="DetailSegue" id="D0O-EP-Sdk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -76,7 +76,7 @@
         <!--Search-->
         <scene sceneID="y2C-dk-0YD">
             <objects>
-                <tableViewController id="yb3-QK-jZt" sceneMemberID="viewController">
+                <tableViewController id="yb3-QK-jZt" customClass="SearchPokemonTVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2ZP-8L-rVC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,12 +129,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJM-E3-AYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1775" y="561"/>
+            <point key="canvasLocation" x="1831" y="582"/>
         </scene>
-        <!--Arceus-->
+        <!--Pokemon Detail-->
         <scene sceneID="3oQ-xE-bqc">
             <objects>
-                <viewController id="686-ep-95m" sceneMemberID="viewController">
+                <viewController id="686-ep-95m" customClass="PokemonDetailVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dli-zv-dFL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -171,7 +171,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0Iy-Yi-B84"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Arceus" id="PHo-0i-2SR"/>
+                    <navigationItem key="navigationItem" title="Pokemon Detail" id="PHo-0i-2SR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIA-iJ-w9n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,6 +179,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QxO-EB-6bz"/>
+        <segue reference="D0O-EP-Sdk"/>
     </inferredMetricsTieBreakers>
 </document>
