@@ -14,9 +14,13 @@ struct Pokemon: Codable {
 }
 
 struct ReceivedData: Codable {
+    let forms: [[String: String]]
+    let abilities: [[String: String]]
+    let stats
     let name: String
     let id: Int
-    let game_indices: [String]
+    let game_indices: [[String: String]]
+    let types: [[String: String]]
 }
 
 
