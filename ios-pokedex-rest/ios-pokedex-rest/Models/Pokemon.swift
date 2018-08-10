@@ -13,21 +13,21 @@ struct Pokemon: Decodable {
     var id: Int
     let abilities: [PokemonAbilities]
     let types: [PokemonTypes]
-}
-
-struct PokemonTypes: Decodable {
-    let type: PokemonType
-}
-
-struct PokemonType: Decodable {
-    let name: String
-}
-
-struct PokemonAbilities: Decodable {
-    let ability: Ability
-}
-
-struct Ability: Decodable {
-    let url: String
-    let name: String
+    
+    struct PokemonTypes: Decodable {
+        let type: PokemonType
+        
+        struct PokemonType: Decodable {
+            let name: String
+        }
+    }
+    
+    struct PokemonAbilities: Decodable {
+        let ability: Ability
+        
+        struct Ability: Decodable {
+            let url: String
+            let name: String
+        }
+    }
 }
