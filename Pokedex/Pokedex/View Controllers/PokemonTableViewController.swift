@@ -27,7 +27,12 @@ class PokemonTableViewController: UITableViewController {
 
         return pokemonController.pokemons.count
     }
-
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            pokemonController.delete(index:indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
         cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name

@@ -22,10 +22,8 @@ class PokemonController{
         pokemons.append(newPokemon)
 
     }
-    
-    
-    func delete(pokemon:Pokemon){
-        guard let index = pokemons.index(of: pokemon) else {return}
+       
+    func delete(index: Int){
         pokemons.remove(at: index)
     }
     
