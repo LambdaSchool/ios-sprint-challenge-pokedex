@@ -15,14 +15,21 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var abilitliesTextView: UITextView!
+    @IBOutlet weak var abilitiesTextView: UITextView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properties
     
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
     var pokemons = [Pokemon]()
+    var pokemon: Pokemon?
+    {
+        didSet
+        {
+            updateViews()
+        }
+    }
     
     // MARK: - Setup
     
@@ -40,17 +47,49 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
         pokemonController.searchForPokemon(with: searchTerm) { (pokemons, error) in
             self.pokemons = pokemons ?? []
             
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+            
         }
     }
     
     @IBAction func save(_ sender: Any)
     {
-        
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
+        pokemonController.createPokemon(name: searchTerm) { (error) in
+            if let error = error
+            {
+                NSLog("problem \(error)")
+                return
+            }
+            
+        }
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     private func updateViews()
     {
-        
+//        guard let pokemon = pokemon else {
+//            title = "Search Pokemon"
+//            return
+//        }
+//        let x: Int = pokemon.id
+//        let stringValue = "\(x)"
+//        title = pokemon.name
+//        nameLabel.text = pokemon.name
+//        idLabel.text = stringValue
+//        typeLabel.text = pokemon.types
+//        abilitiesTextView.text = pokemon.abilities
+        let x: Int = 100
+        let stringValue = "\(x)"
+        title = "Name goes here"
+        nameLabel.text = "name goes here"
+        idLabel.text = stringValue
+        typeLabel.text = "type goes here"
+        abilitiesTextView.text = "abilities go here"
     }
 }
 

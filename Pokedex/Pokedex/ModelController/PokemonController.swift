@@ -14,6 +14,12 @@ class PokemonController
 {
     var pokemons: [Pokemon] = []
     
+    func createPokemon(name: String, completion: @escaping (Error?) -> Void)
+    {
+        let pokemon = Pokemon(name: name, id: 100, abilities: "ability", types: "type")
+        print(pokemon)
+    }
+    
     func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void)
     {
         let url = baseURL.appendingPathComponent(searchTerm)
