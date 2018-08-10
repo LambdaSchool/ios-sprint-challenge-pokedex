@@ -26,14 +26,15 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         updateViews()
     }
 
     func updateViews() {
         guard let pokemon = pokemon else { return }
       
-        self.nameLabel?.text = "Name: \(pokemon.name)"
+        self.title = pokemon.name.capitalized
+        self.nameLabel?.text = "Name: \(pokemon.name.capitalized)"
         self.idLabel?.text = "ID: \(String(pokemon.id))"
         self.abilityLabel?.text = "Abilities: \(pokemon.abilities.joined(separator: ", "))" // join all the strings of the array
         self.typeLabel?.text = "Types: \(pokemon.types.joined(separator: ", "))"

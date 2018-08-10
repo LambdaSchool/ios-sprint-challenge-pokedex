@@ -26,6 +26,7 @@ class PokemonController {
         pokemons.append(pokemon)
         
         // sort array by id
+        pokemons.sort { $0.id < $1.id }
     }
     
     func delete(pokemon: Pokemon) {
