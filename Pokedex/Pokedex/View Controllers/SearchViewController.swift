@@ -12,18 +12,32 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameLabel.text = ""
+        idLabel.text = ""
+        typeLabel.text = ""
+        abilitiesLabel.text = ""
+        saveOutlet.setTitle("", for: .normal)
         searchBar.delegate = self        
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm  = searchBar.text else {return}
         pokemonController?.fetch(searchName: searchTerm, completion: { (pokemon, error) in
             if let error = error {
-                NSLog("Error fetching: \(error)")
+                DispatchQueue.main.async {
+                    self.nameLabel.text = "Pokemon not found"
+                }
+                NSLog("Error searching: \(error)")
             }
+            guard let pokemon = pokemon else {return}
+            
             DispatchQueue.main.async {
                 self.nameLabel.text = pokemon.name
-                self.idLabel.text = pokemon.id
+                self.idLabel.text = "ID: \(pokemon.id)"
+                self.typeLabel.text = "Type(s): \(pokemon.types)"
+                self.abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
                 self.pokemon = pokemon
+                self.saveOutlet.setTitle("Save Pokemon", for: .normal)
             }
         })
     }
@@ -31,6 +45,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
         guard let pokemon = pokemon else {return}
         pokemonController?.create(newPokemon: pokemon)
+        navigationController?.popViewController(animated: true)
         
     }
     
@@ -42,7 +57,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-    
+   
+    @IBOutlet weak var saveOutlet: UIButton!
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
     

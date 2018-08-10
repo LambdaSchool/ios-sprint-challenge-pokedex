@@ -15,6 +15,11 @@ class PokemonTableViewController: UITableViewController {
         pokemonController.create(name: "Andrew", id: "00", abilities: "Eating", types: "Human")
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
  
 

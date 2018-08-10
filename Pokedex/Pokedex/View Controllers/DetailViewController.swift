@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
         typeLabel.text = pokemon.types
         abilitiesLabel.text = pokemon.abilities
     }
+    
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var idLabel: UILabel!
