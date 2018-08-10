@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Poke_monDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController {
 
     
 

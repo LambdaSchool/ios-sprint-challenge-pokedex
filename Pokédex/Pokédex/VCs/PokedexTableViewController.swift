@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Poke_dexTableViewController: UITableViewController {
+class PokedexTableViewController: UITableViewController {
 
 
     override func viewWillAppear(_ animated: Bool) {

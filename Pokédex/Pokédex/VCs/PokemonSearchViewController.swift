@@ -1,5 +1,5 @@
 //
-//  PokémonViewController.swift
+//  PokémonSearchViewController.swift
 //  Pokédex
 //
 //  Created by Samantha Gatt on 8/10/18.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class Poke_monViewController: UIViewController {
-
+class PokemonSearchViewController: UIViewController {
+    
     
 
 }
