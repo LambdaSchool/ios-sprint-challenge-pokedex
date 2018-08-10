@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+struct Pokemon: Codable, Equatable
+{
+    let name: String
+    let id: Int
+    let abilities: String
+    let types: String
+    
+}
+
+struct PokemonSearchResult: Codable
+{
+    var results: [Pokemon]
+}

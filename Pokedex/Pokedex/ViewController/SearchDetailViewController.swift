@@ -19,6 +19,11 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
     
+    // MARK: - Properties
+    
+    let pokemonController = PokemonController()
+    var pokemons = [Pokemon]()
+    
     // MARK: - Setup
     
     override func viewDidLoad()
@@ -28,9 +33,14 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
 
     
     // MARK: - Actions
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
-        
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
+        pokemonController.searchForPokemon(with: searchTerm) { (pokemons, error) in
+            self.pokemons = pokemons ?? []
+            
+        }
     }
     
     @IBAction func save(_ sender: Any)
@@ -38,6 +48,9 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
         
     }
     
-    
+    private func updateViews()
+    {
+        
+    }
 }
 

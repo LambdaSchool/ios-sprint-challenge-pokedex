@@ -12,10 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var pokemon: Pokemon?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let pokemonController = PokemonController()
+        pokemonController.searchForPokemon(with: "Pikachu") { (aPokemon, error) in
+            self.pokemon = self.pokemon 
+        }
         return true
     }
 
