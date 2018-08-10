@@ -24,7 +24,12 @@ class PokedexSearchViewController: UIViewController, UISearchBarDelegate {
             
             self.searchedPokemon = pokemon
             DispatchQueue.main.async {
-                self.pokemonNameLabel.text = self.searchedPokemon?.name.capitalized
+                if let pokemon = self.searchedPokemon {
+                    self.pokemonNameLabel.text = pokemon.name.capitalized
+                    self.pokemonID.text = String(pokemon.id)
+                    self.pokemonTypesLabel.text = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+                    self.pokemonAbilitiesLabel.text = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+                }
             }
         })
     }
@@ -38,6 +43,9 @@ class PokedexSearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     @IBOutlet var pokemonNameLabel: UILabel!
+    @IBOutlet var pokemonID: UILabel!
+    @IBOutlet var pokemonTypesLabel: UILabel!
+    @IBOutlet var pokemonAbilitiesLabel: UILabel!
     @IBOutlet var searchBar: UISearchBar!
     
     var searchedPokemon: Pokemon?

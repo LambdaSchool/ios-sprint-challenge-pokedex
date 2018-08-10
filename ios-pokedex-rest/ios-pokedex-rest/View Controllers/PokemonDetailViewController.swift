@@ -13,11 +13,17 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let pokemon = pokemon {
-            pokemonNameLabel.text = pokemon.name
+            pokemonNameLabel.text = pokemon.name.capitalized
+            pokemonIDLabel.text = String(pokemon.id)
+            pokemonTypesLabel.text = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+            pokemonAbilitiesLabel.text = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         }
     }
     
     @IBOutlet var pokemonNameLabel: UILabel!
+    @IBOutlet var pokemonIDLabel: UILabel!
+    @IBOutlet var pokemonTypesLabel: UILabel!
+    @IBOutlet var pokemonAbilitiesLabel: UILabel!
     
     var pokemon: Pokemon?
 }
