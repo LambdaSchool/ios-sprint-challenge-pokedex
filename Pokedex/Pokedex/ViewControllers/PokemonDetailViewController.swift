@@ -37,4 +37,6 @@ class PokemonDetailViewController: UIViewController {
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailTextView: UITextView!
 }

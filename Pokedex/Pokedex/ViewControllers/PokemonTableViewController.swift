@@ -53,7 +53,7 @@ class PokemonTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "SearchSegue":
-            let destVC = segue.destination as! SearchViewController
+            let destVC = segue.destination as! SearchTableViewController
             destVC.pokemonController = pokemonController
         case "ShowDetailSegue":
             let destVC = segue.destination as! PokemonDetailViewController
