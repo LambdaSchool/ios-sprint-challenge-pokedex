@@ -16,11 +16,6 @@ class PokedexListTableViewController: UITableViewController
     
     // MARK: - Setup
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(true)
@@ -31,7 +26,6 @@ class PokedexListTableViewController: UITableViewController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        
         return pokemonController.pokemons.count
     }
 
@@ -51,7 +45,16 @@ class PokedexListTableViewController: UITableViewController
     {
         if editingStyle == .delete
         {
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let pokemon = pokemonController.pokemons[indexPath.row]
+            pokemonController.deletePokemon(pokemon: pokemon) { (error) in
+                if let error = error
+                {
+                    NSLog("problem \(error)")
+                    return
+                }
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
         }
     }
 
@@ -64,6 +67,7 @@ class PokedexListTableViewController: UITableViewController
         {
             guard let searchView = segue.destination as? SearchDetailViewController else {return}
             searchView.pokemonController = pokemonController
+            searchView.isViewingDetail = false 
         }
         else if segue.identifier == "ToDetailView"
         {
@@ -71,7 +75,7 @@ class PokedexListTableViewController: UITableViewController
                 let indexPath = tableView.indexPathForSelectedRow else {return}
             detailView.pokemonController = pokemonController
             detailView.pokemon = pokemonController.pokemons[indexPath.row]
-            
+             detailView.isViewingDetail = true
             
         }
     }

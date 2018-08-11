@@ -14,7 +14,7 @@ class PokemonController
 {
     var pokemons: [Pokemon] = []
     
-    func searchForPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void)
+    func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void)
     {
         
         let url = baseURL.appendingPathComponent(searchTerm)
@@ -28,12 +28,12 @@ class PokemonController
             if let error = error
             {
                 NSLog("Error fetching data: \(error)")
-                completion(error)
+                completion(nil, error)
             }
 
             guard let data = data else {
                 NSLog("Error fetching data. No data returned")
-                completion(NSError())
+                completion(nil, NSError())
                 return
             }
 
@@ -44,16 +44,49 @@ class PokemonController
                 print(searchResults.id)
                 print(searchResults.abilities)
                 print(searchResults.types)
-                //completion(pokemon, nil)
+                let pokemon = searchResults
+                completion(pokemon, nil)
             } catch {
                 NSLog("Unable to decode data into pokemon: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
         }
 
         dataTask.resume()
         
+    }
+    
+    func createPokemon(name: String, id: Int, abilities: [Pokemon.Ability], types: [Pokemon.PokemonType]) -> Pokemon
+    {
+        let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types)
+        pokemons.append(pokemon)
+        return pokemon
+    }
+    
+    func deletePokemon(pokemon: Pokemon, completion: @escaping (Error?) -> Void)
+    {
+        let url = baseURL.appendingPathComponent(pokemon.name)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error
+            {
+                NSLog("error \(error)")
+                completion(error)
+                return
+            }
+            DispatchQueue.main.async {
+                guard let index = self.pokemons.index(of: pokemon) else {
+                    completion(NSError())
+                    return
+                }
+                self.pokemons.remove(at: index)
+                completion(nil)
+            }
+        }.resume()
     }
 }
 

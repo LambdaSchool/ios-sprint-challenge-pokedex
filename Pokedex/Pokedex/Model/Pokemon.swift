@@ -13,6 +13,7 @@ struct Pokemon: Codable, Equatable
     let name: String
     let id: Int
 
+    
     let abilities: [Ability]
     
     struct Ability: Codable, Equatable
@@ -24,6 +25,7 @@ struct Pokemon: Codable, Equatable
             let name: String
         }
     }
+    
     
     let types: [PokemonType]
     

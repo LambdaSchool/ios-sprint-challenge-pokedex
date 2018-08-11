@@ -21,13 +21,15 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     
     // MARK: - Properties
     
-    var pokemonController = PokemonController()
-    var pokemons = [Pokemon]()
+    var isViewingDetail: Bool?
+    var pokemonController: PokemonController?
     var pokemon: Pokemon?
     {
         didSet
         {
-            updateViews()
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
         }
     }
     
@@ -36,7 +38,9 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        searchBar.autocapitalizationType = .none 
         updateViews()
+        
     }
 
     
@@ -46,40 +50,35 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
         
-        pokemonController.searchForPokemon(with: searchTerm) { (error) in
+        pokemonController?.searchForPokemon(with: searchTerm) { (pokemon, error)  in
+            self.pokemon = pokemon ?? nil
             
-            if let error = error
-            {
-                NSLog("problem \(error)")
-                return
-            }
         }
+        
+        
         DispatchQueue.main.async {
+            
             self.updateViews()
+            
         }
+        
+        
     }
     
     @IBAction func save(_ sender: Any)
     {
-//        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
-//        pokemonController.createPokemon(name: searchTerm) { (error) in
-//            if let error = error
-//            {
-//                NSLog("problem \(error)")
-//                return
-//            }
-//            
-//        }
-//        DispatchQueue.main.async {
-//            
-//            self.navigationController?.popViewController(animated: true)
-//        }
+        guard let name = pokemon?.name,
+            let id = pokemon?.id,
+            let abilities = pokemon?.abilities,
+            let types = pokemon?.types else {return}
+        pokemonController?.createPokemon(name: name, id: id, abilities: abilities, types: types)
+        navigationController?.popViewController(animated: true)
     }
+    
+    // MARK: - Private
     
     private func updateViews()
     {
-        guard isViewLoaded else {return}
-        
         guard let pokemon = pokemon else
         {
             title = "Search Pokemon"
@@ -88,31 +87,26 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
             idLabel.text = ""
             typeLabel.text = ""
             abilitiesTextView.text = ""
-            
+            saveButton.isHidden = true
             return
         }
         
+        title = pokemon.name
         let x: Int = pokemon.id
         let stringValue = "\(x)"
-        title = pokemon.name
+
         nameLabel.text = pokemon.name
-        idLabel.text = stringValue
+        idLabel.text = "ID: \(stringValue)"
+        typeLabel.text = "Types: " + pokemon.types.map({ $0.type.name }).joined(separator: ", ")
+        abilitiesTextView.text = "Abilities: " + pokemon.abilities.map({ $0.ability.name}).joined(separator: ", ")
         
+        saveButton.isHidden = false
         
-//        typeLabel.text = pokemon.types
-//        abilitiesTextView.text = pokemon.abilities[0]
-        
-        
-        
-//        let x: Int = 100
-//        let stringValue = "\(x)"
-//        title = "Name goes here"
-//        nameLabel.text = "name goes here"
-//        idLabel.text = stringValue
-//
-//
-        typeLabel.text = "type goes here"
-        abilitiesTextView.text = "abilities go here"
+        if isViewingDetail!
+        {
+            saveButton.isHidden = true
+            searchBar.isHidden = true
+        }
     }
 }
 
