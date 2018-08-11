@@ -20,6 +20,12 @@ class PokedexListTableViewController: UITableViewController
     {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 

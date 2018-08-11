@@ -36,6 +36,7 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        updateViews()
     }
 
     
@@ -44,50 +45,72 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
-        pokemonController.searchForPokemon(with: searchTerm) { (pokemons, error) in
-            self.pokemons = pokemons ?? []
+        
+        pokemonController.searchForPokemon(with: searchTerm) { (error) in
             
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
-            
-        }
-    }
-    
-    @IBAction func save(_ sender: Any)
-    {
-        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
-        pokemonController.createPokemon(name: searchTerm) { (error) in
             if let error = error
             {
                 NSLog("problem \(error)")
                 return
             }
-            
         }
         DispatchQueue.main.async {
-            self.navigationController?.popViewController(animated: true)
+            self.updateViews()
         }
+    }
+    
+    @IBAction func save(_ sender: Any)
+    {
+//        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
+//        pokemonController.createPokemon(name: searchTerm) { (error) in
+//            if let error = error
+//            {
+//                NSLog("problem \(error)")
+//                return
+//            }
+//            
+//        }
+//        DispatchQueue.main.async {
+//            
+//            self.navigationController?.popViewController(animated: true)
+//        }
     }
     
     private func updateViews()
     {
-//        guard let pokemon = pokemon else {
-//            title = "Search Pokemon"
-//            return
-//        }
-//        let x: Int = pokemon.id
-//        let stringValue = "\(x)"
-//        title = pokemon.name
-//        nameLabel.text = pokemon.name
-//        idLabel.text = stringValue
-//        typeLabel.text = pokemon.types
-//        abilitiesTextView.text = pokemon.abilities
-        let x: Int = 100
+        guard isViewLoaded else {return}
+        
+        guard let pokemon = pokemon else
+        {
+            title = "Search Pokemon"
+            
+            nameLabel.text = ""
+            idLabel.text = ""
+            typeLabel.text = ""
+            abilitiesTextView.text = ""
+            
+            return
+        }
+        
+        let x: Int = pokemon.id
         let stringValue = "\(x)"
-        title = "Name goes here"
-        nameLabel.text = "name goes here"
+        title = pokemon.name
+        nameLabel.text = pokemon.name
         idLabel.text = stringValue
+        
+        
+//        typeLabel.text = pokemon.types
+//        abilitiesTextView.text = pokemon.abilities[0]
+        
+        
+        
+//        let x: Int = 100
+//        let stringValue = "\(x)"
+//        title = "Name goes here"
+//        nameLabel.text = "name goes here"
+//        idLabel.text = stringValue
+//
+//
         typeLabel.text = "type goes here"
         abilitiesTextView.text = "abilities go here"
     }

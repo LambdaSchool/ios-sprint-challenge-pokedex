@@ -12,14 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var pokemon: Pokemon?
+    //var pokemon: Pokemon?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let pokemonController = PokemonController()
-        pokemonController.searchForPokemon(with: "Pikachu") { (aPokemon, error) in
-            self.pokemon = self.pokemon 
-        }
+//        let pokemonController = PokemonController()
+//        pokemonController.searchForPokemon() { (error) in
+//            //print(self.pokemon as Any)
+//        }
         return true
     }
 

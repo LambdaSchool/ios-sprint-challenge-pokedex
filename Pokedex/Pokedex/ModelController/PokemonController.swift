@@ -14,46 +14,45 @@ class PokemonController
 {
     var pokemons: [Pokemon] = []
     
-    func createPokemon(name: String, completion: @escaping (Error?) -> Void)
+    func searchForPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void)
     {
-        let pokemon = Pokemon(name: name, id: 100, abilities: "ability", types: "type")
-        print(pokemon)
-    }
-    
-    func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void)
-    {
+        
         let url = baseURL.appendingPathComponent(searchTerm)
-        
         print("This is the searchQueryItem \(url)")
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
+
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+
             if let error = error
             {
-                NSLog("error \(error)")
-                completion(self.pokemons, error)
-                return
+                NSLog("Error fetching data: \(error)")
+                completion(error)
             }
-            
+
             guard let data = data else {
-                completion(self.pokemons, NSError())
+                NSLog("Error fetching data. No data returned")
+                completion(NSError())
                 return
             }
-            
+
             do {
                 let jsonDecoder = JSONDecoder()
-                let searchResults = try jsonDecoder.decode(PokemonSearchResult.self, from: data)
-                let pokemons = searchResults.results
-                completion(pokemons, nil)
+                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
+                print(searchResults.name)
+                print(searchResults.id)
+                print(searchResults.abilities)
+                print(searchResults.types)
+                //completion(pokemon, nil)
             } catch {
                 NSLog("Unable to decode data into pokemon: \(error)")
-                completion(nil, error)
+                completion(error)
                 return
             }
-            
-        }.resume()
+        }
+
+        dataTask.resume()
         
     }
 }
