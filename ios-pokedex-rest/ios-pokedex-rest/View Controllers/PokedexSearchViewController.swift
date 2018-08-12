@@ -12,6 +12,11 @@ class PokedexSearchViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pokemonAbilitiesLabel.text = ""
+        pokemonTypesLabel.text = ""
+        pokemonID.text = ""
+        pokemonNameLabel.text = ""
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
