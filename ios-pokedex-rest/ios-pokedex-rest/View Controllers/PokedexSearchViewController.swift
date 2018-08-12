@@ -26,9 +26,9 @@ class PokedexSearchViewController: UIViewController, UISearchBarDelegate {
             DispatchQueue.main.async {
                 if let pokemon = self.searchedPokemon {
                     self.pokemonNameLabel.text = pokemon.name.capitalized
-                    self.pokemonID.text = String(pokemon.id)
-                    self.pokemonTypesLabel.text = pokemon.types.map { $0.type.name }.joined(separator: ", ")
-                    self.pokemonAbilitiesLabel.text = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+                    self.pokemonID.text = "ID: " + String(pokemon.id)
+                    self.pokemonTypesLabel.text = "Types: " + pokemon.types.map { $0.type.name }.joined(separator: ", ")
+                    self.pokemonAbilitiesLabel.text = "Abilities: " + pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
                 }
             }
         })
