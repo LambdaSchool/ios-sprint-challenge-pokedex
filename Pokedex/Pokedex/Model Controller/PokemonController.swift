@@ -13,16 +13,8 @@ private let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
 class PokemonController{
     
     
-    func create(newPokemon:Pokemon){
-        pokemons.append(newPokemon)
-        
-    }
     
-    func delete(index: Int){
-        pokemons.remove(at: index)
-    }
-    
-    func fetch(searchName: String, completion: @escaping (Pokemon?,Error?) -> Void){
+    func fetchPokemon(searchName: String, completion: @escaping (Pokemon?,Error?) -> Void){
         //create URL for dataTask
         let url = baseURL.appendingPathComponent(searchName.lowercased())
         
@@ -62,6 +54,18 @@ class PokemonController{
             
             }.resume()
         
+    }
+    
+    
+    func create(newPokemon:Pokemon){
+        pokemons.append(newPokemon)
+        
+    }
+    
+    
+    
+    func delete(index: Int){
+        pokemons.remove(at: index)
     }
     
     //MARK: - Properties

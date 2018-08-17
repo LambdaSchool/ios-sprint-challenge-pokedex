@@ -8,28 +8,56 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        nameLabel.text = ""
+        idLabel.text = ""
+        typeLabel.text = ""
+        ability.text = ""
+        searchBar.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm  = searchBar.text else {return}
+        pokemonController?.fetchPokemon(searchName: searchTerm, completion: { (pokemon, error) in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.nameLabel.text = "Pokemon not found"
+                }
+                NSLog("Error searching: \(error)")
+            }
+            guard let pokemon = pokemon else {return}
+            
+            DispatchQueue.main.async {
+                guard let types = pokemon.pokeTypes,
+                    let abilities = pokemon.pokeAbilities else {return}
+                self.nameLabel.text = pokemon.name
+                self.idLabel.text = "ID: \(pokemon.id)"
+                self.typeLabel.text = "Type(s): \(types)"
+                self.ability.text = "Abilities: \(abilities)"
+                self.pokemon = pokemon
+         
+            }
+        })
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func Save(_ sender: Any) {
+        guard let pokemon = pokemon else {return}
+        pokemonController?.create(newPokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+        
     }
-    */
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var ability: UILabel!
+    
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
 
 }

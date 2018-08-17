@@ -13,7 +13,6 @@ struct Pokemon: Codable, Equatable {
     let id: Int
     let pokeAbilities: String?
     let pokeTypes: String?
-    
     let abilities:[Ability]?
     let types: [pType]?
     
