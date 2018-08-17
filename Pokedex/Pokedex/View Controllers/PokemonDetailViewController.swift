@@ -10,9 +10,15 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+//        idLabel.text = pokemon.id
+//        typeLabel.text = pokemon.types
+//        abilityLabel.text = pokemon.abilities
     }
 
     var pokemonController: PokemonController?
