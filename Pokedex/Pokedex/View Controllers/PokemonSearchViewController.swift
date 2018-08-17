@@ -19,6 +19,7 @@ class PokemonSearchViewController: UIViewController {
         
     }
 
+    var pokemonController: PokemonController?
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!

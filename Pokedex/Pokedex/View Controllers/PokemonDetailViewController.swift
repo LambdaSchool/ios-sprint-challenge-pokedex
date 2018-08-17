@@ -15,6 +15,9 @@ class PokemonDetailViewController: UIViewController {
 
     }
 
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
