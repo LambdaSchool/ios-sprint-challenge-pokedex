@@ -17,6 +17,8 @@ class PokemonDetailViewController: UIViewController {
         
         nameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
+        abilityLabel.text = pokemon.abilities[0].ability.name
+        typeLabel.text = pokemon.types[0].type.name
 //        typeLabel.text = pokemon.types
 //        abilityLabel.text = pokemon.abilities
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
+private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController {
     
@@ -24,12 +24,15 @@ class PokemonController {
     func fetch(searchName: String, completion: @escaping (Error?) -> Void) {
         let url = baseURL.appendingPathComponent(searchName.lowercased())
 
+        print(url)
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
         URLSession.shared.dataTask(with: request) { (data, _, error) in
+            print("Error")
             if let error = error {
-                NSLog("Error: \(error)")
+                NSLog("Error: \(error.localizedDescription)")
                 completion(error)
                 return
             }
@@ -47,7 +50,7 @@ class PokemonController {
                 completion(nil)
             }
             catch {
-                NSLog("Error: \(error)")
+                NSLog("Error: \(error.localizedDescription)")
                 completion(error)
                 return
             }

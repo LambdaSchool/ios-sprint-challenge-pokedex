@@ -19,12 +19,12 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews() {
-        if let pokemon = pokemon {
+        if let pokemon = pokemonController?.pokemon {
             title = pokemon.name
             nameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
-//            typeLabel.text = pokemon.types
-//            abilityLabel.text = pokemon.abilities
+            typeLabel.text = pokemon.types.first?.type.name
+            abilityLabel.text = pokemon.abilities.first?.ability.name
         } else {
             title = "Pokemon Search"
             nameLabel.text = ""
@@ -35,7 +35,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func saveButtonWasTapped(_ sender: Any) {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemonController?.pokemon else { return }
         pokemonController?.create(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
