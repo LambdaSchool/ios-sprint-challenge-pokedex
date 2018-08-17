@@ -13,23 +13,45 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLabel.text = ""
-        idLabel.text = ""
-        typeLabel.text = ""
-        abilityLabel.text = ""
-        
         searchBar.delegate = self
+        updateViews()
 
+    }
+    
+    func updateViews() {
+        if let pokemon = pokemon {
+            title = pokemon.name
+            nameLabel.text = pokemon.name
+            idLabel.text = String(pokemon.id)
+//            typeLabel.text = pokemon.types
+//            abilityLabel.text = pokemon.abilities
+        } else {
+            title = "Pokemon Search"
+            nameLabel.text = ""
+            idLabel.text = ""
+            typeLabel.text = ""
+            abilityLabel.text = ""
+        }
     }
     
     @IBAction func saveButtonWasTapped(_ sender: Any) {
         guard let pokemon = pokemon else { return }
-        pokemonController?.create(newPokemon: pokemon)
+        pokemonController?.create(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
+        
+        pokemonController?.fetch(searchName: searchTerm, completion: { (error) in
+            if let error = error {
+                NSLog("Error fetching: \(error)")
+                return
+            }
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        })
         
     }
 
