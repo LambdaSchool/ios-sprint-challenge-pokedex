@@ -9,27 +9,28 @@
 import UIKit
 
 class PokedexDetailViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
     }
-    */
 
+   
+    func updateViews(){
+        
+        guard let pokemon = pokemon else {return}
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        typesLabel.text = pokemon.pokeTypes
+        abilityLabel.text = pokemon.pokeAbilities
+    }
+  
+    var pokemonController: PokemonController?
+    var pokemon:Pokemon?
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
 }
