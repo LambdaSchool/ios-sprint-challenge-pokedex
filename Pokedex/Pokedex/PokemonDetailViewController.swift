@@ -13,24 +13,25 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        typesLabel.text = String()
+        abilitiesLabel.text = String()
     }
+
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    var pokemonController: PokemonController?
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!

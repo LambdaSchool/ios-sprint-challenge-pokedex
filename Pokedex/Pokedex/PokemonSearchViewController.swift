@@ -8,31 +8,48 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        typesLabel.text = String()
+        abilitiesLabel.text = String()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let pokemonName = searchBar.text else { return }
+        
+        pokemon = pokemonController?.searchPokemon(name: pokemonName, completion: { (error) in
+            if let error = error {
+                print("can't search pokemon!: \(error)")
+            }
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        })
     }
     
     @IBAction func savePokemon(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
     }
-    */
+    var pokemonController: PokemonController?
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
