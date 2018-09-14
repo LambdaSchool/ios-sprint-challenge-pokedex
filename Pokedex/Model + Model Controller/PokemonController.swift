@@ -10,6 +10,9 @@ import Foundation
 
 class PokémonController {
     
+    // MARK:- Init
+    init() { loadFromPersistentStore() }
+    
     // MARK:- Search
     // Searches for the given Pokémon using the user's entered text
     func searchForPokémon(with searchTerm: String, completion: @escaping (Error?) -> (Void)) {
@@ -55,6 +58,7 @@ class PokémonController {
         
         savedPokémon.append(match)
         savedPokémon.sort {( $0.id < $1.id )}
+        saveToPersistentStore()
         completion(nil)
     }
     
@@ -65,6 +69,7 @@ class PokémonController {
         guard let index = savedPokémon.index(of: pokémon) else { return }
         
         savedPokémon.remove(at: index)
+        saveToPersistentStore()
         completion(nil)
     }
     
@@ -75,4 +80,48 @@ class PokémonController {
     
     // Base URL for the Pokémon API
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
+    
+    private var pokémonFileUrl: URL? {
+        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        
+        let fileName = "pokédex.plist"
+        return directory.appendingPathComponent(fileName)
+    }
+}
+
+
+// Adding persistence
+extension PokémonController {
+    
+    // MARK:- Persistent store methods
+    // Save data to storage
+    private func saveToPersistentStore() {
+        do {
+            guard let pokémonFileUrl = pokémonFileUrl else { return }
+            let plistEncoder = PropertyListEncoder()
+            
+            let pokémonData = try plistEncoder.encode(savedPokémon)
+            
+            // Attemping to write the Pokémon data to plist file...
+            try pokémonData.write(to: pokémonFileUrl)
+            
+            // If writing data fails, an error is logged:
+        } catch { NSLog("Error encoding shopping items: \(error)") }
+    }
+    
+    // Read data from storage
+    private func loadFromPersistentStore() {
+        do {
+            guard let pokémonFileUrl = pokémonFileUrl,
+                FileManager.default.fileExists(atPath: pokémonFileUrl.path) else { return }
+            let plistDecoder = PropertyListDecoder()
+            
+            let pokémonData = try Data(contentsOf: pokémonFileUrl)
+            
+            self.savedPokémon = try plistDecoder.decode([Pokémon].self, from: pokémonData)
+            
+            // If decoding data data fails, an error is logged:
+        } catch { NSLog("Error decoding shopping items: \(error)") }
+    }
+    
 }
