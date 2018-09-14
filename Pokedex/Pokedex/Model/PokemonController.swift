@@ -13,30 +13,29 @@ class PokemonController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    func searchForPokemon(searchText: String, completion: @escaping (Error?) -> Void ) {
+    func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void ) {
         var requestURl = baseURL.appendingPathComponent("pokemon")
         requestURl.appendPathComponent(searchText)
         
         URLSession.shared.dataTask(with: requestURl) { (data, _, error) in
             if let error = error {
                 NSLog("Error searching for Pokemon: \(error)")
-                completion(error)
+                completion(error, nil)
                 return
             }
             
             guard let data = data else {
                 NSLog("No data was returned.")
-                completion(NSError())
+                completion(NSError(), nil)
                 return
             }
             
             do {
                 let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-                self.pokemonArray.append(pokemon)
-                completion(nil)
+                completion(nil, pokemon)
             } catch {
                 NSLog("Error decoding data: \(error)")
-                completion(error)
+                completion(error, nil)
                 return
             }
             
