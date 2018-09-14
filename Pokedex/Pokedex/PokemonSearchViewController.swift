@@ -24,6 +24,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         typesLabel.text = "types: " + typesToString(types: pokemon.types)
         abilitiesLabel.text = "abilties: " + abilitiesToString(abilities: pokemon.abilities)
         savePokemonButton.setTitle("Save", for: .normal)
+        title = pokemon.name
     }
     
     func typesToString(types: [Pokemon.PokemonType]) -> String {
@@ -62,6 +63,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBOutlet weak var savePokemonButton: UIButton!
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
