@@ -19,6 +19,11 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.becomeFirstResponder()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     // Private UI updater method
