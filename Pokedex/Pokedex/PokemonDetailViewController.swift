@@ -19,10 +19,12 @@ class PokemonDetailViewController: UIViewController {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         
+        title = pokemon.name
+        
         nameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
-        typesLabel.text = String()
-        abilitiesLabel.text = String()
+        typesLabel.text = pokemon.types
+        abilitiesLabel.text = pokemon.abilities
     }
 
     var pokemon: Pokemon? {

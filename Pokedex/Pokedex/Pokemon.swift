@@ -11,8 +11,15 @@ import Foundation
 struct Pokemon: Equatable, Codable {
     let name: String
     let id: Int
-    //let types: String  //[Types]
+    let types: String  //[Types]
     let abilities: String //[Abilities]
+    
+//    init(name: String, id: Int, abilities: String) {
+//        
+//        self.name = name
+//        self.id = id
+//        self.abilities = abilities
+//    }
     
     init(from decoder: Decoder) throws {
 
@@ -22,18 +29,22 @@ struct Pokemon: Equatable, Codable {
         self.id = try container.decode(Int.self, forKey: .id)
 
         let abilitiesContainer = try container.nestedContainer(keyedBy: AbilitiesCodingKeys.self, forKey: .abilities)
-
         let abilityContainer = try abilitiesContainer.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .ability)
-        let abilityNameContainer = try abilityContainer.nestedContainer(keyedBy: AbilityNameCodingKeys.self, forKey: .ability)
-        let name = try abilityNameContainer.decode(String.self, forKey: .name)
+        let abilityName = try abilityContainer.decode(String.self, forKey: .name)
         
-        self.abilities = name
+        self.abilities = abilityName
+        
+        let typesContainer = try container.nestedContainer(keyedBy: TypesCodingKeys.self, forKey: .types)
+        let typeContainer = try typesContainer.nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .type)
+        let typeName = try typeContainer.decode(String.self, forKey: .name)
+        
+        self.types = typeName
     }
     
     enum CodingKeys: String, CodingKey {
         case name
         case id
-       // case types
+        case types
         case abilities
     }
 
@@ -42,10 +53,14 @@ struct Pokemon: Equatable, Codable {
     }
     
     enum AbilityCodingKeys: String, CodingKey {
-        case ability
+        case name
     }
     
-    enum AbilityNameCodingKeys: String, CodingKey {
+    enum TypesCodingKeys: String, CodingKey {
+        case type
+    }
+    
+    enum TypeCodingKeys: String, CodingKey {
         case name
     }
     

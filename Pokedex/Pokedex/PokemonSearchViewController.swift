@@ -28,7 +28,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let pokemonName = searchBar.text else { return }
         
-        pokemon = pokemonController?.searchPokemon(name: pokemonName, completion: { (error) in
+        pokemon = pokemonController?.searchPokemon(name: pokemonName.lowercased(), completion: { (error) in
             if let error = error {
                 print("can't search pokemon!: \(error)")
             }
