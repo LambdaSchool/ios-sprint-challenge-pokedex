@@ -13,7 +13,7 @@
         <!--Pokedex-->
         <scene sceneID="MSz-g2-V3U">
             <objects>
-                <tableViewController id="LIe-Ye-4nt" sceneMemberID="viewController">
+                <tableViewController id="LIe-Ye-4nt" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ouG-gp-bha">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +60,7 @@
         <!--Pokemon Search-->
         <scene sceneID="vvq-4a-3GY">
             <objects>
-                <viewController id="wqP-aw-YR4" sceneMemberID="viewController">
+                <viewController id="wqP-aw-YR4" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HBc-XY-vN2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,6 +74,9 @@
                                 <rect key="frame" x="151" y="473" width="55" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="savePokemon:" destination="wqP-aw-YR4" eventType="touchUpInside" id="nsC-7I-ATc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxw-TM-Vdb">
                                 <rect key="frame" x="157" y="237" width="42" height="21"/>
@@ -108,15 +111,22 @@
                         <viewLayoutGuide key="safeArea" id="ADk-KK-MvC"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="78w-43-zkO"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="Nq7-OH-4j9" id="pKn-le-q6A"/>
+                        <outlet property="idLabel" destination="TvH-cP-BpM" id="S2r-EV-BnZ"/>
+                        <outlet property="nameLabel" destination="cxw-TM-Vdb" id="KfY-yW-srX"/>
+                        <outlet property="searchBar" destination="zOG-cW-kmt" id="SxL-4v-OJ4"/>
+                        <outlet property="typesLabel" destination="AHW-nf-Am4" id="LNO-ku-eDj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roC-VB-9Ho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1488.8" y="-125.4872563718141"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="CUl-yq-icc">
             <objects>
-                <viewController id="zKh-hD-yDq" sceneMemberID="viewController">
+                <viewController id="zKh-hD-yDq" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sCG-Jz-8jW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
