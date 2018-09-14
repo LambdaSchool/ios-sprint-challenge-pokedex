@@ -36,7 +36,6 @@ class PokémonController {
             do {
                 let matchedResults = try jsonDecoder.decode(Pokémon.self, from: data)
                 self.matchedPokémon = matchedResults
-                print("\(matchedResults.name) - \(matchedResults.id)")
                 
                 completion(nil)
             } catch {

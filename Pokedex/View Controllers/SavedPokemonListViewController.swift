@@ -14,6 +14,7 @@ class SavedPokemonListViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
