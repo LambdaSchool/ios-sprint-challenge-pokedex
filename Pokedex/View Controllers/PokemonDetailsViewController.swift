@@ -103,8 +103,15 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
     @IBAction func saveToPokedex(_ sender: Any) {
         guard let pokémonController = pokémonController else { return }
         
-        pokémonController.addMatchToPokédex { (error) -> (Void) in
-            self.navigationController?.popViewController(animated: true)
+        if isUserSearching {
+            pokémonController.addMatchToPokédex { (error) -> (Void) in
+                DispatchQueue.main.async { self.navigationController?.popViewController(animated: true) }
+            }
+        } else {
+            guard let pokémon = pokémon else { return }
+            pokémonController.removeFromPokédex(pokémon: pokémon) { (error) -> (Void) in
+                DispatchQueue.main.async { self.navigationController?.popViewController(animated: true) }
+            }
         }
     }
     
