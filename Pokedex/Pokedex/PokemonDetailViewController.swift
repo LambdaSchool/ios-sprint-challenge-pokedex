@@ -23,7 +23,7 @@ class PokemonDetailViewController: UIViewController {
         
         nameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
-        typesLabel.text = pokemon.types
+        //typesLabel.text = pokemon.types
         abilitiesLabel.text = pokemon.abilities
     }
 

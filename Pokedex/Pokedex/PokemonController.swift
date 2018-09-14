@@ -26,8 +26,8 @@ class PokemonController {
     
     // MARK: - Networking
     
-    func searchPokemon(name: String, completion: @escaping (Error?) -> Void) -> Pokemon {
-        var pokemon: Pokemon
+    func searchPokemon(name: String, completion: @escaping (Error?) -> Void) -> Pokemon? {
+        var pokemon: Pokemon?
         
         var requestURL = baseURL.appendingPathComponent("api")
         requestURL.appendPathComponent("v2")
