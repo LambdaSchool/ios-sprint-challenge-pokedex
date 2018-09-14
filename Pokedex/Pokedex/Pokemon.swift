@@ -12,8 +12,10 @@ struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
-    var abilities: [String] //nested
-    var types: [String] //nested
+//    var abilities: String
+//    var types: String
+//    var abilities: [[ String: String ]] //nested
+//    var types: [[String :String]] //nested
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -21,13 +23,13 @@ struct Pokemon: Codable, Equatable {
         self.id = try container.decode(Int.self, forKey: .id)
         
         // nested containers
-        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .abilities)
-        let ability = try abilitiesContainer.decode([String].self, forKey: .ability)
-        self.abilities = ability
-        
-        let typesContainer = try container.nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .types)
-        let type = try typesContainer.decode([String].self, forKey: .type)
-        self.types = type
+//        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .abilities)
+//        let ability = try abilitiesContainer.decode([String].self, forKey: .ability)
+//        self.abilities = ability.first!
+//        
+//        let typesContainer = try container.nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .types)
+//        let type = try typesContainer.decode([String].self, forKey: .type)
+//        self.types = type.first!
         
         
     }
@@ -35,17 +37,17 @@ struct Pokemon: Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case name
         case id
-        case abilities
-        case types
+//        case abilities
+//        case types
     }
     
-    enum AbilityCodingKeys: String, CodingKey {
-        case ability
-    }
-    
-    enum TypeCodingKeys: String, CodingKey {
-        case type
-    }
+//    enum AbilityCodingKeys: String, CodingKey {
+//        case ability
+//    }
+//
+//    enum TypeCodingKeys: String, CodingKey {
+//        case type
+//    }
     
 }
 
