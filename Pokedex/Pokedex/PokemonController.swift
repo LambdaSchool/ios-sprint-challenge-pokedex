@@ -26,15 +26,12 @@ class PokemonController {
     
     // MARK: - Networking
     
-    func searchPokemon(name: String, completion: @escaping (Error?) -> Void) -> Pokemon? {
-        var pokemon: Pokemon?
+    func searchPokemon(name: String, completion: @escaping (Error?) -> Void) {
         
         var requestURL = baseURL.appendingPathComponent("api")
         requestURL.appendPathComponent("v2")
         requestURL.appendPathComponent("pokemon")
         requestURL.appendPathComponent(name)
-        
-        print(requestURL)
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -58,8 +55,9 @@ class PokemonController {
             do {
                 let pokemonResults = try jsonDecoder.decode(Pokemon.self, from: data)
                 print(pokemonResults)
-                pokemon = pokemonResults
-                print("works?")
+                
+                self.pokemon = pokemonResults
+                
                 completion(nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
@@ -68,11 +66,11 @@ class PokemonController {
             }
             
         }.resume()
-        
-        return pokemon
     }
     
     // MARK: - Properties
+    
+    var pokemon: Pokemon?
     
     let baseURL = URL(string: "https://pokeapi.co/")!
     

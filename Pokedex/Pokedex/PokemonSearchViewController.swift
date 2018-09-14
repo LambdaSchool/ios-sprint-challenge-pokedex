@@ -12,30 +12,41 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        saveButton.setTitle("", for: .normal)
+        
+        nameLabel.text = ""
+        idLabel.text = ""
+        typesLabel.text = ""
+        abilitiesLabel.text = ""
         searchBar.delegate = self
+
     }
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         
+        saveButton.setTitle("Save", for: .normal)
+        
+        let abilitiesString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        let typesString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        
         nameLabel.text = pokemon.name
-        idLabel.text = String(pokemon.id)
-        typesLabel.text = String()
-        abilitiesLabel.text = String()
+        idLabel.text = "id: \(pokemon.id)"
+        typesLabel.text = "types: \(typesString)"
+        abilitiesLabel.text = "abitities: \(abilitiesString)"
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let pokemonName = searchBar.text else { return }
         
-        pokemon = pokemonController?.searchPokemon(name: pokemonName.lowercased(), completion: { (error) in
-            if let error = error {
-                print("can't search pokemon!: \(error)")
-            }
+        pokemonController?.searchPokemon(name: pokemonName.lowercased(), completion: { (_) in
             DispatchQueue.main.async {
-                self.updateViews()
+                self.pokemon = self.pokemonController?.pokemon
             }
+            
         })
+
     }
     
     @IBAction func savePokemon(_ sender: Any) {
@@ -50,6 +61,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     var pokemonController: PokemonController?
     
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!

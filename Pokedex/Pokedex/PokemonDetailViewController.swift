@@ -21,15 +21,22 @@ class PokemonDetailViewController: UIViewController {
         
         title = pokemon.name
         
+        let abilitiesString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        let typesString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        
         nameLabel.text = pokemon.name
-        idLabel.text = String(pokemon.id)
-        //typesLabel.text = pokemon.types
-        abilitiesLabel.text = pokemon.abilities
+        idLabel.text = "id: \(pokemon.id)"
+        typesLabel.text = "types: \(typesString)"
+        abilitiesLabel.text = "abitities: \(abilitiesString)"
+        
+       
     }
 
     var pokemon: Pokemon? {
         didSet {
-            updateViews()
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
         }
     }
     var pokemonController: PokemonController?
