@@ -93,7 +93,10 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" || searchText == " " { view.endEditing(true) }
+        if searchText == "" || searchText == " " {
+            pokémon = nil
+            updateViews()
+        }
     }
     
     // MARK:- IBActions
