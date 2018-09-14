@@ -11,23 +11,60 @@ import Foundation
 struct Pokemon: Equatable, Codable {
     let name: String
     let id: Int
-    let types: [Types]
-    let abilities: [Ability]
+    //let types: String  //[Types]
+    let abilities: String //[Abilities]
     
-    struct Ability: Equatable, Codable {
-        let ability: Name
+    init(from decoder: Decoder) throws {
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.name = try container.decode(String.self, forKey: .name)
+        self.id = try container.decode(Int.self, forKey: .id)
+
+        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilitiesCodingKeys.self, forKey: .abilities)
+
+        let abilityContainer = try abilitiesContainer.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .ability)
+        let abilityNameContainer = try abilityContainer.nestedContainer(keyedBy: AbilityNameCodingKeys.self, forKey: .ability)
+        let name = try abilityNameContainer.decode(String.self, forKey: .name)
         
-        struct Name: Equatable, Codable {
-            let name: String
-        }
+        self.abilities = name
     }
     
-    struct Types: Equatable, Codable {
-        let type: Name
-        
-        struct Name: Equatable, Codable {
-            let name: String
-        }
+    enum CodingKeys: String, CodingKey {
+        case name
+        case id
+       // case types
+        case abilities
     }
+
+    enum AbilitiesCodingKeys: String, CodingKey {
+        case ability
+    }
+    
+    enum AbilityCodingKeys: String, CodingKey {
+        case ability
+    }
+    
+    enum AbilityNameCodingKeys: String, CodingKey {
+        case name
+    }
+    
+//
+//
+//    struct Abilities: Equatable, Codable {
+//        let ability: MoreDetail
+//
+//        struct MoreDetail: Equatable, Codable {
+//            let name: String
+//        }
+//    }
+//
+//    struct Types: Equatable, Codable {
+//        let type: Name
+//
+//        struct Name: Equatable, Codable {
+//            let name: String
+//        }
+//    }
     
 }

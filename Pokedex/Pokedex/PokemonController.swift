@@ -54,8 +54,9 @@ class PokemonController {
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
-                let pokemonResults = try jsonDecoder.decode([Pokemon].self, from: data)
-                pokemon = pokemonResults[0]
+                let pokemonResults = try jsonDecoder.decode([String: Pokemon].self, from: data)
+                let resultValues = pokemonResults.compactMap( { $0.value } )
+                print(resultValues)
                 completion(nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
