@@ -48,15 +48,44 @@ class PokemonController {
                 completion(NSError(), nil)
                 return
             }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(nil, pokemon)
             } catch {
                 NSLog("Error decoding data: \(error)")
                 completion(error, nil)
                 return
             }
+            
+        }.resume()
+    }
+    
+    func fetchImageFor(pokemon: Pokemon, completion: @escaping (Error?, Pokemon?) -> Void ){
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault) else {
+            NSLog("Was unable to make URL from sprite string")
+            completion(NSError(), nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(error, nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
+                return
+            }
+            
+            pokemon.imageData = data
+            completion(nil, pokemon)
+            return
             
         }.resume()
     }

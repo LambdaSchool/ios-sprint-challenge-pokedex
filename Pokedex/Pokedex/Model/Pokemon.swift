@@ -8,13 +8,16 @@
 
 import Foundation
 
-struct Pokemon: Codable, Equatable {
+class Pokemon: Codable, Equatable {
+    
     // MARK: - Properties
     let name: String
     let id: Int
     let weight: Int
     let abilities: [AbilitySlot]
     let types: [TypeSlot]
+    let sprites: Sprites
+    var imageData: Data?
     
     // Computed property to hold a string of abilities
     var abilityString: String {
@@ -26,6 +29,11 @@ struct Pokemon: Codable, Equatable {
     var typesString: String {
         let typesStrings = types.map { $0.type.name }
         return typesStrings.joined(separator: ", ")
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -44,4 +52,8 @@ struct TypeSlot: Codable, Equatable {
 
 struct Type: Codable, Equatable {
     let name: String
+}
+
+struct Sprites: Codable, Equatable {
+    let frontDefault: String
 }

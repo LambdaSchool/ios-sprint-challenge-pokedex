@@ -31,6 +31,9 @@ class PokemonTableViewController: UITableViewController {
         
         cell.textLabel?.text = pokemon.name.capitalized
         cell.detailTextLabel?.text = "\(pokemon.id)"
+        if let imageData = pokemon.imageData {
+            cell.imageView?.image = UIImage(data: imageData)
+        }
 
         return cell
     }

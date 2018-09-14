@@ -20,6 +20,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var abilityLabel: UILabel!
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var pokemonImageView: UIImageView!
     
     // Lifecycle Methods
     override func viewDidLoad() {
@@ -46,10 +47,13 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         pokemonController?.searchForPokemon(searchText: searchText.lowercased(), completion: { (_, pokemon) in
             guard let pokemon = pokemon else { return }
             
-            DispatchQueue.main.async {
-                self.pokemon = pokemon
-                self.updateViews()
-            }
+            self.pokemon = pokemon
+            self.pokemonController?.fetchImageFor(pokemon: pokemon, completion: { (_, pokemon) in
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+            })
         })
     }
     
@@ -71,6 +75,11 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         typeLabel.text = "Types: \(pokemon.typesString)"
         abilityLabel.text = "Abilities: \(pokemon.abilityString)"
         saveButton.isEnabled = true
+        if let imageData = pokemon.imageData {
+            pokemonImageView.image = UIImage(data: imageData)
+        } else {
+            pokemonImageView.isHidden = true
+        }
     }
     
 }
