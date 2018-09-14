@@ -14,7 +14,7 @@ class SavedPokemonTableViewCell: UITableViewCell {
     private func updateViews() {
         guard let pokémon = pokémon else { return }
         
-        nameLabel.text = pokémon.name
+        nameLabel.text = pokémon.name.capitalizingFirstLetter()
         idLabel.text = "ID: \(pokémon.id)"
     }
     

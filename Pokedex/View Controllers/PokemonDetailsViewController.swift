@@ -35,13 +35,14 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
         }
         
         headerTitle.text = pokémon.name.uppercased()
+        headerTitle.kern(0.4)
         pokemonContainer.alpha = 1
         saveButton.alpha = 1
         
         let saveButtonTitle = pokémonController.savedPokémon.contains(pokémon) ? "REMOVE FROM POKÉDEX" : "SAVE TO POKÉDEX!"
         saveButton.setTitle(saveButtonTitle, for: .normal)
         
-        pokemonNameLabel.text = pokémon.name
+        pokemonNameLabel.text = pokémon.name.capitalizingFirstLetter()
         pokemonIDLabel.text = "ID: \(pokémon.id)"
         
         let abilities = pokémon.abilities.map { $0.ability.name }

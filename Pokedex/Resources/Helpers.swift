@@ -34,6 +34,17 @@ class NavController: UINavigationController {
     }
 }
 
+// Extension that capitalizes the first letter in a string
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}
+
 // Personal UILabel extension to increase kerning on labels
 extension UILabel {
     
