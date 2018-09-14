@@ -37,6 +37,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
 
     @IBAction func savePokemon(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.createPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     
