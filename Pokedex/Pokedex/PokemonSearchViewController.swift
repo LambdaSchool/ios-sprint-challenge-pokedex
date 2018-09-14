@@ -8,12 +8,26 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
 
         // Do any additional setup after loading the view.
+    }
+    
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        nameLabel.text = pokemon.name
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        pokemonController?.fetchPokemon(nameOrId: searchTerm.lowercased(), completion: { (_, pokemon) in
+            self.pokemon = pokemon
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,6 +45,17 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+
+        }
+    }
+    
+    var pokemonController: PokemonController?
     
 
     /*
