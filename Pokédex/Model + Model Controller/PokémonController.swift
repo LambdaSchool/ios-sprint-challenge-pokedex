@@ -10,9 +10,10 @@ import Foundation
 
 class PokémonController {
     
-    // MARK:- Search for Pokémon
+    // MARK:- Search
+    // Searches for the given Pokémon using the user's entered text
     func searchForPokémon(with searchTerm: String, completion: @escaping (Error?) -> (Void)) {
-        let requestUrl = baseUrl.appendingPathComponent("Pokémon").appendingPathComponent(searchTerm)
+        let requestUrl = baseUrl.appendingPathComponent("pokemon").appendingPathComponent(searchTerm)
         
         var request = URLRequest(url: requestUrl)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -35,6 +36,7 @@ class PokémonController {
             do {
                 let matchedResults = try jsonDecoder.decode(Pokémon.self, from: data)
                 self.matchedPokémon = matchedResults
+                print("\(matchedResults.name) - \(matchedResults.id)")
                 
                 completion(nil)
             } catch {
@@ -47,16 +49,31 @@ class PokémonController {
     }
     
     
-    // MARK:- Adds the matched Pokémon to the user's Pokedex
-    func addMatchToPokédex() {
+    // MARK:- Add to Pokédex
+    // Adds the matched Pokémon to the user's saved Pokédex
+    func addMatchToPokédex(completion: @escaping (Error?) -> (Void)) {
         guard let match = matchedPokémon else { return }
         
         savedPokémon.append(match)
         savedPokémon.sort {( $0.id < $1.id )}
+        completion(nil)
     }
     
+    
+    // MARK:- Remove Pokémon from Pokédex
+    // Removes a given Pokémon from the user's Pokédex
+    func removeFromPokédex(pokémon: Pokémon, completion: @escaping(Error?) -> (Void)) {
+        guard let index = savedPokémon.index(of: pokémon) else { return }
+        
+        savedPokémon.remove(at: index)
+        completion(nil)
+    }
+    
+    
+    // MARK:- Properties & types
     private var matchedPokémon: Pokémon?
     private(set) var savedPokémon: [Pokémon] = []
     
+    // Base URL for the Pokémon API
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
 }
