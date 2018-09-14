@@ -31,6 +31,7 @@ class PokemonController {
     }
     
     // MARK: - Networking
+    /// Makes a GET request to the API with the given string, returning an error to the completion handler if there is a problem and a pokemon if there isn't.
     func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void ) {
         var requestURl = baseURL.appendingPathComponent("pokemon")
         requestURl.appendPathComponent(searchText)

@@ -10,21 +10,17 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
+    // MARK: - Properties
     let pokemonController = PokemonController()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-    
+    // MARK: - Lifecycle Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
-
+    // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokedex.count
     }
@@ -39,7 +35,6 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let pokemon = pokemonController.pokedexSortedByID[indexPath.row]

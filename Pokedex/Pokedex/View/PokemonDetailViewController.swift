@@ -21,7 +21,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
     
-    
+    // Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +30,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         updateViews()
     }
 
+    // UI Methods
     @IBAction func savePokemon(_ sender: Any) {
         guard let pokemon = pokemon else { return }
         
@@ -38,6 +39,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+    // UI Search Bar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = pokemonSearchBar.text, !searchText.isEmpty else { return }
         
