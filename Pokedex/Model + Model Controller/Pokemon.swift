@@ -14,7 +14,7 @@ struct Pokémon: Codable, Equatable {
     let name: String
     let abilities: [PokémonAbility]
     let types: [PokémonType]
-    let sprites: [String: String]
+    let sprites: PokémonSprite
     
     struct PokémonAbility: Codable, Equatable {
         let ability: PokémonResource
@@ -28,4 +28,8 @@ struct Pokémon: Codable, Equatable {
 
 struct PokémonResource: Codable, Equatable {
     let name: String
+}
+
+struct PokémonSprite: Codable, Equatable {
+    let frontDefault: String
 }

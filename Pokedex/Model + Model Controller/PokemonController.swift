@@ -13,7 +13,7 @@ class PokémonController {
     // MARK:- Search
     // Searches for the given Pokémon using the user's entered text
     func searchForPokémon(with searchTerm: String, completion: @escaping (Error?) -> (Void)) {
-        let requestUrl = baseUrl.appendingPathComponent("pokemon").appendingPathComponent(searchTerm)
+        let requestUrl = baseUrl.appendingPathComponent("pokemon").appendingPathComponent(searchTerm.lowercased())
         
         var request = URLRequest(url: requestUrl)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -71,7 +71,7 @@ class PokémonController {
     
     
     // MARK:- Properties & types
-    private var matchedPokémon: Pokémon?
+    var matchedPokémon: Pokémon?
     private(set) var savedPokémon: [Pokémon] = []
     
     // Base URL for the Pokémon API

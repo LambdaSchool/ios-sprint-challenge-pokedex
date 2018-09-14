@@ -8,10 +8,14 @@
 
 import UIKit
 
-class SavedPokémonTableViewCell: UITableViewCell {
+class SavedPokemonTableViewCell: UITableViewCell {
 
+    // MARK:- View update method
     private func updateViews() {
         guard let pokémon = pokémon else { return }
+        
+        nameLabel.text = pokémon.name
+        idLabel.text = "ID: \(pokémon.id)"
     }
     
     // MARK:- Properties & types
