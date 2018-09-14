@@ -37,22 +37,25 @@ class PokemonController {
                 return
             }
             
-            
             do{
                 let decodeResults = try JSONDecoder().decode(Pokemon.self, from: data)
-//                self.pokemons = Array(decodeResults.values)
                 self.pokemons.append(decodeResults)
-                print(self.pokemons)
+                completion(nil)
+                return
+//                self.pokemons = Array(decodeResults.values)
+//                self.pokemons.append(decodeResults)
+//                print(self.pokemons)
             } catch {
                 NSLog("Error Decoding Data : \(error)")
                 completion(error)
                 return
             }
             
+        
         }.resume()
         
-        pokemons.sort{$0.name > $1.name}
-        
+//        pokemons.sort{$0.name > $1.name}
+        print(pokemons)
     }
     
 }

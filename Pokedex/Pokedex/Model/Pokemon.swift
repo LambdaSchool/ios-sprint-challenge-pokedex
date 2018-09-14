@@ -12,7 +12,11 @@ struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
-//    var abilities: String
+    
+//    struct abilities {
+//        var ability: [String: String]
+//    }
+    
 //    var types: String
 //    var abilities: [[ String: String ]] //nested
 //    var types: [[String :String]] //nested
@@ -21,12 +25,13 @@ struct Pokemon: Codable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(Int.self, forKey: .id)
-        
+  
         // nested containers
-//        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .abilities)
-//        let ability = try abilitiesContainer.decode([String].self, forKey: .ability)
-//        self.abilities = ability.first!
-//        
+//        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilitiesCodingKeys.self, forKey: .abilities)
+//        abilities().ability = abilitiesContainer.decode([String: String].self, forKey: .ability)
+        
+        
+        
 //        let typesContainer = try container.nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .types)
 //        let type = try typesContainer.decode([String].self, forKey: .type)
 //        self.types = type.first!
@@ -41,9 +46,14 @@ struct Pokemon: Codable, Equatable {
 //        case types
     }
     
-//    enum AbilityCodingKeys: String, CodingKey {
+//    enum AbilitiesCodingKeys: String, CodingKey {
 //        case ability
 //    }
+//    
+//    enum AbilityCodingKeys: String, CodingKey {
+//        case name
+//    }
+    
 //
 //    enum TypeCodingKeys: String, CodingKey {
 //        case type
