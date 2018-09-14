@@ -20,7 +20,26 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     func updateViews() {
         guard let pokemon = pokemon else { return }
         nameLabel.text = pokemon.name
-        
+        idLabel.text = "id: " + String(pokemon.id)
+        typesLabel.text = "types: " + typesToString(types: pokemon.types)
+        abilitiesLabel.text = "abilties: " + abilitiesToString(abilities: pokemon.abilities)
+        //print(pokemon.types.first.name)
+    }
+    
+    func typesToString(types: [Pokemon.PokemonType]) -> String {
+        var str = ""
+        for pokemonType in types {
+            str += " \(pokemonType.type.name),"
+        }
+        return str
+    }
+    
+    func abilitiesToString(abilities: [Pokemon.PokemonAbility]) -> String {
+        var str = ""
+        for pokemonAbility in abilities {
+            str += " \(pokemonAbility.ability.name),"
+        }
+        return str
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

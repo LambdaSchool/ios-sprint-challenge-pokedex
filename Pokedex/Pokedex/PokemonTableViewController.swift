@@ -58,8 +58,14 @@ class PokemonTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "SearchPokemon" {
-            guard let desinationVC = segue.destination as? PokemonSearchViewController else { return }
-            desinationVC.pokemonController = pokemonController
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
+            destinationVC.pokemonController = pokemonController
+        }
+        else if segue.identifier == "ViewPokemon" {
+            guard let destinationVC = segue.destination as? PokemonDetailViewController else { return }
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let pokemon = pokemonController.pokemons[indexPath.row]
+            destinationVC.pokemon = pokemon
         }
     }
     
