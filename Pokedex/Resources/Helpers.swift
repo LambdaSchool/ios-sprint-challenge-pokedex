@@ -27,6 +27,13 @@ enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
+// Subclass for using the correct status bar style
+class NavController: UINavigationController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
 // Personal UILabel extension to increase kerning on labels
 extension UILabel {
     
