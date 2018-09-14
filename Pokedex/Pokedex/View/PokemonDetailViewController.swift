@@ -43,12 +43,18 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     // UI Search Bar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = pokemonSearchBar.text, !searchText.isEmpty else { return }
+        pokemonSearchBar.text = ""
+        let spinnerView = UIViewController.displaySpinner(onView: self.view)
         
         pokemonController?.searchForPokemon(searchText: searchText.lowercased(), completion: { (_, pokemon) in
-            guard let pokemon = pokemon else { return }
+            guard let pokemon = pokemon else {
+                UIViewController.removeSpinner(spinner: spinnerView)
+                return
+            }
             
             self.pokemon = pokemon
             self.pokemonController?.fetchImageFor(pokemon: pokemon, completion: { (_, pokemon) in
+                UIViewController.removeSpinner(spinner: spinnerView)
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                     self.updateViews()
