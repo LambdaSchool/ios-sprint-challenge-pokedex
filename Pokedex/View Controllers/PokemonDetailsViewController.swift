@@ -103,18 +103,18 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
     @IBAction func saveToPokedex(_ sender: Any) {
         guard let pokémonController = pokémonController else { return }
         
-        guard let pokémon = pokémon else {
-            pokémonController.addMatchToPokédex { (error) -> (Void) in
+        if !isUserSearching {
+            guard let pokémon = pokémon else { return }
+            pokémonController.removeFromPokédex(pokémon: pokémon) { (error) -> (Void) in
                 DispatchQueue.main.async {
                     self.navigationController?.popViewController(animated: true)
                 }
             }
-            return
-        }
-        
-        pokémonController.removeFromPokédex(pokémon: pokémon) { (error) -> (Void) in
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+        } else {
+            pokémonController.addMatchToPokédex { (error) -> (Void) in
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
@@ -126,7 +126,7 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
     // MARK:- Properties & types
     var pokémon: Pokémon?
     var pokémonController: PokémonController?
-    var isUserSearching: Bool = true
+    var isUserSearching: Bool!
 
     // MARK:- IBOutlets
     @IBOutlet weak var searchBar: UISearchBar!
