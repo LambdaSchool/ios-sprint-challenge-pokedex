@@ -17,6 +17,13 @@ class PokemonController {
         pokedex.append(pokemon)
     }
     
+    func deletePokemon(pokemon: Pokemon) {
+        
+        guard let index = pokedex.index(of: pokemon) else { return }
+        
+        pokedex.remove(at: index)
+    }
+    
     // MARK: - Networking
     
     func searchPokemon(name: String, completion: @escaping (Error?) -> Void) -> Pokemon? {
