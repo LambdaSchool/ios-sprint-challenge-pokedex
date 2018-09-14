@@ -21,7 +21,7 @@ class PokemonDetailsViewController: UIViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchBar.becomeFirstResponder()
+        if isUserSearching { searchBar.becomeFirstResponder() }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
