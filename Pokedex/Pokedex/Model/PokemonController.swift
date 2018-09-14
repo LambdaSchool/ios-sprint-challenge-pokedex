@@ -9,10 +9,28 @@
 import Foundation
 
 class PokemonController {
-    private(set) var pokemonArray: [Pokemon] = []
+    
+    // MARK: - Properties
+    private(set) var pokedex: [Pokemon] = []
+    
+    var pokedexSortedByID: [Pokemon] {
+        return pokedex.sorted() { $0.id < $1.id }
+    }
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
+    // MARK: - CRUD Methods
+    func createPokemon(_ pokemon: Pokemon) {
+        pokedex.append(pokemon)
+    }
+    
+    func deletePokemon(_ pokemon: Pokemon) {
+        guard let index = pokedex.index(of: pokemon) else { return }
+        
+        pokedex.remove(at: index)
+    }
+    
+    // MARK: - Networking
     func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void ) {
         var requestURl = baseURL.appendingPathComponent("pokemon")
         requestURl.appendPathComponent(searchText)

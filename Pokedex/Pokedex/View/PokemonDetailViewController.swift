@@ -11,11 +11,7 @@ import UIKit
 class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
     var pokemonController: PokemonController?
 
     @IBOutlet weak var nameLabel: UILabel!
@@ -23,6 +19,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -34,7 +31,11 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     }
 
     @IBAction func savePokemon(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
         
+        pokemonController?.createPokemon(pokemon)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -45,7 +46,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             
             DispatchQueue.main.async {
                 self.pokemon = pokemon
-                //self.updateViews()
+                self.updateViews()
             }
         })
     }
@@ -54,10 +55,11 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         guard isViewLoaded, let pokemon = pokemon else {
             title = "Pokemon Search"
-            nameLabel.text = ""
-            idLabel.text = ""
-            typeLabel.text = ""
-            abilityLabel.text = ""
+            nameLabel.text = " "
+            idLabel.text = " "
+            typeLabel.text = " "
+            abilityLabel.text = " "
+            saveButton.isEnabled = false
             return
         }
         
@@ -66,6 +68,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         idLabel.text = "ID: \(pokemon.id)"
         typeLabel.text = "Types: \(pokemon.typesString)"
         abilityLabel.text = "Abilities: \(pokemon.abilityString)"
+        saveButton.isEnabled = true
     }
     
 }
