@@ -16,11 +16,11 @@ class PokemonController {
     
     // MARK: - Base URL
     
-    let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     // MARK: - REST API
     
-    func performSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func performSearch(searchTerm: String, completion: @escaping (Pokemon?,Error?) -> Void) {
         
         let url = baseURL.appendingPathComponent(searchTerm)
         let request = URLRequest(url: url)
@@ -29,13 +29,13 @@ class PokemonController {
             
             if let error = error {
                 NSLog("Error fetching data: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
             
             guard let data = data else {
                 NSLog("No data returned")
-                completion(error)
+                completion(nil, error)
                 return
             }
             
@@ -44,15 +44,12 @@ class PokemonController {
             
             do {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                self.pokedex.append(pokemon)
-                completion(nil)
+                completion(pokemon, nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
-            
-           completion(nil)
         }.resume()
     }
     

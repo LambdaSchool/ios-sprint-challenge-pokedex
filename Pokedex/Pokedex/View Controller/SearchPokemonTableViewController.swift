@@ -13,6 +13,7 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
     // MARK: - Properties
     
     var pokemonController: PokemonController?
+    var searchTableViewCell: SearchTableViewCell?
     
     // MARK: - Outlets
     
@@ -29,8 +30,9 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+    
+    
     // MARK: - Table view data source
-
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController?.pokedex.count ?? 0
@@ -46,6 +48,27 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
         return cell
     }
     
+    
+    // MARK: Perform Search
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = pokemonSearchBar.text, !searchTerm.isEmpty else { return }
+        
+        pokemonController?.performSearch(searchTerm: searchTerm, completion: { (pokemon,error) in
+            DispatchQueue.main.async {
+                if let error = error { // Check for a error
+                    NSLog("Error performing search: \(error)")
+                    return
+                } else if let pokemon = pokemon { // If there is a pokemon then pass it to the Cell
+                    self.view.endEditing(true)
+                    self.tableView.reloadData()
+                    self.searchTableViewCell?.pokemon = pokemon
+                }
+            }
+        })
+    }
+    
+    
     // MARK: - SearchTableViewCellDelegate
     
     func heySaveButtonTapped(on cell: SearchTableViewCell) {
@@ -56,23 +79,4 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
             pokemonController?.createPokemon(pokemon: pokemon)
         }
     }
-    
-    // MARK: Perform Search
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = pokemonSearchBar.text, !searchTerm.isEmpty else { return }
-        
-        pokemonController?.performSearch(searchTerm: searchTerm, completion: { (error) in
-            DispatchQueue.main.async {
-                if let error = error {
-                    NSLog("Error performing search: \(error)")
-                    return
-                } else {
-                    self.tableView.reloadData()
-                    self.view.endEditing(true)
-                }
-            }
-        })
-    }
-    
 }

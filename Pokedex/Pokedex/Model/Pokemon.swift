@@ -11,26 +11,27 @@ import Foundation
 struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
-    let abilities: [Abilities.Ability]
-    let types: [Types.aType]
-
-    struct Abilities: Codable, Equatable {
-        
-        struct Ability: Codable, Equatable {
-            
-            let name: String
-        }
-    }
-    
-    struct Types: Codable, Equatable {
-        
-        struct aType: Codable, Equatable {
-            
-            let name: String
-        }
-    }
+    let abilities: [Abilities]
+    let types: [Types]
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id
     }
+}
+
+struct Abilities: Codable, Equatable {
+    let ability: Ability
+}
+
+struct Ability: Codable, Equatable {
+    let name: String
+}
+
+struct Types: Codable, Equatable {
+    let type: Type
+    
+}
+
+struct Type: Codable, Equatable {
+    let name: String
 }
