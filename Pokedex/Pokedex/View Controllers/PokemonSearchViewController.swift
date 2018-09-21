@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
 
+    var pokemonController = PokemonController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

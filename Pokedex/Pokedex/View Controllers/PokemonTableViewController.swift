@@ -37,6 +37,8 @@ class PokemonTableViewController: UITableViewController {
         
         pokemonController.pokedex.remove(at: indexPath.row)
         
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        
     }
     }
     
@@ -44,7 +46,19 @@ class PokemonTableViewController: UITableViewController {
 
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "SearchSegue" {
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else {return}
+            
+            destinationVC.pokemonController = pokemonController
+            
+        }else if segue.identifier == "ShowDetailSegue"{
+            guard let destinationVC = segue.destination as? PokemonDetailViewController,
+            let indexPath = tableView.indexPathForSelectedRow else {return}
+            
+            let pokemon = pokemonController.pokedex[indexPath.row]
+            destinationVC.pokemon = pokemon
+            
+        }
     }
     
 
