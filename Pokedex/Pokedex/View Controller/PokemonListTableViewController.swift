@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonListTableViewController: UITableViewController {
     
+    let pokemonController = PokemonController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -17,7 +19,7 @@ class PokemonListTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return pokemonController.pokedex.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

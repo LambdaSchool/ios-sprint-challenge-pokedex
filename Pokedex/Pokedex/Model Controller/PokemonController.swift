@@ -14,11 +14,11 @@ class PokemonController {
     
     var pokedex: [Pokemon] = []
     
-    // MARK: Base URL
+    // MARK: - Base URL
     
     let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
     
-    // MARK: REST API's Fetch function
+    // MARK: - REST API
     
     func performSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
         
@@ -54,8 +54,13 @@ class PokemonController {
             
            completion(nil)
         }.resume()
-        
     }
     
     
+    // MARK: - CRUD
+    
+    func deletePokemon(pokemon: Pokemon) {
+        guard let index = pokedex.index(of: pokemon) else { return }
+        pokedex.remove(at: index)
+    }
 }
