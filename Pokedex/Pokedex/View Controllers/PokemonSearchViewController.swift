@@ -59,6 +59,12 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         pokemonController?.savePokemon(pokemon: pokemon)
     }
     
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    
     var pokemonController: PokemonController?
     
     @IBOutlet weak var searchBar: UISearchBar!

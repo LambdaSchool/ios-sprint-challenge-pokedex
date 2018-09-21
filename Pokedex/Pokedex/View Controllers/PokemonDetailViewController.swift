@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
-    var pokemonController = PokemonController()
+    var pokemonController: PokemonController?
     
     
     override func viewDidLoad() {
@@ -18,14 +18,7 @@ class PokemonDetailViewController: UIViewController {
     }
     
     
-    var pokemon = Pokemon.self {
-        didSet {
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
-        }
-    }
-
+   
     
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -38,9 +31,9 @@ class PokemonDetailViewController: UIViewController {
    
     
     private func updateViews() {
-        guard let pokemon = self.pokemon else {return}
+        guard let pokemon = pokemon else {return}
         
-         title = pokemon.name
+        title = pokemon.name
         
         let abilities = pokemon.abilities.map {$0.ability.name}.joined(separator: ",")
         let type = pokemon.types.map {$0.type.name}.joined(separator: ",")
@@ -51,4 +44,13 @@ class PokemonDetailViewController: UIViewController {
         abilitiesLabel.text = "abilities: \(abilities)"
     
     }
+    
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
+
 }
