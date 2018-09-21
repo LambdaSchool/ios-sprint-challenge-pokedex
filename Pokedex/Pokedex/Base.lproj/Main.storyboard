@@ -12,13 +12,13 @@
         <!--Pokedex-->
         <scene sceneID="ohR-S4-NF1">
             <objects>
-                <tableViewController id="gWc-vE-QI4" sceneMemberID="viewController">
+                <tableViewController id="gWc-vE-QI4" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="aed-m7-dej">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="4lu-W2-0PR" style="IBUITableViewCellStyleDefault" id="VzW-ci-kP1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="4lu-W2-0PR" style="IBUITableViewCellStyleDefault" id="VzW-ci-kP1">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VzW-ci-kP1" id="sRg-qO-aqd">
@@ -35,7 +35,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="K2I-Fx-IFg" kind="show" id="GXs-ZV-nAk"/>
+                                    <segue destination="K2I-Fx-IFg" kind="show" identifier="DetailViewSegue" id="GXs-ZV-nAk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -47,7 +47,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="TD3-dI-LNZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="gZI-uO-ah2">
                             <connections>
-                                <segue destination="VxI-jV-34x" kind="show" id="6OL-En-bLd"/>
+                                <segue destination="VxI-jV-34x" kind="show" identifier="SearchSegue" id="6OL-En-bLd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -56,10 +56,10 @@
             </objects>
             <point key="canvasLocation" x="1012" y="99.400299850074973"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Search View Controller-->
         <scene sceneID="pWa-1r-EG5">
             <objects>
-                <viewController id="VxI-jV-34x" sceneMemberID="viewController">
+                <viewController id="VxI-jV-34x" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UTS-Ex-pdT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,18 +69,25 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9Q-KH-CO3">
+                                <rect key="frame" x="137" y="491" width="101" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save Pokemon"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igZ-fs-bfi">
+                                <rect key="frame" x="124" y="207" width="114" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="m0w-Sa-AK1">
-                                <rect key="frame" x="16" y="187" width="343" height="210"/>
+                                <rect key="frame" x="16" y="259" width="343" height="210"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9Q-KH-CO3">
-                                <rect key="frame" x="137" y="433" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save Pokemon"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NmM-Gd-eEo"/>
@@ -90,23 +97,28 @@
             </objects>
             <point key="canvasLocation" x="1880.8" y="100.29985007496252"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="ceH-Jg-N0d">
             <objects>
-                <viewController id="K2I-Fx-IFg" sceneMemberID="viewController">
+                <viewController id="K2I-Fx-IFg" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HZ8-Hs-6fv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="P9v-M2-vaj">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="P9v-M2-vaj">
                                 <rect key="frame" x="39" y="154" width="297" height="269"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="P9v-M2-vaj" firstAttribute="leading" secondItem="RQF-gu-rWH" secondAttribute="leading" constant="39" id="4R2-xW-1Oq"/>
+                            <constraint firstItem="P9v-M2-vaj" firstAttribute="top" secondItem="RQF-gu-rWH" secondAttribute="top" constant="38" id="Dho-5s-LgS"/>
+                            <constraint firstItem="P9v-M2-vaj" firstAttribute="centerX" secondItem="HZ8-Hs-6fv" secondAttribute="centerX" id="iIO-qx-Fhu"/>
+                            <constraint firstItem="RQF-gu-rWH" firstAttribute="bottom" secondItem="P9v-M2-vaj" secondAttribute="bottom" constant="244" id="wMJ-JM-rUj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="RQF-gu-rWH"/>
                     </view>
                 </viewController>
