@@ -43,6 +43,8 @@ class SearchTableViewCell: UITableViewCell {
         if let pokemon = pokemon {
             nameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
+//            typeLabel.text =
+//            abilityLabel.text =
         } else {
             nameLabel.text = ""
             idLabel.text = ""
