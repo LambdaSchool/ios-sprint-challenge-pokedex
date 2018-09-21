@@ -59,6 +59,10 @@ class PokemonController {
     
     // MARK: - CRUD
     
+    func createPokemon(pokemon: Pokemon) {
+        pokedex.append(pokemon)
+    }
+    
     func deletePokemon(pokemon: Pokemon) {
         guard let index = pokedex.index(of: pokemon) else { return }
         pokedex.remove(at: index)

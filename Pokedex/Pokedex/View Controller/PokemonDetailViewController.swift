@@ -21,19 +21,34 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
-    @IBOutlet weak var savePokemonOutlet: UIButton!
     
     
-    // MARK: Lifecycle functions
+    // MARK: - Lifecycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
+    // MARK: - Update function
     
-    // MARK: Actions
-    
-    @IBAction func savePokemonTapped(_ sender: Any) {
+    private func updateViews() {
         
+        if isViewLoaded {
+            
+            if let pokemon = pokemon {
+                title = pokemon.name
+                nameLabel.text = pokemon.name
+                idLabel.text = "ID: " + String(pokemon.id)
+//                typeLabel.text = "Types: " + String(pokemon.types)
+//                abilityLabel.text = "Abilities: " + String(pokemon.abilities)
+            } else {
+                title = ""
+                nameLabel.text = ""
+                idLabel.text = ""
+                typeLabel.text = ""
+                abilityLabel.text = ""
+            }
+        }
     }
 }

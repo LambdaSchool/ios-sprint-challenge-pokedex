@@ -10,10 +10,20 @@ import UIKit
 
 class PokemonListTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
     let pokemonController = PokemonController()
+    
+    
+    // MARK: - Lifecycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -45,7 +55,7 @@ class PokemonListTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchBarButtonSegue" {
-            let destinationVC = segue.destination as! PokemonSearchViewController
+            let destinationVC = segue.destination as! SearchPokemonTableViewController
             destinationVC.pokemonController = pokemonController
         } else if segue.identifier == "TableCellSegue" {
             let destionationVC = segue.destination as! PokemonDetailViewController
