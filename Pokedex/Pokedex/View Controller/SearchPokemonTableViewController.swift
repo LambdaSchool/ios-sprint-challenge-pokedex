@@ -25,6 +25,10 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     // MARK: - Table view data source
 
 
@@ -45,7 +49,12 @@ class SearchPokemonTableViewController: UITableViewController, SearchTableViewCe
     // MARK: - SearchTableViewCellDelegate
     
     func heySaveButtonTapped(on cell: SearchTableViewCell) {
-//        pokemonController?.createPokemon(pokemon: <#T##Pokemon#>)
+        guard let index = tableView.indexPathForSelectedRow else { return }
+        let pokemon = pokemonController?.pokedex[index.row]
+        
+        if let pokemon = pokemon {
+            pokemonController?.createPokemon(pokemon: pokemon)
+        }
     }
     
     // MARK: Perform Search

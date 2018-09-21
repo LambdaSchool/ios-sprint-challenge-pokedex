@@ -17,7 +17,9 @@ class SearchTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     weak var cellDelegate: SearchTableViewCellDelegate?
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet { updateViews() }
+    }
     
     // MARK: - Outlets
     
@@ -25,11 +27,29 @@ class SearchTableViewCell: UITableViewCell {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var saveButtonOutlet: UIButton!
+    
     
     // MARK: - Actions
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         cellDelegate?.heySaveButtonTapped(on: self)
+    }
+    
+    // MARK: - Update views
+    
+    private func updateViews() {
+        
+        if let pokemon = pokemon {
+            nameLabel.text = pokemon.name
+            idLabel.text = String(pokemon.id)
+        } else {
+            nameLabel.text = ""
+            idLabel.text = ""
+            typeLabel.text = ""
+            abilityLabel.text = ""
+            saveButtonOutlet.isHidden = true
+        }
     }
     
 }
