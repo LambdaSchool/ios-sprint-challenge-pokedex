@@ -13,21 +13,6 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     // attach buttons, action for save button, for searchbar action, update the view for title?, make sure they are on main queue
     //good grief man. :/
     
-    var pokemonController = PokemonController()
-    
-    
-    @IBOutlet weak var searchBar: UISearchBar!
-    
-    @IBOutlet weak var saveButton: UIButton!
-    
-    @IBOutlet weak var nameLabel: UILabel!
-    
-    @IBOutlet weak var idLabel: UILabel!
-    
-    @IBOutlet weak var typesLabel: UILabel!
-    
-    @IBOutlet weak var abilitiesLabel: UILabel!
-    
   
     
     override func viewDidLoad() {
@@ -41,42 +26,52 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
     }
     
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-   
     
     private func updateViews() {
         guard let pokemon = pokemon else {return}
         
         saveButton.setTitle("Save", for: .normal)
         
+        let abilitiesString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        let typesString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        
         nameLabel.text = pokemon.name
         idLabel.text = "id: \(pokemon.id)"
-        typesLabel.text = "types: \(type)"
-        abilitiesLabel.text = "abilities"
+        typesLabel.text = "types: \(typesString)"
+        abilitiesLabel.text = "abilities: \(abilitiesString)"
         
-        let abilitesString = pokemon.abilities.map {$0.ability.name}
-        let typesString = pokemon.types.map {$0.type.name}
+       
     }
     
     func searchBarClick(_searchBar: UISearchBar) {
         guard let pokemon = searchBar.text else {return}
         
-        pokemonController.searchPokemon(name: pokemon, completion: {(_) in
+        pokemonController?.searchPokemon(name: pokemon.lowercased(), completion: {(_) in
             DispatchQueue.main.async {
                 self.pokemon = self.pokemonController?.pokemon
             }
-    })
+        })
     }
     
     @IBAction func saveButtonAction(_ sender: Any) {
         
         guard let pokemon = pokemon else {return}
         pokemonController?.savePokemon(pokemon: pokemon)
-        
-        
-        }
     }
-}
+    
+    var pokemonController: PokemonController?
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var idLabel: UILabel!
+    
+    @IBOutlet weak var typesLabel: UILabel!
+    
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    }
+
