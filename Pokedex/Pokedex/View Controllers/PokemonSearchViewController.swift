@@ -12,6 +12,19 @@ class PokemonSearchViewController: UIViewController {
 
     var pokemonController = PokemonController()
     
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var idLabel: UILabel!
+    
+    @IBOutlet weak var typesLabel: UILabel!
+    
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
