@@ -20,8 +20,8 @@ class PokemonController {
     //Search API ( URL, Session, JSON Decode, dataTasks, errors, resume
     func searchPokemon(name:String, completion: @escaping (Error?) -> Void){
         
-        let requestURL = baseURL.appendingPathComponent("api").appendingPathComponent("v2").appendingPathComponent("pokemon").appendingPathComponent("name")
-        
+      let requestURL = baseURL.appendingPathComponent("api").appendingPathComponent("v2").appendingPathComponent("pokemon").appendingPathComponent(name)
+    
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
