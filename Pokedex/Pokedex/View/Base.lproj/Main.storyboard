@@ -36,7 +36,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Reh-TH-otf" kind="show" identifier="TableCellSegua" id="JIG-BZ-cez"/>
+                                    <segue destination="Reh-TH-otf" kind="show" identifier="TableCellSegue" id="JIG-BZ-cez"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -62,11 +62,11 @@
             <objects>
                 <viewController id="Reh-TH-otf" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5gH-pD-RVM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="495"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hJb-go-84m">
-                                <rect key="frame" x="16" y="156" width="343" height="179.5"/>
+                                <rect key="frame" x="16" y="60" width="343" height="179.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igd-lD-DKh">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
@@ -167,6 +167,9 @@
                             <searchBar contentMode="redraw" placeholder="Search by name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="3WA-Ne-Vew">
                                 <rect key="frame" x="0.0" y="116" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="7a7-1e-Vmg" id="lJ9-Nn-PFL"/>
+                                </connections>
                             </searchBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKM-j9-Vgu">
                                 <rect key="frame" x="0.0" y="172" width="375" height="495"/>
@@ -216,6 +219,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JIG-BZ-cez"/>
+        <segue reference="Wy5-Fp-Orx"/>
     </inferredMetricsTieBreakers>
 </document>

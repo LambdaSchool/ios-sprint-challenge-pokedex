@@ -10,6 +10,10 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
     
+    // MARK: - Porperties
+    
+    var pokemonController: PokemonController?
+    
     // MARK: Outlets
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!

@@ -10,6 +10,11 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
+    
     // MARK: - Outlets
 
     @IBOutlet weak var nameLabel: UILabel!

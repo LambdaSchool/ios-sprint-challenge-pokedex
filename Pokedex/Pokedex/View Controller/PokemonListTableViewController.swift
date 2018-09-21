@@ -23,7 +23,10 @@ class PokemonListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+        let pokemon = pokemonController.pokedex[indexPath.row]
+        
+        cell.textLabel?.text = pokemon.name
         
         return cell
     }
@@ -32,7 +35,8 @@ class PokemonListTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            let pokemon = pokemonController.pokedex[indexPath.row]
+            pokemonController.deletePokemon(pokemon: pokemon)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -40,7 +44,17 @@ class PokemonListTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchBarButtonSegue" {
+            let destinationVC = segue.destination as! PokemonSearchViewController
+            destinationVC.pokemonController = pokemonController
+        } else if segue.identifier == "TableCellSegue" {
+            let destionationVC = segue.destination as! PokemonDetailViewController
+            destionationVC.pokemonController = pokemonController
+            
+            guard let index = tableView.indexPathForSelectedRow else { return }
+            let pokemon = pokemonController.pokedex[index.row]
+            
+            destionationVC.pokemon = pokemon
+        }
     }
 }
