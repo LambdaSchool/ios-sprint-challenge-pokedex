@@ -32,6 +32,7 @@ class PokemonController {
             if let error = error {
                 NSLog("Error occured trying to fetch data from api: \(error)")
                 completion(error)
+                return
             }
             guard let data = data else {return}
             
@@ -40,6 +41,7 @@ class PokemonController {
                 self.pokemon = dicodePoke
             }catch{
                 NSLog("error decoding: \(error)")
+                return
             }
         }.resume()
         
