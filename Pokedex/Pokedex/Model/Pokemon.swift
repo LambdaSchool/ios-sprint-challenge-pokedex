@@ -9,29 +9,38 @@
 import Foundation
 
 struct Pokemon: Codable, Equatable {
-    let name: String
+
     let id: Int
-    let abilities: [Abilities]
-    let types: [Types]
+    let name: String
+
+    let abilities: [Ability]
+
+    let types: [TypeElement]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case abilities
+        case types
+    }
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-struct Abilities: Codable, Equatable {
-    let ability: Ability
-}
-
-struct Ability: Codable, Equatable {
-    let name: String
-}
-
-struct Types: Codable, Equatable {
-    let type: Type
+struct Ability: Codable {
+    let ability: Species
     
+    enum CodingKeys: String, CodingKey {
+        case ability
+    }
 }
 
-struct Type: Codable, Equatable {
+struct TypeElement: Codable {
+    let slot: Int
+    let type: Species
+}
+
+struct Species: Codable {
     let name: String
 }
