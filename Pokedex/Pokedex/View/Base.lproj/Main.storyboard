@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eL6-6w-Tph">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Pokedex-->
+        <scene sceneID="FUb-sk-Ths">
+            <objects>
+                <tableViewController id="NV3-Eg-Yjf" customClass="PokemonListTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eyl-ef-bzj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" textLabel="AbA-pA-K9U" style="IBUITableViewCellStyleDefault" id="yKp-Dk-HZe">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yKp-Dk-HZe" id="ojQ-7w-4BS">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AbA-pA-K9U">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Reh-TH-otf" kind="show" identifier="TableCellSegua" id="JIG-BZ-cez"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="NV3-Eg-Yjf" id="vQf-ue-XGk"/>
+                            <outlet property="delegate" destination="NV3-Eg-Yjf" id="nS5-n0-yVC"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Pokedex" id="aQd-3G-Qm4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="fco-Ct-6dL">
+                            <connections>
+                                <segue destination="7a7-1e-Vmg" kind="show" identifier="SearchBarButtonSegue" id="5pb-he-brF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Rh-HP-uai" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="989.60000000000002" y="108.39580209895054"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="4ks-U4-Y0A">
+            <objects>
+                <viewController id="Reh-TH-otf" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5gH-pD-RVM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hJb-go-84m">
+                                <rect key="frame" x="16" y="156" width="343" height="179.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igd-lD-DKh">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bdz-wU-DRm">
+                                        <rect key="frame" x="0.0" y="40" width="343" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrT-t9-8vJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="21" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOR-9p-H6N">
+                                                <rect key="frame" x="29" y="0.0" width="314" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cBg-Na-CfW">
+                                        <rect key="frame" x="0.0" y="76.5" width="343" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmJ-CW-9aQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="51" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="types" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01x-u0-X6B">
+                                                <rect key="frame" x="59" y="0.0" width="284" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Xe-PQ-pmf">
+                                        <rect key="frame" x="0.0" y="113" width="343" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJW-vv-yBK">
+                                                <rect key="frame" x="0.0" y="0.0" width="163.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="abilities" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T31-lt-Nfa">
+                                                <rect key="frame" x="171.5" y="0.0" width="171.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdj-4Q-vBQ">
+                                        <rect key="frame" x="0.0" y="149.5" width="343" height="30"/>
+                                        <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="savePokemonTapped:" destination="Reh-TH-otf" eventType="touchUpInside" id="5Zd-ML-LUA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hJb-go-84m" firstAttribute="top" secondItem="jig-pg-0SI" secondAttribute="top" constant="40" id="Bco-PZ-RuM"/>
+                            <constraint firstItem="hJb-go-84m" firstAttribute="leading" secondItem="jig-pg-0SI" secondAttribute="leading" constant="16" id="X9l-BY-ejI"/>
+                            <constraint firstItem="jig-pg-0SI" firstAttribute="trailing" secondItem="hJb-go-84m" secondAttribute="trailing" constant="16" id="wKy-33-TeM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jig-pg-0SI"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="kYQ-rf-AyU"/>
+                    <connections>
+                        <outlet property="abilityLabel" destination="T31-lt-Nfa" id="7kr-cq-uly"/>
+                        <outlet property="idLabel" destination="LOR-9p-H6N" id="V6d-39-ErV"/>
+                        <outlet property="nameLabel" destination="Igd-lD-DKh" id="dNV-sT-ah0"/>
+                        <outlet property="savePokemonOutlet" destination="Fdj-4Q-vBQ" id="LG3-FS-djn"/>
+                        <outlet property="typeLabel" destination="01x-u0-X6B" id="ps5-47-EXx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XYp-75-9nh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1873" y="577"/>
+        </scene>
+        <!--Pokemon Search-->
+        <scene sceneID="63T-JC-ZET">
+            <objects>
+                <viewController id="7a7-1e-Vmg" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EHb-46-h4J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" placeholder="Search by name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="3WA-Ne-Vew">
+                                <rect key="frame" x="0.0" y="116" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKM-j9-Vgu">
+                                <rect key="frame" x="0.0" y="172" width="375" height="495"/>
+                                <connections>
+                                    <segue destination="Reh-TH-otf" kind="embed" identifier="ContainerSeague" id="Wy5-Fp-Orx"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nKM-j9-Vgu" firstAttribute="trailing" secondItem="E9l-tr-hpy" secondAttribute="trailing" id="9oQ-cn-BPl"/>
+                            <constraint firstItem="3WA-Ne-Vew" firstAttribute="top" secondItem="E9l-tr-hpy" secondAttribute="top" id="g2H-fr-bvq"/>
+                            <constraint firstItem="nKM-j9-Vgu" firstAttribute="leading" secondItem="E9l-tr-hpy" secondAttribute="leading" id="pI3-wU-edD"/>
+                            <constraint firstItem="3WA-Ne-Vew" firstAttribute="trailing" secondItem="E9l-tr-hpy" secondAttribute="trailing" id="pOn-0w-0JF"/>
+                            <constraint firstItem="3WA-Ne-Vew" firstAttribute="leading" secondItem="E9l-tr-hpy" secondAttribute="leading" id="t3Y-Vi-7QE"/>
+                            <constraint firstItem="nKM-j9-Vgu" firstAttribute="bottom" secondItem="E9l-tr-hpy" secondAttribute="bottom" id="y6p-1A-kuq"/>
+                            <constraint firstItem="nKM-j9-Vgu" firstAttribute="top" secondItem="3WA-Ne-Vew" secondAttribute="bottom" id="yVg-XM-9Mq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="E9l-tr-hpy"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Pokemon Search" id="6Ii-KQ-hGb"/>
+                    <connections>
+                        <outlet property="pokemonSearchBar" destination="3WA-Ne-Vew" id="sc6-Xh-Jqv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d04-Ml-NFi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1872.8" y="-132.68365817091455"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9ru-kx-1np">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eL6-6w-Tph" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="2X2-8S-M0B">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NV3-Eg-Yjf" kind="relationship" relationship="rootViewController" id="LLp-aA-hVg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IHM-WI-bu6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50.399999999999999" y="108.39580209895054"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="JIG-BZ-cez"/>
+    </inferredMetricsTieBreakers>
+</document>
