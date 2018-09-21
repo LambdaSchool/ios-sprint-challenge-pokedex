@@ -10,19 +10,11 @@ import Foundation
 
 class PokemonController {
     
-    
-    
     var pokemon: Pokemon?
     
     let baseURL = URL(string: "https://pokeapi.co")!
     
     var pokedex: [Pokemon] = []
-    
-    // CRUD -
-    
-    // Save Pokemon
-    
-    // Delete Pokemon
     
     
     //Search API ( URL, Session, JSON Decode, dataTasks, errors, resume
@@ -63,4 +55,23 @@ class PokemonController {
             }
         }.resume()
     }
+    
+    // CRUD -
+    
+    // Save Pokemon
+    
+    func savePokemon(pokemon: Pokemon?){
+        guard let pokemon = pokemon else {return}
+        
+        pokedex.append(pokemon)
+    }
+    
+    // Delete Pokemon
+    
+    func deletePokemon(pokemon: Pokemon){
+        guard let index = pokedex.index(of: pokemon) else {return}
+        pokedex.remove(at: index)
+    }
+    
+    
 }
