@@ -10,12 +10,15 @@ import UIKit
 
 class PokemonTableViewCell: UITableViewCell {
 
+    
+    weak var delegate: SavedPokemonCellDelegate?
+    
     @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
+        delegate?.saveButtonTapped(cell: self)
     }
-    
+    @IBOutlet weak var saveButtonName: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,4 +33,8 @@ class PokemonTableViewCell: UITableViewCell {
     
     
 
+}
+
+protocol SavedPokemonCellDelegate: AnyObject {
+    func saveButtonTapped(cell: PokemonTableViewCell)
 }

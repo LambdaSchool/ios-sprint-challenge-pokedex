@@ -8,7 +8,14 @@
 
 import UIKit
 
-class SearchTVC: UITableViewController {
+class SearchTVC: UITableViewController, SavedPokemonCellDelegate {
+    func saveButtonTapped(cell: PokemonTableViewCell) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else {return}
+        let pokemon = Model.shared.searchPokemon[indexPath.row]
+        Model.shared.SavePokemon(pokemon: pokemon)
+        cell.saveButtonName.setTitle("Saved!", for: .normal)
+    }
+    
     
     // Search Bar
     let searchController = UISearchController(searchResultsController: nil)
@@ -72,6 +79,7 @@ class SearchTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! PokemonTableViewCell
+        cell.delegate = self
         
         let pokemon: Pokemon
     
