@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    
+    let reuseIdentifier = "pokemoncell"
     
     
 }
