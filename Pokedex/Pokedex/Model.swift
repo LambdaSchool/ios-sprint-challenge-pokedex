@@ -86,13 +86,6 @@ class Model {
     }
     
     func fetchEachPokemon(pokemonName: String, completion: @escaping () -> Void = {}) {
-        guard
-            let baseURL = URL(string: "https://pokeapi.co/api/v2"),
-            var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-            else {
-                fatalError("Unable to setup url and components")
-        }
-        
         var url = URL(string: "https://pokeapi.co/api/v2/pokemon")!
         url.appendPathComponent(pokemonName)
         
@@ -115,6 +108,10 @@ class Model {
         }
         
         dataTask.resume()
+    }
+    
+    func SavePokemon(pokemon: Pokemon) {
+        savedPokemon.append(pokemon)
     }
     
     

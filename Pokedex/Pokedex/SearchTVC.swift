@@ -82,7 +82,12 @@ class SearchTVC: UITableViewController {
         }
         
         cell.nameLabel!.text = pokemon.name
-        //cell.cellImageView.image = pokemon.sprites.
+        ImageLoader.fetchImage(from: URL(string: "\(pokemon.sprites.frontDefault)")) { (image) in
+            guard let image = image else {return}
+            DispatchQueue.main.async {
+                cell.cellImageView.image = image
+            }
+        }
     
         return cell
     }
