@@ -13,6 +13,7 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
 //    var filteredtempPoke = [tempPoke]() //delete later
     var pokemons = [Pokemon]()  // fix this later to array of other pokemon Allpokemon
     var unfilteredPokemon = [Pokemon]()
+    var searchPokemon: [Result] = []
     var pokemon: Pokemon? {
         didSet {
             //updateViews()
@@ -42,6 +43,16 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
         searchController.searchBar.placeholder = "Search Pokemon"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Model.shared.fetchAll {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func searchBarIsEmpty() -> Bool {
