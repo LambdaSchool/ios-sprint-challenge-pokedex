@@ -24,27 +24,33 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         // Do any additional setup after loading the view.
     }
     
+    // MARK: Actions
     @IBAction func savePokemon(_ sender: Any) {
         guard let pokemon = pokemon else { return }
         
         pokemonController?.createPokemon(pokemon)
+        
         navigationController?.popViewController(animated: true)
         
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = pokemonSearchBar.text, !searchText.isEmpty else {
-            return
-        }
+        guard let searchText = pokemonSearchBar.text, !searchText.isEmpty else { return }
+        pokemonSearchBar.text = ""
         
         pokemonController?.searchForPokemon(searchText:searchText.lowercased(), completion: { (_, pokemon) in
-            guard let pokemon = pokemon else { return }
-            
-            DispatchQueue.main.async {
-                self.pokemon = pokemon
-                self.updateViews()
+            guard let pokemon = pokemon else {
+                
+                return
             }
             
+            self.pokemon = pokemon
+            self.pokemonController?.imageLoader(pokemon: pokemon, completion: { (_, pokemon) in
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+            })
         })
 
     }
@@ -59,24 +65,17 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             saveButton.isEnabled = false
             return
         }
-        
+        title = pokemon.name
+        nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
         typeLabel.text = "Types: \(pokemon.typesString)"
         abilityLabel.text = "Abilities: \(pokemon.abilityString)"
         saveButton.isEnabled = true
+        if let imageData = pokemon.imageData {
+            pokemonImageView.image = UIImage(data: imageData)
+        } else {
+            pokemonImageView.isHidden = true
+        }
     }
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -19,6 +19,7 @@ class Pokemon: Codable, Equatable {
         return typesStrings.joined(separator: ", ")
     }
     
+    // MARK: = Equatable
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id
     }

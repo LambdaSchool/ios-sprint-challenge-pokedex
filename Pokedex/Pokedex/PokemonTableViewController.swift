@@ -20,10 +20,10 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-
         let pokemon = pokemonController.sortedPokedex[indexPath.row]
         
         cell.textLabel?.text = pokemon.name
+        cell.detailTextLabel?.text = "\(pokemon.id)"
 
         return cell
     }
