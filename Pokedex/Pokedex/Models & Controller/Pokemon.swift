@@ -136,7 +136,6 @@ struct TypeElement: Codable {
 
 struct AllPokemon: Codable {
     let count: Int
-    let next, previous: JSONNull?
     let results: [Result]
 }
 
