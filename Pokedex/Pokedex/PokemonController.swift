@@ -2,9 +2,23 @@ import Foundation
 
 class PokemonController {
     
-    private(set) var pokemonArray: [Pokemon] = []
+    private(set) var pokedex: [Pokemon] = []
+    var sortedPokedex: [Pokemon] {
+        return pokedex.sorted() { $0.name < $1.name}
+    }
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    
+    //MARK: - CRUD
+    func createPokemon(pokemon: Pokemon) {
+        pokedex.append(pokemon)
+    }
+    
+    func deletePokemon(pokemon: Pokemon) {
+        guard let index = pokedex.index(of: pokemon) else { return }
+        
+        pokedex.remove(at: index)
+    }
     
     // Create a dataTask to GET Pokemon
     func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void) {
