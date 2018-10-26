@@ -16,9 +16,8 @@ struct Pokemon: Codable {
     private enum CodingKeys: String, CodingKey {
         case name, id
     }
-    
-    struct PokemonResults: Codable {
-        var results: [Pokemon]
-    }
-    
+}
+
+struct PokemonResults: Codable {
+    var results: [Pokemon]
 }
