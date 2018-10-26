@@ -368,3 +368,14 @@ class JSONAny: Codable {
     }
 }
 
+struct AllPokemon: Codable {
+    let count: Int
+    let next, previous: JSONNull?
+    let results: [Result]
+}
+
+struct Result: Codable {
+    let name: String
+    let url: String
+}
+

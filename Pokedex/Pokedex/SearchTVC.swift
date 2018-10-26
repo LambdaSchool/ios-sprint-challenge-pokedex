@@ -42,13 +42,26 @@ class SearchTVC: UITableViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
+    var searchedResults: [Result] = []
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        Model.shared.searchPokemon = Model.shared.pokemon.filter({( pokemon : Pokemon) -> Bool in
-            return pokemon.name.lowercased().contains(searchText.lowercased())
-        })
         
-        tableView.reloadData()
+        searchedResults = Model.shared.allPokemon.filter({( result : Result) -> Bool in
+            return result.name.lowercased().contains(searchText.lowercased())
+        })
+        for result in searchedResults {
+            Model.shared.fetchEachPokemon(pokemonName: result.name)
+            for pokemon in Model.shared.searchPokemon {
+                if !pokemon.name.contains(searchText.lowercased()) {
+                    guard let indexPath = Model.shared.searchPokemon.firstIndex(of: pokemon) else {return}
+                    Model.shared.searchPokemon.remove(at: indexPath)
+                }
+            }
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
