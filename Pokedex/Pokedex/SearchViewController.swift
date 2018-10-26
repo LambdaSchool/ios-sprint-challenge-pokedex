@@ -12,4 +12,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
 }
