@@ -9,12 +9,16 @@ struct Pokemon: Codable, Equatable {
     
     
     struct Ability: Codable, Equatable {
+        let ability: AbilityName
+        
         struct AbilityName: Codable, Equatable {
             let name: String
         }
     }
     
     struct Types: Codable, Equatable {
+        let types: TypesName
+        
         struct TypesName: Codable, Equatable {
             let name: String
         }

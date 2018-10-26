@@ -2,24 +2,33 @@ import UIKit
 
 class PokemonController {
     
-    var pokemon: [Pokemon] = []
+    var pokedex: [Pokemon] = []
+    var pokemon: Pokemon?
     
-    private let baseURL = URL(string: "https://pokeapi.co")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     
+    func creatPokemon(pokemon: Pokemon) {
+        pokedex.append(pokemon)
+    }
     
-    func performSearch(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
+    func deletePokemon(pokemon: Pokemon) {
+        guard let indexPath = pokedex.index(of: pokemon) else {return}
+        pokedex.remove(at: indexPath)
+    }
+    
+    func performSearch(with searchTerm: String, completion: @escaping (Error?) -> Void) {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
             fatalError("Unable to resolve baseURL to components")
         }
-        let nameQueryItem = URLQueryItem(name: "name", value: searchTerm)
+        let nameQueryItem = URLQueryItem(name: "pokemon", value: searchTerm)
         //let idQueryItem = URLQueryItem(name: "id", value: searchTerm)
         
         urlComponents.queryItems = [nameQueryItem]
         
         guard let searchURL = urlComponents.url else {
             NSLog("Error constructing search URL for \(searchTerm)")
-            completion(nil, NSError())
+            completion(NSError())
             return
         }
         
@@ -30,13 +39,13 @@ class PokemonController {
             
             if let error = error {
                 NSLog("Error fetching data: \(error)")
-                completion(nil, error)
+                completion(error)
                 return
             }
             
             guard let data = data else {
                 NSLog("Unable to unwrap data")
-                completion(nil, NSError())
+                completion(NSError())
                 return
             }
             
@@ -44,12 +53,12 @@ class PokemonController {
                 
                 let decodedPokemon = try JSONDecoder().decode([Pokemon].self, from: data)
                 
-                self.pokemon = decodedPokemon
-                completion(self.pokemon, nil)
+                self.pokedex = decodedPokemon
+                completion(error)
                 
             } catch {
                 NSLog("Unable to decode data into pokemon")
-                completion(nil, error)
+                completion(error)
                 return
             }
         }
