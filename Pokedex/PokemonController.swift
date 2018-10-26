@@ -28,9 +28,31 @@ class PokemonController {
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, _, error in
             
+            if let error = error {
+                NSLog("Error fetching data: \(error)")
+                completion(nil, error)
+                return
+            }
             
+            guard let data = data else {
+                NSLog("Unable to unwrap data")
+                completion(nil, NSError())
+                return
+            }
+            
+            do {
+                
+                let decodedPokemon = try JSONDecoder().decode([Pokemon].self, from: data)
+                
+                self.pokemon = decodedPokemon
+                completion(self.pokemon, nil)
+                
+            } catch {
+                NSLog("Unable to decode data into pokemon")
+                completion(nil, error)
+                return
+            }
         }
-        
+        dataTask.resume()
     }
-    
 }
