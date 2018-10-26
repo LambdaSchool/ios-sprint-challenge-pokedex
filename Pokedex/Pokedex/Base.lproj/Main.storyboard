@@ -107,24 +107,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="355-yb-e5B">
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="seA-vx-Se1">
                                 <rect key="frame" x="0.0" y="116" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Zrt-cw-tSL" id="iVc-cQ-6lg"/>
-                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="355-yb-e5B" firstAttribute="top" secondItem="3ba-2O-Z63" secondAttribute="top" id="ZyM-Xb-BeZ"/>
-                            <constraint firstItem="355-yb-e5B" firstAttribute="leading" secondItem="3ba-2O-Z63" secondAttribute="leading" id="tTk-e2-wiL"/>
-                            <constraint firstItem="355-yb-e5B" firstAttribute="trailing" secondItem="3ba-2O-Z63" secondAttribute="trailing" id="tUV-Ah-ckz"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3ba-2O-Z63"/>
                     </view>
                     <connections>
-                        <outlet property="pokemonSearchBar" destination="355-yb-e5B" id="wXV-E9-iMt"/>
+                        <outlet property="pokemonSearchBar" destination="seA-vx-Se1" id="gM8-Lx-4Jq"/>
                         <outlet property="searchDisplayController" destination="CBM-Y5-Ss1" id="VR8-Qv-l3m"/>
                     </connections>
                 </viewController>
@@ -132,7 +125,6 @@
                 <searchDisplayController id="CBM-Y5-Ss1">
                     <connections>
                         <outlet property="delegate" destination="Zrt-cw-tSL" id="PqB-IW-mU2"/>
-                        <outlet property="searchBar" destination="355-yb-e5B" id="wZI-CT-4cc"/>
                         <outlet property="searchContentsController" destination="Zrt-cw-tSL" id="mIc-vK-byj"/>
                         <outlet property="searchResultsDataSource" destination="Zrt-cw-tSL" id="Kfo-Z3-ogF"/>
                         <outlet property="searchResultsDelegate" destination="Zrt-cw-tSL" id="2pO-Hg-Wde"/>

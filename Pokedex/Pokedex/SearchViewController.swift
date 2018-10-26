@@ -14,6 +14,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonSearchBar.delegate = self
     }
     
 }
