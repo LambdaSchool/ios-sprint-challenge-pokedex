@@ -43,7 +43,7 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Model.shared.fetchAll {
+        Model.shared.fetch {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
