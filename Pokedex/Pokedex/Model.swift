@@ -55,7 +55,7 @@ class Model {
     func fetchAll(completion: @escaping () -> Void = {}) {
         guard
             let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon"),
-            var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+            let components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
             else {
                 fatalError("Unable to setup url and components")
         }

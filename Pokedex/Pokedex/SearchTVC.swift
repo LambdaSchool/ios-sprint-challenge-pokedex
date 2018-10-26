@@ -100,6 +100,12 @@ class SearchTVC: UITableViewController, SavedPokemonCellDelegate {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? DetailVC else {return}
+        guard let indexPath = tableView.indexPathForSelectedRow else {return}
+        destination.pokemon = Model.shared.searchPokemon[indexPath.row]
+    }
+    
     
 }
 
