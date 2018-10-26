@@ -25,18 +25,46 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="HRS-lr-Gjm">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokemoncell" rowHeight="90" id="HRS-lr-Gjm" customClass="TableViewCell" customModule="Pokedex" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HRS-lr-Gjm" id="0Z8-Pg-G4n">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PZr-s8-IUn">
+                                            <rect key="frame" x="28" y="11" width="50" height="58"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyf-dX-Hj3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="14" height="29.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3W-aF-kAW">
+                                                    <rect key="frame" x="0.0" y="37.5" width="50" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="PZr-s8-IUn" firstAttribute="leading" secondItem="0Z8-Pg-G4n" secondAttribute="leadingMargin" constant="12" id="eVS-Ro-ylG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="PZr-s8-IUn" secondAttribute="bottom" constant="5" id="gaz-03-bVl"/>
+                                        <constraint firstItem="PZr-s8-IUn" firstAttribute="top" secondItem="0Z8-Pg-G4n" secondAttribute="topMargin" constant="5" id="yiu-DI-VwF"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="idLabel" destination="fyf-dX-Hj3" id="z2x-v6-N5y"/>
+                                    <outlet property="nameLabel" destination="b3W-aF-kAW" id="uIr-u4-cjI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="h7Y-eb-co9" id="r71-Bb-bdR"/>
-                            <outlet property="delegate" destination="h7Y-eb-co9" id="V3M-gO-OKd"/>
+                            <outlet property="delegate" destination="h7Y-eb-co9" id="nqT-cC-vke"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="JFn-K5-E16"/>
@@ -55,7 +83,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="334" y="154"/>
+            <point key="canvasLocation" x="333.60000000000002" y="153.37331334332833"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="u3L-HT-2yL">
