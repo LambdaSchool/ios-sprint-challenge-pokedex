@@ -5,6 +5,8 @@ class Model {
     private init() {}
     
     var pokemons: [Pokemon] = []
+    var pokemonList: [Pokemon] = []
+    var allPokemon: [Result] = []
     
     func fetch(completion: @escaping () -> Void = { }) {
         guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")
@@ -24,7 +26,7 @@ class Model {
             
             do {
                 let searchResults = try JSONDecoder().decode(AllPokemon.self, from: data)
-                self.pokemons = searchResults.allPokemon
+                self.allPokemon = searchResults.results
                 completion()
             } catch {
                 NSLog("Unable to decode data into news entries: \(error)")
@@ -32,6 +34,5 @@ class Model {
             }
         }
         dataTask.resume()
-        print(pokemons)
     }
 }

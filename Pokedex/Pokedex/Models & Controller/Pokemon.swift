@@ -1,9 +1,5 @@
 import Foundation
 
-struct AllPokemon: Codable {
-    var allPokemon: [Pokemon]
-}
-
 struct Pokemon: Codable, Equatable {
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -136,4 +132,15 @@ struct Stat: Codable {
 struct TypeElement: Codable {
     let slot: Int
     let type: Species
+}
+
+struct AllPokemon: Codable {
+    let count: Int
+    let next, previous: JSONNull?
+    let results: [Result]
+}
+
+struct Result: Codable {
+    let name: String
+    let url: String
 }
