@@ -21,12 +21,12 @@ class PokemonTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Model.shared.pokemons.count
+        return Model.shared.pokemonList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
-        let record = Model.shared.pokemons[indexPath.row]
+        let record = Model.shared.pokemonList[indexPath.row]
         
         cell.nameLabel.text = record.name
         cell.idLabel.text = String(record.id)
@@ -43,7 +43,7 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        Model.shared.pokemons.remove(at: indexPath.row)
+        Model.shared.pokemonList.remove(at: indexPath.row)
 //        pokemonController.writeToFile()    // add persistence
         tableView.reloadData()
     }

@@ -5,8 +5,10 @@ class Model {
     static let shared = Model()
     private init() {}
     
-    var pokemons: [Pokemon] = []
+    var pokemon: [Pokemon] = []
+    var pokemonList: [Pokemon] = []
     var allPokemon: [Result] = []
+    var savedPokemon: [Pokemon] = []
     
     func fetchAll(completion: @escaping () -> Void = { }) {
         guard
@@ -63,8 +65,8 @@ class Model {
             }
             
             do {
-                let searchResults = try JSONDecoder().decode([Pokemon].self, from: data)
-                self.pokemons = searchResults
+                let result = try JSONDecoder().decode([Pokemon].self, from: data)
+                self.pokemon = result
             } catch {
                 NSLog("Unable to decode data into Pokemon: \(error)")
                 completion()
@@ -74,4 +76,5 @@ class Model {
         
         dataTask.resume()
     }
+    
 }

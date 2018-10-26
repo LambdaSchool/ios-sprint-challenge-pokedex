@@ -11,15 +11,10 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
     var filteredPokemon = [Pokemon]()
     
 //    var filteredtempPoke = [tempPoke]() //delete later
-    var pokemons = [Pokemon]()  // fix this later to array of other pokemon Allpokemon
+//    var pokemons = [Pokemon]()  // fix this later to array of other pokemon Allpokemon
     var unfilteredPokemon = [Pokemon]()
-    var searchPokemon: [Result] = []
-    var pokemon: Pokemon? {
-        didSet {
-            //updateViews()
-            pokemonController?.savePokemon(pokemon: pokemon)
-        }
-    }
+    var searchedResults: [Result] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,10 +55,21 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredPokemon = pokemons.filter({( pokemons: Pokemon ) -> Bool in
-            return pokemons.name.lowercased().contains(searchText.lowercased())
+        searchedResults = Model.shared.allPokemon.filter({( result : Result) -> Bool in
+            return result.name.lowercased().contains(searchText.lowercased())
         })
-        tableView.reloadData()
+        for result in searchedResults {
+            Model.shared.fetch(pokemonName: result.name)
+            for pokemon in Model.shared.pokemonList {
+                if !pokemon.name.contains(searchText.lowercased()) {
+                    guard let indexPath = Model.shared.pokemonList.firstIndex(of: pokemon) else {return}
+                    Model.shared.pokemonList.remove(at: indexPath)
+                }
+            }
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func isFiltering() -> Bool {
@@ -72,20 +78,26 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
-            return filteredPokemon.count
+            return Model.shared.pokemonList.count
         }
-        return pokemons.count
+        return Model.shared.pokemon.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
-        let pokemons: Pokemon
+        let pokemon: Pokemon
         if isFiltering() {
-            pokemons = filteredPokemon[indexPath.row]
+            pokemon = Model.shared.pokemonList[indexPath.row]
         } else {
-//            pokemons = pokemons[indexPath.row]
+            pokemon = Model.shared.pokemon[indexPath.row]
         }
-//        cell.textLabel!.text = pokemons.name
+        cell.detailTextLabel!.text = pokemon.name
+        ImageLoader.fetchImage(from: URL(string: "\(pokemon.sprites.frontDefault)")) { (image) in
+            guard let image = image else {return}
+            DispatchQueue.main.async {
+ //               cell.contentImageView.image = image
+            }
+        }
         
         return cell
     }
@@ -95,9 +107,9 @@ class PokemonSearchTableViewController: UITableViewController, UISearchControlle
             if let indexPath = tableView.indexPathForSelectedRow {
                 let pokemon: Pokemon
                 if isFiltering() {
-                    pokemon = filteredPokemon[indexPath.row]
+                    pokemon = Model.shared.pokemonList[indexPath.row]
                 } else {
-                    pokemon = pokemons[indexPath.row]
+                    pokemon = Model.shared.pokemonList[indexPath.row]
                 }
                 
                 let controller = segue.destination as! PokemonDetailViewController
