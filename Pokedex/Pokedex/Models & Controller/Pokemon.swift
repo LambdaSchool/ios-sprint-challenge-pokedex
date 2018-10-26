@@ -1,131 +1,114 @@
 import Foundation
 
 struct Pokemon: Codable, Equatable {
-    
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.baseExperience == rhs.baseExperience && lhs.height == rhs.height && lhs.id == rhs.id && lhs.isDefault == rhs.isDefault && lhs.locationAreaEncounters == rhs.locationAreaEncounters && lhs.name == rhs.name && lhs.order == rhs.order && lhs.weight == rhs.weight
+        return lhs.name == rhs.name && lhs.id == rhs.id && lhs.weight == rhs.weight && lhs.locationAreaEncounters == rhs.locationAreaEncounters && lhs.height == rhs.height && lhs.baseExperience == rhs.baseExperience
     }
     
-    let abilities: [Ability]
-    let baseExperience: Int
     let forms: [Species]
-    let gameIndices: [GameIndex]
-    let height: Int
-    let heldItems: [HeldItem]
-    let id: Int
-    let isDefault: Bool
-    let locationAreaEncounters: String
-    let moves: [Move]
-    let name: String
-    let order: Int
-    let species: Species
-    let sprites: Sprites
+    let abilities: [Ability]
     let stats: [Stat]
-    let types: [TypeElement]
+    let name: String
     let weight: Int
+    let moves: [Move]
+    let sprites: Sprites
+    let heldItems: [JSONAny]
+    let locationAreaEncounters: String
+    let height: Int
+    let isDefault: Bool
+    let species: Species
+    let id, order: Int
+    let gameIndices: [GameIndex]
+    let baseExperience: Int
+    let types: [TypeElement]
     
     enum CodingKeys: String, CodingKey {
-        case abilities
-        case baseExperience = "base_experience"
-        case forms
-        case gameIndices = "game_indices"
-        case height
+        case forms, abilities, stats, name, weight, moves, sprites
         case heldItems = "held_items"
-        case id
-        case isDefault = "is_default"
         case locationAreaEncounters = "location_area_encounters"
-        case moves, name, order, species, sprites, stats, types, weight
+        case height
+        case isDefault = "is_default"
+        case species, id, order
+        case gameIndices = "game_indices"
+        case baseExperience = "base_experience"
+        case types
     }
 }
 
-
-
 struct Ability: Codable {
-    let ability: Species
-    let isHidden: Bool
     let slot: Int
+    let isHidden: Bool
+    let ability: Species
     
     enum CodingKeys: String, CodingKey {
-        case ability
-        case isHidden = "is_hidden"
         case slot
+        case isHidden = "is_hidden"
+        case ability
     }
 }
 
 struct Species: Codable {
-    let name: String
     let url: String
+    let name: String
 }
 
 struct GameIndex: Codable {
+    let version: Species
     let gameIndex: Int
-    let version: Species
     
     enum CodingKeys: String, CodingKey {
-        case gameIndex = "game_index"
         case version
+        case gameIndex = "game_index"
     }
-}
-
-struct HeldItem: Codable {
-    let item: Species
-    let versionDetails: [VersionDetail]
-    
-    enum CodingKeys: String, CodingKey {
-        case item
-        case versionDetails = "version_details"
-    }
-}
-
-struct VersionDetail: Codable {
-    let rarity: Int
-    let version: Species
 }
 
 struct Move: Codable {
-    let move: Species
     let versionGroupDetails: [VersionGroupDetail]
+    let move: Species
     
     enum CodingKeys: String, CodingKey {
-        case move
         case versionGroupDetails = "version_group_details"
+        case move
     }
 }
 
 struct VersionGroupDetail: Codable {
+    let moveLearnMethod: Species
     let levelLearnedAt: Int
-    let moveLearnMethod, versionGroup: Species
+    let versionGroup: Species
     
     enum CodingKeys: String, CodingKey {
-        case levelLearnedAt = "level_learned_at"
         case moveLearnMethod = "move_learn_method"
+        case levelLearnedAt = "level_learned_at"
         case versionGroup = "version_group"
     }
 }
 
 struct Sprites: Codable {
-    let backDefault, backFemale, backShiny, backShinyFemale: String
-    let frontDefault, frontFemale, frontShiny, frontShinyFemale: String
+    let backFemale, backShinyFemale: JSONNull?
+    let backDefault: String
+    let frontFemale, frontShinyFemale: JSONNull?
+    let backShiny, frontDefault, frontShiny: String
     
     enum CodingKeys: String, CodingKey {
-        case backDefault = "back_default"
         case backFemale = "back_female"
-        case backShiny = "back_shiny"
         case backShinyFemale = "back_shiny_female"
-        case frontDefault = "front_default"
+        case backDefault = "back_default"
         case frontFemale = "front_female"
-        case frontShiny = "front_shiny"
         case frontShinyFemale = "front_shiny_female"
+        case backShiny = "back_shiny"
+        case frontDefault = "front_default"
+        case frontShiny = "front_shiny"
     }
 }
 
 struct Stat: Codable {
-    let baseStat, effort: Int
     let stat: Species
+    let effort, baseStat: Int
     
     enum CodingKeys: String, CodingKey {
+        case stat, effort
         case baseStat = "base_stat"
-        case effort, stat
     }
 }
 
@@ -133,6 +116,8 @@ struct TypeElement: Codable {
     let slot: Int
     let type: Species
 }
+
+// MARK: Encode/decode helpers
 
 class JSONNull: Codable, Hashable {
     
@@ -383,5 +368,4 @@ struct Result: Codable {
     let name: String
     let url: String
 }
-
 

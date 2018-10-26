@@ -36,20 +36,20 @@ class PokemonDetailViewController: UIViewController {
     }
     
     
-    var detailtempPoke: tempPoke? {
-        didSet {
-            configureView()
-        }
-    }
+//    var detailtempPoke: tempPoke? {
+//        didSet {
+//            configureView()
+//        }
+//    }
     
-    func configureView() {
-        if let detailtempPoke = detailtempPoke {
-            if let nameLabel = nameLabel {
-                nameLabel.text = detailtempPoke.name
-                //tempPokeImageView.image = UIImage(named: detailtempPoke.name)
-                title = detailtempPoke.category
-            }
-        }
-    }
+//    func configureView() {
+//        if let detailtempPoke = detailtempPoke {
+//            if let nameLabel = nameLabel {
+//                nameLabel.text = detailtempPoke.name
+//                //tempPokeImageView.image = UIImage(named: detailtempPoke.name)
+//                title = detailtempPoke.category
+//            }
+//        }
+//    }
     
 }

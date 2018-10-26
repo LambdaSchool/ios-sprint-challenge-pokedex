@@ -13,37 +13,37 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Model.shared.fetchAll {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+//        Model.shared.fetchAll {
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Model.shared.pokemonList.count
+        return Model.shared.searchPokemon.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
-        let record = Model.shared.pokemonList[indexPath.row]
-        
-        cell.nameLabel.text = record.name
-        cell.idLabel.text = String(record.id)
-        
-        ImageLoader.fetchImage(from: URL(string: record.sprites.frontDefault)) { image in
-            guard let image = image else { return }
-            DispatchQueue.main.async {
-                cell.contentImageView.image = image
-            }
-        }
-        
-        return cell
-    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath) as! PokemonCell
+//        let record = Model.shared.pokemonList[indexPath.row]
+//
+//        cell.nameLabel.text = record.name
+//        cell.idLabel.text = String(record.id)
+//
+//        ImageLoader.fetchImage(from: URL(string: record.sprites.frontDefault)) { image in
+//            guard let image = image else { return }
+//            DispatchQueue.main.async {
+//                cell.contentImageView.image = image
+//            }
+//        }
+//
+//        return cell
+//    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        Model.shared.pokemonList.remove(at: indexPath.row)
+        Model.shared.searchPokemon.remove(at: indexPath.row)
 //        pokemonController.writeToFile()    // add persistence
         tableView.reloadData()
     }
