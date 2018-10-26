@@ -19,7 +19,7 @@ class PokemonController {
             }
             
             guard let data = data else {
-                NSLog("No data was returned")
+                NSLog("Data not sent")
                 completion(NSError())
                 return
             }
@@ -29,7 +29,7 @@ class PokemonController {
                 self.pokemonArray.append(pokemon)
                 completion(nil)
             } catch {
-                NSLog("Error decoding data: \(error)")
+                NSLog("Coud not decode data: \(error)")
                 completion(error)
                 return
             }
