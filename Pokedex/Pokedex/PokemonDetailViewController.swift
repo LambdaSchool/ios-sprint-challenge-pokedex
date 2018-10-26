@@ -2,11 +2,7 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
 
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
     var pokemonController: PokemonController?
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -29,6 +25,10 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func savePokemon(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        
+        pokemonController?.createPokemon(pokemon)
+        navigationController?.popViewController(animated: true)
         
     }
     
@@ -42,7 +42,9 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             
             DispatchQueue.main.async {
                 self.pokemon = pokemon
+                self.updateViews()
             }
+            
         })
 
     }
@@ -50,18 +52,18 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         guard isViewLoaded, let pokemon = pokemon else {
             title = "Pokemon Search"
-            nameLabel.text = ""
-            idLabel.text = ""
-            typeLabel.text = ""
-            abilityLabel.text = ""
+            nameLabel.text = " "
+            idLabel.text = " "
+            typeLabel.text = " "
+            abilityLabel.text = " "
+            saveButton.isEnabled = false
             return
         }
         
-        title = pokemon.name
-        nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
         typeLabel.text = "Types: \(pokemon.typesString)"
         abilityLabel.text = "Abilities: \(pokemon.abilityString)"
+        saveButton.isEnabled = true
     }
     
     

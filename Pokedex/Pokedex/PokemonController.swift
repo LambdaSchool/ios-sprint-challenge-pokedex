@@ -10,11 +10,11 @@ class PokemonController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     //MARK: - CRUD
-    func createPokemon(pokemon: Pokemon) {
+    func createPokemon(_ pokemon: Pokemon) {
         pokedex.append(pokemon)
     }
     
-    func deletePokemon(pokemon: Pokemon) {
+    func deletePokemon(_ pokemon: Pokemon) {
         guard let index = pokedex.index(of: pokemon) else { return }
         
         pokedex.remove(at: index)
@@ -40,7 +40,7 @@ class PokemonController {
             
             do {
                 let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-                self.pokemonArray.append(pokemon)
+                self.pokedex.append(pokemon)
                 completion(nil, pokemon)
             } catch {
                 NSLog("Coud not decode data: \(error)")
