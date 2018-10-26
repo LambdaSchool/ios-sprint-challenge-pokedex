@@ -43,7 +43,7 @@ class SearchTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
         
-        //Custom cell 
+        //Custom cell
         
         
         
