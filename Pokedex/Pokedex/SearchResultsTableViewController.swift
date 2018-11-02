@@ -5,7 +5,7 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       searchBar.delegate = self
+//       searchBar.delegate = self
     }
 
     // MARK: - Table view data source
