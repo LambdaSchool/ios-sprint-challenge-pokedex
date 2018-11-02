@@ -9,17 +9,18 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
     }
 
     // MARK: - Table view data source
-
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        guard let search = searchBar.text, search.count > 0 else { return }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let search = searchBar.text, search.count > 0 else { return }
+        
 //        var resultType: ResultType!
-//        let index = segmentedControl.selectedSegmentIndex
 //
-//        if index == 0 {
-//            resultType = 
-//        }
-//    }
-    
+//        SearchResultController.shared.performSearch(with: search, resultType: resultType) { (_) in
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//                }
+//            }
+        }
+//
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
@@ -31,8 +32,8 @@ class SearchResultsTableViewController: UITableViewController, UISearchBarDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath)
 
        let searchResult = SearchResultController.shared.searchResults[indexPath.row]
-        cell.textLabel?.text = searchResult.title
-        cell.detailTextLabel?.text = searchResult.creator
+        cell.textLabel?.text = searchResult.name
+        cell.detailTextLabel?.text = searchResult.id
 
         return cell
     }
