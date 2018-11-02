@@ -12,6 +12,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func saveToButtonTapped(_ sender: Any) {
         
+        guard let pokemon = PokemonController.shared.pokemon else {return}
+        PokemonController.shared.createPokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     
