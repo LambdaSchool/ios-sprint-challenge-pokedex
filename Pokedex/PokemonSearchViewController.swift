@@ -14,6 +14,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         
         guard let pokemon = PokemonController.shared.pokemon else {return}
         PokemonController.shared.createPokemon(pokemon: pokemon)
+        
         navigationController?.popViewController(animated: true)
     }
     
