@@ -6,7 +6,7 @@ struct Pokemon: Codable, Equatable {
     let id: Int
     let abilities: [Ability]
     let types: [Types]
-    let sprites: URL?
+   // let sprites: URL?
     
     struct Ability: Codable, Equatable {
         let ability: AbilityName

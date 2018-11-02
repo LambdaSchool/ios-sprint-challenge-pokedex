@@ -2,6 +2,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+    var pokemon: Pokemon?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -14,7 +15,12 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return PokemonController.shared.pokedex.count
+        
+        if pokemon != nil {
+            return PokemonController.shared.pokedex.count
+        } else {
+            return 1
+        }
     }
     
     let reuseIdentifier = "pokecell"
@@ -22,10 +28,16 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
+        if pokemon != nil {
+            
         let pokemon = PokemonController.shared.pokedex[indexPath.row]
         cell.textLabel?.text = pokemon.name
-        
         return cell
+            
+        } else {
+        return cell
+        }
+        
     }
     
     
@@ -48,8 +60,11 @@ class PokemonTableViewController: UITableViewController {
         guard let destination = segue.destination as? PokemonDetailViewController,
             let indexPath = tableView.indexPathForSelectedRow else { return }
         
+        if pokemon != nil {
+        
         let pokemon = PokemonController.shared.pokedex[indexPath.row]
         destination.pokemon = pokemon
-        
+            
+        }
     }
 }
