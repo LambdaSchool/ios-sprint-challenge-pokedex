@@ -1,6 +1,6 @@
 import UIKit
 
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable {
     
     let name: String
     let id: Int
@@ -8,18 +8,18 @@ struct Pokemon: Codable, Equatable {
     let types: [Types]
     
     
-    struct Ability: Codable, Equatable {
+    struct Ability: Codable {
         let ability: AbilityName
         
-        struct AbilityName: Codable, Equatable {
+        struct AbilityName: Codable {
             let name: String
         }
     }
     
-    struct Types: Codable, Equatable {
+    struct Types: Codable {
         let types: TypesName
         
-        struct TypesName: Codable, Equatable {
+        struct TypesName: Codable {
             let name: String
         }
     }

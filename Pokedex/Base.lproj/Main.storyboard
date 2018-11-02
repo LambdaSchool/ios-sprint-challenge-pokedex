@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Maq-Zl-ygV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Maq-Zl-ygV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -138,9 +138,6 @@
                                 <rect key="frame" x="144" y="375.5" width="87" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.82842576400000001" blue="0.38911424280000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Add to Team"/>
-                                <connections>
-                                    <action selector="addPokemonButtonTapped:" destination="vfd-Me-erD" eventType="touchUpInside" id="oVy-9C-1oX"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -159,13 +156,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Jly-I6-eAg"/>
                     </view>
-                    <connections>
-                        <outlet property="pokemonAbilitiesLabel" destination="jna-te-tdx" id="GWy-k3-9p8"/>
-                        <outlet property="pokemonIDLabel" destination="fmT-wa-kql" id="aXK-Dw-ecR"/>
-                        <outlet property="pokemonNameLabel" destination="eIS-q9-q1l" id="BUM-lr-tqI"/>
-                        <outlet property="pokemonTypeLabel" destination="m7R-kr-fcU" id="zO2-HE-HIB"/>
-                        <outlet property="searchBar" destination="8BH-60-dSm" id="lco-Dm-jTF"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IkB-za-qk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -180,7 +170,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ozw-1C-7PS">
-                                <rect key="frame" x="0.0" y="198" width="375" height="107.5"/>
+                                <rect key="frame" x="0.0" y="236" width="375" height="107.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fEL-JQ-Kqc">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="26.5"/>
@@ -240,8 +230,11 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uX0-YU-2bj">
-                                <rect key="frame" x="0.0" y="136" width="375" height="42"/>
+                                <rect key="frame" x="0.0" y="136" width="375" height="80"/>
                                 <color key="backgroundColor" red="0.3530152332" green="0.5367357143" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="plt-do-1qq"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
                                 <color key="textColor" red="1" green="0.82842576400000001" blue="0.38911424280000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -258,12 +251,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6a5-i9-SNd"/>
                     </view>
-                    <connections>
-                        <outlet property="pokemonAbilitiesLabel" destination="SDf-SS-QFd" id="pN6-hJ-1Gz"/>
-                        <outlet property="pokemonIDLabel" destination="Qno-Hj-5hz" id="K5h-fb-Vq3"/>
-                        <outlet property="pokemonNameLabel" destination="uX0-YU-2bj" id="cZE-zj-8r4"/>
-                        <outlet property="pokemonTypeLabel" destination="d8D-aX-GoT" id="Akr-ii-yF6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzN-CX-K9G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

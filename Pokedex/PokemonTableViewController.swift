@@ -2,7 +2,6 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    let pokemonController = PokemonController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,23 +21,20 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
-        // let pokemon = pokemonController.pokedex[indexPath.row]
-        
-        // cell.textLabel?.text = pokemon.name
-        
+       
         return cell
     }
     
     
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            let pokemon = pokemonController.pokedex[indexPath.row]
-//            pokemonController.deletePokemon(pokemon: pokemon)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
-//
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+
+    // code here
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
     
     // MARK: - Navigation
     
@@ -46,10 +42,6 @@ class PokemonTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
-        guard let destination = segue.destination as? PokemonDetailViewController,
-            let indexPath = tableView.indexPathForSelectedRow else { return }
-        
-        //   destination.pokemonController = pokemonController
-        //    destination.pokemon = pokemonController.pokedex[indexPath.row]
+
     }
 }
