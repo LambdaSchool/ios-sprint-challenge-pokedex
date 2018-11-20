@@ -8,26 +8,24 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var typeLabwl: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    var tableViewController: PokemonTableViewController?
-    
     var pokemonController: PokemonController?
-    
     var pokemon: Pokemon?{
         didSet{
-            updateViews()
+            updateView()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self;
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,50 +33,32 @@ class PokemonDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //    @IBAction func searchPokemon(_ sender: Any) {
-    //
-    //        guard let name = searchBar.text else {return}
-    //        pokemonController?.fetchPokemon(name: name, completion: { (_) in
-    //
-    //        })
-    //        updateViews()
-    //
-    //    }
-    @IBAction func exit(_ sender: Any)
-    {navigationController?.popViewController(animated: true)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-    }
-    
-    @IBAction func savePokemon(_ sender: Any) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         
-        guard let name = searchBar.text?.lowercased(), let tableViewController = tableViewController else {return}
-        pokemonController?.fetchPokemon(name: name, completion: { (_) in
+        pokemonController?.fetchPokemon(name: searchText, completion: { (_, pokemon) in
+            guard let pokemon = pokemon else { return }
+            
+            self.pokemonController?.createPokemon(pokemon: pokemon)
+            
+            self.pokemon = pokemon
             
         })
-        
-        tableViewController.tableView.reloadData()
-        
-        print(pokemonController?.pokemons)
-        updateViews()
-        
-        
-        
     }
     
-    func updateViews(){
-        guard let pokemon = pokemon else {return}
-        nameLabel.text = pokemon.name
+    func updateView(){
+        
+        guard let pokemon = pokemon else { return }
+        
         idLabel.text = String(pokemon.id)
+        nameLabel.text = String(pokemon.name)
+        
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
+
+    
+
+   
+    
+

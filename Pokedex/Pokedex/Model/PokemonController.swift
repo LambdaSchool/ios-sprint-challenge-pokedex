@@ -13,7 +13,20 @@ class PokemonController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     var pokemons: [Pokemon] = []
     
-    func fetchPokemon(name: String, completion: @escaping (Error?) -> Void){
+    func createPokemon(pokemon: Pokemon){
+        
+        pokemons.append(pokemon)
+        
+    }
+    
+    func deletePokemon(_ pokemon: Pokemon) {
+        guard let index = pokemons.index(of: pokemon) else { return }
+        
+        pokemons.remove(at: index)
+    }
+    
+    
+    func fetchPokemon(name: String, completion: @escaping (Error?, Pokemon?) -> Void) {
         
         var requestURL = baseURL.appendingPathComponent(name)
         requestURL.appendPathExtension("json")
@@ -27,35 +40,28 @@ class PokemonController {
             
             if let error = error {
                 NSLog("Error performing fetch request: \(error)")
-                completion(error)
+                completion(error, nil)
                 return
             }
             
             guard let data = data else {
                 NSLog("Could not GET data")
-                completion(NSError())
+                completion(NSError(), nil)
                 return
             }
             
             do{
-                let decodeResults = try JSONDecoder().decode(Pokemon.self, from: data)
-                self.pokemons.append(decodeResults)
-                completion(nil)
-                return
-//                self.pokemons = Array(decodeResults.values)
-//                self.pokemons.append(decodeResults)
-//                print(self.pokemons)
+                let decodedPokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(nil, decodedPokemon)
             } catch {
                 NSLog("Error Decoding Data : \(error)")
-                completion(error)
+                completion(error, nil)
                 return
             }
             
         
         }.resume()
-        
-//        pokemons.sort{$0.name > $1.name}
-        print(pokemons)
+     
     }
     
 }

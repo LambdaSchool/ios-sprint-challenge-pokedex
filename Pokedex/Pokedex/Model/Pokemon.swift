@@ -21,6 +21,11 @@ struct Pokemon: Codable, Equatable {
 //    var abilities: [[ String: String ]] //nested
 //    var types: [[String :String]] //nested
     
+    init(name: String, id: Int){
+        self.name = name
+        self.id = id
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
