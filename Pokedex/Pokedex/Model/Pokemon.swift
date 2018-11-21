@@ -7,62 +7,103 @@
 //
 
 import Foundation
+import UIKit
 
 struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
+    var imageURL: String
+    var abilities: [String]
+    var types: [String]
+    var weight: Int
     
-//    struct abilities {
-//        var ability: [String: String]
-//    }
-    
-//    var types: String
-//    var abilities: [[ String: String ]] //nested
-//    var types: [[String :String]] //nested
-    
-    init(name: String, id: Int){
+    init(name: String, id: Int, imageURL: String, abilities: [String], types: [String], weight: Int){
         self.name = name
         self.id = id
+        self.imageURL = imageURL
+        self.abilities = abilities
+        self.types = types
+        self.weight = weight
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(Int.self, forKey: .id)
-  
-        // nested containers
-//        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilitiesCodingKeys.self, forKey: .abilities)
-//        abilities().ability = abilitiesContainer.decode([String: String].self, forKey: .ability)
+        self.weight = try container.decode(Int.self, forKey: .weight)
         
+        let spriteContainer = try container.nestedContainer(keyedBy: SpriteCodingKeys.self, forKey: .imageURL)
         
+        self.imageURL = try spriteContainer.decode(String.self, forKey: .image);
         
-//        let typesContainer = try container.nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .types)
-//        let type = try typesContainer.decode([String].self, forKey: .type)
-//        self.types = type.first!
+        var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
         
+        var abilities = [String]()
+        
+        while !abilitiesContainer.isAtEnd {
+            
+            let abilityContainer = try abilitiesContainer.nestedContainer(keyedBy: AbilityCodingKeys.self).nestedContainer(keyedBy: AbilitySmallCodingKeys.self, forKey: .ability)
+            
+            let ability = try abilityContainer.decode(String.self, forKey: .name)
+            
+            abilities.append(ability)
+            
+        }
+        
+        self.abilities = abilities
+        
+        var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
+        
+        var types = [String]()
+        
+        while !typesContainer.isAtEnd {
+            
+            let typeContainer = try typesContainer.nestedContainer(keyedBy: TypesCodingKeys.self).nestedContainer(keyedBy: TypeCodingKeys.self, forKey: .type)
+            
+            let type = try typeContainer.decode(String.self, forKey: .name)
+            
+            types.append(type)
+            
+        }
+        
+        self.types = types
         
     }
     
     enum CodingKeys: String, CodingKey {
         case name
         case id
-//        case abilities
-//        case types
+        case imageURL = "sprites"
+        case abilities
+        case types
+        case weight
     }
     
-//    enum AbilitiesCodingKeys: String, CodingKey {
-//        case ability
-//    }
-//    
-//    enum AbilityCodingKeys: String, CodingKey {
-//        case name
-//    }
+    enum SpriteCodingKeys: String, CodingKey {
+        case image = "front_default"
+    }
     
-//
-//    enum TypeCodingKeys: String, CodingKey {
-//        case type
-//    }
+    enum AbilityCodingKeys: String, CodingKey {
+        case ability
+    }
+    
+    enum AbilitySmallCodingKeys: String, CodingKey {
+        case name
+    }
+    
+    enum TypesCodingKeys: String, CodingKey {
+        case type
+    }
+    
+    enum TypeCodingKeys: String, CodingKey {
+        case name
+    }
+    
+    
+    
+    
+    
     
 }
 

@@ -28,8 +28,10 @@ class PokemonController {
     
     func fetchPokemon(name: String, completion: @escaping (Error?, Pokemon?) -> Void) {
         
-        var requestURL = baseURL.appendingPathComponent(name)
-        requestURL.appendPathExtension("json")
+        let lowercasedName = name.lowercased();
+        
+        let requestURL = baseURL.appendingPathComponent(lowercasedName)
+//        requestURL.appendPathExtension("json")
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = "GET"
@@ -52,6 +54,7 @@ class PokemonController {
             
             do{
                 let decodedPokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                print(decodedPokemon);
                 completion(nil, decodedPokemon)
             } catch {
                 NSLog("Error Decoding Data : \(error)")

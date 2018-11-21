@@ -19,14 +19,6 @@ class PokemonTableViewController: UITableViewController {
         
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-
     // MARK: - Table view data source
 
 
