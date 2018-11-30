@@ -26,11 +26,11 @@ class PokemonDetailVC: UIViewController {
         mainImg.image = img
         currentEvoImg.image = img
         pekemonLbl.text = "\(pokemon.pokemonId)"
-        //        pokemon.downloadPokemonDetail {
-        //            print("we are here")
-        //            // Whatever we write will only be called after the network call is compelte!
-        //            self.updateUI()
-        //        }
+                pokemon.downloadPokemonDetail {
+                    print("we are here")
+                    // Whatever we write will only be called after the network call is compelte!
+                    self.updateUI()
+                }
     }
     
     func updateUI() {
@@ -44,7 +44,7 @@ class PokemonDetailVC: UIViewController {
         
         if pokemon.nextEvolutionId == "" {
             
-            evoLbl.text = "No Evolutions"
+            evoLbl.text = "FIXING"
             nextEvoImg.isHidden = true
             
         } else {

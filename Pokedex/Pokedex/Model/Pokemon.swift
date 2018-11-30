@@ -125,90 +125,90 @@ class Pokemon {
         self._pokemonId = pokemonId
         self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self.pokemonId)/"
     }
-    //    func downloadPokemonDetail(completed: @escaping DownloadComplete) {
-    //        Alamofire.request(_pokemonURL).responseJSON { (response) in
-    //            if let dict = response.result.value as? Dictionary<String, AnyObject> {
+        func downloadPokemonDetail(completed: @escaping DownloadComplete) {
+            Alamofire.request(_pokemonURL).responseJSON { (response) in
+                if let dict = response.result.value as? Dictionary<String, AnyObject> {
+    
+                    if let weight = dict["weight"] as? Int {
+    
+                        self._weight = "\(weight)"
+                    }
+                    if let height = dict["height"] as? Int {
+    
+                        self._height = "\(height)"
+                    }
+    
+                    if let attack = dict["base_experience"] as? Int {
+    
+                        self._attack = "\(attack)"
+                    }
+    
+                    if let defense = dict["is_default"] as? Int {
+    
+                        self._defense = "\(defense)"
+                    }
+    
+                    print(self._weight)
+                    print(self._height)
+                    print(self._attack)
+                    print(self._defense)
+    
+                    if let types = dict["forms"] as? [Dictionary<String, String>] , types.count > 0 {
+    
+                        if let name = types[0]["name"] {
+    
+                            self._type = name.capitalized
+                        }
+    
+                        if types.count > 1 {
+    
+                            for x in 1..<types.count {
+    
+                                if let name = types[x]["name"] {
+    
+                                    self._type! += "/\(name.capitalized)"
+                                }
+                            }
+                        }
+    
+                        print(self._type)
+    
+                    } else {
+    
+                        self._type = ""
+                    }
+                    if let descArr = dict["forms"] as? [Dictionary<String, String>] , descArr.count > 0 {
+    
+                        if let url = descArr[0]["url"] {
+    
+                            let descURL = "\(URL_BASE)\(url)"
+    
+                            Alamofire.request(url).responseJSON(completionHandler: { (response) in
+    
+                                if let descDict = response.result.value as? Dictionary<String, AnyObject> {
+    
+                                    if let description = descDict["is_battle_only"] as? Bool {
+    
+    //                                    let newDescription = description.replacingOccurrences(of: "POKMON", with: "Pokemon")
     //
-    //                if let weight = dict["weight"] as? Int {
-    //
-    //                    self._weight = "\(weight)"
-    //                }
-    //                if let height = dict["height"] as? Int {
-    //
-    //                    self._height = "\(height)"
-    //                }
-    //
-    //                if let attack = dict["base_experience"] as? Int {
-    //
-    //                    self._attack = "\(attack)"
-    //                }
-    //
-    //                if let defense = dict["is_default"] as? Int {
-    //
-    //                    self._defense = "\(defense)"
-    //                }
-    //
-    //                print(self._weight)
-    //                print(self._height)
-    //                print(self._attack)
-    //                print(self._defense)
-    //
-    //                if let types = dict["forms"] as? [Dictionary<String, String>] , types.count > 0 {
-    //
-    //                    if let name = types[0]["name"] {
-    //
-    //                        self._type = name.capitalized
-    //                    }
-    //
-    //                    if types.count > 1 {
-    //
-    //                        for x in 1..<types.count {
-    //
-    //                            if let name = types[x]["name"] {
-    //
-    //                                self._type! += "/\(name.capitalized)"
-    //                            }
-    //                        }
-    //                    }
-    //
-    //                    print(self._type)
-    //
-    //                } else {
-    //
-    //                    self._type = ""
-    //                }
-    //                if let descArr = dict["forms"] as? [Dictionary<String, String>] , descArr.count > 0 {
-    //
-    //                    if let url = descArr[0]["url"] {
-    //
-    //                        let descURL = "\(URL_BASE)\(url)"
-    //
-    //                        Alamofire.request(url).responseJSON(completionHandler: { (response) in
-    //
-    //                            if let descDict = response.result.value as? Dictionary<String, AnyObject> {
-    //
-    //                                if let description = descDict["is_battle_only"] as? Bool {
-    //
-    ////                                    let newDescription = description.replacingOccurrences(of: "POKMON", with: "Pokemon")
-    ////
-    ////                                    self._description = description
-    //                                    print(description)
-    //                                }
-    //                            }
-    //                            completed()
-    //                        })
-    //
-    //                    }
-    //
-    //                }else {
-    //
-    //                    self._description = "some"
-    //                }
-    //            }
-    //            completed()
-    //
-    //            }
-    //    }
+    //                                    self._description = description
+                                        print(description)
+                                    }
+                                }
+                                completed()
+                            })
+    
+                        }
+    
+                    }else {
+    
+                        self._description = "some"
+                    }
+                }
+                completed()
+    
+                }
+        }
     
     
 }
