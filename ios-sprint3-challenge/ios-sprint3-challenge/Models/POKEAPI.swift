@@ -2,18 +2,19 @@ import Foundation
 
 class POKEAPI {
     static let endpoint = "https://pokeapi.co/api/v2/pokemon/"
+    var searchResult: [Pokemon] = []
     
-    static func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
-        
+    static func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
+        let base = endpoint + "\(searchTerm)"
         //construct baseURL
-        guard let baseURL = URL(string: endpoint) else {fatalError("Unable to construct base URL from endpoint")}
+        guard let baseURL = URL(string: base) else {fatalError("Unable to construct base URL from endpoint")}
         
         //Break baseURL into its components
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else { fatalError("Unable to resolve baseURL components")}
         
         
         //Add in the searchTerm as URLComponent path
-        urlComponents.path = searchTerm
+        //urlComponents.fragment = searchTerm
         
         // Re-compose the components back into a valid URL
         guard let searchURL = urlComponents.url else {
@@ -21,10 +22,11 @@ class POKEAPI {
             completion(nil, NSError())
             return
         }
-        
+        print(searchURL)
         // create the GET request
         var request = URLRequest(url: searchURL)
         request.httpMethod = "GET"
+        print(request)
         
         let dataTask = URLSession.shared.dataTask(with: request) {
             data, _, error in

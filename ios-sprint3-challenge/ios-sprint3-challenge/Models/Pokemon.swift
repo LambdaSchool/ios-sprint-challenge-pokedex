@@ -3,16 +3,17 @@ import UIKit
 
 struct Pokemon: Codable {
     let abilities: [String]
-    let forms: [String]
+    let types: [String]
     let id: Int
     let name: String
     let sprites: [String]
-    let spriteFront: String // sprites.front should return a URL String
+    let sprite: String // sprites.front should return a URL String
+    var isSaved = "False"
     
     enum CodingKeys: String, CodingKey {
-        case spriteFront = "front_default"
+        case sprite = "front_default"
         case abilities
-        case forms
+        case types
         case id
         case name
         case sprites

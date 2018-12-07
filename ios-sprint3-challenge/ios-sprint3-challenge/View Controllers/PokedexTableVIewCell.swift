@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class PokeDexTableViewCell: UITableViewCell {
+class PokedexTableViewCell: UITableViewCell {
     static let reuseIdentifier = "pokedex cell"
     
     @IBOutlet var pokemonName: UILabel!

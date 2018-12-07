@@ -3,6 +3,8 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
     
-    let pokemonSearchController = POKEAPI()
+    
+    
+    
     
 }

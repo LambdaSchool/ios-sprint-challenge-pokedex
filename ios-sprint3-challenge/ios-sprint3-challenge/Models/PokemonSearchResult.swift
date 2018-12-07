@@ -1,5 +1,5 @@
 import Foundation
 
 struct PokemonSearchResult: Codable {
-    let results: Pokemon
+    let results: [Pokemon]
 }

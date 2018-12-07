@@ -90,7 +90,7 @@
         <!--Search Detail View Controller-->
         <scene sceneID="9qz-KM-MuK">
             <objects>
-                <viewController id="iR8-th-gQM" userLabel="Search Detail View Controller" sceneMemberID="viewController">
+                <viewController id="iR8-th-gQM" userLabel="Search Detail View Controller" customClass="SearchDetailViewController" customModule="ios_sprint3_challenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8fz-fD-df3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,6 +141,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qy4-k8-dfK">
                                                 <rect key="frame" x="76.5" y="369" width="181" height="30"/>
                                                 <state key="normal" title="Save Pokemon to Pokedex"/>
+                                                <connections>
+                                                    <action selector="saveToPokedex:" destination="iR8-th-gQM" eventType="touchUpInside" id="EvE-qv-7Yw"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -177,7 +180,15 @@
                         <viewLayoutGuide key="safeArea" id="tHo-mv-aBD"/>
                     </view>
                     <connections>
+                        <outlet property="resultAbilitiesLabel" destination="uJQ-T6-1uz" id="Tal-kh-f4h"/>
+                        <outlet property="resultIdLabel" destination="4OZ-h4-5H3" id="diS-Hn-Svj"/>
+                        <outlet property="resultNameLabel" destination="bYm-GY-Mgc" id="hOB-kn-Axb"/>
+                        <outlet property="resultTypesLabel" destination="ZWd-56-2OK" id="7TQ-eH-nyk"/>
+                        <outlet property="saveButton" destination="Qy4-k8-dfK" id="Mi1-eA-kmK"/>
                         <outlet property="searchDisplayController" destination="Dds-dH-eHN" id="2zj-Jp-odV"/>
+                        <outlet property="searchField" destination="XnB-IL-AQD" id="3rN-tw-8Th"/>
+                        <outlet property="searchViewLabel" destination="EHb-Ti-sd0" id="k4t-CT-xqF"/>
+                        <outlet property="spriteImage" destination="uKg-1R-bGh" id="poX-fv-D5C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UGN-Nb-jAA" userLabel="First Responder" sceneMemberID="firstResponder"/>
