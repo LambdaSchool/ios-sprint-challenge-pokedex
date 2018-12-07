@@ -18,6 +18,10 @@ class Model {
         return characters.count
     }
     
+    func add(character: Character) {
+        characters.append(character)
+    }
+    
     func character(at index: Int) -> Character {
         return characters[index]
     }
