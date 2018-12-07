@@ -11,35 +11,40 @@ class Model {
         
         didSet {
             DispatchQueue.main.async {
-            //    Model.UpdateHandler?()
+            self.updateHandler?()
             }
         }
     }
-    
-    
     
     func numberOfItems() -> Int {
         return pokemons.count
     }
     
-    func pokemon(at indexPath: Int) -> SearchResult {
-        return pokemons[indexPath]
+    func pokemon(at index: Int) -> SearchResult {
+        return pokemons[index]
     }
+    func search(for string: String) {
+        SearchViewController(with: string) { pokemon, error in
+            if let error = error {
+                NSLog("Error fetching pokemon: \(error)")
+                return
+            }
+            
+            self.pokemon = pokemon ?? []
+        }
+     
     
-    // MARK: Core Database Management Methods
-    
-//    func addNewPokemon(completion: @escaping () -> Void) {
-//        let pokemon = SearchResult.
-//
-//        pokemons.append(pokemon)
-//
-//
-//        }
+        func addNewPokemon(pokemon: SearchResult, complrtion: @escaping () -> Void) {
+        pokemons.append(pokemon)
+         
+
+        }
     
     
     func deletePokemon(at indexPath: IndexPath, completion: @escaping () -> Void) {
-        let pokemon = pokemons[indexPath.row]
+        // let pokemon = pokemons(
         pokemons.remove(at: indexPath.row)
         
         }
+}
 }

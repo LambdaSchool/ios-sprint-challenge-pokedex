@@ -40,11 +40,9 @@ class MainTableViewController: UITableViewController {
         
         cell.nameLabel.text = searchResult.name
         cell.abilitiesLabel.text = searchResult.abilities
-        cell.idLabel.text = searchResult.id.hashValue
+        // cell.idLabel.text = searchResult.id.hashValue
         cell.typeLabel.text = searchResult.types
-        //            cell.textLabel?.text = searchResult.title
-        //            cell.detailTextLabel?.text = searchResult.creator
-        //
+        
         return cell
     
 

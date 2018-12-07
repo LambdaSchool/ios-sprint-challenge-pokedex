@@ -1,6 +1,6 @@
 import Foundation
 
-struct SearchResult: Codable {
+class SearchResult: Codable {
     
     let name: String
     let id: Int
@@ -18,8 +18,10 @@ init(name: String, id: Int, abilities: String, types: String) {
         let results: [SearchResult]
     }
 
-//enum CodingKeys: String, CodingKey {
-//    case name = "name"
-//    case id = "id"
-//}
+enum CodingKeys: String, CodingKey {
+    case name = "name"
+    case id = "id"
+    case abilities = "abilities"
+    case types = "types"
+}
 }

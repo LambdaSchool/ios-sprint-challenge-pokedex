@@ -1,10 +1,9 @@
 import Foundation
 
-enum ResultType: String {
+struct ResultType: Codable {
     
-    case name
-    case id
-    case type
-    case abilities
-    
+    let name: String
+    let id: Int
+    let abilities: String
+    let types: String
 }

@@ -3,7 +3,7 @@ import Foundation
 
 class SearchViewController {
     
-    let endpoint = "https://pokeapi.co/api/v2"
+    let endpoint = "https://pokeapi.co/api/v2/"
     var searchResults: [SearchResult] = []
     
     func performSearch (with searchTerm: String , resultType: ResultType, completion: @escaping (NSError?) -> Void) {
@@ -14,11 +14,11 @@ class SearchViewController {
             else { fatalError("Unable to resolve baseURL to components") }
         
         let searchQueryItem = URLQueryItem(name: "name", value: searchTerm)
-        let typeResultTypeQueryItem = URLQueryItem(name: "type", value: resultType.rawValue)
-        let abilitiesResultTypeQueryItem = URLQueryItem(name: "abilities", value: resultType.rawValue)
-        let idResultTypeQueryItem = URLQueryItem(name: "id", value: resultType.rawValue)
+//        let typeResultTypeQueryItem = URLQueryItem(name: "type", value: resultType.rawValue)
+//        let abilitiesResultTypeQueryItem = URLQueryItem(name: "abilities", value: resultType.rawValue)
+//        let idResultTypeQueryItem = URLQueryItem(name: "id", value: resultType.rawValue)
 
-        urlComponents.queryItems = [searchQueryItem, typeResultTypeQueryItem, abilitiesResultTypeQueryItem, idResultTypeQueryItem]
+        urlComponents.queryItems = [searchQueryItem] //, typeResultTypeQueryItem, abilitiesResultTypeQueryItem, idResultTypeQueryItem]
 
         guard let searchURL = urlComponents.url else { return }
         

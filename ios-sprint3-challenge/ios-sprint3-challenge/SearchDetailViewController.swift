@@ -8,10 +8,11 @@ class Search {
             //            else {return}
             
             guard let searchTerm = searchBar.text, searchTerm.count > 0 else {return}
+            Model.shared.search(for: searchTerm)
             
             var resultType: ResultType!
             
-            resultType = ResultType.name // for testing
+            resultType = ResultType// for testing
             
             Search(with: searchTerm, resultType: resultType) { (_) in
                 
