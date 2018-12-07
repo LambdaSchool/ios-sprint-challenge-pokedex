@@ -30,7 +30,7 @@ class Model {
         
         // append it to our devices array, updating our local model <-- local
         pokemons.append(pokemon)
-        
+       
         // save it by pushing it to the firebase thing <-- remote
         Firebase<Pokemon>.save(item: pokemon){ success in
             guard success else {return}

@@ -11,6 +11,7 @@ import UIKit
 class SearchTableViewCell: UITableViewCell {
 
     static let reuseIdentifier = "searchResultCell"
+    var onComplete: (() -> Void)? = nil
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -32,10 +33,11 @@ class SearchTableViewCell: UITableViewCell {
     @IBAction func save(_ sender: Any) {
         
         let pokemon = Model.shared.results[0]
-        print(pokemon.name)
-        Model.shared.addNewPokemon(pokemon: pokemon, completion: {})
         
-        print(Model.shared.pokemon(forIndex: 0).name)
+        Model.shared.addNewPokemon(pokemon: pokemon){
+            self.onComplete?()
+        }
+        
     }
     
 

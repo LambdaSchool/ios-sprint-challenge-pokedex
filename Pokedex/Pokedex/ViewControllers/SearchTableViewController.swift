@@ -60,6 +60,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = String(pokemon.id)
         
+        cell.onComplete = { self.navigationController?.popViewController(animated: true) }
+        
         //cell.typesLabel.text = pokemon.types[0] // TODO: fix this
         //cell.abilitiesLabel.text = pokemon.abilities[0] // TODO: fix this
         

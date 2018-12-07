@@ -4,8 +4,8 @@ class Pokemon: Codable, FirebaseItem {
     
     var name: String
     var id: Int
-    //var types: [Int:[String:String]]
-    //var abilities: [String]
+    var types: [Types]
+    var abilities: [Abilities]
     var recordIdentifier: String = ""
     
     init(name: String, id: Int) {
