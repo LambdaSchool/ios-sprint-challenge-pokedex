@@ -8,14 +8,14 @@
 
 import Foundation
 
-class SWAPI {
+class Pokeapi {
     
-    static let endpoint = "https://pokeapi.co/api/v2/"
+    static let endpoint = "https://pokeapi.co/api/v2/pokemon/"
     // Add the completion last
     static func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
         
         // Establish the base url for our search
-        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/")
+        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")
             else {
                 fatalError("Unable to construct baseURL")
         }
@@ -74,14 +74,14 @@ class SWAPI {
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 // Perform decoding into [Person] stored in PersonSearchResults
-                let searchResults = try jsonDecoder.decode(PersonSearchResults.self, from: data)
+                let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
                 let people = searchResults.results
                 
                 // Send back the results to the completion handler
                 completion(people, nil)
                 
             } catch {
-                NSLog("Unable to decode data into people: \(error)")
+                NSLog("Unable to decode data into pokemon: \(error)")
                 completion(nil, error)
                 //        return
             }

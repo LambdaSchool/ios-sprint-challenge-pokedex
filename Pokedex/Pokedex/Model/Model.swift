@@ -9,7 +9,6 @@ class Model {
     var updateHandler: UpdateHandler? = nil
     
     private var pokemons: [Pokemon] = []
-    private var results: [Pokemon] = []
     
     func count() -> Int {
         return pokemons.count
@@ -72,9 +71,9 @@ class Model {
     // MARK: Core Search Functionality
     
     func search(for string: String) {
-        SWAPI.searchForPokemon(with: string) { results, error in
+        Pokeapi.searchForPokemon(with: string) { results, error in
             if let error = error {
-                NSLog("Error fetching people: \(error)")
+                NSLog("Error fetching Pokemon: \(error)")
                 return
             }
             
