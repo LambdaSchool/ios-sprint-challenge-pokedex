@@ -9,7 +9,15 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    var pokemon: Pokemon?
 
+    @IBOutlet weak var nameTitle: UINavigationItem!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBAction func saveButton(_ sender: Any) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 

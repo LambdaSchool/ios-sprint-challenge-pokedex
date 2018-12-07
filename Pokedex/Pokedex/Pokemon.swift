@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import UIKit
+
+struct Pokemon: Codable {
+    let image: UIImage
+    let name: String
+    let id: Int
+    let type: String
+    let ability: String 
+}

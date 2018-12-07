@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Detail View Controller-->
+        <!--Title-->
         <scene sceneID="m1a-At-CYx">
             <objects>
                 <viewController id="8IH-jv-0uZ" customClass="DetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
@@ -45,6 +45,9 @@
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60b-zb-c0z">
                                         <rect key="frame" x="0.0" y="439.5" width="219.5" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="saveButton:" destination="8IH-jv-0uZ" eventType="touchUpInside" id="vWu-go-jtA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -60,6 +63,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Jyd-un-kWH"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="G67-Sl-POU"/>
+                    <connections>
+                        <outlet property="abilityLabel" destination="2Tw-Cv-lwV" id="KaV-jp-GZh"/>
+                        <outlet property="idLabel" destination="yNw-Yd-fu9" id="NWF-VM-Sr7"/>
+                        <outlet property="image" destination="T3U-as-WlT" id="yM8-Ze-Fu3"/>
+                        <outlet property="nameTitle" destination="G67-Sl-POU" id="Vdt-Wh-p6n"/>
+                        <outlet property="typeLabel" destination="lvW-Ut-IJf" id="Z5K-vN-1hS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zYZ-lg-wWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
