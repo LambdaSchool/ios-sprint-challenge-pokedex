@@ -17,8 +17,10 @@ class Model {
     func numberOfCharacters() -> Int {
         return characters.count
     }
+    
+    //Fix this
     func search(for string: String) {
-        Poke.searchForCharacters(with: string) { people, error in
+        Poke.searchForCharacters(with: string, resultType: string) { characters, error in
             if let error = error {
                 NSLog("Error fetching people: \(error)")
                 return

@@ -6,8 +6,6 @@ class TableViewController: UITableViewController {
     @IBAction func search(_ sender: Any) {
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
