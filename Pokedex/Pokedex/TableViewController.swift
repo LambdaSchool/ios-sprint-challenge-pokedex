@@ -2,6 +2,12 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+    //outlets
+    @IBAction func search(_ sender: Any) {
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

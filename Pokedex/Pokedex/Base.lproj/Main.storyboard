@@ -36,6 +36,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="q9G-qj-Ewm">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="EDW-a3-xtf">
                             <connections>
+                                <action selector="search:" destination="qxI-4V-oAt" id="Rdb-oj-JqW"/>
                                 <segue destination="Inr-Ww-AsP" kind="show" id="lYe-uh-1sH"/>
                             </connections>
                         </barButtonItem>
@@ -69,6 +70,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9Z-Wn-qbs">
                                         <rect key="frame" x="0.0" y="261" width="101" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="save:" destination="Inr-Ww-AsP" eventType="touchUpInside" id="r0W-Yr-yql"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -76,13 +80,13 @@
                                 <rect key="frame" x="44" y="270" width="42" height="123.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIh-Mj-kNh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MPF-4q-MK4">
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MPF-4q-MK4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIh-Mj-kNh">
                                         <rect key="frame" x="0.0" y="51.5" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -107,6 +111,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4wc-38-Mid"/>
                     </view>
+                    <connections>
+                        <outlet property="abilityLabel" destination="FzU-r9-glL" id="cxe-f5-14q"/>
+                        <outlet property="characterLabel" destination="xW7-jx-xaF" id="TkD-Hq-7PP"/>
+                        <outlet property="idLabel" destination="MPF-4q-MK4" id="WNC-tW-hso"/>
+                        <outlet property="searchBar" destination="KOi-1D-XRH" id="JHt-bJ-6gb"/>
+                        <outlet property="typeLabel" destination="fIh-Mj-kNh" id="eM1-Ec-OUl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wt4-7B-INV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
