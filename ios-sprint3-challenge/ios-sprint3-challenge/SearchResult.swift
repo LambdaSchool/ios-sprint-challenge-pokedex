@@ -4,9 +4,9 @@ struct SearchResult: Codable {
     
     let name: String
     let id: Int
-    let abilities: [String]?
-    let types: [String]?
-init(name: String, id: Int, abilities: [String], types: [String]) {
+    let abilities: String
+    let types: String
+init(name: String, id: Int, abilities: String, types: String) {
         
         self.name = name
         self.id = id

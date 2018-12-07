@@ -1,16 +1,7 @@
 import UIKit
 
-class SearchDetailViewController: UIViewController {
-
-    @IBOutlet weak var nameLabel: UILabel!
+class Search {
     
-    @IBOutlet weak var idLabel: UILabel!
-    
-    @IBOutlet weak var typeLabel: UILabel!
-    
-    @IBOutlet weak var abilitiesLabel: UILabel!
-    
-    var searchViewController = SearchViewController()
         
         func searchBarSearchButtonClicked(_  searchBar: UISearchBar) {
             //        guard let searchTerm = searchBar.text, !searchTerm.isEmpty
@@ -22,7 +13,7 @@ class SearchDetailViewController: UIViewController {
             
             resultType = ResultType.name // for testing
             
-            searchViewController.performSearch(with: searchTerm, resultType: resultType) { (_) in
+            Search(with: searchTerm, resultType: resultType) { (_) in
                 
                 DispatchQueue.main.async {
                   //  tableView.reloadData()

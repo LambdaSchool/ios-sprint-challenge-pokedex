@@ -4,7 +4,7 @@ class MainTableViewController: UITableViewController {
 
 
     var searchViewController = SearchViewController()
-   let reuseIdentifier = "cell"
+   
     
     @IBOutlet weak var mainNameLabel: UILabel!
     
@@ -32,11 +32,16 @@ class MainTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+       guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as? MainTableViewCell else { fatalError("no cell") }
         
-        let searchResult = searchViewController.searchResults[indexPath.row]
+        let searchResult = Model.shared.pokemon(at: indexPath.row)
+        //searchViewController.searchResults[indexPath.row]
         
-        mainNameLabel.text = searchResult.name
+        
+        cell.nameLabel.text = searchResult.name
+        cell.abilitiesLabel.text = searchResult.abilities
+        cell.idLabel.text = searchResult.id.hashValue
+        cell.typeLabel.text = searchResult.types
         //            cell.textLabel?.text = searchResult.title
         //            cell.detailTextLabel?.text = searchResult.creator
         //

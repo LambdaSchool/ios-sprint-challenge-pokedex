@@ -22,8 +22,8 @@ class Model {
         return pokemons.count
     }
     
-    func pokemon(at indexPath: IndexPath) -> SearchResult {
-        return pokemons[indexPath.row]
+    func pokemon(at indexPath: Int) -> SearchResult {
+        return pokemons[indexPath]
     }
     
     // MARK: Core Database Management Methods
