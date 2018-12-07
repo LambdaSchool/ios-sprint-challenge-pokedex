@@ -10,6 +10,7 @@ import UIKit
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
+    
     override func viewDidLoad(){
         super.viewDidLoad()
         // TODO: Update updatehandler
@@ -32,14 +33,22 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return Model.shared.numberOfResults()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseIdentifier, for: indexPath) as? SearchTableViewCell else {fatalError("Unable to retrieve and cast cell")}
+        
         // Configure the cell...
-
+        let pokemon = Model.shared.pokemon(forIndex: indexPath.row)
+        
+        // fill out the cell labels
+        
+        cell.nameLabel.text = pokemon.name
+        cell.idLabel.text = pokemon.id
+        cell.typesLabel.text = pokemon.types
+        cell.abilitiesLabel.text = pokemon.abilities[0] // TODO: fix this
+        
         return cell
     }
 

@@ -29,16 +29,5 @@ class SearchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func save(_ sender: Any) {
-//        guard let pokemon = pokemon else { return }
-//        guard let name = nameField.text, !name.isEmpty else { return }
-//
-//        person.name = name
-//        person.cohort = cohortField.text ?? ""
-//
-//        Model.shared.updatePerson(for: person, completion: {})
-        
-        navigationController?.popViewController(animated: true)
-    }
-
+ 
 }
