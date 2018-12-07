@@ -10,6 +10,31 @@ import UIKit
 
 class MainTableViewController: UITableViewController {
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        let activity = UIActivityIndicatorView()
+        activity.style = .gray
+        activity.startAnimating()
+        navigationItem.titleView = activity
+        
+        // Fetch records from Firebase and then reload the table view
+        // Note: this may be significantly delayed.
+        Firebase<Pokemon>.fetchRecords { pokemons in
+            if let pokemons = pokemons {
+                Model.shared.setPokemon(pokemons: pokemons)
+                
+                // Comment this out to show what it looks like while waiting
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                    self.navigationItem.titleView = nil
+                    self.title = "Pokedex"
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
