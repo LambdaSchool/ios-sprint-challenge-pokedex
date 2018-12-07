@@ -60,7 +60,6 @@ class Pokeapi {
                 return
             }
             
-            print(data)
             // We know now we have no error *and* we have data to work with
             
             // Convert the data to JSON
@@ -76,16 +75,20 @@ class Pokeapi {
                 // Perform decoding into [Pokemoon] stored in PersonSearchResults
                 let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
                 
-                
+                print(searchResults)
                 let name = searchResults.name
                 let id = searchResults.id
+                //let types = searchResults.types
+                //let abilities = searchResults.abilities
+                
                 //let types = searchResults.types
                 //let abilities = searchResults.abilities
                 //, types: types, abilities: abilities
             
                 let pokemon = Pokemon(name: name, id: id)
-                let pokemons = [pokemon]
                 
+                let pokemons = [pokemon]
+                print(pokemons[0].name)
                 // Send back the results to the completion handler
                 completion(pokemons, nil)
                 

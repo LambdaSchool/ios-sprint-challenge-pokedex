@@ -81,6 +81,7 @@ class Model {
             // Great opportunity to use nil coalescing to convert
             // a nil result into the empty array
             // TODO: Update here
+            
             self.results = results ?? []
         }
     }

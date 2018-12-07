@@ -12,7 +12,7 @@ import Foundation
 struct PokemonSearchResults: Codable{
     let id: Int
     let name: String
-    //let types: [String]
-    //let abilities: [String]
+    //let types: [[Int:[String:String]]]
+    //let abilities: [Bool,Int,[String:String]]
     
 }
