@@ -37,24 +37,32 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokedex cell" rowHeight="53" id="sVw-O2-cJD">
-                                <rect key="frame" x="0.0" y="72" width="375" height="53"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokedex cell" rowHeight="123" id="sVw-O2-cJD">
+                                <rect key="frame" x="0.0" y="72" width="375" height="123"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sVw-O2-cJD" id="IQs-uC-iYc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="122.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pokemon name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q9A-KR-NA6">
-                                            <rect key="frame" x="24" y="16" width="118" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="DwU-zw-Vd7">
+                                            <rect key="frame" x="24" y="11.5" width="327" height="100"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pokemon name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q9A-KR-NA6">
+                                                    <rect key="frame" x="0.0" y="39.5" width="118" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zEh-HQ-DgG">
+                                                    <rect key="frame" x="198" y="0.0" width="129" height="100"/>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="q9A-KR-NA6" firstAttribute="leading" secondItem="IQs-uC-iYc" secondAttribute="leadingMargin" constant="8" id="M7Q-6y-rOr"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="q9A-KR-NA6" secondAttribute="trailing" constant="20" symbolic="YES" id="h9v-o5-daO"/>
-                                        <constraint firstItem="q9A-KR-NA6" firstAttribute="centerY" secondItem="IQs-uC-iYc" secondAttribute="centerY" id="ofD-m4-4r7"/>
+                                        <constraint firstItem="DwU-zw-Vd7" firstAttribute="centerY" secondItem="IQs-uC-iYc" secondAttribute="centerY" id="5Pd-Ol-Ip1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="DwU-zw-Vd7" secondAttribute="trailing" constant="8" id="ThY-UK-uvB"/>
+                                        <constraint firstItem="DwU-zw-Vd7" firstAttribute="leading" secondItem="IQs-uC-iYc" secondAttribute="leadingMargin" constant="8" id="t5X-6M-eMO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -77,7 +85,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lif-l6-ABj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="575" y="121"/>
+            <point key="canvasLocation" x="573.60000000000002" y="120.98950524737631"/>
         </scene>
         <!--Search Detail View Controller-->
         <scene sceneID="9qz-KM-MuK">
