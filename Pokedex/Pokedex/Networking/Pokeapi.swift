@@ -15,21 +15,21 @@ class Pokeapi {
     static func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
         
         // Establish the base url for our search
-        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")
+        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/\(searchTerm)")
             else {
                 fatalError("Unable to construct baseURL")
         }
         
         // Decompose it into its components
-        guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
+        guard let urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else {
             fatalError("Unable to resolve baseURL to components")
         }
         
         // Create the query item using `search` and the search term
-        let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
+        // let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
         
         // Add in the search term
-        urlComponents.queryItems = [searchQueryItem]
+        // urlComponents.queryItems = [searchQueryItem]
         
         // Recompose all those individual components back into a fully
         // realized search URL
