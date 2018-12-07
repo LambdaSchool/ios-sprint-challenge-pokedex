@@ -1,9 +1,9 @@
-//
-//  Pokemon.swift
-//  Pokedex
-//
-//  Created by Julian A. Fordyce on 12/7/18.
-//  Copyright © 2018 Julian A. Fordyce. All rights reserved.
-//
-
 import Foundation
+
+// https://pokeapi.co/docs/v2.html/
+struct Pokemon: Codable  {
+    let name: String
+    let ID: Int
+    let ability: String
+    let type: String
+}
