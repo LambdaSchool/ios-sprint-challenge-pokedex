@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="-550" y="-90"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Pokemon Table View Controller-->
         <scene sceneID="y89-QN-KQA">
             <objects>
-                <tableViewController id="4Yf-Zt-sUU" sceneMemberID="viewController">
+                <tableViewController id="4Yf-Zt-sUU" customClass="PokemonTableViewController" customModule="Sprint_3_Challenge___Week_4" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mhp-2y-4l1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +62,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="263" id="KpR-Ol-luW">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="263" id="KpR-Ol-luW" customClass="PokemonSearchTableViewCell" customModule="Sprint_3_Challenge___Week_4" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="263"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KpR-Ol-luW" id="PDT-zp-a4f">
@@ -102,6 +102,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xeu-Lq-gJl">
                                                     <rect key="frame" x="0.0" y="232.5" width="359" height="30"/>
                                                     <state key="normal" title="Save Pokemon"/>
+                                                    <connections>
+                                                        <action selector="savePokemon:" destination="KpR-Ol-luW" eventType="touchUpInside" id="DPi-3n-myY"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -113,6 +116,12 @@
                                         <constraint firstItem="Dp0-zN-ME1" firstAttribute="top" secondItem="PDT-zp-a4f" secondAttribute="top" id="fMf-Df-sit"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="abilitiesLabel" destination="7Rj-ER-yUW" id="KGA-hj-uuX"/>
+                                    <outlet property="idLabel" destination="MV5-0G-Pze" id="9ab-RR-wSF"/>
+                                    <outlet property="pokemonNameLabel" destination="pdQ-JO-cSR" id="kWm-fR-n93"/>
+                                    <outlet property="typesLabel" destination="L1f-jY-vGO" id="bE6-cT-Z6w"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
