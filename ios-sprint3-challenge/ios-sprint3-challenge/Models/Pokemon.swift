@@ -6,10 +6,17 @@ struct Pokemon: Codable {
     let forms: [String]
     let id: Int
     let name: String
-    let sprites: String // sprites.front should return a URL String
+    let sprites: [String]
+    let spriteFront: String // sprites.front should return a URL String
     
     enum CodingKeys: String, CodingKey {
-        case front = "front_default"
+        case spriteFront = "front_default"
+        case abilities
+        case forms
+        case id
+        case name
+        case sprites
+        
         
     }
 }
