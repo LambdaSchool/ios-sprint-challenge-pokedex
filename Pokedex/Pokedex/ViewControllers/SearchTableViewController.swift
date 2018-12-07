@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchTableViewController: UITableViewController, UISearchBarDelegate {
+class SearchTableViewController: UITableViewController, UISearchBarDelegate{
 
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -57,7 +57,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         let pokemon = Model.shared.result(at: indexPath.row)
         
         // fill out the cell labels
-        
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = String(pokemon.id)
         
@@ -68,10 +67,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    {
-        return 200.0;//Your custom row height
-    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -12,7 +12,6 @@ class SearchTableViewCell: UITableViewCell {
 
     static let reuseIdentifier = "searchResultCell"
     
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
@@ -30,5 +29,14 @@ class SearchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
- 
+    @IBAction func save(_ sender: Any) {
+        
+        let pokemon = Model.shared.results[0]
+        print(pokemon.name)
+        Model.shared.addNewPokemon(pokemon: pokemon, completion: {})
+        
+        print(Model.shared.pokemon(forIndex: 0).name)
+    }
+    
+
 }
