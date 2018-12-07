@@ -3,7 +3,7 @@ import Foundation
 class Pokemon: Codable, FirebaseItem {
     
     var name: String
-    var id: String
+    var id: Int
     var types: [String]
     var abilities: [String]
     var recordIdentifier: String = ""
