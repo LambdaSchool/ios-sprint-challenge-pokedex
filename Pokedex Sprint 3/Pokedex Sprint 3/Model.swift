@@ -24,6 +24,10 @@ class Model {
         return pokemon[index]
     }
     
+    func add(pokemon: Pokemon) {
+        pokemon.append(pokemon)
+    }
+    
     func search(for string: String) {
         PokemonAPI.searchForPokemon(with: string) { pokemon, error in
             if let error = error {

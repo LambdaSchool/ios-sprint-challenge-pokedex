@@ -4,6 +4,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Model.shared.pokemon
         Model.shared.updateHandler = { self.tableView.reloadData() }
     }
     
