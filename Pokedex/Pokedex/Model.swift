@@ -18,7 +18,10 @@ class Model {
         return characters.count
     }
     
-    //Fix this
+    func character(at index: Int) -> Character {
+        return characters[index]
+    }
+    
     func search(for string: String) {
         Poke.searchForCharacters(with: string, resultType: string) { characters, error in
             if let error = error {

@@ -5,4 +5,5 @@ struct Character: Codable {
     let id: String
     let type: String
     let ability: String
+    let sprites: String
 }

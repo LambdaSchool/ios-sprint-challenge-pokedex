@@ -19,12 +19,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="IVI-L8-fig">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="Fkh-uz-Haw" style="IBUITableViewCellStyleDefault" id="IVI-L8-fig">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IVI-L8-fig" id="LC6-vk-lqJ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fkh-uz-Haw">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -100,11 +109,20 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gpU-g7-Sgn">
+                                <rect key="frame" x="30" y="497" width="315" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="2Im-9c-LzG"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gpU-g7-Sgn" firstAttribute="leading" secondItem="4wc-38-Mid" secondAttribute="leading" constant="30" id="AND-CN-GUW"/>
                             <constraint firstItem="KOi-1D-XRH" firstAttribute="top" secondItem="4wc-38-Mid" secondAttribute="top" id="DWF-Gp-CIP"/>
+                            <constraint firstItem="4wc-38-Mid" firstAttribute="bottom" secondItem="gpU-g7-Sgn" secondAttribute="bottom" constant="20" id="bPn-f9-tfe"/>
                             <constraint firstItem="KOi-1D-XRH" firstAttribute="trailing" secondItem="4wc-38-Mid" secondAttribute="trailing" id="bq8-bv-MIa"/>
+                            <constraint firstItem="4wc-38-Mid" firstAttribute="trailing" secondItem="gpU-g7-Sgn" secondAttribute="trailing" constant="30" id="dLa-Vu-SwP"/>
                             <constraint firstItem="ATi-YY-0eW" firstAttribute="centerX" secondItem="s6g-iq-CxM" secondAttribute="centerX" id="epk-xZ-kYR"/>
                             <constraint firstItem="ATi-YY-0eW" firstAttribute="top" secondItem="KOi-1D-XRH" secondAttribute="bottom" constant="20" id="hdA-lC-aGU"/>
                             <constraint firstItem="KOi-1D-XRH" firstAttribute="leading" secondItem="4wc-38-Mid" secondAttribute="leading" id="rtv-f4-p0L"/>
@@ -116,6 +134,7 @@
                         <outlet property="characterLabel" destination="xW7-jx-xaF" id="TkD-Hq-7PP"/>
                         <outlet property="idLabel" destination="MPF-4q-MK4" id="WNC-tW-hso"/>
                         <outlet property="searchBar" destination="KOi-1D-XRH" id="JHt-bJ-6gb"/>
+                        <outlet property="spriteView" destination="gpU-g7-Sgn" id="u3G-vb-ZBD"/>
                         <outlet property="typeLabel" destination="fIh-Mj-kNh" id="eM1-Ec-OUl"/>
                     </connections>
                 </viewController>

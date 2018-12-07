@@ -17,7 +17,8 @@ class Poke {
         let resultItemOne = URLQueryItem(name: "id", value: resultType)
         let resultItemTwo = URLQueryItem(name: "type", value: resultType)
         let resultItemThree = URLQueryItem(name: "ability", value: resultType)
-        urlComponents.queryItems = [searchQueryItems, resultItemOne, resultItemTwo, resultItemThree]
+        let resultItemFour = URLQueryItem(name: "sprintes", value: resultType)
+        urlComponents.queryItems = [searchQueryItems, resultItemOne, resultItemTwo, resultItemThree, resultItemFour]
         
         guard let searchURL = urlComponents.url else {
            fatalError("Unable to recompose components")

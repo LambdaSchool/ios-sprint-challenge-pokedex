@@ -1,6 +1,7 @@
 import UIKit
 
 class DetailViewController: UIViewController, UISearchBarDelegate {
+    var character: Character?
     
     @IBOutlet weak var characterLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -9,6 +10,9 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBAction func save(_ sender: Any) {
     }
+    
+    @IBOutlet weak var spriteView: UIImageView!
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         <#code#>

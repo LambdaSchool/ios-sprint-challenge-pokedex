@@ -8,34 +8,35 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       
+        Model.shared.updateHandler = { self.tableView.reloadData()}
+    }
+    deinit {
+        Model.shared.updateHandler = nil
     }
 
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return Model.shared.numberOfCharacters()
     }
 
-   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        let character = Model.shared.character(at: indexPath.row)
 
         return cell
     }
    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let editingStyle == .delete
+        guard editingStyle == .delete else { return }
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let indexPath = tableView.indexPathsForSelectedRows else { return }
+        guard let destination = segue.destination as? DetailViewController else { return }
+        let character = Model.shared.characters
+        //need to fix this
+        destination.characterLabel = character
     }
 }
