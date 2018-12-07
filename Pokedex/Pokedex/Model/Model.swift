@@ -5,7 +5,11 @@ class Model {
     private init() {}
     var delegate: ModelUpdateClient?
     
+    typealias UpdateHandler = () -> Void
+    var updateHandler: UpdateHandler? = nil
+    
     private var pokemons: [Pokemon] = []
+    private var results: [Pokemon] = []
     
     func count() -> Int {
         return pokemons.count
@@ -64,4 +68,37 @@ class Model {
         }
         delegate?.modelDidUpdate()
     }
+    
+    // MARK: Core Search Functionality
+    
+    func search(for string: String) {
+        SWAPI.searchForPokemon(with: string) { results, error in
+            if let error = error {
+                NSLog("Error fetching people: \(error)")
+                return
+            }
+            
+            // Great opportunity to use nil coalescing to convert
+            // a nil result into the empty array
+            // TODO: Update here
+            self.results = results ?? []
+        }
+    }
+    
+    var results: [Pokemon] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateHandler?()
+            }
+        }
+    }
+    
+    func numberOfResults() -> Int {
+        return results.count
+    }
+    
+    func result(at index: Int) -> Pokemon {
+        return results[index]
+    }
+    
 }

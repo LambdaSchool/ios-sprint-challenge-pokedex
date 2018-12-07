@@ -10,6 +10,7 @@ import UIKit
 
 class PokedexTableViewCell: UITableViewCell {
 
+    static let reuseIdentifier = "cell"
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
