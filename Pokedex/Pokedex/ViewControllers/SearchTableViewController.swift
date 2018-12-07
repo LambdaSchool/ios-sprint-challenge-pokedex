@@ -46,7 +46,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = pokemon.id
-        cell.typesLabel.text = pokemon.types
+        cell.typesLabel.text = pokemon.types[0] // TODO: fix this
         cell.abilitiesLabel.text = pokemon.abilities[0] // TODO: fix this
         
         return cell
