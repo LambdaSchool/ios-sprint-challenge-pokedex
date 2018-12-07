@@ -70,7 +70,7 @@ class Model {
     
     // MARK: Core Search Functionality
     
-    func search(for string: String) {
+    func search(for string: String, completion: @escaping () -> Void) {
         Pokeapi.searchForPokemon(with: string) { results, error in
             if let error = error {
                 NSLog("Error fetching Pokemon: \(error)")

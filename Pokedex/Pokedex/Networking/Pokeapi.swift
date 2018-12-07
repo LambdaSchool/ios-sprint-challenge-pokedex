@@ -75,10 +75,10 @@ class Pokeapi {
                 
                 // Perform decoding into [Person] stored in PersonSearchResults
                 let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                let people = searchResults.results
+                let results = searchResults.results
                 
                 // Send back the results to the completion handler
-                completion(people, nil)
+                completion(results, nil)
                 
             } catch {
                 NSLog("Unable to decode data into pokemon: \(error)")
