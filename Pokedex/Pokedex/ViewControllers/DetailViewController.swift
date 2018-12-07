@@ -25,7 +25,9 @@ class DetailViewController: UIViewController {
         nameLabel.text = pokemon.name
         idLabel.text = pokemon.id
         typesLabel.text = pokemon.types
-        abilitiesLabel.text = pokemon.abilities
+        
+        // TODO: implement split(", ") here
+        abilitiesLabel.text = pokemon.abilities[0]
     }
 
 }
