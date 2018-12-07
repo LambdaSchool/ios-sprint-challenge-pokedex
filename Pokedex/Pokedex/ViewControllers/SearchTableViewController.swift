@@ -11,8 +11,11 @@ import UIKit
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad(){
         super.viewDidLoad()
+        searchBar.delegate = self
         // TODO: Update updatehandler
         Model.shared.updateHandler = { self.tableView.reloadData() }
     }
@@ -44,14 +47,14 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseIdentifier, for: indexPath) as? SearchTableViewCell else {fatalError("Unable to retrieve and cast cell")}
         
         // Configure the cell...
-        let pokemon = Model.shared.pokemon(forIndex: indexPath.row)
+        let pokemon = Model.shared.result(at: indexPath.row)
         
         // fill out the cell labels
         
         cell.nameLabel.text = pokemon.name
-        cell.idLabel.text = pokemon.id
-        cell.typesLabel.text = pokemon.types[0] // TODO: fix this
-        cell.abilitiesLabel.text = pokemon.abilities[0] // TODO: fix this
+        cell.idLabel.text = String(pokemon.id)
+        //cell.typesLabel.text = pokemon.types[0] // TODO: fix this
+        //cell.abilitiesLabel.text = pokemon.abilities[0] // TODO: fix this
         
         return cell
     }

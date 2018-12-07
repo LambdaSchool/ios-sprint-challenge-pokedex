@@ -15,6 +15,7 @@ class Model {
     }
     
     func pokemon(forIndex index: Int) -> Pokemon {
+        print(index)
         return pokemons[index]
     }
     

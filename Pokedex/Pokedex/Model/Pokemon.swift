@@ -4,13 +4,17 @@ class Pokemon: Codable, FirebaseItem {
     
     var name: String
     var id: Int
-    var types: [String]
-    var abilities: [String]
+    //var types: [String]
+    //var abilities: [String]
     var recordIdentifier: String = ""
     
-    init(name: String, id: String, types: String?, abilities: String?) {
-        let types = types ?? ""
-        let abilities = abilities ?? ""
-        (self.name, self.id,self.types, self.abilities ) = (name, id, [types], [abilities])
+    init(name: String, id: Int) {
+        // let types = types[0] ?? ""
+        // let abilities = abilities[0] ?? ""
+        (self.name, self.id ) = (name, id)
     }
 }
+
+//,self.types, self.abilities
+//, [types], [abilities]
+//types: [String?], abilities: [String?]

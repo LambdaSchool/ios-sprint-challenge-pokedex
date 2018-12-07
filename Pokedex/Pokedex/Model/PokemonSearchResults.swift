@@ -10,5 +10,9 @@ import Foundation
 
 // individual entry
 struct PokemonSearchResults: Codable{
-    let results: [Pokemon]
+    let id: Int
+    let name: String
+    //let types: [String]
+    //let abilities: [String]
+    
 }

@@ -15,7 +15,7 @@ class Pokeapi {
     static func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
         
         // Establish the base url for our search
-        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/\(searchTerm)")
+        guard let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/\(searchTerm.lowercased())/")
             else {
                 fatalError("Unable to construct baseURL")
         }
@@ -60,6 +60,7 @@ class Pokeapi {
                 return
             }
             
+            print(data)
             // We know now we have no error *and* we have data to work with
             
             // Convert the data to JSON
@@ -71,14 +72,22 @@ class Pokeapi {
             do {
                 // Declare, customize, use the decoder
                 let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                // Perform decoding into [Person] stored in PersonSearchResults
+                // Perform decoding into [Pokemoon] stored in PersonSearchResults
                 let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                let results = searchResults.results
+                
+                
+                let name = searchResults.name
+                let id = searchResults.id
+                //let types = searchResults.types
+                //let abilities = searchResults.abilities
+                //, types: types, abilities: abilities
+            
+                let pokemon = Pokemon(name: name, id: id)
+                let pokemons = [pokemon]
                 
                 // Send back the results to the completion handler
-                completion(results, nil)
+                completion(pokemons, nil)
                 
             } catch {
                 NSLog("Unable to decode data into pokemon: \(error)")

@@ -134,6 +134,7 @@ class Firebase<Item: Codable & FirebaseItem> {
                 let recordDict = try JSONDecoder().decode([String: Item].self, from:data)
                 for (key, value) in recordDict { value.recordIdentifier = key } // pure paranoia
                 let records = recordDict.map({ $0.value }) // This converts the [[id: item]] array of dictionary entries into an array of items
+                print(records)
                 completion(records)
             } catch {
                 NSLog("Error decoding received data: \(error)")
