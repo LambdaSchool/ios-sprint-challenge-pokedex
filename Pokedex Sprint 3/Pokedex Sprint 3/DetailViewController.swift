@@ -7,12 +7,13 @@ class DetailViewController: UIViewController {
     @IBOutlet var abilityLabel: UILabel!
     @IBOutlet var typeLabel: UILabel!
     
-    @IBAction var saveButton: UIButton {
-        guard let pokemon = pokemon else { return }
-    }
-    
     var pokemon: Pokemon?
     
+    @IBAction func save(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+       
+        
+    }
 
     
     override func viewWillAppear(_ animated: Bool) {

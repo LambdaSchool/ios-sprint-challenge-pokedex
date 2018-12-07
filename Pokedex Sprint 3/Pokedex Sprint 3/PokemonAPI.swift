@@ -6,7 +6,7 @@ import Foundation
 
 class PokemonAPI {
     
-    static let endpoint = "https://pokeapi.co/api/v2/pokemon/"
+    static let endpoint = "https://pokeapi.co/api/v2/"
     
     // Add the completion last
     static func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {

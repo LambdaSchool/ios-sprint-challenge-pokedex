@@ -2,18 +2,17 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchBarDelegate {
     
+    
+    @IBOutlet var searchBar: UISearchBar!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        Model.shared.pokemon
         Model.shared.updateHandler = { self.tableView.reloadData() }
     }
-    
-    // work to do when this object is released back to memory
-    //Cleaning up after ourselves...kind of like setting a text field to an empty string.
     deinit {
         Model.shared.updateHandler = nil
     }
-    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
@@ -21,7 +20,6 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         
         
     }
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Model.shared.numberOfPokemon()
