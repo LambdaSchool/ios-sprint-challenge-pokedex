@@ -8,18 +8,26 @@
 
 import UIKit
 
-class SearchTableViewController: UITableViewController {
+class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // TODO: Update updatehandler
+        Model.shared.updateHandler = { self.tableView.reloadData() }
     }
 
+    // TODO: Update deinit
+    deinit {
+        Model.shared.updateHandler = nil
+    }
+    
+    // TODO: Update search button clicked
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else {return}
+        
+        Model.shared.search(for: searchTerm)
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
