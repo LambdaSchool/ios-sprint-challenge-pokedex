@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="L12-0W-ARd" style="IBUITableViewCellStyleDefault" id="SSW-Tc-mKH">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokedexCell" textLabel="L12-0W-ARd" style="IBUITableViewCellStyleDefault" id="SSW-Tc-mKH">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SSW-Tc-mKH" id="FAP-Nb-YIV">
@@ -36,7 +36,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="pqv-CT-xxN" kind="show" id="07O-u5-Oy7"/>
+                                    <segue destination="pqv-CT-xxN" kind="show" identifier="detailViewSegue" id="07O-u5-Oy7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -48,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="dHv-mp-KYA">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="hqP-H9-pYJ">
                             <connections>
-                                <segue destination="OcX-6B-YcU" kind="show" id="lrP-Kq-uOU"/>
+                                <segue destination="OcX-6B-YcU" kind="show" identifier="pokemonSearchSegue" id="lrP-Kq-uOU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -134,7 +134,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="165" id="0bP-Pi-nbu">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultCell" rowHeight="165" id="0bP-Pi-nbu">
                                 <rect key="frame" x="0.0" y="72" width="375" height="165"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0bP-Pi-nbu" id="hzN-jc-sTm">

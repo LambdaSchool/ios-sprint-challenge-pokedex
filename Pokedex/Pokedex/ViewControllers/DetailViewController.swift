@@ -24,7 +24,7 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         nameLabel.text = pokemon.name
         idLabel.text = pokemon.id
-        typesLabel.text = pokemon.id
+        typesLabel.text = pokemon.types
         abilitiesLabel.text = pokemon.abilities
     }
 

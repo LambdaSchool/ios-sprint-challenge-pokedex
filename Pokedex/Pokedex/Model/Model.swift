@@ -51,7 +51,7 @@ class Model {
     }
     
     
-    func updatePokemon(for person: Pokemon, completion: @escaping () -> Void) {
+    func updatePokemon(for pokemon: Pokemon, completion: @escaping () -> Void) {
         //
         
         // TODO: do we need this?
