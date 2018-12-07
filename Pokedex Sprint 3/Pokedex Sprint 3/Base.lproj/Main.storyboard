@@ -1,58 +1,198 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1pb-yC-EMv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iar-c9-alz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
-        <scene sceneID="BR6-bo-9Z6">
+        <!--Pokémon-->
+        <scene sceneID="sq2-eP-MNr">
             <objects>
-                <tableViewController id="nFe-ef-23S" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="l1o-PY-hA6">
+                <tableViewController id="g8C-38-9fe" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3M5-ML-LG8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="J0A-sE-J94">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokemon cell" rowHeight="133" id="FTD-bj-uUl">
-                                <rect key="frame" x="0.0" y="28" width="375" height="133"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="120" id="NRV-VJ-Ynh">
+                                <rect key="frame" x="0.0" y="72" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FTD-bj-uUl" id="8qc-4m-6mu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="132.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NRV-VJ-Ynh" id="h7D-am-W2J">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search Pokemon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9y-Js-v3F">
+                                            <rect key="frame" x="123" y="11" width="129" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1MM-IC-bIo">
+                                            <rect key="frame" x="139" y="44" width="97" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdV-dy-biF">
+                                            <rect key="frame" x="170" y="82" width="34" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Save"/>
+                                        </button>
+                                    </subviews>
                                 </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="224" id="s6K-WJ-FMU">
+                                <rect key="frame" x="0.0" y="192" width="375" height="224"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s6K-WJ-FMU" id="anO-77-WrR">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="223.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="4Ih-fa-Ovz">
+                                            <rect key="frame" x="16" y="49" width="133.5" height="125.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bulbasaur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5r-5v-9ao">
+                                                    <rect key="frame" x="0.0" y="0.0" width="95.5" height="26.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z22-nE-tHc">
+                                                    <rect key="frame" x="0.0" y="41.5" width="29.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ability: chlorophyll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ni-yJ-Agm">
+                                                    <rect key="frame" x="0.0" y="74.5" width="126" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type: poison, grass" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfQ-co-RJL">
+                                                    <rect key="frame" x="0.0" y="107.5" width="133.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8KW-B4-Azm">
+                                            <rect key="frame" x="233" y="59" width="115" height="115"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8KW-B4-Azm" firstAttribute="top" secondItem="anO-77-WrR" secondAttribute="topMargin" constant="48" id="4zk-0B-Tc9"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="4Ih-fa-Ovz" secondAttribute="bottom" constant="38.5" id="V59-9B-dxB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="8KW-B4-Azm" secondAttribute="trailing" constant="11" id="b22-7d-yi3"/>
+                                        <constraint firstItem="4Ih-fa-Ovz" firstAttribute="leading" secondItem="anO-77-WrR" secondAttribute="leadingMargin" id="baJ-QP-wVf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="8KW-B4-Azm" secondAttribute="bottom" constant="39" id="f8Y-St-KPS"/>
+                                        <constraint firstItem="8KW-B4-Azm" firstAttribute="leading" secondItem="4Ih-fa-Ovz" secondAttribute="trailing" constant="83.5" id="ihR-sn-mOH"/>
+                                        <constraint firstItem="8KW-B4-Azm" firstAttribute="leading" secondItem="4Ih-fa-Ovz" secondAttribute="trailing" constant="83.5" id="opQ-Mc-gZq"/>
+                                        <constraint firstItem="4Ih-fa-Ovz" firstAttribute="top" secondItem="anO-77-WrR" secondAttribute="topMargin" constant="38" id="q5t-wP-Dj5"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="hD0-Zv-f25" kind="show" id="bn4-ct-nAG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="nFe-ef-23S" id="tyF-2C-Zzd"/>
-                            <outlet property="delegate" destination="nFe-ef-23S" id="zBI-I4-UAR"/>
+                            <outlet property="dataSource" destination="g8C-38-9fe" id="ILX-lG-o3d"/>
+                            <outlet property="delegate" destination="g8C-38-9fe" id="pxq-mO-e5K"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="YpL-xJ-vwP"/>
+                    <navigationItem key="navigationItem" title="Pokémon" id="efs-76-aLQ"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IVR-Jd-kt3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aPm-bg-Fit" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="384.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="456.80000000000001" y="275.71214392803603"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="kCQ-Ms-gU4">
+        <scene sceneID="ukW-M1-lte">
             <objects>
-                <navigationController id="1pb-yC-EMv" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FT4-Bv-2zG">
+                <navigationController id="iar-c9-alz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3pf-cT-Xpq">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="nFe-ef-23S" kind="relationship" relationship="rootViewController" id="qbN-Ga-a8L"/>
+                        <segue destination="g8C-38-9fe" kind="relationship" relationship="rootViewController" id="0yR-za-o6G"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bmg-nZ-twC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eXh-Lc-Nhn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-375" y="134"/>
+            <point key="canvasLocation" x="-496" y="276"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5dT-zg-9pl">
+            <objects>
+                <viewController id="hD0-Zv-f25" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6aH-c9-o25">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HbP-id-rrU">
+                                <rect key="frame" x="87" y="112" width="200" height="200"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ooC-AO-Gmc">
+                                <rect key="frame" x="0.0" y="370" width="375" height="190.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bulbasaur" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="K2A-Lo-wV2">
+                                        <rect key="frame" x="131.5" y="0.0" width="112.5" height="31.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0M-ga-E2Q">
+                                        <rect key="frame" x="169.5" y="61.5" width="36.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ability: chlorophyll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="D2A-Ir-hyf">
+                                        <rect key="frame" x="109.5" y="114.5" width="156" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type: poison, grass" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="48U-sh-y5e">
+                                        <rect key="frame" x="105" y="167.5" width="165.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HbP-id-rrU" firstAttribute="top" secondItem="shf-ks-eEP" secondAttribute="top" constant="48" id="4ns-uz-VXn"/>
+                            <constraint firstItem="shf-ks-eEP" firstAttribute="trailing" secondItem="ooC-AO-Gmc" secondAttribute="trailing" id="At6-F8-tKh"/>
+                            <constraint firstItem="ooC-AO-Gmc" firstAttribute="top" secondItem="HbP-id-rrU" secondAttribute="bottom" constant="58" id="Dld-NF-yyp"/>
+                            <constraint firstItem="ooC-AO-Gmc" firstAttribute="leading" secondItem="shf-ks-eEP" secondAttribute="leading" id="Fjr-UG-lpU"/>
+                            <constraint firstItem="shf-ks-eEP" firstAttribute="bottom" secondItem="ooC-AO-Gmc" secondAttribute="bottom" constant="106.5" id="UKO-Dc-rCc"/>
+                            <constraint firstItem="shf-ks-eEP" firstAttribute="trailing" secondItem="HbP-id-rrU" secondAttribute="trailing" constant="88" id="oyN-Qv-x4j"/>
+                            <constraint firstItem="HbP-id-rrU" firstAttribute="leading" secondItem="shf-ks-eEP" secondAttribute="leading" constant="87" id="uXY-g7-uOV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="shf-ks-eEP"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qhC-vA-zPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1182" y="276"/>
         </scene>
     </scenes>
 </document>
