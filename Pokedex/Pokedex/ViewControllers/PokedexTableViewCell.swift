@@ -10,8 +10,8 @@ import UIKit
 
 class PokedexTableViewCell: UITableViewCell {
 
-    
     static let reuseIdentifier = "pokedexCell"
+    @IBOutlet weak var nameLabel: UILabel!
 
-
+    
 }

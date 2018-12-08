@@ -55,12 +55,10 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        tableView.register(PokedexTableViewCell.self, forCellReuseIdentifier: PokedexTableViewCell.reuseIdentifier)
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PokedexTableViewCell.reuseIdentifier, for: indexPath) as? PokedexTableViewCell else { fatalError("Unable to dequeue entry cell") }
         
         let pokemon = Model.shared.pokemon(forIndex: indexPath.row)
-        cell.textLabel?.text = pokemon.name
+        cell.nameLabel.text = pokemon.name
 
         // Configure the cell...
 
