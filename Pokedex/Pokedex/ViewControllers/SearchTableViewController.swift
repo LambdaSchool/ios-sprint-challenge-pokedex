@@ -77,6 +77,23 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         
         cell.typesLabel.text = typesString
         
+        let imageUrlString = pokemon.sprites.frontDefault
+
+        DispatchQueue.global(qos: .background).async {
+            do
+            {
+                let data = try Data.init(contentsOf: URL.init(string:imageUrlString)!)
+                DispatchQueue.main.async {
+                    let image: UIImage = UIImage(data: data)!
+                    cell.pokemonImageView.image = image
+                }
+            }
+            catch {
+                // error
+                fatalError("unable to get Pokemon picture")
+            }
+        }
+        
         cell.onComplete = { self.navigationController?.popViewController(animated: true) }
         
         //cell.typesLabel.text = pokemon.types[0] // TODO: fix this

@@ -59,6 +59,23 @@ class MainTableViewController: UITableViewController {
         
         let pokemon = Model.shared.pokemon(forIndex: indexPath.row)
         cell.nameLabel.text = pokemon.name
+        
+        let imageUrlString = pokemon.sprites.frontDefault
+        
+        DispatchQueue.global(qos: .background).async {
+            do
+            {
+                let data = try Data.init(contentsOf: URL.init(string:imageUrlString)!)
+                DispatchQueue.main.async {
+                    let image: UIImage = UIImage(data: data)!
+                    cell.pokemonImageView.image = image
+                }
+            }
+            catch {
+                // error
+                fatalError("unable to get Pokemon picture")
+            }
+        }
 
         // Configure the cell...
 

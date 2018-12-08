@@ -18,6 +18,7 @@ class SearchTableViewCell: UITableViewCell {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var pokemonImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
