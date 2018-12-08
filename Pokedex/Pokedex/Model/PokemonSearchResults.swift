@@ -12,7 +12,8 @@ import Foundation
 struct PokemonSearchResults: Codable{
     let id: Int
     let name: String
-    //let types: [[Int:[String:String]]]
-    //let abilities: [Bool,Int,[String:String]]
-    
+    let types: [Pokemon.TypeElement]
+    let abilities: [Pokemon.AbilityElement]
+    let sprites: Pokemon.Sprites
+  
 }

@@ -11,7 +11,10 @@ import Foundation
 struct Type: Codable{
     let name: String
     let url: String
-    //let types: [[Int:[String:String]]]
-    //let abilities: [Bool,Int,[String:String]]
     
+    init(name: String, url: String) {
+        // let types = types[0] ?? ""
+        // let abilities = abilities[0] ?? ""
+        (self.name, self.url) = (name, url)
+    }
 }

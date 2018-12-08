@@ -72,23 +72,27 @@ class Pokeapi {
                 // Declare, customize, use the decoder
                 let jsonDecoder = JSONDecoder()
                 
+                print(data)
                 // Perform decoding into [Pokemoon] stored in PersonSearchResults
                 let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
+
                 
-                print(searchResults)
                 let name = searchResults.name
                 let id = searchResults.id
-                //let types = searchResults.types
-                //let abilities = searchResults.abilities
+                let types = searchResults.types
+                let abilities = searchResults.abilities
+                let sprites = searchResults.sprites
+                
+//                let abilities = searchResults.abilities[0].keys
+                
+                let pokemon = Pokemon(name: name, id: id, types: types, abilities: abilities, sprites: sprites)
                 
                 //let types = searchResults.types
                 //let abilities = searchResults.abilities
                 //, types: types, abilities: abilities
             
-                let pokemon = Pokemon(name: name, id: id)
-                
                 let pokemons = [pokemon]
-                print(pokemons[0].name)
+                
                 // Send back the results to the completion handler
                 completion(pokemons, nil)
                 

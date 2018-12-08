@@ -7,10 +7,10 @@
 //
 
 import Foundation
-// individual entry
+
 struct Types: Codable{
     let name: String
     let url: String
-    let types: [Type]
+    let type: Type
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate{
 
@@ -59,6 +60,22 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         // fill out the cell labels
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = String(pokemon.id)
+        
+        var abilitiesString = ""
+        for each in 0..<(pokemon.abilities.count - 1){
+            abilitiesString += "\(pokemon.abilities[each].ability.name), "
+        }
+        abilitiesString += pokemon.abilities[pokemon.abilities.count - 1].ability.name
+        
+        cell.abilitiesLabel.text = abilitiesString
+        
+        var typesString = ""
+        for each in 0..<(pokemon.types.count - 1){
+            typesString += "\(pokemon.types[each].type.name), "
+        }
+        typesString += pokemon.types[pokemon.types.count - 1].type.name
+        
+        cell.typesLabel.text = typesString
         
         cell.onComplete = { self.navigationController?.popViewController(animated: true) }
         
