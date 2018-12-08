@@ -28,10 +28,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         Model.shared.updateHandler = { self.tableView.reloadData() }
     }
 
-    // TODO: Update deinit
-    deinit {
-        Model.shared.updateHandler = nil
-    }
+//    // TODO: Update deinit
+//    deinit {
+//        Model.shared.updateHandler = nil
+//    }
     
     // TODO: Update search button clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -25,9 +25,21 @@ class DetailViewController: UIViewController {
         nameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
         
-        // TODO: implement split(", ") here
-        //typesLabel.text = pokemon.types[0]
-        //abilitiesLabel.text = pokemon.abilities[0]
+        var abilitiesString = "Abilities: "
+        for each in 0..<(pokemon.abilities.count - 1){
+            abilitiesString += "\(pokemon.abilities[each].ability.name), "
+        }
+        abilitiesString += pokemon.abilities[pokemon.abilities.count - 1].ability.name
+        
+        abilitiesLabel.text = abilitiesString
+        
+        var typesString = "Types: "
+        for each in 0..<(pokemon.types.count - 1){
+            typesString += "\(pokemon.types[each].type.name), "
+        }
+        typesString += pokemon.types[pokemon.types.count - 1].type.name
+        
+        typesLabel.text = typesString
     }
 
 }
