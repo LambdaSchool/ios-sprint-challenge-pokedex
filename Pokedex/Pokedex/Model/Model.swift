@@ -102,4 +102,8 @@ class Model {
         return results[index]
     }
     
+    func deleteResults(){
+        results = []
+    }
+    
 }

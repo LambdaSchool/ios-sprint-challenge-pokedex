@@ -10,7 +10,6 @@ import UIKit
 
 class MainTableViewController: UITableViewController {
 
-    let reuseIdentifier = "pokedexCell"
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem?.isEnabled = false
@@ -56,7 +55,9 @@ class MainTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? PokedexTableViewCell else { fatalError("Unable to dequeue entry cell") }
+        tableView.register(PokedexTableViewCell.self, forCellReuseIdentifier: PokedexTableViewCell.reuseIdentifier)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokedexTableViewCell.reuseIdentifier, for: indexPath) as? PokedexTableViewCell else { fatalError("Unable to dequeue entry cell") }
         
         let pokemon = Model.shared.pokemon(forIndex: indexPath.row)
         cell.textLabel?.text = pokemon.name
@@ -81,4 +82,13 @@ class MainTableViewController: UITableViewController {
         destination.pokemon = Model.shared.pokemon(forIndex: indexPath.row)
     }
 
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        guard editingStyle == .delete else { return }
+        
+        // FIXME: Delete an item, update Firebase, update model, and reload data
+        Model.shared.deletePokemon(at: indexPath){
+            self.tableView.reloadData()
+        }
+    }
 }

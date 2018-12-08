@@ -34,7 +34,10 @@ class SearchTableViewCell: UITableViewCell {
         
         let pokemon = Model.shared.results[0]
         
+        Model.shared.deleteResults()
+        
         Model.shared.addNewPokemon(pokemon: pokemon){
+            
             self.onComplete?()
         }
         
