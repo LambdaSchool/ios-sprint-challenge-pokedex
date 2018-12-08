@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonImageView: UIImageView!
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +41,23 @@ class DetailViewController: UIViewController {
         typesString += pokemon.types[pokemon.types.count - 1].type.name
         
         typesLabel.text = typesString
+        
+        let imageUrlString = pokemon.sprites.frontDefault
+        
+        DispatchQueue.global(qos: .background).async {
+            do
+            {
+                let data = try Data.init(contentsOf: URL.init(string:imageUrlString)!)
+                DispatchQueue.main.async {
+                    let image: UIImage = UIImage(data: data)!
+                    self.pokemonImageView.image = image
+                }
+            }
+            catch {
+                // error
+                fatalError("unable to get Pokemon picture")
+            }
+        }
     }
 
 }
