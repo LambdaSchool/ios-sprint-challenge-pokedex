@@ -61,7 +61,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = String(pokemon.id)
         
-        var abilitiesString = ""
+        var abilitiesString = "Abilities: "
         for each in 0..<(pokemon.abilities.count - 1){
             abilitiesString += "\(pokemon.abilities[each].ability.name), "
         }
@@ -69,7 +69,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate{
         
         cell.abilitiesLabel.text = abilitiesString
         
-        var typesString = ""
+        var typesString = "Types: "
         for each in 0..<(pokemon.types.count - 1){
             typesString += "\(pokemon.types[each].type.name), "
         }
