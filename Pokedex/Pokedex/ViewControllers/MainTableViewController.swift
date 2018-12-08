@@ -108,4 +108,23 @@ class MainTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        Model.shared.movePokemon(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+        
+    }
+    
+    
+    @IBAction func editTable(_ sender: Any) {
+        tableView.setEditing(true, animated: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(stopEditingTable(_:)))
+    }
+    
+    @objc
+    func stopEditingTable(_ sender: Any) {
+        tableView.setEditing(false, animated: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editTable(_:)))
+    }
 }

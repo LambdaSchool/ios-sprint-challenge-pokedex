@@ -19,6 +19,11 @@ class Model {
         return pokemons[index]
     }
     
+    func movePokemon(from index: Int, to destinationIndex: Int) {
+        let pokemon = pokemons.remove(at: index)
+        pokemons.insert(pokemon, at: destinationIndex)
+    }
+    
     func setPokemon(pokemons: [Pokemon]) {
         Model.shared.pokemons = pokemons
     }

@@ -64,6 +64,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" id="dHv-mp-KYA">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="rGq-RS-M0C">
+                            <connections>
+                                <action selector="editTable:" destination="kS6-Xz-bAm" id="tr1-Va-cze"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="hqP-H9-pYJ">
                             <connections>
                                 <segue destination="OcX-6B-YcU" kind="show" identifier="pokemonSearchSegue" id="lrP-Kq-uOU"/>
@@ -142,12 +147,27 @@
                                     <constraint firstAttribute="trailing" secondItem="tnQ-XZ-pqn" secondAttribute="trailing" id="xzM-1O-4F1"/>
                                 </constraints>
                             </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Mm4-Se-N4K">
+                                <rect key="frame" x="47.5" y="533.5" width="280" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="u3n-2y-HqD"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Front View"/>
+                                    <segment title="Back View"/>
+                                </segments>
+                                <connections>
+                                    <action selector="selectDifferentImage:" destination="pqv-CT-xxN" eventType="valueChanged" id="ucS-02-Dhy"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="f48-lq-ZGN" firstAttribute="centerY" secondItem="LMG-eS-CUV" secondAttribute="centerY" id="Imo-3r-wKE"/>
+                            <constraint firstItem="Mm4-Se-N4K" firstAttribute="top" secondItem="f48-lq-ZGN" secondAttribute="bottom" constant="20" id="Tuv-w1-l5M"/>
                             <constraint firstItem="f48-lq-ZGN" firstAttribute="centerX" secondItem="LMG-eS-CUV" secondAttribute="centerX" id="Xke-4m-qQ6"/>
                             <constraint firstItem="f48-lq-ZGN" firstAttribute="centerX" secondItem="LMG-eS-CUV" secondAttribute="centerX" id="fE9-gl-wW0"/>
+                            <constraint firstItem="Mm4-Se-N4K" firstAttribute="centerX" secondItem="LMG-eS-CUV" secondAttribute="centerX" id="fPI-QX-vEW"/>
                             <constraint firstItem="f48-lq-ZGN" firstAttribute="centerY" secondItem="LMG-eS-CUV" secondAttribute="centerY" id="yLn-d4-u6P"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CaJ-u5-igt"/>
@@ -158,6 +178,7 @@
                         <outlet property="idLabel" destination="u6I-9U-7AS" id="0CL-i7-FSf"/>
                         <outlet property="nameLabel" destination="bkT-iM-2rA" id="9cO-hR-mkf"/>
                         <outlet property="pokemonImageView" destination="tgn-1K-cC0" id="nW3-mM-IoE"/>
+                        <outlet property="segmentImagePicker" destination="Mm4-Se-N4K" id="foU-X0-9Xh"/>
                         <outlet property="typesLabel" destination="tnQ-XZ-pqn" id="8fL-EY-hgd"/>
                     </connections>
                 </viewController>
