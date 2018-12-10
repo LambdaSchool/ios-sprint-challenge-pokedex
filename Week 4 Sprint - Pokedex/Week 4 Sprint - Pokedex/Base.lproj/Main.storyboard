@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="savedpokecell" rowHeight="100" id="RX7-Tb-KiH">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="savedpokecell" rowHeight="100" id="RX7-Tb-KiH" customClass="SavedTableViewCell" customModule="Week_4_Sprint___Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RX7-Tb-KiH" id="CsP-2P-dwH">
@@ -52,6 +52,10 @@
                                         <constraint firstItem="ZrZ-MQ-sPM" firstAttribute="leading" secondItem="CsP-2P-dwH" secondAttribute="leading" constant="20" id="mC5-o9-bmg"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="pokeImageSavedView" destination="Z4h-To-6EM" id="ZkE-Yo-uHB"/>
+                                    <outlet property="pokeNameSavedLabel" destination="fSi-Ic-bgX" id="vMP-Fi-60Q"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -108,7 +112,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedpokecell" rowHeight="232" id="w0O-fa-rpR">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedpokecell" rowHeight="232" id="w0O-fa-rpR" customClass="SearchResultsTableViewCell" customModule="Week_4_Sprint___Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="375" height="232"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w0O-fa-rpR" id="mSv-kt-cvS">
@@ -165,6 +169,9 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JoP-aX-41j">
                                             <rect key="frame" x="137" y="191" width="101" height="30"/>
                                             <state key="normal" title="Save Pokemon"/>
+                                            <connections>
+                                                <action selector="save:" destination="ted-kB-2un" eventType="touchUpInside" id="qyl-tk-TSo"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -177,6 +184,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="pokeAbilitiesLabel" destination="zeN-Na-g3O" id="CqP-OE-zwQ"/>
+                                    <outlet property="pokeIdLabel" destination="g9X-q4-Wcj" id="w7v-Sp-phF"/>
+                                    <outlet property="pokeImageView" destination="vBB-bE-8VS" id="8U3-Jr-j9f"/>
+                                    <outlet property="pokeNameLabel" destination="umM-uX-3lq" id="5b3-Bg-icp"/>
+                                    <outlet property="pokeTypesLabel" destination="tgh-Lh-vJ6" id="hX7-GM-b73"/>
                                     <segue destination="dIj-fF-VzI" kind="show" id="ccL-li-GSZ"/>
                                 </connections>
                             </tableViewCell>
@@ -187,6 +199,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="10X-Pz-wPx"/>
+                    <connections>
+                        <outlet property="pokeNameTopLabel" destination="FrA-2N-QiC" id="7wC-2k-rqj"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BwV-Lc-r9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -247,16 +262,33 @@
                                     <constraint firstItem="3vZ-bP-GFz" firstAttribute="centerY" secondItem="9du-FY-HuX" secondAttribute="centerY" id="iGK-Er-zlE"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khG-ks-iRD">
+                                <rect key="frame" x="8" y="72" width="359" height="36"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9du-FY-HuX" firstAttribute="leading" secondItem="eMR-GG-NS5" secondAttribute="leading" constant="20" id="4ND-wB-ycL"/>
+                            <constraint firstItem="eMR-GG-NS5" firstAttribute="trailing" secondItem="khG-ks-iRD" secondAttribute="trailing" constant="8" id="BA6-et-dTf"/>
+                            <constraint firstItem="khG-ks-iRD" firstAttribute="leading" secondItem="eMR-GG-NS5" secondAttribute="leading" constant="8" id="H9g-9b-DiY"/>
+                            <constraint firstItem="khG-ks-iRD" firstAttribute="top" secondItem="eMR-GG-NS5" secondAttribute="top" constant="8" id="OZf-70-xVx"/>
                             <constraint firstItem="eMR-GG-NS5" firstAttribute="trailing" secondItem="9du-FY-HuX" secondAttribute="trailing" constant="20" id="fu9-AW-h9Q"/>
                             <constraint firstItem="9du-FY-HuX" firstAttribute="centerX" secondItem="QyT-Hb-QVy" secondAttribute="centerX" id="lMo-ha-5va"/>
                             <constraint firstItem="9du-FY-HuX" firstAttribute="centerY" secondItem="QyT-Hb-QVy" secondAttribute="centerY" id="reG-JV-utw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eMR-GG-NS5"/>
                     </view>
+                    <connections>
+                        <outlet property="pokeAbilitiesDetailLabel" destination="xZ6-1i-CSK" id="tnp-W6-AnK"/>
+                        <outlet property="pokeIdDetailLabel" destination="3PH-5z-TSN" id="y8F-qg-MvN"/>
+                        <outlet property="pokeImageDetailView" destination="3vZ-bP-GFz" id="K5H-iE-4JJ"/>
+                        <outlet property="pokeNameDetailLabel" destination="XdU-PP-Hqw" id="qna-F3-nnQ"/>
+                        <outlet property="pokeNameDetailTopLabel" destination="khG-ks-iRD" id="vfB-vZ-7PK"/>
+                        <outlet property="pokeTypesDetailLabel" destination="1LN-9f-40b" id="8St-eG-5gm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Rh-5d-jx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
