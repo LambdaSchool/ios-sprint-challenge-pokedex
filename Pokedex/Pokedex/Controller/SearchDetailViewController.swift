@@ -8,16 +8,30 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
-
+class SearchDetailViewController: UIViewController {
+    
+    let reuseIdentifier = "PokemonCell"
+    
+    // MARK: - Outlets
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    
+    @IBOutlet weak var idLabel: UILabel!
+    
+    @IBOutlet weak var typesLabel: UILabel!
+    
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func savePokemon(_ sender: Any) {
+    }
+    
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -25,6 +39,5 @@ class DetailViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
 
-}
+} //End of class
