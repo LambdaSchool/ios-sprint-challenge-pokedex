@@ -24,16 +24,16 @@ class Model {
     func pokemon(at index: Int) -> Pokemon {
         return pokemons[index]
     }
-    func search(searchTerm: String) {
-        searchAPI.performSearch(with: searchTerm, resultType: resultType) { (pokemon, error) in
-        
-    if let error = error {
-    NSLog("Error fetching data: \(error)")
-    return
-    }
-            self.pokemon = pokemon!
-        }
-    }
+//    func search(searchTerm: String) {
+//        searchAPI.performSearch(with: searchTerm) { (pokemon, error) in
+//        
+//    if let error = error {
+//    NSLog("Error fetching data: \(error)")
+//    return
+//    }
+//            self.pokemons = pokemons!
+//        }
+//    }
         // self.pokemons = pokemons
     
      

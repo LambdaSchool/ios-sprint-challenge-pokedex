@@ -27,21 +27,7 @@ class SearchDetailViewController: UIViewController {
         typeLabel.text = pokemon.types[0].type.name
     }
     
-        func searchBarSearchButtonClicked(_  searchBar: UISearchBar) {
-            searchBar.resignFirstResponder()
-    guard let searchTerm = searchBar.text, !searchTerm.isEmpty
-        else {return}
-        
-            let resultType = ResultType.self
-            
-            searchAPI.performSearch(with: searchTerm, resultType: resultType) { ([Pokemon]?, error) in
-               
-                if let error = error {
-                    NSLog("Error fetching data: \(error)")
-                    return
-            }
-                self.pokemons = self.pokemons ?? []
-                }
+    
     }
 
 
@@ -58,4 +44,4 @@ class SearchDetailViewController: UIViewController {
         
     
 
-}
+

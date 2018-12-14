@@ -6,7 +6,7 @@ class SearchAPI {
     let endpoint = "https://pokeapi.co/api/v2/pokemon/"
     var searchResults: [Pokemon] = []
     
-    func performSearch (with searchTerm: String , resultType: ResultType, completion: @escaping ([Pokemon]?, Error?) -> Void) {
+    func performSearch (with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
         
         
         guard let baseURL = URL(string: endpoint) else { fatalError("Unable to construct baseURL") }

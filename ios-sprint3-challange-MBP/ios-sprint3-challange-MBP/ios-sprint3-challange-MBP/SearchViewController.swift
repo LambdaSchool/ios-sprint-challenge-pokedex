@@ -1,9 +1,19 @@
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
 
-    var pokemon: Pokemon?
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        
+        searchBar.delegate = self
+    }
+    var pokemon: Pokemon?
+    var searchAPI = SearchAPI()
+    var pokemons: [Pokemon] = []
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -13,6 +23,25 @@ class SearchViewController: UIViewController {
     @IBAction func saveButton(_ sender: Any) {
         
     }
+    
+    
+    func searchBarSearchButtonClicked(_  searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty
+            else {return}
+        
+        
+        
+        searchAPI.performSearch(with: searchTerm) { ([Pokemon]?, error) in
+            
+            if let error = error {
+                NSLog("Error fetching data: \(error)")
+                return
+            }
+           
+        }
+    }
+    
     func updateViews() {
         if let pokemon = Model.shared.pokemon {
             
@@ -30,11 +59,7 @@ class SearchViewController: UIViewController {
             abilitiesLabel.text = ""
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateViews()
-      
-    }
+    
     
 
 }
