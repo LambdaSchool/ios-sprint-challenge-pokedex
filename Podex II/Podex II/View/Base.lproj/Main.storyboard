@@ -57,11 +57,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokemon Name" id="Xrp-pK-Cb2"/>
+                    <navigationItem key="navigationItem" title="Pokemon Name" id="Xrp-pK-Cb2" userLabel="Pokemon Title"/>
                     <connections>
                         <outlet property="pokemonAbilityLabel" destination="nTG-dj-Vee" id="eA2-j6-bp6"/>
                         <outlet property="pokemonIDLabel" destination="buI-9U-q3U" id="XQQ-mV-mUq"/>
                         <outlet property="pokemonImage" destination="gN1-Kn-3mr" id="TC7-7k-27P"/>
+                        <outlet property="pokemonNameTitle" destination="Xrp-pK-Cb2" id="Cc4-XD-fUW"/>
                         <outlet property="pokemonTypeLabel" destination="Mvl-dL-jRx" id="9py-wb-7ei"/>
                     </connections>
                 </viewController>
@@ -162,6 +163,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYP-D9-KdC">
                                         <rect key="frame" x="0.0" y="85.5" width="337.5" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="savePokemon:" destination="9Ds-dn-SzR" eventType="touchUpInside" id="dVq-3p-SjI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

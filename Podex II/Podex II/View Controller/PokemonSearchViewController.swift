@@ -22,6 +22,13 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonSave: UIButton!
     
+    @IBAction func savePokemon(_ sender: Any) {
+        PokemonModel.shared.pokemons.append(pokemon!)
+        for index in 0 ..< PokemonModel.shared.pokemons.count {
+            print(PokemonModel.shared.pokemons[index].name)
+        }
+        navigationController?.popViewController(animated: true)
+    }
     
     
     // Functions
@@ -34,14 +41,10 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         // Build the webaddress
         let url = URL(string: endpoint + searchTerm.lowercased())
-        print(url)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             print("Was able to download data.")
             do {
                 self.pokemon = try JSONDecoder().decode(Pokemon.self, from: data!)
-                print (self.pokemon!.name)
-                print (self.pokemon!.id)
-                print ("Ability Count: \(self.pokemon!.abilities.count)")
                 var index = 0
                 var abilities: String = "Ability: "
                 while index < self.pokemon?.abilities.count ?? 0 {
