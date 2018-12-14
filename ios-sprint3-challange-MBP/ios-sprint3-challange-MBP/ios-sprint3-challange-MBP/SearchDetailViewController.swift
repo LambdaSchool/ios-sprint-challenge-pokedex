@@ -12,7 +12,7 @@ class SearchDetailViewController: UIViewController {
     
     
     
-        var pokemons: [Pokemon] = []
+        var pokemons: [Pokemon]? = []
         var pokemon: Pokemon?
         let searchAPI = SearchAPI()
     
@@ -32,15 +32,15 @@ class SearchDetailViewController: UIViewController {
     guard let searchTerm = searchBar.text, !searchTerm.isEmpty
         else {return}
         
-             let resultType: ResultType!
+            let resultType = ResultType.self
             
-            searchAPI.performSearch(with: searchTerm, resultType: resultType) { (error?) -> Void
+            searchAPI.performSearch(with: searchTerm, resultType: resultType) { ([Pokemon]?, error) in
+               
                 if let error = error {
                     NSLog("Error fetching data: \(error)")
                     return
             }
-               
-              self.pokemons = pokemons ?? []
+                self.pokemons = self.pokemons ?? []
                 }
     }
 

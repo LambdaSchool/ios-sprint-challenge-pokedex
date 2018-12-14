@@ -6,7 +6,7 @@ class MainTableViewController: UITableViewController {
     var searchAPI = SearchAPI()
    
     
-    @IBOutlet weak var textLabel: UILabel!
+   // @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class MainTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
                 let pokemon = Model.shared.pokemons[indexPath.row]
-                Model.shared.delete(pokemon: pokemon)
+                Model.shared.delete(pokemons: pokemon)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
         }

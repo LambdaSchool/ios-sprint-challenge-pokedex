@@ -25,7 +25,7 @@ class Model {
         return pokemons[index]
     }
     func search(searchTerm: String) {
-        searchAPI.performSearch(with: searchTerm, resultType: resultType.rawValue) { (pokemon, error) in
+        searchAPI.performSearch(with: searchTerm, resultType: resultType) { (pokemon, error) in
         
     if let error = error {
     NSLog("Error fetching data: \(error)")
