@@ -1,24 +1,23 @@
-//
-//  ResultsTableViewCell.swift
-//  PokeAPI Sprint 3
-//
-//  Created by Jaspal on 12/14/18.
-//  Copyright © 2018 Jaspal Suri. All rights reserved.
-//
-
 import UIKit
 
 class ResultsTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    static let reuseIdentifer = "ResultCell"
+    
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    
+    @IBOutlet weak var pokemonTypesLabel: UILabel!
+    
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    
+    @IBOutlet weak var pokemonSpriteImageView: UIImageView!
+    
+    @IBAction func savePokemon(_ sender: Any) {
+        
+       // Pop back into previous view after saving pokemon
+        // Doesn't work so far
+        //NavigationController?.popViewController(animated: true)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
 }

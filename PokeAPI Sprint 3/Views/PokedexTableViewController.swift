@@ -1,11 +1,3 @@
-//
-//  PokedexTableViewController.swift
-//  PokeAPI Sprint 3
-//
-//  Created by Jaspal on 12/14/18.
-//  Copyright © 2018 Jaspal Suri. All rights reserved.
-//
-
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
@@ -22,10 +14,6 @@ class PokedexTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
