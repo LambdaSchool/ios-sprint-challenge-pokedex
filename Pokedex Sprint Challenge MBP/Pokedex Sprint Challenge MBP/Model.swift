@@ -95,7 +95,7 @@ class Model {
             // Convert the data
             do {
                 let pokemons = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemons = pokemons
+                self.pokemons = [pokemons]
                 completion(nil)
                 return
             } catch {
