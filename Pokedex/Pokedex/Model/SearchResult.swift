@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct SearchResult: Codable {
+    var name: String
+    var id: String
+    var types: String
+    var abilities: String
+}
