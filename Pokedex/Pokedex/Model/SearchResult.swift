@@ -14,3 +14,9 @@ struct SearchResult: Codable {
     var types: String
     var abilities: String
 }
+
+// Structure to collect the full result
+//Customize the results we want
+struct PokemonResults: Codable {
+    var results: [SearchResult]
+}
