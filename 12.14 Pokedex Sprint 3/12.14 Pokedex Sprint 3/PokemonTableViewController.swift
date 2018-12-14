@@ -19,14 +19,16 @@ class PokemonTableViewController: UITableViewController {
     }
 
     
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+
 //        let text = PokemonModel.shared.poke(at: indexPath)
 //        let label = text(String)
-//        cell.textLabel?.text = label
-//        return cell
-//    }
+    let searchResults = PokemonModel.shared.searchResults[indexPath.row]
+        cell.textLabel?.text = searchResults.name
+        
+        return cell
+    }
     
 
     /*

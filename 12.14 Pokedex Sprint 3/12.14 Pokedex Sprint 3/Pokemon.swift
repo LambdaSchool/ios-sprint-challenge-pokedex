@@ -1,20 +1,26 @@
 import Foundation
 
-struct Pokemon: Codable {
-    let pokemonName: String
-    let pokemonID: String
-    let pokemonType: String
-    let pokemonAbilities: String
-    let pokemonImage: imageURLS
+struct SearchResult: Codable {
+    var name: String
+    var id: String
+    var abilities: String
+    var type: String
     
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case id = "id"
+        case abilities = "abilities"
+        case type = "type"
+    }
 }
 
-struct imageURLS: Codable {
-    let name: String
-    let url: String
-    let ability: String
+struct ResultsList: Codable {
+    let results: [SearchResult]
 }
 
-struct SearchResults: Codable {
-    let results: [Pokemon]
-}
+
+
+
+
+
+

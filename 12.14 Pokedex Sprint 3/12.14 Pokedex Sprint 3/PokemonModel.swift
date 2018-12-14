@@ -56,4 +56,5 @@ class PokemonModel {
             }
         } .resume()
     }
+    var searchResults: [PokemonModel] = []
 }
