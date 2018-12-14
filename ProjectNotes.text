@@ -1,0 +1,25 @@
+MVP Requirements
+
+1. Pokemon struct: Name, ID, Ability, Types, Sprites
+- Name: I will pull from search bar
+- ID is top level JSON
+- Ability is nested in Abilities array, need to display all items in Abilities array
+- Type is nested in Types array, need to display all items in Types array
+- Pokemon struct will contain a variable of `[Sprite]'
+- Create separate `PokemonImage` struct with a var that takes a string
+
+2. Create and perform "GET" request
+- baseURL = https://pokeapi.co/api/v2/pokemon/
+- There is no `QueryItem`
+- AppendingPathCompent(searchTerm)
+- Call dataTask
+- Store data in Pokemon struct
+
+2. Use a UIView for the search scene. Upon searching, labels under the search bar will populate with pokemon information and sprite. Include a save button.
+
+3. Use a UITableView to display saved pokemon. Implement delete functionality. Clicking on a cell goes to the detail view of the Pokemon.
+
+4. The detail view is the same as what pops up in the search scene.
+
+3. Only display the name of the Pokemon that was entered(poked does not have a search function to return multiple pokemons) along with a sprite image of the Pokemon.
+- Choose the "front_default" sprite. Each sprite is nested in Sprite array.
