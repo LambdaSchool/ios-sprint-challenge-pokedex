@@ -2,7 +2,7 @@ import Foundation
 
 struct Pokemon: Codable {
     let name: String
-    let id: Int
+    let id: String
     let abilities: [Abilities]
     
     struct Abilities: Codable {

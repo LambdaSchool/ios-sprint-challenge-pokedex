@@ -58,6 +58,7 @@ class Model {
             if let error = error {
                 NSLog("There was a problem getting data from JSON: \(error)")
                 completion(NSError())
+                return
             }
             guard let data = data else {
                 NSLog("No data found")
@@ -74,8 +75,9 @@ class Model {
                 completion(nil)
                 
             } catch {
-                
                 NSLog("Unable to decode data: \(error)")
+                completion(error)
+                return
             }
         }
         dataTask.resume()
