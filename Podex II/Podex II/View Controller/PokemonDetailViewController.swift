@@ -1,5 +1,5 @@
 //
-//  PokemonSearchViewController.swift
+//  PokemonDetailViewController.swift
 //  Podex II
 //
 //  Created by Ivan Caldwell on 12/14/18.
@@ -8,8 +8,18 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonDetailViewController: UIViewController {
 
+    // Variables and Constants
+    var pokemon: Pokemon?
+    
+    // Outlets and Actions
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    @IBOutlet weak var pokemonTypeLabel: UILabel!
+    @IBOutlet weak var pokemonAbilityLabel: UILabel!
+    
+    // Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
