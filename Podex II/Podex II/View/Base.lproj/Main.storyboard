@@ -139,27 +139,37 @@
                                 <rect key="frame" x="0.0" y="180" width="375" height="333.5"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UKQ-4v-ihS">
-                                <rect key="frame" x="19" y="533.5" width="337.5" height="77.5"/>
+                                <rect key="frame" x="19" y="533.5" width="337.5" height="115.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-DT-Gf3">
-                                        <rect key="frame" x="0.0" y="0.0" width="21" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="337.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQS-Mc-yyT">
-                                        <rect key="frame" x="0.0" y="28.5" width="42.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="28.5" width="337.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ability:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7i-yB-dsE">
-                                        <rect key="frame" x="0.0" y="57" width="52" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="57" width="337.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYP-D9-KdC">
+                                        <rect key="frame" x="0.0" y="85.5" width="337.5" height="30"/>
+                                        <state key="normal" title="Save Pokemon"/>
+                                    </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="fQS-Mc-yyT" secondAttribute="trailing" id="MFZ-5y-KuD"/>
+                                    <constraint firstAttribute="trailing" secondItem="dhq-DT-Gf3" secondAttribute="trailing" id="QY3-ai-RzV"/>
+                                    <constraint firstAttribute="trailing" secondItem="x7i-yB-dsE" secondAttribute="trailing" id="eht-Ep-8vk"/>
+                                    <constraint firstItem="PYP-D9-KdC" firstAttribute="centerX" secondItem="UKQ-4v-ihS" secondAttribute="centerX" id="lZj-F0-KSR"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -177,11 +187,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ri2-UI-zNF"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokemon Search" id="70n-Yq-qyb"/>
+                    <navigationItem key="navigationItem" title="Pokemon Search" id="70n-Yq-qyb" userLabel="Pokemon Title"/>
                     <connections>
                         <outlet property="pokemonAbilityLabel" destination="x7i-yB-dsE" id="K8U-lD-PNW"/>
                         <outlet property="pokemonIDLabel" destination="dhq-DT-Gf3" id="mNq-2g-uWU"/>
                         <outlet property="pokemonImage" destination="Ki2-NH-wLg" id="3Y9-36-21G"/>
+                        <outlet property="pokemonNameTitle" destination="70n-Yq-qyb" id="iCb-2g-lBn"/>
+                        <outlet property="pokemonSave" destination="PYP-D9-KdC" id="pls-IF-1wr"/>
                         <outlet property="pokemonTypeLabel" destination="fQS-Mc-yyT" id="gDY-Sc-ROm"/>
                         <outlet property="searchBar" destination="TRm-ZI-hlP" id="33j-4h-zWR"/>
                     </connections>
