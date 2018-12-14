@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonModel {
     // MARK: - Singleton
-    static let shared = PokemonMode()
+    static let shared = PokemonModel()
     
     private init() {
         loadData()
@@ -20,7 +20,7 @@ class PokemonModel {
     
     //Computed property: number of Pokemon saved
     var numberOfPokemonSaved: Int {
-        return pokemon.count
+        return savedPokemon.count
     }
     
     // MARK: - CRUD Methods
@@ -31,7 +31,7 @@ class PokemonModel {
     
     func remove(pokemonAtIndex index: Int) {
         savedPokemon.remove(at: index)
-        savedData()
+        saveData()
     }
     
     
