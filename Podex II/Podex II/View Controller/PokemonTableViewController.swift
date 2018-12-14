@@ -9,11 +9,9 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
-
     // Variables and Constants
     let reuseIdentifier = "PokemonCell"
 
-    // Outlets and Actions
     
     // TableViewController Functions
     override func viewWillAppear(_ animated: Bool) {
@@ -37,38 +35,12 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         PokemonModel.shared.pokemons.remove(at: indexPath.row)
         self.tableView.reloadData()
     }
-
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
   
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,6 +48,4 @@ class PokemonTableViewController: UITableViewController {
         guard let destination = segue.destination as? PokemonDetailViewController else { return }
         destination.pokemon = PokemonModel.shared.pokemons[indexPath.row]
     }
-  
-
 }

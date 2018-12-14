@@ -10,10 +10,10 @@ import Foundation
 struct Pokemon: Codable {
     let id: Int
     let name: String
-    //let baseExperience, height: Int?
-    //let order, weight: Int?
+    let baseExperience, height: Int?
+    let order, weight: Int?
     let abilities: [Ability]
-    //let species: Species?
+    let species: Species?
     let sprites: Sprites?
     let types: [TypeElement]
 }
