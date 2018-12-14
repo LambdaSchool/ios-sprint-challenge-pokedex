@@ -11,7 +11,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBarOutlet: UISearchBar!
     
     @IBAction func savePokemon(_ sender: Any) {
-        // save search bar text to model
+        // save search bar pokemon to model
     }
     
     override func viewDidLoad() {
@@ -20,6 +20,9 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         searchBarOutlet.delegate = self
     }
     
+    func reloadData() {
+        //updates pokemon
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -28,14 +31,15 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         searchBar.text = ""
         searchBar.placeholder = searchTerm
         
-        PokemonModel.shared.performSearch(with: searchTerm) { (error) in
+        let resultType: ResultType! = .name
+        nameLabel.text = resultType.map { $0.rawValue }
+        nameLabelSame.text = resultType.map { $0.rawValue }
         
-            if error == nil {
+        SearchResultController.shared.performSearch(with: searchTerm, resultType: resultType) { (error) in
+        
+        if error == nil {
                 DispatchQueue.main.async {
-//                    self.view.reloadData()
-//                    updateViews()
-                    var pokeName = PokemonModel.shared.poke(at: indexPath.row)
-                    self.nameLabel.text = pokeName
+                    self.reloadData()
                 }
             }
         }
