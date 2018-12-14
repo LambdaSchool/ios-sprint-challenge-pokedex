@@ -2,6 +2,7 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
 
+    let mainTableViewController = MainTableViewController()
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -30,7 +31,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty
             else {return}
         
-        
+        searchBar.text = ""
         
         searchAPI.performSearch(with: searchTerm) { ([Pokemon]?, error) in
             
@@ -38,8 +39,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 NSLog("Error fetching data: \(error)")
                 return
             }
+            DispatchQueue.main.async {
+                searchBar.placeholder = searchTerm
+                self.mainTableViewController.tableView.reloadData()
            
         }
+    }
     }
     
     func updateViews() {
@@ -63,3 +68,4 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
 
 }
+
