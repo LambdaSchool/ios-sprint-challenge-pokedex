@@ -19,7 +19,7 @@ class PokemonModel {
         return pokemon[indexPath.row]
     }
     
-    func performSearch(with searchTerm: String, resultType: Pokemon, completion: @escaping CompletionHandler) {
+    func performSearch(with searchTerm: String, completion: @escaping CompletionHandler) {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         let searchQueryItems = URLQueryItem(name: "term", value: searchTerm)
         let resultTypeQueryItem = URLQueryItem(name: "entity", value: "100")
@@ -54,6 +54,6 @@ class PokemonModel {
                 NSLog("Unable to decode JSON")
                 completion(NSError())
             }
-            } .resume()
+        } .resume()
     }
 }
