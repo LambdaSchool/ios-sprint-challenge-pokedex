@@ -65,6 +65,9 @@ class Model {
                 return
             }
             
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            
             do {
                 let searchResults = try JSONDecoder().decode(SearchResults.self, from: data)
                 self.searchResults = searchResults.results

@@ -1,5 +1,5 @@
 import Foundation
 
-struct Pokemon {
+struct Pokemon: Codable {
     
 }
