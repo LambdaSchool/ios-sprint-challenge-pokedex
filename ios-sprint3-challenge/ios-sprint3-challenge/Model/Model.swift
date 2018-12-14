@@ -8,6 +8,8 @@ class Model {
     let pokemonModelController = PokemonModelController()
     let pokemonSearchViewController: PokemonSearchViewController? = PokemonSearchViewController()
     var pokemon: PokemonModel?
+    var pokemonTypes: PokemonModel.PokemonType?
+    var pokemonAbilities: PokemonModel.PokemonAbility?
     var savedpokemons: [PokemonModel] = []
     var numberOfPokemons: Int {
         return savedpokemons.count
@@ -27,10 +29,25 @@ class Model {
     func deletePokemon(at indexPath: IndexPath) {
         savedpokemons.remove(at: indexPath.row)
     }
-    func getTypes() {
-        pokemon.type
+    func getAbilities() -> String {
+        var pokemonAbilitiesArray: [String] = []
+        guard let pokemon = pokemon else {return ""}
+        for count in 0...(pokemon.abilities.count - 1) {
+            pokemonAbilitiesArray.append((pokemon.abilities[count].ability["name"])!)
         }
-    func getAbilities() {
-        
+        return pokemonAbilitiesArray.joined(separator: ", ")
+        }
+    func getTypes() -> String {
+        var pokemonTypesArray: [String] = []
+        guard let pokemon = pokemon else {return ""}
+        for count in 0...(pokemon.types.count - 1) {
+            pokemonTypesArray.append((pokemon.types[count].type["name"])!)
+        }
+        return pokemonTypesArray.joined(separator: ", ")
+    }
+    func getID () -> String {
+        guard let pokemon = pokemon else {return ""}
+        let pokemonID = "\(pokemon.id)"
+        return pokemonID
     }
 }

@@ -34,9 +34,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     func updateViews() {
         DispatchQueue.main.async {
             self.pokemonNameLabel.text = Model.shared.pokemon?.name
-            self.pokemonIDLabel.text = "\(String(describing: Model.shared.pokemon?.id))"
-            self.pokemonTypesLabel.text = Model.shared.pokemon?.types.description
-            self.pokemonAbilitiesLabel.text = Model.shared.pokemon?.abilities.description
+            self.pokemonIDLabel.text = Model.shared.getID()
+            self.pokemonTypesLabel.text = Model.shared.getTypes()
+            self.pokemonAbilitiesLabel.text = Model.shared.getAbilities()
         }
     }
     

@@ -9,8 +9,7 @@ struct PokemonModel: Codable {
     
     struct PokemonAbility: Codable {
         var ability: [String : String]
-
-        }
+}
     struct PokemonType: Codable {
         var type: [String : String]
 
