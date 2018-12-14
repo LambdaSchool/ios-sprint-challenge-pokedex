@@ -33,14 +33,24 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         Model.shared.search(for: searchTerm) { (error) in
             if error == nil {
                 DispatchQueue.main.async {
-                    updateViews()
+                    self.updateViews()
                 }
             }
         }
     }
 
     func updateViews() {
+        guard let pokemon = pokemon else {return}
         
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
+        typesLabel.text = "Types: \(pokemon.types)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        
+        guard let url = URL(string: pokemon.sprites.frontDefault),
+            let imageData = try? Data(contentsOf: url) else {return}
+        
+        pokemonView.image = UIImage(data: imageData)
     }
 }
 
