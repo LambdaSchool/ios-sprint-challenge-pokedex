@@ -33,6 +33,17 @@ struct Pokemon: Codable {
     
 }
 
+/*
+struct PokemonSearchResults: Codable {
+    let name: [Pokemon.]
+    let id: [Pokemon.]
+    let types: [Pokemon.Types]
+    let
+}
+ */
+
+/*
 struct TopLevelSearchResults: Codable {
     let results: [Pokemon]
 }
+ */

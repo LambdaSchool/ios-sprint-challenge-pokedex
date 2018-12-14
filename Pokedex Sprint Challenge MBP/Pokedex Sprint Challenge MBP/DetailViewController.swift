@@ -30,10 +30,12 @@ class DetailViewController: UIViewController {
         
         // Populate the labels and image
         
+        self.navigationItem.title = pokemon.name
         detailNameLabel.text = pokemon.name
         detailIDLabel.text = "ID: \(pokemon.id)"
         detailTypesLabel.text = "Types: \(pokemon.types)"
         detailAbilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+
         
         // Get a url, try to load image data from that URL
         guard let url = URL(string: pokemon.sprites.frontFemale), let imageData = try? Data(contentsOf: url) else { return }

@@ -47,13 +47,16 @@ class Model {
     func performSearch(for searchTerm: String, completion: @escaping (Error?) -> Void) {
         
         // PUT TOGETHER A URL(urlRequest) TO MAKE A REQUEST/dataTask
-        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        
+        let fullURL = baseURL.appendingPathComponent(searchTerm)
+        
+        var components = URLComponents(url: fullURL, resolvingAgainstBaseURL: true)
         
         // Query item for our search
-        let searchQueryItem = URLQueryItem(name: "", value: searchTerm)
+        //let searchQueryItem = URLQueryItem(name: "", value: searchTerm)
         
         // Give query item to the components
-        components?.queryItems = [searchQueryItem]
+        //components?.queryItems = [searchQueryItem]
         
         // Use component's URL property to create an actual URL to make our request on
         guard let requestURL = components?.url else {
@@ -91,8 +94,8 @@ class Model {
             
             // Convert the data
             do {
-                let searchResults = try jsonDecoder.decode(TopLevelSearchResults.self, from: data)
-                self.pokemons = searchResults.results
+                let pokemons = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.pokemons = pokemons
                 completion(nil)
                 return
             } catch {
