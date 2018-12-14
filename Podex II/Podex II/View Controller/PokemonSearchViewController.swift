@@ -69,7 +69,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
                     self.pokemonAbilityLabel.text = abilities
                     self.pokemonAbilityLabel.textColor = UIColor.black
                     self.pokemonImage.image = UIImage(data: imageData)
-                    self.pokemonSave.setTitleColor(.black, for: .normal)
+                    self.pokemonSave.setTitleColor( UIColor(displayP3Red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), for: .normal)
                 }
             } catch {
                 print(error)
