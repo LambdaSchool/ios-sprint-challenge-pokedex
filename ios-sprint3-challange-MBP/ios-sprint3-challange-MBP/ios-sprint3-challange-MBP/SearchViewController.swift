@@ -8,7 +8,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+    updateViews()
         
         searchBar.delegate = self
     }
@@ -21,6 +21,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     @IBAction func saveButton(_ sender: Any) {
         
     }
@@ -52,16 +53,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             
             nameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
-            typeLabel.text = pokemon.types.first?.type.name
-            abilitiesLabel.text = pokemon.abilities.first?.ability.name
+            typeLabel.text = pokemon.types[0].type.name
+            abilitiesLabel.text = pokemon.abilities[0].ability.name
             // imageView.image = pokemon.
             
         } else {
             title = "Pokemon Search"
-            nameLabel.text = ""
-            idLabel.text = ""
+            nameLabel.isHidden = true
+            idLabel.isHidden = true
             typeLabel.text = ""
             abilitiesLabel.text = ""
+            saveButton.isHidden = true
         }
     }
     
