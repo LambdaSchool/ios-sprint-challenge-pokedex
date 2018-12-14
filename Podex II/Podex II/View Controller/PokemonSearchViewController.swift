@@ -35,25 +35,14 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar, completion: @escaping (Error?) -> Void ) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
         // Build the webaddress
         let url = URL(string: endpoint + searchTerm.lowercased())
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            if let error = error {
-                NSLog("Error fetching data: \(error)")
-                completion(error)
-                return
-            }
-            
-            guard let data = data else {
-                NSLog("Error: No data returend from data task")
-                completion(NSError())
-                return
-            }
             do {
-                self.pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                self.pokemon = try JSONDecoder().decode(Pokemon.self, from: data!)
                 var index = 0
                 var abilities: String = "Ability: "
                 while index < self.pokemon?.abilities.count ?? 0 {

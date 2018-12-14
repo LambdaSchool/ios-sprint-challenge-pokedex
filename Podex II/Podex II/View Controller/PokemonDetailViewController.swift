@@ -5,7 +5,8 @@
 //  Created by Ivan Caldwell on 12/14/18.
 //  Copyright © 2018 Ivan Caldwell. All rights reserved.
 //
-/* I am being a lazy programmer by force unwrapping everything. I should go back and use guard
+/*
+   I am being a lazy programmer by force unwrapping everything. I should go back and use guard
    statements and should create a function to create the string for pokemon type and abilities, but
    I want MVP... sooooo.... that will be something that i will change if time permits.
  */
