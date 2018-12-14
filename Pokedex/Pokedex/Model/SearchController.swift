@@ -29,8 +29,38 @@ class SearchController {
             completion(NSError())
             return
         }
-
-
+        
+        //Create a URLSession to perform the dataTask
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error ) in
+            if let error = error {
+                NSLog("Error fetching search results: \(error)")
+                completion(error)
+                return
+            }
+            
+            // Check for data returned by the dataTask
+            guard let data = data else {
+                NSLog("Request did not return valid data")
+                completion(error)
+                return
+            }
+            
+            // We have data, decode it and store it
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            // Try and decode and store the data
+            do {
+                let searchResults = try jsonDecoder.decode(PokemonResult.self, from: data)
+                self.searchResult = searchResults.results
+                completion(nil)
+            } catch {
+                NSLog("Error decoding JSON: \(error)")
+                completion(error)
+                return
+            }
+            
+        } .resume() // End of URLSession
         
         
     } // End of performSearch

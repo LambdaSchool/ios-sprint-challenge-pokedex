@@ -17,6 +17,6 @@ struct SearchResult: Codable {
 
 // Structure to collect the full result
 //Customize the results we want
-struct PokemonResults: Codable {
+struct PokemonResult: Codable {
     var results: [SearchResult]
 }
