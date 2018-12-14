@@ -70,7 +70,7 @@ class Model {
             
             do {
                 let searchResults = try JSONDecoder().decode(SearchResults.self, from: data)
-                self.searchResults = searchResults.results
+                self.pokemons = searchResults.pokemon
                 completion(nil)
                 
             } catch {
