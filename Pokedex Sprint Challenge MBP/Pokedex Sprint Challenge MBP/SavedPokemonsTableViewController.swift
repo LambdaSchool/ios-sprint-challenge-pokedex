@@ -31,14 +31,14 @@ class SavedPokemonsTableViewController: UITableViewController {
         }
         
         // Get the right pokemon
-        let pokemon = Model.shared.savedPokemon(at: indexPath)
+        let pokemon = Model.shared.findPokemon(at: indexPath)
 
         // Configure the cell...
         
         cell.savedPokeNameLabel.text = pokemon.name
         
         // Get a url, try to load image data from that URL
-        guard let url = URL(string: pokemon.sprites.frontFemale), let imageData = try? Data(contentsOf: url) else { return cell }
+        guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return cell }
         
         cell.savedPokeSpriteView.image = UIImage(data: imageData)
 

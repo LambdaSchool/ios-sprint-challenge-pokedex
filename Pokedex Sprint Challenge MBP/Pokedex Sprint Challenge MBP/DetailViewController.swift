@@ -3,7 +3,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var searchTableViewController = SearchTableViewController()
+    var searchViewController = SearchViewController()
     
     var pokemon: Pokemon?
     
@@ -38,7 +38,7 @@ class DetailViewController: UIViewController {
 
         
         // Get a url, try to load image data from that URL
-        guard let url = URL(string: pokemon.sprites.frontFemale), let imageData = try? Data(contentsOf: url) else { return }
+        guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return }
         
         detailSpriteView.image = UIImage(data: imageData)
     }

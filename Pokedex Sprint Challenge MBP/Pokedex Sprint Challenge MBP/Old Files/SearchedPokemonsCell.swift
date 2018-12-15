@@ -1,5 +1,5 @@
 
-
+/*
 import UIKit
 
 class SearchedPokemonsCell: UITableViewCell {
@@ -17,3 +17,4 @@ class SearchedPokemonsCell: UITableViewCell {
     @IBOutlet weak var searchedPokeSpriteView: UIImageView!
     
 }
+*/

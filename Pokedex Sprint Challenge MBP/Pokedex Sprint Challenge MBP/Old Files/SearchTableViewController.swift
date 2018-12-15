@@ -1,5 +1,5 @@
 
-
+/*
 import UIKit
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
@@ -40,7 +40,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         cell.searchedPokeAbilitiesLabel.text = "Abilities: \(pokemon.abilities)"
         
         // Get a url, try to load image data from that URL
-        guard let url = URL(string: pokemon.sprites.frontFemale), let imageData = try? Data(contentsOf: url) else { return cell }
+        guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return cell }
         
         cell.searchedPokeSpriteView?.image = UIImage(data: imageData)
 
@@ -87,3 +87,4 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
 
 }
+*/

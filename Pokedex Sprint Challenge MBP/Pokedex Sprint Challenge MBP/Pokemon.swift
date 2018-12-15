@@ -4,6 +4,40 @@
 
 import Foundation
 
+
+struct Pokemon: Codable {
+    
+    let name: String
+    let id: Int
+    let types: [TypeElement]
+    let abilities: [Ability]
+    let sprites: Sprites
+    
+
+    struct TypeElement: Codable {
+        let type: Species
+    }
+    
+    struct Ability: Codable {
+        let ability: Species
+    }
+    
+    struct Species: Codable {
+        let name: String
+    }
+    
+    struct Sprites: Codable {
+        let frontDefault: String // convert from snake case
+    }
+}
+
+/*
+struct PokemonSearchResults: Codable {
+    let results: [Pokemon]
+}
+*/
+
+/*
 struct Pokemon: Codable {
     let name: String
     let id: Int
@@ -28,22 +62,29 @@ struct Pokemon: Codable {
     }
     
     struct Sprites: Codable {
-        let frontFemale: String // Change from Snake Case
+        let frontDefault: String // Change from Snake Case
     }
     
 }
 
-/*
 struct PokemonSearchResults: Codable {
-    let name: [Pokemon.]
-    let id: [Pokemon.]
-    let types: [Pokemon.Types]
-    let
+    let JSON: [Pokemon]
+    
+    //let name: String
+    //let id: Int
+    //let types: [Pokemon.Types]
+    //let abilities: [Pokemon.Abilities]
+    //let sprites: Pokemon.Sprites
+    
 }
- */
 
-/*
-struct TopLevelSearchResults: Codable {
-    let results: [Pokemon]
-}
- */
+
+
+
+
+
+//struct TopLevelSearchResults: Codable {
+    //let results: [Pokemon]
+//}
+
+*/
