@@ -9,14 +9,30 @@
 import Foundation
 
 struct SearchResult: Codable {
-    var name: String
-    var id: String
-    var types: String
-    var abilities: String
+    let name: String?
+    let id: Int
+    let abilities: [Abilities]
+    let types: [Type]
+//    let sprites: Sprite
 }
 
-// Structure to collect the full result
-//Customize the results we want
-struct PokemonResult: Codable {
-    var results: [SearchResult]
+// GET the Pokemon abilities
+struct Ability: Codable {
+    let name: String
 }
+struct Abilities: Codable {
+    let ability: Ability
+}
+
+// GET the Pokemon types
+struct Types: Codable {
+    let name: String
+}
+struct Type: Codable {
+    let type: Types
+}
+
+////Get the Pokemon sprite
+//struct Sprite: Codable {
+//    let front_default: String
+//}

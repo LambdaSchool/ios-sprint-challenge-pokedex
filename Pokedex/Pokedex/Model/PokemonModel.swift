@@ -26,7 +26,12 @@ class PokemonModel {
     // MARK: - CRUD Methods
     func add(pokemon: Pokemon) {
         savedPokemon.append(pokemon)
+         print("*** Added the Pokemon ***")
         saveData()
+    }
+    
+    func pokemon(at indexPath: IndexPath) -> Pokemon {
+        return savedPokemon[indexPath.row]
     }
     
     func remove(pokemonAtIndex index: Int) {
