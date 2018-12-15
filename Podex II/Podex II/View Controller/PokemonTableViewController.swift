@@ -12,7 +12,6 @@ class PokemonTableViewController: UITableViewController {
     // Variables and Constants
     let reuseIdentifier = "PokemonCell"
 
-    
     // TableViewController Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -52,7 +52,6 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
                 abilities.removeLast()
                 index = 0
                 var types: String = "Type: "
-                print ("Type Count: \(self.pokemon!.types.count)")
                 while index < self.pokemon?.types.count ?? 0 {
                     types += " \(self.pokemon!.types[index].type.name),"
                     index += 1
@@ -72,10 +71,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
                     self.pokemonImage.image = UIImage(data: imageData)
                     self.pokemonSave.setTitleColor( UIColor(displayP3Red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), for: .normal)
                 }
-            } catch {
-                print(error)
-            }
+            } catch { print(error) }
         }.resume()
-        
     }
 }

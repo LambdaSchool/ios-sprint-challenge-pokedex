@@ -24,7 +24,6 @@ struct Ability: Codable {
 
 struct Species: Codable {
     let name: String
-    let url: String
 }
 
 struct Sprites: Codable {
@@ -44,6 +43,5 @@ struct Sprites: Codable {
 }
 
 struct TypeElement: Codable {
-    let slot: Int
     let type: Species
 }
