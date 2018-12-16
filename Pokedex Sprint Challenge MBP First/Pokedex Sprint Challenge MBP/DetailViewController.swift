@@ -3,7 +3,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var searchViewController = SearchViewController()
+    var searchTableViewController = SearchTableViewController()
     
     var pokemon: Pokemon?
     
