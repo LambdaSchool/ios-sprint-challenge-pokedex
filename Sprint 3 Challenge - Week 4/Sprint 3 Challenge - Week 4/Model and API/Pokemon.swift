@@ -1,16 +1,28 @@
-import UIKit
-
+import Foundation
 struct Pokemon: Codable {
     let name: String
-    let ID: String // MARK: Could be an Int...
-    let type: String
-    let abilities: String
-    let sprite: String
-    // UIImage doesn't conform to Codable
+    let id: Int
+    let abilities: [Ability]
+    let types: [Types]
+    let sprites: Sprites
 }
 
-//struct Person: Codable {
-//    let name: String
-//    let birthYear: String // MARK: this is different from API docs
-//    let height: String
-//}
+struct Types: Codable {
+    let type: Other
+}
+
+struct Ability: Codable {
+    let ability: Other
+}
+
+struct Other: Codable {
+    let name: String
+}
+
+struct Sprites: Codable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}

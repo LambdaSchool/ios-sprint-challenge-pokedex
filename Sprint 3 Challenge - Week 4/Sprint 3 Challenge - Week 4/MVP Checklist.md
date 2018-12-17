@@ -15,6 +15,8 @@ The requirements for this project are as follows:
 - Have the view change when the user taps to save a search result (pokemon).
 - Have the title change to the name of the current pokemon being viewed.
 - Resize the pokemon sprites as needed.
+- Make search smarter
+- Improve the saved pokemon list (there are at least two things you can do)
 
 
 ## Stretch
