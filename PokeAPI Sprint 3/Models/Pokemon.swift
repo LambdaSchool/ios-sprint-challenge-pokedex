@@ -1,34 +1,32 @@
 import Foundation
-
 struct Pokemon: Codable {
-    let id: Int
     let name: String
+    let id: Int
     let abilities: [Ability]
+    let types: [Types]
     let sprites: Sprites
-    let types: [TypeElement]
+}
+
+struct Types: Codable {
+    let type: Other
 }
 
 struct Ability: Codable {
-    let ability: Types
+    let ability: Other
 }
 
-// For Ability and TypeElement
-struct Types: Codable {
+struct Other: Codable {
     let name: String
-    let url: String
 }
 
 struct Sprites: Codable {
-    let backDefault: String
     let frontDefault: String
     
     enum CodingKeys: String, CodingKey {
-        case backDefault = "back_default"
         case frontDefault = "front_default"
     }
 }
 
-struct TypeElement: Codable {
-    let slot: Int
-    let type: Types
+struct PokemonSearchResults: Codable {
+    let results: [Pokemon]
 }
