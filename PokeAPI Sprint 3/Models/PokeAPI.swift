@@ -2,6 +2,8 @@ import UIKit
 
 class PokemonSearchResultsController {
     
+    static let shared = PokemonSearchResultsController()
+    
     let baseURL = "https://pokeapi.co/api/v2/pokemon/"
     
     // search results array, data source for the table view
