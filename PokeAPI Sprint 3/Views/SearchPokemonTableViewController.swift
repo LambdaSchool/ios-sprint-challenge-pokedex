@@ -2,6 +2,11 @@ import UIKit
 
 class SearchPokemonTableViewController: UITableViewController, UISearchBarDelegate {
     
+    var searchResult: Pokemon?
+    
+  // redundant
+    // let pokemonSearchResultsController = PokemonSearchResultsController()
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var searchResultTVCTitle: UINavigationItem!
@@ -32,13 +37,11 @@ class SearchPokemonTableViewController: UITableViewController, UISearchBarDelega
         searchBar.text = ""
         searchBar.placeholder = searchTerm
         
-        Model.shared.search(for: searchTerm) { error in
-            if error == nil {
-                DispatchQueue.main.async {
+        PokemonSearchResultsController.shared.performSearch(searchTerm: searchTerm) { _, _ in
+            DispatchQueue.main.async {
                     self.tableView.reloadData()
-                }
             }
         }
     }
-
 }
+
