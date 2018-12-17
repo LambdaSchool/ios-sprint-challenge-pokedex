@@ -26,3 +26,7 @@ struct Sprites: Codable {
         case frontDefault = "front_default"
     }
 }
+
+struct PokemonSearchResults: Codable {
+    let results: [Pokemon]
+}
