@@ -40,11 +40,12 @@ class PokemonSearchResultsController {
             }
             
             do {
-
                 let searchResults = try JSONDecoder().decode(PokemonSearchResults.self, from: data)
-                self.searchResults = searchResults.results
+               self.searchResults = searchResults.results
                 completion(self.searchResults, nil)
+   
                 return
+                
             } catch {
                 NSLog("Unable to decode data: \(error)")
                 completion(nil, NSError())
