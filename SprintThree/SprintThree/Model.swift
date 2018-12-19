@@ -40,21 +40,10 @@ class Model {
     
     //accessing api process
     func search(for searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void ) {
-        //let pokemonURL = baseURL.appendingPathComponent("pokemon")
-        
-        //You don't need to use URLComponenets or URLQueryItems
-//        let components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-//      let searchQueryItem = URLQueryItem(name: "pokemon", value: searchTerm)
-//      urlComponents?.queryItems = [searchQueryItem]
-        
-//        guard let requestURL = URLComponents?.url else {
-//            NSLog("wasn't able to construct URL")
-//            completion(NSError())
-//            return
-//        }
+        let requestURL = baseURL.appendingPathComponent(searchTerm)
         
         //create get request
-        var request = URLRequest(url: baseURL)
+        var request = URLRequest(url: requestURL)
         request.httpMethod = "GET"
         
         //fetching data
@@ -70,13 +59,14 @@ class Model {
                 return
             }
             
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            
             do {
-                let searchResults = try JSONDecoder().decode(SearchResults.self, from: data)
-                let pokemons = searchResults.pokemon
-                completion(searchResults.pokemon, nil)
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.pokemons = pokemon
+                print("\(pokemon)")
+                completion(pokemon, nil)
 
             } catch {
                 NSLog("Unable to decode data: \(error)")
