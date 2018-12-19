@@ -1,5 +1,5 @@
 
-
+/*
 import UIKit
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
@@ -8,32 +8,11 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.reloadData()
         
         // Set the delegate
         searchBarOutlet.delegate = self
-        
-        // Let the user know that data is loading
-        let activity = UIActivityIndicatorView()
-        activity.style = .gray
-        // Start animating
-        activity.startAnimating()
-        // Set the title view to be the activity indicator
-        navigationItem.titleView = activity
-        
-        refresh()
-        
-        /*
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-
-        // Set the delegate
-        searchBarOutlet.delegate = self
-        */
     }
 
     // MARK: - Table view data source
@@ -51,23 +30,20 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         }
         
         // Get the right pokemon
-        //let pokemon = Model.shared.findPokemon(at: indexPath)
-        let pokemon = Model.shared.pokemon
+        let pokemon = Model.shared.findPokemon(at: indexPath)
+
         // Configure the cell...
         
-        cell.searchedPokeNameLabel.text = pokemon?.name
-        cell.searchedPokeIDLabel.text = "ID: \(pokemon?.id)"
-        cell.searchedPokeTypesLabel.text = "Types: \(pokemon?.types)"
-        cell.searchedPokeAbilitiesLabel.text = "Abilities: \(pokemon?.abilities)"
+        cell.searchedPokeNameLabel.text = pokemon.name
+        cell.searchedPokeIDLabel.text = "ID: \(pokemon.id)"
+        cell.searchedPokeTypesLabel.text = "Types: \(pokemon.types)"
+        cell.searchedPokeAbilitiesLabel.text = "Abilities: \(pokemon.abilities)"
         
         // Get a url, try to load image data from that URL
-        guard let url = URL(string: (pokemon?.sprites.frontDefault)!) else { return cell}
-        guard let imageData = try? Data(contentsOf: url) else { return cell }
+        guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return cell }
         
         cell.searchedPokeSpriteView?.image = UIImage(data: imageData)
 
-        //cell.pokemon = pokemon
-        
         return cell
     }
     
@@ -82,17 +58,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         searchBar.placeholder = searchTerm
         
         // Call our model's search function to display results of what the user searched for
-        Model.shared.performSearch(for: searchTerm) { (error) in
+        Model.shared.performSearch(for: searchTerm) { error in
             if error == nil {
-                // On the main thread
+                // reload data on the table view
                 DispatchQueue.main.async {
-                    
-                    // Tell the table view to reload the data
-                    // Reload when in our model it sets pokemon to the results
                     self.tableView.reloadData()
                 }
             }
-
         }
     }
 
@@ -113,15 +85,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         destinationDVC.pokemon = pokemon
     }
 
-    func refresh() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            
-            // When we are -done- with the request, we will re-enable the view
-            self.navigationItem.titleView = nil
-            // When you replace the titleView, it also deletes the title, so we need to reset it
-            self.title = "Pokemon Search"
-        }
-    }
-    
+
 }
+*/

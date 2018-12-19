@@ -31,7 +31,7 @@ class SavedPokemonsTableViewController: UITableViewController {
         }
         
         // Get the right pokemon
-        let pokemon = Model.shared.savedPokemon(at: indexPath)
+        let pokemon = Model.shared.findPokemon(at: indexPath)
 
         // Configure the cell...
         

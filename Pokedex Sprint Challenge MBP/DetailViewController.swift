@@ -3,7 +3,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var searchTableViewController = SearchTableViewController()
+    var searchViewController = SearchViewController()
     
     var pokemon: Pokemon?
     
@@ -13,14 +13,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailTypesLabel: UILabel!
     @IBOutlet weak var detailAbilitiesLabel: UILabel!
     
-    @IBAction func save(_ sender: Any) {
-        
-        guard let pokemon = pokemon else { return }
-        
-        Model.shared.add(pokemon: pokemon)
-        
-        navigationController?.popToRootViewController(animated: true)
-    }
+
     
     // Called just before view controller appears on-screen
     override func viewWillAppear(_ animated: Bool) {
@@ -30,11 +23,20 @@ class DetailViewController: UIViewController {
         
         // Populate the labels and image
         
+        var onePokemonTypeArray : [String] = []
+        var onePokemonAbilityArray : [String] = []
+        for each in pokemon.types {
+            onePokemonTypeArray.append(each.type.name)
+        }
+        for each in pokemon.abilities {
+            onePokemonAbilityArray.append(each.ability.name)
+        }
+        
         self.navigationItem.title = pokemon.name
         detailNameLabel.text = pokemon.name
         detailIDLabel.text = "ID: \(pokemon.id)"
-        detailTypesLabel.text = "Types: \(pokemon.types)"
-        detailAbilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        detailTypesLabel.text = "Types: " + "\(onePokemonTypeArray.joined(separator: ", "))"
+        detailAbilitiesLabel.text = "Abilities: \(onePokemonAbilityArray.joined(separator: ", "))"
 
         
         // Get a url, try to load image data from that URL

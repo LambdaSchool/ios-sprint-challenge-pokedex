@@ -44,25 +44,13 @@ class Model {
         return savedPokemons[indexPath.row]
     }
     
-    
+    /*
     // Function that lets us search for pokemons
     func performSearch(for searchTerm: String, completion: @escaping (Error?) -> Void) {
         
         // PUT TOGETHER A URL(urlRequest) TO MAKE A REQUEST/dataTask
         
         let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
-        
-            //var components = URLComponents(url: fullURL, resolvingAgainstBaseURL: true)
-        
-            // Use component's URL property to create an actual URL to make our request on
-            //guard let requestURL = components?.url else {
-                //NSLog("Wasn't able to construct URL")
-                //completion(NSError())
-                //return
-            //}
-            //print(requestURL)
-        
-        // Now we have a valid URL
         
         // MAKE THE REQUEST/dataTask
         URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
@@ -80,8 +68,6 @@ class Model {
                 completion(NSError())
                 return
             }
-            
-            // DO STUFF WITH THE RESULTS
             
             // Make JSON decoder
             
@@ -104,12 +90,7 @@ class Model {
         }
         .resume()
         
-        
-        
     }
-    
-    
-    
-    
+    */
     
 }
