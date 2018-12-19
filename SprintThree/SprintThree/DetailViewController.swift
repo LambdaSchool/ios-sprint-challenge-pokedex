@@ -2,11 +2,7 @@ import UIKit
 
 class DetailViewController: UIViewController, UISearchBarDelegate {
 
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
@@ -36,9 +32,9 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         Model.shared.search(for: searchTerm.lowercased()) { (pokemon, error) in
             if let pokemon = pokemon, error == nil {
                 self.pokemon = pokemon
-//                DispatchQueue.main.async {
-//                    self.updateViews()
-//                }
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
             }
         }
     }
@@ -51,14 +47,11 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         self.nameLabel.text = pokemon.name
         self.idLabel.text = "ID: \(pokemon.id)"
         
-//        self.typesLabel.text = "Types: \(pokemon.types[0].type)"
-//        self.abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability)"
+        let types: [String] = pokemon.types.map{$0.type.name}
+        self.typesLabel.text = "Types: \(types.joined(separator: ", "))"
         
-        let types = pokemon.types.map{$0.type.name}
-        self.typesLabel.text = "Types: \(types)"
-        
-        let abilities = pokemon.abilities.map{$0.ability.name}
-        self.abilitiesLabel.text = "Abilities: \(abilities)"
+        let abilities: [String] = pokemon.abilities.map{$0.ability.name}
+        self.abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
         
         //image
         guard let url = URL(string: pokemon.sprites.frontDefault),
