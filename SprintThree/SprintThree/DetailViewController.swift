@@ -47,19 +47,21 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     func updateViews() {
         guard let pokemon = pokemon else {return}
         
-        navigationItem.title = pokemon.name
-        nameLabel.text = pokemon.name
-        idLabel.text = "ID: \(pokemon.id)"
+        DispatchQueue.main.async {
+        self.navigationItem.title = pokemon.name
+        self.nameLabel.text = pokemon.name
+        self.idLabel.text = "ID: \(pokemon.id)"
         
         //possibly fix?
-        typesLabel.text = "Types: \(pokemon.types)"
-        abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        self.typesLabel.text = "Types: \(pokemon.types)"
+        self.abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
         
         //image
         guard let url = URL(string: pokemon.sprites.frontDefault),
             let imageData = try? Data(contentsOf: url) else {return}
         
-        pokemonView.image = UIImage(data: imageData)
+        self.pokemonView.image = UIImage(data: imageData)
+        }
     }
 }
 
