@@ -4,7 +4,6 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
 
     var pokemon: Pokemon? {
         didSet {
-            let pokemon = self.pokemon
             updateViews()
         }
     }
@@ -36,9 +35,9 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         searchBar.text = ""
         
         Model.shared.search(for: searchTerm) { (pokemon, error) in
-            if error == nil {
+            if let pokemon = pokemon, error == nil {
+                self.pokemon = pokemon
                 DispatchQueue.main.async {
-                    let pokemon = self.pokemon
                     self.updateViews()
                 }
             }
