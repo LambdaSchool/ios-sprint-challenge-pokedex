@@ -7,7 +7,7 @@ class Model {
     private init () {}
     
     //baseURL for api
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     //var
     var pokemons: [Pokemon] = []
@@ -38,31 +38,34 @@ class Model {
     }
     
     //accessing api process
-    func search(for searchTerm: String, completion: @escaping (Error?) -> Void ) {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+    func search(for searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void ) {
+        //let pokemonURL = baseURL.appendingPathComponent("pokemon")
         
-        let searchQueryItem = URLQueryItem(name: "pokemon", value: searchTerm)
-        urlComponents?.queryItems = [searchQueryItem]
+        //You don't need to use URLComponenets or URLQueryItems
+//        let components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+//      let searchQueryItem = URLQueryItem(name: "pokemon", value: searchTerm)
+//      urlComponents?.queryItems = [searchQueryItem]
         
-        guard let requestURL = urlComponents?.url else {
-            NSLog("wasn't able to construct URL")
-            completion(NSError())
-            return
-        }
+//        guard let requestURL = URLComponents?.url else {
+//            NSLog("wasn't able to construct URL")
+//            completion(NSError())
+//            return
+//        }
         
-        var request = URLRequest(url: requestURL)
+        //create get request
+        var request = URLRequest(url: baseURL)
         request.httpMethod = "GET"
         
         //fetching data
         let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 NSLog("There was a problem getting data from JSON: \(error)")
-                completion(NSError())
+                completion(nil, error)
                 return
             }
             guard let data = data else {
                 NSLog("No data found")
-                completion(NSError())
+                completion(nil, error)
                 return
             }
             
@@ -71,12 +74,12 @@ class Model {
             
             do {
                 let searchResults = try JSONDecoder().decode(SearchResults.self, from: data)
-                self.pokemons = searchResults.pokemon
-                completion(nil)
-                
+                let pokemons = searchResults.pokemon
+                completion(searchResults.pokemon, nil)
+
             } catch {
                 NSLog("Unable to decode data: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
         }

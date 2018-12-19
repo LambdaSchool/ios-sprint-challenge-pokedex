@@ -2,7 +2,12 @@ import UIKit
 
 class DetailViewController: UIViewController, UISearchBarDelegate {
 
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet {
+            let pokemon = self.pokemon
+            updateViews()
+        }
+    }
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
@@ -30,9 +35,10 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         
         searchBar.text = ""
         
-        Model.shared.search(for: searchTerm) { (error) in
+        Model.shared.search(for: searchTerm) { (pokemon, error) in
             if error == nil {
                 DispatchQueue.main.async {
+                    let pokemon = self.pokemon
                     self.updateViews()
                 }
             }
