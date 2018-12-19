@@ -63,8 +63,8 @@ class Model {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemons = pokemon
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.pokemon = pokemon
                 print("\(pokemon)")
                 completion(pokemon, nil)
 
