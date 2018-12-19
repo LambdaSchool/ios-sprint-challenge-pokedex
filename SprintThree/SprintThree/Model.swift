@@ -35,7 +35,7 @@ class Model {
     
     //update
     func updatePokemon(at indexPath: IndexPath) {
-        let pokemon = pokemons[indexPath.row]
+        let _ = pokemons[indexPath.row]
     }
     
     //accessing api process
