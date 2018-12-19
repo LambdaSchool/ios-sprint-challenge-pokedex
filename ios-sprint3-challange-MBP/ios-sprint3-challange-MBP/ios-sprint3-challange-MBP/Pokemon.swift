@@ -1,35 +1,34 @@
 import Foundation
 
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable {
     let name: String
     let id: Int
+    let weight: Int
     let abilities: [Ability]
     let types: [PokemonType]
+    let sprites: ImageURLs?
     
-    struct Ability: Codable,  Equatable {
+    struct ImageURLs: Codable {
+        let frontDefault: String?
+    }
+    
+    struct Ability: Codable{
         let ability: SubAbility
         
-        struct SubAbility: Codable, Equatable {
+        struct SubAbility: Codable {
             let name: String
         }
     }
     
-    struct PokemonType: Codable, Equatable {
+    struct PokemonType: Codable {
         let type: SubPokemonType
         
-        struct SubPokemonType: Codable, Equatable {
+        struct SubPokemonType: Codable {
             let name: String
         }
     }
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case id = "id"
-        case abilities = "abilities"
-        case types = "types"
-    }
+   
 }
 
 
-struct PokemonSearchResult: Codable, Equatable {
-    let results: [Pokemon]
-}
+
