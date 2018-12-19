@@ -1,6 +1,13 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     @IBAction func search(_ sender: Any) {
     }
