@@ -10,6 +10,7 @@ class Model {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     //var
+    var pokemon: Pokemon?
     var pokemons: [Pokemon] = []
     
     //count
