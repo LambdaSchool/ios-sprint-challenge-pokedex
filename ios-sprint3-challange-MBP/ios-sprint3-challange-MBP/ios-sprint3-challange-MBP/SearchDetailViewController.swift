@@ -22,7 +22,7 @@ class SearchDetailViewController: UIViewController {
         idLabel.text = "ID: \(String(describing: pokemon.id))"
         abilitiesLabel?.text = "Ability: \(pokemon.abilities[0].ability.name.capitalized)"
         typeLabel?.text = "Type: \(pokemon.types[0].type.name.capitalized)"
-        weightLabel.text = "Weight: \(pokemon.weight)"
+        weightLabel.text = "Weight: \(pokemon.weight) hectograms"
         guard let url = URL(string: pokemon.sprites?.frontDefault ?? "No Picture"),
             let imageData = try? Data(contentsOf: url) else { return }
         imageView.image = UIImage(data: imageData)

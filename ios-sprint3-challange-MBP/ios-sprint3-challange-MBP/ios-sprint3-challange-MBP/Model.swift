@@ -25,6 +25,11 @@ class Model {
     func addNewPokemon() {
         guard let pokemon = pokemon else {return}
           pokemons.append(pokemon)
+        
+//        Firebase<Pokemon>.save(item: pokemon) { success in
+//            guard success else {return}
+//            
+//        }
     }
     
     func deletePokemon(at indexPath: IndexPath) {

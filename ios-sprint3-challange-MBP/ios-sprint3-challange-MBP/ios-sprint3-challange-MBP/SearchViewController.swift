@@ -2,8 +2,6 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
 
-    let mainTableViewController = MainTableViewController()
-    let pokemonCell = PokemonCell()
     var pokemon: Pokemon?
     var searchAPI = SearchAPI()
     
@@ -57,10 +55,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             self.idLabel?.text = "ID: \(pokemon.id)"
             self.typeLabel?.text = "Type: \(pokemon.types[0].type.name.capitalized)"
             self.abilitiesLabel?.text = "Ability: \(pokemon.abilities[0].ability.name.capitalized)"
-            self.weightLabel.text = "Weight: \(pokemon.weight)"
-            guard let url = URL(string: pokemon.sprites?.frontDefault ?? "No Picture"),
-                let imageData = try? Data(contentsOf: url) else { return }
-            self.imageView.image = UIImage(data: imageData)
+            self.weightLabel.text = "Weight: \(pokemon.weight) hectograms"
+            
+            DispatchQueue.global().async {
+                guard let url = URL(string: pokemon.sprites?.frontDefault ?? "No Picture"),
+                    let imageData = try? Data(contentsOf: url) else { return }
+                DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: imageData)
+                }
+            }
             self.saveButton.isHidden = false
             self.navigationItem.title = pokemon.name.capitalized
         }

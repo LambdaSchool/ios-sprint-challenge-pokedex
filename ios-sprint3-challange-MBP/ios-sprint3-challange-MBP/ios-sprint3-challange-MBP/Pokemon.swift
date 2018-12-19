@@ -1,12 +1,15 @@
 import Foundation
 
 struct Pokemon: Codable {
+    // var recordIdentifier: String
+    
     let name: String
     let id: Int
     let weight: Int
     let abilities: [Ability]
     let types: [PokemonType]
     let sprites: ImageURLs?
+    
     
     struct ImageURLs: Codable {
         let frontDefault: String?
@@ -27,7 +30,7 @@ struct Pokemon: Codable {
             let name: String
         }
     }
-   
+    
 }
 
 
