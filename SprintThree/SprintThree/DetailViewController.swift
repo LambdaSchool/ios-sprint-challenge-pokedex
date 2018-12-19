@@ -18,7 +18,6 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         guard let pokemon = pokemon else {return}
         guard let name = nameLabel.text, !name.isEmpty else {return}
         Model.shared.addPokemon(pokemon: pokemon)
-        
         navigationController?.popViewController(animated: true)
     }
     
@@ -37,9 +36,9 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         Model.shared.search(for: searchTerm.lowercased()) { (pokemon, error) in
             if let pokemon = pokemon, error == nil {
                 self.pokemon = pokemon
-                DispatchQueue.main.async {
-                    self.updateViews()
-                }
+//                DispatchQueue.main.async {
+//                    self.updateViews()
+//                }
             }
         }
     }
@@ -52,9 +51,14 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         self.nameLabel.text = pokemon.name
         self.idLabel.text = "ID: \(pokemon.id)"
         
-        //possibly fix?
-        self.typesLabel.text = "Types: \(pokemon.types)"
-        self.abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+//        self.typesLabel.text = "Types: \(pokemon.types[0].type)"
+//        self.abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability)"
+        
+        let types = pokemon.types.map{$0.type.name}
+        self.typesLabel.text = "Types: \(types)"
+        
+        let abilities = pokemon.abilities.map{$0.ability.name}
+        self.abilitiesLabel.text = "Abilities: \(abilities)"
         
         //image
         guard let url = URL(string: pokemon.sprites.frontDefault),
