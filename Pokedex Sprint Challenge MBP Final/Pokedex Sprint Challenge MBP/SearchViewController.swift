@@ -11,6 +11,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchedSpriteView: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveLabelOutlet: UILabel!
+    @IBOutlet weak var errorOutlet: UILabel!
     
     @IBAction func save(_ sender: Any) {
         
@@ -102,6 +103,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 return
             } catch {
                 NSLog("Error decoding JSON: \(error)")
+                
+                DispatchQueue.main.async {
+                    self.searchedTypesLabel.textColor = .red
+                    self.searchedTypesLabel.textAlignment = .center
+                    self.searchedTypesLabel.layer.borderColor = UIColor.black.cgColor;
+                    self.searchedTypesLabel.layer.borderWidth = 3.0
+                    self.searchedTypesLabel.layer.cornerRadius = 16
+                    self.searchedTypesLabel.layer.masksToBounds = true
+                    self.searchedTypesLabel.frame.size.width = self.searchedTypesLabel.intrinsicContentSize.width + 10
+                    self.searchedTypesLabel.frame.size.height = self.searchedTypesLabel.intrinsicContentSize.height + 10
+                    self.searchedTypesLabel.text = " \n !! \n Can't find that Pokémon. \n  Are you sure you typed it correctly?   \n \n"
+                }
+
                 completion(error)
                 return
             }
