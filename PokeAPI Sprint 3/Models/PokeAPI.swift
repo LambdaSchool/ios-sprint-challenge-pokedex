@@ -2,12 +2,8 @@ import UIKit
 
 class PokemonSearchResultsController {
     
-    // static let shared = PokemonSearchResultsController()
-    
     let baseURL = "https://pokeapi.co/api/v2/pokemon/"
     
-    // search results array, data source for the table view
-    // var pokemonSearchResults: [Pokemon] = []
     
     func performSearch(searchTerm: String, completion: @escaping (NSError?) -> Void) {
         

@@ -26,7 +26,3 @@ struct Pokemon: Codable {
         }
     }
 }
-
-//struct PokemonSearchResults: Codable {
-//    let results: [Pokemon]
-//}
