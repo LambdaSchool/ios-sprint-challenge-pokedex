@@ -1,12 +1,12 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.tableView.reloadData()
-    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PokedexModel.shared.savedPokemon.count
@@ -30,7 +30,7 @@ class PokedexTableViewController: UITableViewController {
         PokedexModel.shared.removePokemon(indexPath: indexPath)
         
         // Make sure the user sees the update on the views
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     // MARK: - Navigation | Segue - to the Detail View Controller
