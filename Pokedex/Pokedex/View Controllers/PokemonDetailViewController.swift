@@ -15,50 +15,55 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+
+    // MARK: - Properties
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
-            updateViews()
-        }
-    }
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        updateViews()
-    }
-    
-    func updateViews() {
-        if isViewLoaded {
-            if pokemon?.name == pokemon?.name {
-                title = pokemon?.name
-                nameLabel.text = pokemon?.name
-                idLabel.text = pokemon?.id
-                typesLabel.text = pokemon?.types
-                abilitiesLabel.text = pokemon?.abilities
-            } else {
-                title = "Pokemon Search"
+            DispatchQueue.main.async {
+              self.updateViews()
             }
         }
     }
     
+    func updateViews() {
+        if isViewLoaded {
+            guard let pokemon = pokemon else {
+                    title = "Pokemon Search"
+                    return
+            }
+            
+            title = pokemon.name
+            
+            let abilityString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+            let typeString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+                nameLabel.text = pokemon.name
+                idLabel.text = String(pokemon.id)
+                typesLabel.text = typeString
+                abilitiesLabel.text = abilityString
+            }
+        }
+    
+    @IBAction func saveButton(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Search Bar Delegate
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
-//        pokemonController?.searchForPokemon(with: searchTerm, completion: { (pokemon, error) in
-//            
-//        })
-        
+        pokemonController?.searchForPokemon(with: searchTerm.lowercased()) { (pokemon, error) in
+            self.pokemon = pokemon
+        }
     }
     
-    
-    
-    
-    @IBAction func saveButton(_ sender: Any) {
-        
-        
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
     }
-    
 }
+

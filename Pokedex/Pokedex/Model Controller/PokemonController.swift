@@ -8,7 +8,7 @@
 
 import Foundation
 
-private var baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
+private var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController {
     
@@ -19,51 +19,56 @@ class PokemonController {
         case delete = "DELETE"
     }
     
-    var pokemonResults: [Pokemon] = []
-    let searchTerm = "133"
+    // MARK: - Properites
     
+    var pokeDex: [Pokemon] = []
     
-    func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
+    // Search for Pokemon
+    func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
+        // URL
         var requestURL =  baseURL
         requestURL.appendPathComponent(searchTerm)
-                
+        
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
-        print(request)
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+        
+        // URLSession
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            // Check if there is an error
             if let error = error {
                 NSLog("Error fetching data: \(error)")
                 completion(nil, error)
                 return
             }
             
+            // Check if data was received
             guard let data = data else {
                 NSLog("Error fetching data No data received.")
                 completion(nil, NSError())
                 return
             }
             
+            // Decode data
             do {
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                let search = try jsonDecoder.decode(SearchResults.self, from: data)
-                self.pokemonResults = search.results
-                completion(self.pokemonResults, nil)
+                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(pokemon, nil)
             } catch {
                 NSLog("Unable to decode data into result: \(error)")
                 completion(nil, NSError())
             }
-        }
-        dataTask.resume()
+        }.resume()
     }
     
-    func create(name: String, id: String, abilities: String, types: String, completion: @escaping (Error?) -> Void) {
-        
+    func savePokemon(pokemon: Pokemon?) {
+        guard let pokemon = pokemon else { return }
+        pokeDex.append(pokemon)
     }
     
-    func update(pokemon: Pokemon, name: String, id: String, abilities: String, types: String, completion: @escaping (Error?) -> Void) {
+    func deletePokemon(pokemon: Pokemon) {
+//        guard let index = pokeDex.index(of: pokemon) else { return }
         
+//        pokeDex.remove(at: index)
     }
     
 }

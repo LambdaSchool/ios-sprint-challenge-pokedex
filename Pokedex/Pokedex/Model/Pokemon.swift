@@ -8,13 +8,30 @@
 
 import Foundation
 
-struct Pokemon: Equatable, Codable {
+struct Pokemon: Codable {
     let name: String
-    let id: String
-    let abilities: String
-    let types: String
+    let id: Int
+    let abilities: [Ability]
+    let types: [Types]
+    
+    struct Ability: Codable {
+        let ability: AbilityDetail
+    }
+    
+    struct AbilityDetail: Codable {
+        let name: String
+    }
+    
+    struct Types: Codable {
+        let type: TypeDetail
+    }
+    
+    struct TypeDetail: Codable {
+        let name: String
+    }
 }
 
 struct SearchResults: Codable {
     let results: [Pokemon]
 }
+

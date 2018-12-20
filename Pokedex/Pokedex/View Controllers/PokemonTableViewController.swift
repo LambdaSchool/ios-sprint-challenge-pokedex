@@ -12,42 +12,32 @@ class PokemonTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let searchTerm = "133"
-        pokemonController.searchForPokemon(with: searchTerm) { (pokemon, error) in
-            return
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonController.pokemonResults.count
+        return pokemonController.pokeDex.count
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
-
-        let searchResult = pokemonController.pokemonResults[indexPath.row]
-        
+        let searchResult = pokemonController.pokeDex[indexPath.row]
         cell.textLabel?.text = searchResult.name
-
         return cell
     }
-
-
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            pokemonController.pokemonResults.remove(at: indexPath.row)
+            pokemonController.pokeDex.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-
 
     // MARK: - Navigation
 
@@ -55,7 +45,7 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "Show" {
             guard let destinationVC = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = pokemonController.pokemonResults[indexPath.row]
+            let pokemon = pokemonController.pokeDex[indexPath.row]
             destinationVC.pokemon = pokemon
             destinationVC.pokemonController = pokemonController
         }
@@ -65,5 +55,4 @@ class PokemonTableViewController: UITableViewController {
             destinationVC.pokemonController = pokemonController
         }
     }
-
 }
