@@ -21,7 +21,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
-    // Relocate this to the model if necessary.
+    // Relocate this to the API controller if necessary.
     var pokemonSearchResult: Pokemon?
     
     // In case we need to connect to our API...
@@ -55,23 +55,21 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         func updateSearchResults() {
             
             // if let pokemonSearchResult = pokemonSearchResult {
-                
                 guard let presentedPokemon = PokedexModel.shared.selectedPokemon else { fatalError("Could not obtain Pokemon.")}
                 
                 self.pokemonNameLabel.text = presentedPokemon.name
                 self.pokemonIDLabel.text = "ID: \(presentedPokemon.id)"
-                
+            
                 self.pokemonTypesLabel.text = "Types: "
-                
+                    
                 self.pokemonAbilitiesLabel.text = "Abilities: "
-                
+            
                 // Unwrap the URL if a valid, non-empty sprite is returned
                 guard let urlString = presentedPokemon.sprites?.frontDefault else { return }
                 // Set the link to the image
                 guard let imageURL = URL(string: urlString), let imageData = try? Data(contentsOf: imageURL) else { fatalError("Couldn't obtain image.")}
                 // Set the ImageView to the imageData in the form of a usable UIImage
                 self.pokemonSpriteImageView?.image = UIImage(data: imageData)
-        //    }
          }
         
         pokemonSearchResultsController.performSearch(searchTerm: searchTerm) { _ in

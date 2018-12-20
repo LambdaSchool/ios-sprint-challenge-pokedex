@@ -24,7 +24,7 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        guard let presentedPokemon = PokedexModel.shared.selectedPokemon else { fatalError("Could not obtain Pokemon.")}
+        guard let presentedPokemon = self.savedPokemon else { fatalError("Could not obtain Pokemon.")}
         
         self.pokemonDetailName.text = presentedPokemon.name
         self.pokemonDetailID.text = "ID: \(presentedPokemon.id)"
