@@ -55,19 +55,22 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
             // if let pokemonSearchResult = pokemonSearchResult {
             guard let presentedPokemon = PokedexModel.shared.selectedPokemon else { fatalError("Could not obtain Pokemon.")}
             
-            self.pokemonNameLabel.text = presentedPokemon.name
-            self.pokemonIDLabel.text = "ID: \(presentedPokemon.id)"
+            searchResultsVCTitle.title = presentedPokemon.name
             
-            self.pokemonTypesLabel.text = "Types: "
+            pokemonNameLabel.text = presentedPokemon.name
             
-            self.pokemonAbilitiesLabel.text = "Abilities: "
+            pokemonIDLabel.text = "ID: \(presentedPokemon.id)"
+            
+            pokemonTypesLabel.text = "Types: "
+            
+            pokemonAbilitiesLabel.text = "Abilities: "
             
             // Unwrap the URL if a valid, non-empty sprite is returned
             guard let urlString = presentedPokemon.sprites?.frontDefault else { return }
             // Set the link to the image
             guard let imageURL = URL(string: urlString), let imageData = try? Data(contentsOf: imageURL) else { fatalError("Couldn't obtain image.")}
             // Set the ImageView to the imageData in the form of a usable UIImage
-            self.pokemonSpriteImageView?.image = UIImage(data: imageData)
+            pokemonSpriteImageView?.image = UIImage(data: imageData)
         }
         
         pokemonSearchResultsController.performSearch(searchTerm: searchTerm) { _ in

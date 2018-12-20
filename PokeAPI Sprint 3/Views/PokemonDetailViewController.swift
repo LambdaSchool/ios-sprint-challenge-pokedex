@@ -26,12 +26,15 @@ class PokemonDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         guard let presentedPokemon = self.savedPokemon else { fatalError("Could not obtain Pokemon.")}
         
-        self.pokemonDetailName.text = presentedPokemon.name
-        self.pokemonDetailID.text = "ID: \(presentedPokemon.id)"
+        detailVCTitle.title = presentedPokemon.name
         
-        self.pokemonDetailTypes.text = "Types: "
+        pokemonDetailName.text = presentedPokemon.name
         
-        self.pokemonDetailAbilities.text = "Abilities: "
+        pokemonDetailID.text = "ID: \(presentedPokemon.id)"
+        
+        pokemonDetailTypes.text = "Types: "
+        
+        pokemonDetailAbilities.text = "Abilities: "
         
         // Unwrap the URL if a valid, non-empty sprite is returned
         guard let urlString = presentedPokemon.sprites?.frontDefault else { return }
