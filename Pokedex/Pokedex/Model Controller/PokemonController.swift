@@ -23,17 +23,25 @@ class PokemonController {
     
     var pokeDex: [Pokemon] = []
     
-    // Search for Pokemon
+    // MARK: - CRUD
+    
+    func savePokemon(pokemon: Pokemon?) {
+        guard let pokemon = pokemon else { return }
+        pokeDex.append(pokemon)
+    }
+    
+    // MARK: Networking
+    
     func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
-        // URL
+        // Create URL
         var requestURL =  baseURL
         requestURL.appendPathComponent(searchTerm)
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        // URLSession
+        // Make network call
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             // Check if there is an error
             if let error = error {
@@ -59,16 +67,5 @@ class PokemonController {
             }
         }.resume()
     }
-    
-    func savePokemon(pokemon: Pokemon?) {
-        guard let pokemon = pokemon else { return }
-        pokeDex.append(pokemon)
-    }
-    
-    func deletePokemon(pokemon: Pokemon) {
-//        guard let index = pokeDex.index(of: pokemon) else { return }
-        
-//        pokeDex.remove(at: index)
-    }
-    
+
 }

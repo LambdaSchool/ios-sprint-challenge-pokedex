@@ -2,68 +2,54 @@
 //  PokemonDetailViewController.swift
 //  Pokedex
 //
-//  Created by Scott Bennett on 9/21/18.
+//  Created by Scott Bennett on 12/20/18.
 //  Copyright © 2018 Scott Bennett. All rights reserved.
 //
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
-    
+class PokemonDetailViewController: UIViewController {
+
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-    @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var imageView: UIImageView!
+    
     // MARK: - Properties
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
-              self.updateViews()
+                self.updateViews()
             }
         }
     }
     
     func updateViews() {
-        if isViewLoaded {
-            guard let pokemon = pokemon else {
-                    title = "Pokemon Search"
-                    return
-            }
-            
-            title = pokemon.name
-            
-            let abilityString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
-            let typeString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
-                nameLabel.text = pokemon.name
-                idLabel.text = String(pokemon.id)
-                typesLabel.text = typeString
-                abilitiesLabel.text = abilityString
-            }
-        }
-    
-    @IBAction func saveButton(_ sender: Any) {
         guard let pokemon = pokemon else { return }
-        pokemonController?.savePokemon(pokemon: pokemon)
         
-        navigationController?.popViewController(animated: true)
-    }
-    
-    // MARK: - Search Bar Delegate
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        title = pokemon.name.capitalized
         
-        pokemonController?.searchForPokemon(with: searchTerm.lowercased()) { (pokemon, error) in
-            self.pokemon = pokemon
-        }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
+        let abilityString = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        let typeString = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        
+        idLabel.text = "ID:  \(pokemon.id)"
+        typesLabel.text = "Types:  \(typeString.capitalized)"
+        abilitiesLabel.text = "Abilities:  \(abilityString.capitalized)"
+        
+        // Get image
+        guard let imageURL = URL(string: pokemon.sprites.front_default) else { return }
+        
+        URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            if error == nil {
+                let loadedImage = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    self.imageView.image = loadedImage
+                }
+                
+            }
+        }.resume()        
     }
 }
-

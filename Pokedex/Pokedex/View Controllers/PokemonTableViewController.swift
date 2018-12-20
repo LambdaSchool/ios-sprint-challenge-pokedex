@@ -18,7 +18,7 @@ class PokemonTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
+    // MARK: - TableView data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokeDex.count
@@ -27,7 +27,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
         let searchResult = pokemonController.pokeDex[indexPath.row]
-        cell.textLabel?.text = searchResult.name
+        cell.textLabel?.text = searchResult.name.capitalized
         return cell
     }
 
@@ -42,16 +42,16 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Show" {
+        if segue.identifier == "ShowDetail" {
             guard let destinationVC = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
+            
             let pokemon = pokemonController.pokeDex[indexPath.row]
             destinationVC.pokemon = pokemon
-            destinationVC.pokemonController = pokemonController
         }
         
         if segue.identifier == "Search" {
-            guard let destinationVC = segue.destination as? PokemonDetailViewController else { return }
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
             destinationVC.pokemonController = pokemonController
         }
     }
