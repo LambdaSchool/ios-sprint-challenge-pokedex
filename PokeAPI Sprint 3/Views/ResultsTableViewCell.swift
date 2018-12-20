@@ -1,4 +1,6 @@
-import UIKit
+// Ignore this
+
+/* import UIKit
 
 class ResultsTableViewCell: UITableViewCell {
     
@@ -21,3 +23,4 @@ class ResultsTableViewCell: UITableViewCell {
     }
     
 }
+*/

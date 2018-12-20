@@ -15,14 +15,13 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var pokemonSpriteImageView: UIImageView!
     
     @IBAction func savePokemon(_ sender: Any) {
-        pokemonSearchResultsController.searchResults.append(searchResult!)
+        pokemonSearchResultsController.pokemonSearchResults.append(pokemonSearchResult!)
         
         // Pop back into previous view after saving pokemon
-        // Doesn't work so far
-        //NavigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
-    var searchResult: Pokemon?
+    var pokemonSearchResult: Pokemon?
     
     // Access our model and save having to write a few characters...
     let pokemonSearchResultsController = PokemonSearchResultsController()
@@ -45,22 +44,28 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         searchBar.text = ""
         searchBar.placeholder = searchTerm
         
-        func updateSearchBar() {
+        func updateSearchResults() {
             
-           // guard let imageURL = URL(string: (searchResult!.sprites.frontDefault)),            let imageData = try? Data(contentsOf: imageURL) else { fatalError("Couldn't obtain image.")}
-            self.pokemonNameLabel.text = self.searchResult?.name
-            self.pokemonIDLabel.text = "ID: \(self.searchResult!.id)"
-            
-            self.pokemonTypesLabel.text = "Types: "
-            
-            self.pokemonAbilitiesLabel.text = "Abilities: "
-            
-           // self.pokemonSpriteImageView?.image = UIImage(data: imageData)
+            if let pokemonSearchResult = pokemonSearchResult {
+                
+                guard let urlString = pokemonSearchResult.sprites?.frontDefault else { return }
+                
+                guard let imageURL = URL(string: urlString), let imageData = try? Data(contentsOf: imageURL) else { fatalError("Couldn't obtain image.")}
+                self.pokemonNameLabel.text = pokemonSearchResult.name
+                self.pokemonIDLabel.text = "ID: \(pokemonSearchResult.id)"
+                
+                self.pokemonTypesLabel.text = "Types: "
+                
+                self.pokemonAbilitiesLabel.text = "Abilities: "
+                
+               self.pokemonSpriteImageView?.image = UIImage(data: imageData)
+            }
         }
         
-        pokemonSearchResultsController.performSearch(searchTerm: searchTerm) { _, _ in
+        pokemonSearchResultsController.performSearch(searchTerm: searchTerm) { _ in
             DispatchQueue.main.async {
-                updateSearchBar()
+               // self.pokemonSearchResult = PokemonSearchResultsController.shared.pokemonSearchResults[IndexPath]
+                updateSearchResults()
             }
         }
     }
