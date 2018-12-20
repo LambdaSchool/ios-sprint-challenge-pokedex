@@ -61,9 +61,9 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
             
             pokemonIDLabel.text = "ID: \(presentedPokemon.id)"
             
-            pokemonTypesLabel.text = "Types: "
+            pokemonTypesLabel.text = "Types: \(presentedPokemon.types.compactMap({$0.type.name}).joined(separator: ", "))"
             
-            pokemonAbilitiesLabel.text = "Abilities: "
+            pokemonAbilitiesLabel.text = "Abilities: \(presentedPokemon.abilities.compactMap({$0.ability.name}).joined(separator: ", "))"
             
             // Unwrap the URL if a valid, non-empty sprite is returned
             guard let urlString = presentedPokemon.sprites?.frontDefault else { return }

@@ -32,9 +32,9 @@ class PokemonDetailViewController: UIViewController {
         
         pokemonDetailID.text = "ID: \(presentedPokemon.id)"
         
-        pokemonDetailTypes.text = "Types: "
+        pokemonDetailTypes.text = "Types: \(presentedPokemon.types.compactMap({$0.type.name}).joined(separator: ", "))"
         
-        pokemonDetailAbilities.text = "Abilities: "
+        pokemonDetailAbilities.text = "Abilities: \(presentedPokemon.abilities.compactMap({$0.ability.name}).joined(separator: ", "))"
         
         // Unwrap the URL if a valid, non-empty sprite is returned
         guard let urlString = presentedPokemon.sprites?.frontDefault else { return }
