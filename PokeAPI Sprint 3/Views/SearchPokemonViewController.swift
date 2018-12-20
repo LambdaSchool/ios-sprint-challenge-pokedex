@@ -30,7 +30,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     // SearchBar Outlet
     @IBOutlet weak var searchBar: UISearchBar!
     
-    // Set it to something (elsewhere) or remove completely
+    // TODO: Set it to something (elsewhere) or remove completely
     @IBOutlet weak var searchResultsVCTitle: UINavigationItem!
     
     override func viewDidLoad() {
