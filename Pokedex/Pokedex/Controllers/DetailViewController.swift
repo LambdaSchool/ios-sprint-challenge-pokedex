@@ -18,8 +18,12 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var pokemonTypeText: UITextField!
     @IBOutlet weak var pokemonAbilitiesText: UITextField!
     
+    var pokemon: Pokemon?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pokemonSearchBar.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -28,11 +32,35 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBAction func pokemonSave(_ sender: Any) {
     }
     
+    func displayPokemon() {
+        // Make sure we found a Pokemon
+//        guard let pokemon = pokemon else {
+// //           pokemonNameLabel.text = "Sorry, did not find that Pokemon"
+//            return
+//        }
+        pokemonNameLabel.text = pokemon?.name
+    }
+    
     
     // MARK: - Search
-    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        pokemonSearchBar.autocapitalizationType = .none
+        searchBar.resignFirstResponder()
+        guard let findThisPokemon = searchBar.text?.lowercased(), !findThisPokemon.isEmpty else { return }
         
-    }
+        // Clear the searchbar and set the placeholder text
+        searchBar.text = ""
+        searchBar.placeholder = findThisPokemon.lowercased()
+        
+        // Search the Pokemon API for the entered Pokemon name
+        NetworkData.shared.searchForPokemon(with: findThisPokemon.lowercased()) { (error) in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.displayPokemon()
+                }
+            }
+        }
+   }
     
     /*
     // MARK: - Navigation
@@ -44,4 +72,4 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     }
     */
 
-}
+} // End of class
