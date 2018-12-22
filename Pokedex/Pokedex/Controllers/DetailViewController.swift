@@ -19,6 +19,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var pokemonTypeLabel: UILabel!
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
     @IBOutlet weak var spriteImage: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     
     var pokemon: Pokemon?
     
@@ -36,15 +37,6 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
     }
-    
-    /*
- for controller in self.navigationController!.viewControllers as Array {
- if controller.isKind(of: SOListScreen .self) {
- self.navigationController!.popToViewController(controller, animated: true)
- break
- }
- }
- */
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         pokemonSearchBar.autocapitalizationType = .none
@@ -78,25 +70,12 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                     }
                     // Clear the placeholder text
                     searchBar.placeholder = nil
-                   
+                    self.saveButton.setTitle("Save \(pokemon.name?.capitalized ?? "Pokemon")", for: .normal)
                     self.pokemon = Pokemon.init(name: pokemon.name!, id: "\(pokemon.id)", abilities: pokemonAbilities, types: pokemonTypes, sprite: self.spriteImage.image!)
                     
                 }
             }
         }
-    }
-    
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard
-            let destination = segue.destination as? TableViewController
-            else { return }
-
-        let pokemon = self.pokemon
-        destination.pokemon = pokemon
     }
 
 } // End of class
