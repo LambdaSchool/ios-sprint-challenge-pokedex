@@ -64,6 +64,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                 }
             }
         }
+    }
     
     /*
     // MARK: - Navigation
