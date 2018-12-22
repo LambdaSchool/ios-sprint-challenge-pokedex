@@ -18,11 +18,18 @@ class PersistentData {
     
     var savedPokemon: [Pokemon] = []
     
+    //Computed property: number of Pokemon saved
+    var numberOfPokemonSaved: Int {
+        return savedPokemon.count 
+    }
+    
     // MARK: - CRUD Methods
     func add(pokemon: Pokemon) {
         savedPokemon.append(pokemon)
         saveData()
     }
+    
+    
     
     
     // MARK: - Local perstance

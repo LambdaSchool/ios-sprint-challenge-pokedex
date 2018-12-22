@@ -9,7 +9,10 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
 
+    // Collect the Pokemon sent back to be saved
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +22,15 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //guard let saveThisPokemon = pokemon else { return }
+        
+        //We got a Pokemon:
+        print("*** \(pokemon?.name ?? "There is no Pokemon!") ***")
     }
 
     // MARK: - Table view data source
@@ -30,18 +42,17 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return PersistentData.shared.numberOfPokemonSaved
     }
 
-    /*
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonList", for: indexPath)
 
         // Configure the cell...
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

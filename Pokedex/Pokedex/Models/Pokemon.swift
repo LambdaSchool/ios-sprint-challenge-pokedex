@@ -10,12 +10,12 @@ import UIKit
 
 class Pokemon {
     var name: String?
-    var id: Int
-    var abilities: [String]
-    var types: [String]
+    var id: String
+    var abilities: String
+    var types: String
     var sprite: UIImage
     
-    init(name: String, id: Int, abilities: [String], types: [String], sprite: UIImage) {
+    init(name: String, id: String, abilities: String, types: String, sprite: UIImage) {
         self.name = name
         self.id = id
         self.abilities = abilities

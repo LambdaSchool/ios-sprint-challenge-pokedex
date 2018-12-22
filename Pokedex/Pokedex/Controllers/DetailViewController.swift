@@ -15,11 +15,12 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var allElementsStack: UIStackView!
     
     @IBOutlet weak var pokemonNameLabel: UILabel!
-
-    @IBOutlet weak var pokemonIDText: UITextField!
-    @IBOutlet weak var pokemonTypeText: UITextField!
-    @IBOutlet weak var pokemonAbilitiesText: UITextField!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    @IBOutlet weak var pokemonTypeLabel: UILabel!
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
     @IBOutlet weak var spriteImage: UIImageView!
+    
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,15 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func pokemonSave(_ sender: Any) {
+        self.pokemon?.name = pokemonNameLabel.text
+        self.pokemon?.id = pokemonIDLabel.text!
+        self.pokemon?.types = pokemonTypeLabel.text!
+        self.pokemon?.abilities = pokemonAbilitiesLabel.text!
+        self.pokemon?.sprite = spriteImage.image!
+        
+        PersistentData.shared.add(pokemon: pokemon!)
+        
+        print("There are \(PersistentData.shared.numberOfPokemonSaved) saved.")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -44,36 +54,43 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         
         NetworkData.shared.searchForPokemon(with: findThisPokemon) { (error) in
             if error == nil {
+               
                 DispatchQueue.main.async {
                     // First, make sure we have a Pokemon
                     guard let pokemon = NetworkData.shared.pokemonAPI else { return }
                     // We have a Pokemon so populate the fields
                     self.pokemonNameLabel.text = pokemon.name
-                    self.pokemonIDText.text = "\(pokemon.id)"
+                    self.pokemonIDLabel.text = "\(pokemon.id)"
                     let pokemonTypes = pokemon.types.map({$0.type.name.capitalized}).joined(separator: ", ")
-                    self.pokemonTypeText.text = pokemonTypes
+                    self.pokemonTypeLabel.text = pokemonTypes
                     let pokemonAbilities = pokemon.abilities.map({$0.ability.name.capitalized}).joined(separator: ", ")
-                    self.pokemonAbilitiesText.text = pokemonAbilities
+                    self.pokemonAbilitiesLabel.text = pokemonAbilities
                     //get the sprite
                     guard let url = URL(string: pokemon.sprites.frontDefault), let spriteData = try? Data(contentsOf: url) else { return }
-                    // and show it
                     self.spriteImage.image = UIImage(data: spriteData)
                     
-                    //Display the form
-                    self.allElementsStack.isHidden.toggle()
+                    //Show the form if necessary
+                    if (self.allElementsStack.isHidden == true) {
+                        self.allElementsStack.isHidden.toggle()
+                    }
+                    // Clear the placeholder text
+                    searchBar.placeholder = nil
                 }
             }
         }
     }
     
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard
+            let destination = segue.destination as? TableViewController
+            else { return }
+        
+        let pokemon = self.pokemon
+        destination.pokemon = pokemon
     }
-    */
 
 } // End of class
