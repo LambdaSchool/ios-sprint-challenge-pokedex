@@ -70,6 +70,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                     }
                     // Clear the placeholder text
                     searchBar.placeholder = nil
+                    self.navigationItem.title = pokemon.name
                     self.saveButton.setTitle("Save \(pokemon.name?.capitalized ?? "Pokemon")", for: .normal)
                     self.pokemon = Pokemon.init(name: pokemon.name!, id: "\(pokemon.id)", abilities: pokemonAbilities, types: pokemonTypes, sprite: self.spriteImage.image!)
                     
