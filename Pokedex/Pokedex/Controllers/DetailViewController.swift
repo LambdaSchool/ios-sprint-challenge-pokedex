@@ -33,7 +33,18 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func pokemonSave(_ sender: Any) {
         PersistentData.shared.add(pokemon: self.pokemon!)
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true);
     }
+    
+    /*
+ for controller in self.navigationController!.viewControllers as Array {
+ if controller.isKind(of: SOListScreen .self) {
+ self.navigationController!.popToViewController(controller, animated: true)
+ break
+ }
+ }
+ */
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         pokemonSearchBar.autocapitalizationType = .none
