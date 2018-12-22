@@ -13,7 +13,7 @@ struct PokemonAPI: Codable {
     let id: Int
     let abilities: [Abilities]
     let types: [Type]
-//    let sprites: Sprite
+    let sprites: Sprite
 }
 
 // GET the Pokemon abilities
@@ -33,9 +33,6 @@ struct Type: Codable {
 }
 
 //Get the Pokemon sprite
-//struct Sprite: Codable {
-//    let sprite: String
-//    struct ImageURLs: Codable {
-//        let frontDefault: String
-//    }
-//}
+struct Sprite: Codable {
+    let frontDefault: String
+}

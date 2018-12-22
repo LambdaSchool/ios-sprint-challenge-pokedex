@@ -6,15 +6,20 @@
 //  Copyright © 2018 Sameera Leola. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Pokemon {
     var name: String?
     var id: Int
     var abilities: [String]
     var types: [String]
+    var sprite: UIImage
     
-    init(name: String, id: Int, abilities: [String], types: [String]) {
-        self.name = name; self.id = id; self.abilities = abilities; self.types = types
+    init(name: String, id: Int, abilities: [String], types: [String], sprite: UIImage) {
+        self.name = name
+        self.id = id
+        self.abilities = abilities
+        self.types = types
+        self.sprite = sprite
     }
 }

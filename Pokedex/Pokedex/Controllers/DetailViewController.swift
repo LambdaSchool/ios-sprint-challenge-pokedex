@@ -12,13 +12,13 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     
+    @IBOutlet weak var allElementsStack: UIStackView!
+    
     @IBOutlet weak var pokemonNameLabel: UILabel!
 
     @IBOutlet weak var pokemonIDText: UITextField!
     @IBOutlet weak var pokemonTypeText: UITextField!
     @IBOutlet weak var pokemonAbilitiesText: UITextField!
-    
-    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,35 +32,36 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBAction func pokemonSave(_ sender: Any) {
     }
     
-    func displayPokemon() {
-        // Make sure we found a Pokemon
-//        guard let pokemon = pokemon else {
-// //           pokemonNameLabel.text = "Sorry, did not find that Pokemon"
-//            return
-//        }
-        pokemonNameLabel.text = pokemon?.name
-    }
-    
-    
-    // MARK: - Search
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         pokemonSearchBar.autocapitalizationType = .none
-        searchBar.resignFirstResponder()
-        guard let findThisPokemon = searchBar.text?.lowercased(), !findThisPokemon.isEmpty else { return }
+        pokemonSearchBar.resignFirstResponder()
+        guard let findThisPokemon = pokemonSearchBar.text?.lowercased(), !findThisPokemon.isEmpty else { return }
         
         // Clear the searchbar and set the placeholder text
         searchBar.text = ""
         searchBar.placeholder = findThisPokemon.lowercased()
         
-        // Search the Pokemon API for the entered Pokemon name
-        NetworkData.shared.searchForPokemon(with: findThisPokemon.lowercased()) { (error) in
-            if error == nil {
-                DispatchQueue.main.async {
-                    self.displayPokemon()
-                }
+        NetworkData.shared.searchForPokemon(with: findThisPokemon) { (error) in
+            if let error = error {
+                NSLog("could not call fetchPokemon method in pokemonSearchViewController: \(error)")
+                return
+            }
+            DispatchQueue.main.async {
+                // First, make sure we have a Pokemon
+                guard let pokemon = NetworkData.shared.pokemonAPI else { return }
+                // We have a Pokemon so populate the fields
+                self.pokemonNameLabel.text = pokemon.name
+                self.pokemonIDText.text = "\(pokemon.id)"
+                let pokemonTypes = pokemon.types.map({$0.type.name.capitalized}).joined(separator: ", ")
+                self.pokemonTypeText.text = pokemonTypes
+                let pokemonAbilities = pokemon.abilities.map({$0.ability.name.capitalized}).joined(separator: ", ")
+                self.pokemonAbilitiesText.text = pokemonAbilities
+                
+                // Show the Pokemon
+                self.allElementsStack.isHidden.toggle()
             }
         }
-   }
+    }
     
     /*
     // MARK: - Navigation

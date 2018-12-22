@@ -18,7 +18,7 @@ class NetworkData {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")
     
     // Save the found Pokemon here
-    private var pokemonAPI: PokemonAPI?
+    var pokemonAPI: PokemonAPI?
     
     func searchForPokemon(with findThisPokemon: String, completion: @escaping ((Error?) -> Void)) {
         // Complete the URL for the pokemon
@@ -27,7 +27,8 @@ class NetworkData {
             completion(NSError())
             return
         }
-        print("We are in the Network Data")
+        var searchRequest = URLRequest(url: pokemonURL)
+        searchRequest.httpMethod = "GET"
         
         // Create the URLSession and search for the Pokemon
         URLSession.shared.dataTask(with: pokemonURL) { (data, _, error) in
@@ -49,8 +50,7 @@ class NetworkData {
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
-                let foundThePokemon = try jsonDecoder.decode(PokemonAPI.self, from: data)
-                self.pokemonAPI = foundThePokemon
+                NetworkData.shared.pokemonAPI = try jsonDecoder.decode(PokemonAPI.self, from: data)
                 completion(nil)
             } catch {
                 NSLog("Error decoding JSON: \(error)")
