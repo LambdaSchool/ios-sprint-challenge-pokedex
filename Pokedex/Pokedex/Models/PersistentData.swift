@@ -36,10 +36,10 @@ class PersistentData {
     
     
     
-    // MARK: - Local perstance    
+    // MARK: - Local persistent
     let fileURL = URL(fileURLWithPath: NSHomeDirectory())
         .appendingPathComponent("Library")
-        .appendingPathComponent("Pokemon")
+        .appendingPathComponent("Pokedex")
         .appendingPathExtension(".pList")
     
     func saveData() {
