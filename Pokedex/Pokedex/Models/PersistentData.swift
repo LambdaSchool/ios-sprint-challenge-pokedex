@@ -29,15 +29,26 @@ class PersistentData {
         saveData()
     }
     
+    func getPokemon(at index: Int) -> Pokemon {
+        return savedPokemon[index]
+    }
     
     
     
-    // MARK: - Local perstance
+    
+    // MARK: - Local perstance    
+    let fileURL = URL(fileURLWithPath: NSHomeDirectory())
+        .appendingPathComponent("Library")
+        .appendingPathComponent("Pokemon")
+        .appendingPathExtension(".pList")
+    
     func saveData() {
-        // TODO Implement saveData
+        try? (savedPokemon as? NSArray)?.write(to: fileURL)
     }
     
     func loadData() {
-        // TODO Implement saveData
+        if let savedPokemon = NSArray(contentsOf: fileURL) as? [Pokemon] {
+            self.savedPokemon = savedPokemon
+        }
     }
 }

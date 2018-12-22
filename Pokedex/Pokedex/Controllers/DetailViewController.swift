@@ -32,15 +32,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func pokemonSave(_ sender: Any) {
-        self.pokemon?.name = pokemonNameLabel.text
-        self.pokemon?.id = pokemonIDLabel.text!
-        self.pokemon?.types = pokemonTypeLabel.text!
-        self.pokemon?.abilities = pokemonAbilitiesLabel.text!
-        self.pokemon?.sprite = spriteImage.image!
-        
-        PersistentData.shared.add(pokemon: pokemon!)
-        
-        print("There are \(PersistentData.shared.numberOfPokemonSaved) saved.")
+        PersistentData.shared.add(pokemon: self.pokemon!)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -75,6 +67,9 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                     }
                     // Clear the placeholder text
                     searchBar.placeholder = nil
+                   
+                    self.pokemon = Pokemon.init(name: pokemon.name!, id: "\(pokemon.id)", abilities: pokemonAbilities, types: pokemonTypes, sprite: self.spriteImage.image!)
+                    
                 }
             }
         }
@@ -88,7 +83,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         guard
             let destination = segue.destination as? TableViewController
             else { return }
-        
+
         let pokemon = self.pokemon
         destination.pokemon = pokemon
     }

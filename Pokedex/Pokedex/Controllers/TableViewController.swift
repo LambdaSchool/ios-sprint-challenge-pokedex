@@ -27,10 +27,7 @@ class TableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //guard let saveThisPokemon = pokemon else { return }
-        
-        //We got a Pokemon:
-        print("*** \(pokemon?.name ?? "There is no Pokemon!") ***")
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -48,8 +45,13 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonList", for: indexPath)
-
-        // Configure the cell...
+        
+        // Get the saved Pokemon
+        let savedPokemon = PersistentData.shared.getPokemon(at: indexPath.row)
+        //And list them
+        cell.imageView?.image = savedPokemon.sprite
+        cell.textLabel?.text = savedPokemon.name
+        
 
         return cell
     }

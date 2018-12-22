@@ -11,7 +11,4 @@
 //class TableViewCell: UITableViewCell {
 //
 //    static let reuseIdentifier = "PokemonList"
-//
-//
-//
 //}
