@@ -35,4 +35,5 @@ struct Type: Codable {
 //Get the Pokemon sprite
 struct Sprite: Codable {
     let frontDefault: String
+    
 }

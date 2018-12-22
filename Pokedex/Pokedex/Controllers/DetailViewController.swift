@@ -19,6 +19,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var pokemonIDText: UITextField!
     @IBOutlet weak var pokemonTypeText: UITextField!
     @IBOutlet weak var pokemonAbilitiesText: UITextField!
+    @IBOutlet weak var spriteImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,26 +43,27 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         searchBar.placeholder = findThisPokemon.lowercased()
         
         NetworkData.shared.searchForPokemon(with: findThisPokemon) { (error) in
-            if let error = error {
-                NSLog("could not call fetchPokemon method in pokemonSearchViewController: \(error)")
-                return
-            }
-            DispatchQueue.main.async {
-                // First, make sure we have a Pokemon
-                guard let pokemon = NetworkData.shared.pokemonAPI else { return }
-                // We have a Pokemon so populate the fields
-                self.pokemonNameLabel.text = pokemon.name
-                self.pokemonIDText.text = "\(pokemon.id)"
-                let pokemonTypes = pokemon.types.map({$0.type.name.capitalized}).joined(separator: ", ")
-                self.pokemonTypeText.text = pokemonTypes
-                let pokemonAbilities = pokemon.abilities.map({$0.ability.name.capitalized}).joined(separator: ", ")
-                self.pokemonAbilitiesText.text = pokemonAbilities
-                
-                // Show the Pokemon
-                self.allElementsStack.isHidden.toggle()
+            if error == nil {
+                DispatchQueue.main.async {
+                    // First, make sure we have a Pokemon
+                    guard let pokemon = NetworkData.shared.pokemonAPI else { return }
+                    // We have a Pokemon so populate the fields
+                    self.pokemonNameLabel.text = pokemon.name
+                    self.pokemonIDText.text = "\(pokemon.id)"
+                    let pokemonTypes = pokemon.types.map({$0.type.name.capitalized}).joined(separator: ", ")
+                    self.pokemonTypeText.text = pokemonTypes
+                    let pokemonAbilities = pokemon.abilities.map({$0.ability.name.capitalized}).joined(separator: ", ")
+                    self.pokemonAbilitiesText.text = pokemonAbilities
+                    //get the sprite
+                    guard let url = URL(string: pokemon.sprites.frontDefault), let spriteData = try? Data(contentsOf: url) else { return }
+                    // and show it
+                    self.spriteImage.image = UIImage(data: spriteData)
+                    
+                    //Display the form
+                    self.allElementsStack.isHidden.toggle()
+                }
             }
         }
-    }
     
     /*
     // MARK: - Navigation
