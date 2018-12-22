@@ -14,6 +14,7 @@ class Pokemon {
     var abilities: String
     var types: String
     var sprite: UIImage
+    var detail: Bool = false
     
     init(name: String, id: String, abilities: String, types: String, sprite: UIImage) {
         self.name = name

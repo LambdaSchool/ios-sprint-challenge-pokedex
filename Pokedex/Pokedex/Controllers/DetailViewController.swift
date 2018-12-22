@@ -27,10 +27,25 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         pokemonSearchBar.delegate = self
-
-        // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Determine if we are searching or reviewing a saved Pokemon
+        if((pokemon?.detail ?? false)) {
+            pokemonSearchBar.isHidden = true
+            saveButton.isHidden = true
+            //Display the saved Pokemon
+            navigationItem.title = pokemon?.name
+            pokemonNameLabel.text = pokemon?.name
+            pokemonIDLabel.text = pokemon?.id
+            pokemonTypeLabel.text = pokemon?.types
+            pokemonAbilitiesLabel.text = pokemon?.abilities
+            spriteImage.image = pokemon?.sprite
+            allElementsStack.isHidden.toggle()
+        }
+    }
     
     @IBAction func pokemonSave(_ sender: Any) {
         PersistentData.shared.add(pokemon: self.pokemon!)
@@ -70,8 +85,11 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                     }
                     // Clear the placeholder text
                     searchBar.placeholder = nil
+                    // Set the navigation title to the Pokemon name.
                     self.navigationItem.title = pokemon.name
+                    // Update the button title to included the Pokemon name
                     self.saveButton.setTitle("Save \(pokemon.name?.capitalized ?? "Pokemon")", for: .normal)
+                    // Grab the Pokemon
                     self.pokemon = Pokemon.init(name: pokemon.name!, id: "\(pokemon.id)", abilities: pokemonAbilities, types: pokemonTypes, sprite: self.spriteImage.image!)
                     
                 }

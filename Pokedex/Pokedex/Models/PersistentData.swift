@@ -33,6 +33,11 @@ class PersistentData {
         return savedPokemon[index]
     }
     
+    func removePokemon(at index: Int) {
+        savedPokemon.remove(at: index)
+        saveData()
+    }
+    
     
     
     
@@ -43,7 +48,7 @@ class PersistentData {
         .appendingPathExtension(".pList")
     
     func saveData() {
-        try? (savedPokemon as? NSArray)?.write(to: fileURL)
+        try? (savedPokemon as NSArray).write(to: fileURL)
     }
     
     func loadData() {
