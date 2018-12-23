@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Load the saved data then get on with the app
         PersistentData.shared.loadData()
+        Thread.sleep(forTimeInterval: 2.5)
         return true
     }
 }

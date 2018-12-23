@@ -38,9 +38,6 @@ class PersistentData {
         saveData()
     }
     
-    
-    
-    
     // MARK: - Local persistent
     let fileURL = URL(fileURLWithPath: NSHomeDirectory())
         .appendingPathComponent("Library")
@@ -52,8 +49,9 @@ class PersistentData {
     }
     
     func loadData() {
-        if let savedPokemon = NSArray(contentsOf: fileURL) as? [Pokemon] {
-            self.savedPokemon = savedPokemon
+        if let savedData = NSArray(contentsOf: fileURL) as? [Pokemon] {
+            savedPokemon = savedData
+            print("The number of saved records restored = \(savedPokemon.count)")
         }
     }
 }
