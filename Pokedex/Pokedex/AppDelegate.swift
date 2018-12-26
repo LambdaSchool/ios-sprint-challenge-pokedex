@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Load the saved data then get on with the app
-        PersistentData.shared.loadData()
-        Thread.sleep(forTimeInterval: 2.5)
+        //PersistentData.shared.loadData()
+        Thread.sleep(forTimeInterval: 1.0)
         return true
     }
 }

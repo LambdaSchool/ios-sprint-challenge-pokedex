@@ -45,13 +45,8 @@ class PersistentData {
         .appendingPathExtension(".pList")
     
     func saveData() {
-        try? (savedPokemon as NSArray).write(to: fileURL)
     }
     
     func loadData() {
-        if let savedData = NSArray(contentsOf: fileURL) as? [Pokemon] {
-            savedPokemon = savedData
-            print("The number of saved records restored = \(savedPokemon.count)")
-        }
     }
 }
