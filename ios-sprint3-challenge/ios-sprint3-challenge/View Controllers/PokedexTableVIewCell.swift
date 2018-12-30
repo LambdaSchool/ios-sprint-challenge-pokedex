@@ -6,6 +6,7 @@ class PokedexTableViewCell: UITableViewCell {
     
     @IBOutlet var pokemonName: UILabel!
     
-    @IBOutlet var pokemonSprite: UIImage!
+    @IBOutlet var pokemonSprite: UIImageView!
     
 }
+ 

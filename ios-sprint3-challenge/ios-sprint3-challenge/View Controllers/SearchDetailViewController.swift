@@ -3,7 +3,8 @@ import UIKit
 
 class SearchDetailViewController: UIViewController, UISearchBarDelegate {
     
-   let searchResultsController = POKEAPI()
+    
+   
     
     @IBOutlet var searchViewLabel: UILabel!
     
@@ -20,7 +21,10 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var saveButton: UIButton!
     
     @IBAction func saveToPokedex(_ sender: Any) {
-        
+        POKEAPI.saveToPokedex(pokemon: POKEAPI.shared.searchResult[0])
+        print(POKEAPI.shared.savedPokemon)
+        POKEAPI.shared.searchResult.removeAll()
+        print(POKEAPI.shared.searchResult)
     }
     
     override func viewDidLoad() {
@@ -45,18 +49,20 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
                 NSLog("Error fetching results: \(error)")
                 return
             }
-            
-            self.searchResultsController.searchResult = searchResults ?? []
-            
+            //print(searchResults!)
+            //self.searchResultsController.searchResult?.results.append(searchResults!)
+            //print(self.searchResultsController.searchResult?.results)
             DispatchQueue.main.async {
-                let result = self.searchResultsController.searchResult[0]
-                
+                let result = searchResults! //self.searchResultsController.searchResult?.results
+                POKEAPI.shared.searchResult.append(result)
+                print(result.id!)
+                print(result.abilities![0].ability?.name)
                 self.searchViewLabel.text = result.name
                 self.resultNameLabel.text = result.name
-                self.resultIdLabel.text = "ID: \(String(result.id))"
-                self.resultTypesLabel.text = "Types: \(result.types[1])"
-                self.resultAbilitiesLabel.text = "Abilities: \(result.abilities[1])"
-                self.spriteImage.image = #imageLiteral(resourceName: "1.png") // TESTIMAGE FOR NOW
+                self.resultIdLabel.text = "ID: \(result.id!)"
+                self.resultTypesLabel.text = "Types: \(result.types![0].type!.name!)"
+                self.resultAbilitiesLabel.text = "Abilities: \(result.abilities![0].ability!.name!)"
+                self.spriteImage.loadImageFrom(url: URL(string: result.sprites?.frontDefault ?? "https://via.placeholder.com/128x201?text=Cover%20Image%20Unavailable")!)
                 self.saveButton.titleLabel?.text = "Save Pokemon to Pokedex"
             }
             
