@@ -4,33 +4,21 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //POKEAPI.shared.
-        tableView.reloadData()
-        //print(POKEAPI.shared.savedPokemon)
+            tableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.reloadData()
-        //print(POKEAPI.shared.savedPokemon)
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-         //Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         //self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return POKEAPI.shared.savedPokemon.count
-        //return 1
     }
 
     
@@ -39,7 +27,7 @@ class PokedexTableViewController: UITableViewController {
 
         // Configure the cell...
         let result = POKEAPI.shared.savedPokemon[indexPath.row]
-        print(result)
+        //print(result)
         cell.pokemonName.text = result.name
         cell.pokemonSprite.loadImageFrom(url: URL(string: result.sprites?.frontDefault ?? "https://via.placeholder.com/128x201?text=Cover%20Image%20Unavailable")!)
 
@@ -90,14 +78,17 @@ class PokedexTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        guard let destination = segue.destination as? PokedexDetailViewController else { return }
         // Pass the selected object to the new view controller.
+        destination.savedPoke = POKEAPI.shared.savedPokemon[indexPath.row]
     }
-    */
+    
 
 }
