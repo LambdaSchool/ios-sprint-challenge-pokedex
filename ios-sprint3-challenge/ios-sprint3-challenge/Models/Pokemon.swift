@@ -1,7 +1,9 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Codable, Equatable {
+class Pokemon: Codable, Equatable, FirebaseItem {
+    lazy var recordIdentifier: String = ""  // lazy var "hack" to keep JSONDecoder from throwing errors
+    
     
     let abilities: [Ability]?
     let id: Int?
@@ -14,6 +16,7 @@ struct Pokemon: Codable, Equatable {
         case abilities
         case id
         case name, species, sprites, types
+        //case recordIdentifier
     }
     
     static func ==(lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -21,7 +24,9 @@ struct Pokemon: Codable, Equatable {
     }
 }
 
-struct Ability: Codable, Equatable {
+class Ability: Codable, Equatable, FirebaseItem {
+    lazy var recordIdentifier: String = ""
+    
     static func ==(lhs: Ability, rhs: Ability) -> Bool {
         return lhs.ability == rhs.ability
     }
@@ -32,18 +37,31 @@ struct Ability: Codable, Equatable {
     
     enum CodingKeys: String, CodingKey {
         case ability
+        //case recordIdentifier
         //case isHidden = "is_hidden"
         //case slot
     }
 }
 
-struct Species: Codable, Equatable {
+class Species: Codable, Equatable, FirebaseItem {
+    static func == (lhs: Species, rhs: Species) -> Bool {
+        return lhs.name == rhs.name && lhs.url == rhs.url
+    }
+    
+    lazy var recordIdentifier: String = ""
+    
     let name: String?
     let url: String?
 }
 
 
-struct Sprites: Codable, Equatable {
+class Sprites: Codable, Equatable, FirebaseItem {
+    static func == (lhs: Sprites, rhs: Sprites) -> Bool {
+        return lhs.frontDefault == rhs.frontDefault
+    }
+    
+    lazy var recordIdentifier: String = ""
+    
     //let backDefault, backFemale, backShiny, backShinyFemale: String?
     //let frontDefault, frontFemale, frontShiny, frontShinyFemale: String?
     let frontDefault: String?
@@ -57,10 +75,17 @@ struct Sprites: Codable, Equatable {
         //case frontFemale = "front_female"
         //case frontShiny = "front_shiny"
         //case frontShinyFemale = "front_shiny_female"
+        //case recordIdentifier
     }
 }
 
-struct TypeElement: Codable, Equatable {
+class TypeElement: Codable, Equatable, FirebaseItem {
+    static func == (lhs: TypeElement, rhs: TypeElement) -> Bool {
+        return lhs.type?.name == rhs.type?.name
+    }
+    
+    lazy var recordIdentifier: String = ""
+    
     //let slot: Int?
     let type: Species?
 }
