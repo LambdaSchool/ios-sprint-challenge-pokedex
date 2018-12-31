@@ -10,11 +10,27 @@ class POKEAPI {
     var savedPokemon: [Pokemon] = []
     
     static func saveToPokedex(pokemon: Pokemon){
-        POKEAPI.shared.savedPokemon.append(pokemon)
+        //local
+        var pokeArr = POKEAPI.shared.savedPokemon
+        pokeArr.append(pokemon)
+        
+        //remote
+        Firebase<Pokemon>.save(item: pokemon) { success in
+            guard success else { return }
+            //DispatchQueue.main.async { completion() }
+        }
     }
     
     static func deleteFromPokedex(indexPath: IndexPath){
+        //local
+        let pokemon = POKEAPI.shared.savedPokemon[indexPath.row]
         POKEAPI.shared.savedPokemon.remove(at: indexPath.row)
+        
+        //remote
+        Firebase<Pokemon>.delete(item: pokemon) { success in
+            guard success else { return }
+            //DispatchQueue.main.async { completion() }
+        }
     }
     
     static func makeTypesString(for pokemon: Pokemon?) -> String {

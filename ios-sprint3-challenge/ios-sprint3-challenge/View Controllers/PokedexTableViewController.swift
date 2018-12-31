@@ -2,10 +2,10 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-            tableView.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//            tableView.reloadData()
+//    }
     
     // MARK: - Table view data source
 
@@ -22,6 +22,33 @@ class PokedexTableViewController: UITableViewController {
         cell.pokemonSprite.loadImageFrom(url: URL(string: result.sprites?.frontDefault ?? "https://via.placeholder.com/128x201?text=Cover%20Image%20Unavailable")!)
 
         return cell
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        let activity = UIActivityIndicatorView()// for indeterminate waits
+        activity.style = .gray
+        activity.startAnimating()
+        navigationItem.titleView = activity
+
+
+        // Fetch records from Firebase and then reload the table view
+        // Note: this may be significantly delayed.
+        Firebase<Pokemon>.fetchRecords { savedPokemon in
+            if let savedPokemon = savedPokemon {
+                POKEAPI.shared.savedPokemon = savedPokemon  // breaks encapsulation, hacked it instead due to time constriants
+
+                // Comment this out to show what it looks like while waiting
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                    self.navigationItem.titleView = nil // important to be able to see custom title
+                    self.title = "Devices"
+                }
+            }
+        }
     }
  
      //Override to support conditional editing of the table view.

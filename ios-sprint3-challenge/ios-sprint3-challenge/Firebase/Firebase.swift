@@ -10,7 +10,7 @@ import Foundation
 
 
 class Firebase<Item: Codable & FirebaseItem> {
-    static var baseURL: URL!  { return URL(string: "https://ios-project-week-1.firebaseio.com/") }
+    static var baseURL: URL!  { return URL(string: "https://pokedex-1e289.firebaseio.com/") }
     
     // RESTful methods are: PUT POST GET and DELETE
     static func requestURL(_ method: String, for recordIdentifier: String = "unknownid") -> URL {
