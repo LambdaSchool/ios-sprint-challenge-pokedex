@@ -49,19 +49,15 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
                 NSLog("Error fetching results: \(error)")
                 return
             }
-            //print(searchResults!)
-            //self.searchResultsController.searchResult?.results.append(searchResults!)
-            //print(self.searchResultsController.searchResult?.results)
+            
             DispatchQueue.main.async {
-                let result = searchResults! //self.searchResultsController.searchResult?.results
+                let result = searchResults!
                 POKEAPI.shared.searchResult.append(result)
-                print(result.id!)
-                print(result.abilities![0].ability?.name)
                 self.searchViewLabel.text = result.name
                 self.resultNameLabel.text = result.name
                 self.resultIdLabel.text = "ID: \(result.id!)"
-                self.resultTypesLabel.text = "Types: \(result.types![0].type!.name!)"
-                self.resultAbilitiesLabel.text = "Abilities: \(result.abilities![0].ability!.name!)"
+                self.resultTypesLabel.text = "Types: \(POKEAPI.makeTypesString(for: result))"
+                self.resultAbilitiesLabel.text = "Abilities: \(POKEAPI.makeAbilitiesString(for: result))"
                 self.spriteImage.loadImageFrom(url: URL(string: result.sprites?.frontDefault ?? "https://via.placeholder.com/128x201?text=Cover%20Image%20Unavailable")!)
                 self.saveButton.titleLabel?.text = "Save Pokemon to Pokedex"
             }

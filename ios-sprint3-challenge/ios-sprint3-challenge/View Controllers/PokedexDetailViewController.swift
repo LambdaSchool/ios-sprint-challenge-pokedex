@@ -9,8 +9,8 @@ class PokedexDetailViewController: UIViewController {
         pokedexDetailTitleLabel.text = savedPoke?.name
         pokemonNameLabel.text = savedPoke?.name
         pokemonIdLabel.text = "ID: \(savedPoke!.id!)"
-        pokemonTypesLabel.text = "Types: \(savedPoke!.types![0].type!.name!)"
-        pokemonAbilitiesLabel.text = "Abilities: \(savedPoke!.abilities![0].ability!.name!)"
+        pokemonTypesLabel.text = "Types: \(POKEAPI.makeTypesString(for: savedPoke))"
+        pokemonAbilitiesLabel.text = "Abilities: \(POKEAPI.makeAbilitiesString(for: savedPoke))"
         pokemonSpriteImageView.loadImageFrom(url: URL(string: savedPoke!.sprites?.frontDefault ?? "https://via.placeholder.com/128x201?text=Cover%20Image%20Unavailable")!)
     }
     
