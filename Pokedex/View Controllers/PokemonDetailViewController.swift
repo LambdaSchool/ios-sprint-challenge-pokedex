@@ -11,23 +11,12 @@ import UIKit
 class PokemonDetailViewController: UIViewController {
 
     var pokemonController: PokemonController?
-   // var path = IndexPath()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //updateViews()
-//        print(nameLabel)
-//        print(abilitiesLabel)
+     
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        updateViews()
-//        print(path?.row)
-//    }
-//
-    
-   // var pokemon: Pokemon?
+
    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -75,5 +64,4 @@ class PokemonDetailViewController: UIViewController {
         }
     }
 
-    
 }
