@@ -21,10 +21,12 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var saveButton: UIButton!
     
     @IBAction func saveToPokedex(_ sender: Any) {
+        guard !POKEAPI.shared.searchResult.isEmpty else { return }
         POKEAPI.saveToPokedex(pokemon: POKEAPI.shared.searchResult[0])
         print(POKEAPI.shared.savedPokemon)
         POKEAPI.shared.searchResult.removeAll()
         print(POKEAPI.shared.searchResult)
+        
     }
     
     override func viewDidLoad() {
@@ -47,6 +49,9 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
         POKEAPI.searchForPokemon(with: searchTerm) { (searchResults, error) in
             if let error = error {
                 NSLog("Error fetching results: \(error)")
+                DispatchQueue.main.async {
+                    self.resultNameLabel.text = "NO MATCHES FOUND."
+                }
                 return
             }
             

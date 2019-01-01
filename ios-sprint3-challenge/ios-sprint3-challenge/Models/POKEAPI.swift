@@ -54,10 +54,12 @@ class POKEAPI {
     }
     
     static func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
-        let base = endpoint + "\(searchTerm.lowercased())"
+        let base = endpoint + "\(searchTerm.replacingOccurrences(of: " ", with: "-").lowercased())"
         //construct baseURL
+        print(base)
         guard let baseURL = URL(string: base) else {fatalError("Unable to construct base URL from endpoint")}
         //Break baseURL into its components
+        print(baseURL)
         guard let urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true) else { fatalError("Unable to resolve baseURL components")}
       
         // Re-compose the components back into a valid URL
