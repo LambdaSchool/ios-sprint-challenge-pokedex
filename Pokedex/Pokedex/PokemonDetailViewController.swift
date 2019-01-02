@@ -37,12 +37,31 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         saveButton.isHidden = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
+    }
+    
     @IBAction func save(_ sender: Any) {
         guard let pokemon = pokemon else { return }
         PokemonModel.shared.savePokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        PokemonModel.shared.search(with: searchTerm.lowercased()) { (pokemon, error) in
+            if let pokemon = pokemon, error == nil {
+                self.pokemon = pokemon
+                DispatchQueue.main.async {
+                    self.updateViews()
+                    searchBar.text = ""
+                    self.saveButton.isHidden = false
+                }
+            }
+        }
+    }
 
 
     func updateViews() {
