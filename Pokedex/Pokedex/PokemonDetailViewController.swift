@@ -34,19 +34,16 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         idLabel.text = ""
         abilitiesLabel.text = ""
         typesLabel.text = ""
-        saveButton.isHidden = true 
+        saveButton.isHidden = true
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        PokemonModel.shared.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     func updateViews() {
         DispatchQueue.main.async {
