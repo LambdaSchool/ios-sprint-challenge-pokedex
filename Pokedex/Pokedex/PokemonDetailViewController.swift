@@ -28,8 +28,13 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        updateViews()
+        pokemonNameLabel.text = ""
+        idLabel.text = ""
+        abilitiesLabel.text = ""
+        typesLabel.text = ""
+        saveButton.isHidden = true 
     }
     
 
