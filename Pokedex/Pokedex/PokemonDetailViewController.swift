@@ -62,8 +62,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
-
+    
     func updateViews() {
         DispatchQueue.main.async {
             guard let pokemon = self.pokemon else { return }
@@ -73,7 +72,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             self.idLabel.text = "ID: \(pokemon.id)"
             let types: [String] = pokemon.types.map{$0.type.name}
             self.typesLabel.text = "Types: \(types.joined(separator: ", "))"
-            let abilities: [String] = pokemon.abiliities.map{$0.ability.name}
+            let abilities: [String] = pokemon.abilities.map{$0.ability.name}
             self.abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
             self.imageView.image = UIImage(data: imageData)
         }

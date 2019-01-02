@@ -13,7 +13,7 @@
         <!--Pokedex-->
         <scene sceneID="BcS-Fd-sJR">
             <objects>
-                <tableViewController id="vTZ-hb-yoN" sceneMemberID="viewController">
+                <tableViewController id="vTZ-hb-yoN" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="env-4l-g8V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -50,7 +50,6 @@
                                 <connections>
                                     <outlet property="pokemonNameLabel" destination="XNs-ma-V9K" id="cfc-Pu-PDx"/>
                                     <outlet property="spriteImageView" destination="RJ7-LD-ZY4" id="PZH-U7-tus"/>
-                                    <segue destination="uHs-Jb-ub6" kind="show" id="AVr-56-KVM"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -60,7 +59,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" largeTitleDisplayMode="always" id="Zvf-53-mEa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="SoI-wW-uZa"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="SoI-wW-uZa">
+                            <connections>
+                                <segue destination="uHs-Jb-ub6" kind="show" id="gms-bN-fup"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AIm-vi-XdT" userLabel="First Responder" sceneMemberID="firstResponder"/>
