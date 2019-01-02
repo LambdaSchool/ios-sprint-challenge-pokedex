@@ -37,7 +37,7 @@ class POKEAPI {
         let types = pokemon?.types
         var typesArray: [String] = []
         for type in types! {
-            print(type.type?.name)
+            //print(type.type?.name)
             typesArray.append((type.type?.name)!)
         }
         return typesArray.joined(separator: ", ")
@@ -47,7 +47,7 @@ class POKEAPI {
         let abilities = pokemon?.abilities
         var abilitiesArray: [String] = []
         for abil in abilities! {
-            print(abil.ability?.name)
+            //print(abil.ability?.name)
             abilitiesArray.append((abil.ability?.name)!)
         }
         return abilitiesArray.joined(separator: ", ")

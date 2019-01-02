@@ -45,7 +45,7 @@ class PokedexTableViewController: UITableViewController {
                     self.tableView.reloadData()
                     self.navigationItem.rightBarButtonItem?.isEnabled = true
                     self.navigationItem.titleView = nil // important to be able to see custom title
-                    self.title = "Devices"
+                    self.title = ""
                 }
             }
         }
