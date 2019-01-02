@@ -6,4 +6,13 @@
 //  Copyright © 2019 Glas Labs. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SavedPokemonTableViewCell: UITableViewCell {
+    
+    static let reuseIdentifier = "cell"
+    
+    @IBOutlet weak var spriteImageView: UIImageView!
+    
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+}

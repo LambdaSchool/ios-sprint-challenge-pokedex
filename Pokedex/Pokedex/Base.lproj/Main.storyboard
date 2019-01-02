@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="58" id="QKv-p8-lqx">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="58" id="QKv-p8-lqx" customClass="SavedPokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QKv-p8-lqx" id="p8K-YU-yUX">
@@ -48,6 +48,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="pokemonNameLabel" destination="XNs-ma-V9K" id="cfc-Pu-PDx"/>
+                                    <outlet property="spriteImageView" destination="RJ7-LD-ZY4" id="PZH-U7-tus"/>
                                     <segue destination="uHs-Jb-ub6" kind="show" id="AVr-56-KVM"/>
                                 </connections>
                             </tableViewCell>
@@ -68,7 +70,7 @@
         <!--Pokemon Search-->
         <scene sceneID="DiS-z8-iHp">
             <objects>
-                <viewController id="uHs-Jb-ub6" sceneMemberID="viewController">
+                <viewController id="uHs-Jb-ub6" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SnH-j9-8c8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -156,6 +158,15 @@
                         <viewLayoutGuide key="safeArea" id="VSu-jQ-8n2"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="q1J-bl-Lim"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="0CA-5E-Md8" id="B68-IV-KEh"/>
+                        <outlet property="idLabel" destination="mwk-Er-RSc" id="KfV-Ee-9EJ"/>
+                        <outlet property="imageView" destination="Uzj-KQ-Klf" id="YI2-sW-UXs"/>
+                        <outlet property="pokemonNameLabel" destination="a6s-H7-MKP" id="OpB-cE-RxU"/>
+                        <outlet property="saveButton" destination="rSH-zA-hGw" id="IgD-hQ-4kn"/>
+                        <outlet property="searchBar" destination="4LS-vB-aH2" id="17i-C3-PBo"/>
+                        <outlet property="typesLabel" destination="Pbq-dj-ife" id="TO0-eu-Rph"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erN-uy-jBs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
