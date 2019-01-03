@@ -1,6 +1,8 @@
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    var pokemon = Model.shared.pokemon
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
@@ -11,25 +13,61 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var savePokemonButton: UIButton!
     
     @IBAction func saveButtonAction(_ sender: Any) {
-        
+        guard let pokemon = pokemon else { return }
+        Model.shared.addPokemon(pokemon: pokemon)
+        navigationController?.popToRootViewController(animated: true)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        pokemonSearchBar.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    
+    func performSearch(for searchTerm: String, completion: @escaping (Error?) -> Void) {
+        let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Could not load URL results: \(error)")
+                completion(error)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("Bad URL data request.")
+                completion(NSError())
+                return
+            }
+            
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            do {
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                var typesArray: [String] = []
+                for types in pokemon.types {
+                    typesArray.append(types.type.name)
+                }
+                
+                var abilitiesArray: [String] = []
+                for ability in pokemon.abilities {
+                    abilitiesArray.append(ability.ability.name)
+                }
+                
+                self.pokemon = pokemon
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.title = pokemon.name
+                    self.nameLabel.text = pokemon.name
+                    self.
+                }
+                
+                completion(nil)
+                return
+            } catch {
+                NSLog("Error decoding JSON: \(error)")
+            }
+        }
     }
-    */
-
 }
