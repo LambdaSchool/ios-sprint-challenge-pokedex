@@ -53,6 +53,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="nameLabel" destination="9fd-iz-0hW" id="giP-jk-ze4"/>
+                                    <outlet property="pokemonImage" destination="z2i-Lk-Db1" id="XW1-OL-MKG"/>
                                     <segue destination="WOd-or-kVV" kind="show" id="VR1-9g-QVF"/>
                                 </connections>
                             </tableViewCell>
@@ -127,6 +129,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IrQ-4D-5PI"/>
                     </view>
+                    <connections>
+                        <outlet property="IDLabel" destination="NBL-D2-5Ra" id="GqK-Ou-h7H"/>
+                        <outlet property="abilitiesLabel" destination="2aF-5n-z3s" id="cmf-vj-FD7"/>
+                        <outlet property="nameLabel" destination="sLU-QC-Mtf" id="e74-d9-CVt"/>
+                        <outlet property="pokemonImage" destination="G1S-Kq-1xJ" id="rh9-AO-ifC"/>
+                        <outlet property="typesLabel" destination="ZQm-UK-1Xw" id="ERP-Py-9oj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwJ-hp-aWz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,6 +201,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7p-O4-MUn">
                                         <rect key="frame" x="125" y="342" width="101" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="saveButtonAction:" destination="VZl-Sz-Dnk" eventType="touchUpInside" id="EPO-4f-K6e"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -212,6 +224,15 @@
                         <viewLayoutGuide key="safeArea" id="r5F-Z9-wrv"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="IZw-CL-5Wn"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="0mW-Tl-q68" id="0cc-Zr-jyL"/>
+                        <outlet property="idLabel" destination="tbf-v9-PuJ" id="ORZ-lN-td3"/>
+                        <outlet property="nameLabel" destination="Q4W-nD-ag7" id="jEa-Pw-pD8"/>
+                        <outlet property="pokemonImage" destination="19g-Za-1bJ" id="1BI-Jq-Uai"/>
+                        <outlet property="pokemonSearchBar" destination="5qX-s7-v7l" id="N6Q-xt-Tif"/>
+                        <outlet property="savePokemonButton" destination="d7p-O4-MUn" id="0Uu-zV-ozc"/>
+                        <outlet property="typesLabel" destination="c8v-95-SUa" id="av5-dl-3T1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ebr-qs-b8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
