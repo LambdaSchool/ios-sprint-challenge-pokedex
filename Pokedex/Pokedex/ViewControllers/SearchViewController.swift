@@ -60,13 +60,42 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.navigationController?.title = pokemon.name
                     self.nameLabel.text = pokemon.name
-                    self.
+                    self.idLabel.text = "ID: \(pokemon.id)"
+                    self.typesLabel.text = "Types: \(pokemon.types)"
+                    self.abilitiesLabel.text = "Abilities: \(abilitiesArray)"
+                    guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return }
+                    self.pokemonImage.image = UIImage(data: imageData)
                 }
                 
                 completion(nil)
                 return
             } catch {
                 NSLog("Error decoding JSON: \(error)")
+                
+                DispatchQueue.main.sync {
+                    self.nameLabel.text = "Can't Find That Pokemon."
+                }
+                
+                completion(error)
+                return
+            }
+        }
+        .resume()
+    }
+    
+    func searchPokemon(_ searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
+        
+        guard let searchPokemon = searchBar.text, !searchPokemon.isEmpty else { return }
+        
+        searchBar.text = nil
+        
+        performSearch(for: searchPokemon) { (error) in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.nameLabel.text = self.pokemon?.name.capitalized
+                }
             }
         }
     }
