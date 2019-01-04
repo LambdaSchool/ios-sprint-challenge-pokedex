@@ -6,12 +6,17 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.reloadData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        
-        return Model.shared.numberOfpokemon()
+        return Model.shared.numberOfPokemon
     }
 
     
@@ -20,7 +25,7 @@ class TableViewController: UITableViewController {
             fatalError("Can not load cell.")
         }
 
-        let pokemon = Model.shared.savePokemon(at: indexPath)
+        let pokemon = Model.shared.savedPokemon(at: indexPath)
         cell.nameLabel.text = pokemon.name.capitalized
         
         guard let url = URL(string: pokemon.sprites.frontDefault),
@@ -45,7 +50,7 @@ class TableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationVC = segue.destination as? ViewController,
             let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = Model.shared.savePokemon(at: indexPath)
+            let pokemon = Model.shared.savedPokemon(at: indexPath)
             destinationVC.pokemon = pokemon
     }
 }
