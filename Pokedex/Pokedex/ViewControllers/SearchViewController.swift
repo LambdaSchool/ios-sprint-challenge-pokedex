@@ -13,8 +13,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var savePokemonButton: UIButton!
     
     @IBAction func saveButtonAction(_ sender: Any) {
+        
         guard let pokemon = pokemon else { return }
+        
         Model.shared.addPokemon(pokemon: pokemon)
+        
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -29,13 +32,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
             if let error = error {
-                NSLog("Could not load URL results: \(error)")
+                NSLog("Could not load results: \(error)")
                 completion(error)
                 return
             }
             
             guard let data = data else {
-                NSLog("Bad URL data request.")
+                NSLog("Bad data request.")
                 completion(NSError())
                 return
             }
@@ -45,24 +48,23 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             
             do {
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                var typesArray: [String] = []
-                for types in pokemon.types {
-                    typesArray.append(types.type.name)
+                var typeArray : [String] = []
+                for each in pokemon.types {
+                    typeArray.append(each.type.name.capitalized)
                 }
-                
-                var abilitiesArray: [String] = []
-                for ability in pokemon.abilities {
-                    abilitiesArray.append(ability.ability.name)
+                var abilityArray : [String] = []
+                for each in pokemon.abilities {
+                    abilityArray.append(each.ability.name.capitalized)
                 }
                 
                 self.pokemon = pokemon
                 
                 DispatchQueue.main.async {
-                    self.navigationController?.title = pokemon.name
-                    self.nameLabel.text = pokemon.name
+                    self.navigationItem.title = pokemon.name.capitalized
+                    self.nameLabel.text = pokemon.name.capitalized
                     self.idLabel.text = "ID: \(pokemon.id)"
-                    self.typesLabel.text = "Types: \(pokemon.types)"
-                    self.abilitiesLabel.text = "Abilities: \(abilitiesArray)"
+                    self.typesLabel.text = "Types: \(typeArray)"
+                    self.abilitiesLabel.text = "Abilities: \(abilityArray)"
                     guard let url = URL(string: pokemon.sprites.frontDefault), let imageData = try? Data(contentsOf: url) else { return }
                     self.pokemonImage.image = UIImage(data: imageData)
                 }
@@ -72,18 +74,18 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             } catch {
                 NSLog("Error decoding JSON: \(error)")
                 
-                DispatchQueue.main.sync {
-                    self.nameLabel.text = "Can't Find That Pokemon."
+                DispatchQueue.main.async {
+                    self.typesLabel.text = "Can't find that Pokemon."
                 }
                 
                 completion(error)
                 return
             }
-        }
-        .resume()
+            }
+            .resume()
     }
     
-    func searchPokemon(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         searchBar.resignFirstResponder()
         
