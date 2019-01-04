@@ -40,7 +40,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
-        Model.shared.deletePokemon(index: indexPath.row) { _ in self.tableView.reloadData() }
+        Model.shared.deletePokemon(index: indexPath.row)
         
     }
     
@@ -53,6 +53,11 @@ class PokedexTableViewController: UITableViewController {
                 let destination = segue.destination as? PokeDetailViewController else { return }
             
             let pokemon = Model.shared.findPokemon(at: indexPath.row)
+            destination.pokemon = pokemon
+            
+        } else if segue.identifier == "SearchPokedex" {
+            guard let destination = segue.destination as? PokeDetailViewController else { return }
+            let pokemon = Model.shared.pokemon
             destination.pokemon = pokemon
         }
     }

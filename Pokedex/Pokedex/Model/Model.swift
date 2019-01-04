@@ -35,24 +35,32 @@ class Model {
         return pokedex[index]
     }
     
-    func addPokemon(pokemon: Pokemon, completion: @escaping (Error?) -> (Void)) {
+    func addPokemon(pokemon: Pokemon) {
         pokedex.append(pokemon)
-        completion(nil)
     }
     
-    func deletePokemon(index: Int, completion: @escaping (Error?) -> (Void)) {
+    func deletePokemon(index: Int) {
         pokedex.remove(at: index)
-        completion(nil)
     }
     
-    func search(for pokemon: String) {
-        Pokedex.searchForPokemon(with: pokemon) { (pokedex, error) in
-            if let error = error {
-                NSLog("Error fetching Pokemon: \(error)")
-                return
-            }
-            self.pokedex = pokedex ?? []
-        }
-    }
+//    func addPokemon(pokemon: Pokemon, completion: @escaping (Error?) -> (Void)) {
+//        pokedex.append(pokemon)
+//        completion(nil)
+//    }
+//
+//    func deletePokemon(index: Int, completion: @escaping (Error?) -> (Void)) {
+//        pokedex.remove(at: index)
+//        completion(nil)
+//    }
+    
+//    func search(for pokemon: String) {
+//        Pokedex.searchForPokemon(with: pokemon) { (pokedex, error) in
+//            if let error = error {
+//                NSLog("Error fetching Pokemon: \(error)")
+//                return
+//            }
+//            self.pokedex = pokedex ?? []
+//        }
+//    }
     
 }

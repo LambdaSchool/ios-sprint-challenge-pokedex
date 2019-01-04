@@ -1,61 +1,67 @@
 import Foundation
 
-struct PokemonSearchResults: Codable {
-    let abilities: [Pokemon.Ability]
-    let id: Int
-    let name: String
-    let sprites: Pokemon.Sprites
-    let types: [Pokemon.TypeElement]
-    
-}
+//struct PokemonSearchResults: Codable {
+//    let abilities: [Pokemon.Ability]
+//    let id: Int
+//    let name: String
+//    let sprites: Pokemon.Sprites
+//    let types: [Pokemon.TypeElement]
+//}
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let abilities: [Ability]
     let id: Int
     let name: String
     let sprites: Sprites
     let types: [TypeElement]
-    
-//    init(name: String, id: Int, types: [TypeElement], abilities: [Ability], sprites: Sprites) {
-//        self.name = name
-//        self.id = id
-//        self.types = types
-//        self.abilities = abilities
-//        self.sprites = sprites
-//    }
-    
-    struct Ability: Codable {
+        
+    struct Ability: Codable, Equatable {
         let ability: Type
-        //let isHidden: Bool
         let slot: Int
         
         enum CodingKeys: String, CodingKey {
             case ability
-            //case isHidden = "is_hidden"
             case slot
         }
+        
+        static func == (lhs: Pokemon.Ability, rhs: Pokemon.Ability) -> Bool {
+            return
+                lhs.ability == rhs.ability &&
+                lhs.slot == rhs.slot
+        }
+        
     }
-    
-    struct `Type`: Codable {
+    struct `Type`: Codable, Equatable {
         let name: String
         let url: String
-    }
-    
-    struct Sprites: Codable {
-        //let backDefault, backShiny: String
-        let frontDefault: String
-        //let frontShiny: String
         
-        enum CodingKeys: String, CodingKey {
-            //case backDefault = "back_default"
-            //case backShiny = "back_shiny"
-            case frontDefault //= "front_default"
-            //case frontShiny = "frontShiny"
+        static func == (lhs: Pokemon.`Type`, rhs: Pokemon.`Type`) -> Bool {
+            return
+                lhs.name == rhs.name &&
+                lhs.url == rhs.url
         }
     }
-    
-    struct TypeElement: Codable {
+    struct Sprites: Codable {
+        let frontDefault: String
+        
+        enum CodingKeys: String, CodingKey {
+            case frontDefault
+        }
+    }
+    struct TypeElement: Codable, Equatable {
         let slot: Int
         let type: Type
+        
+        
     }
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return
+            lhs.abilities == rhs.abilities &&
+            lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.types == rhs.types
+        
+    }
+    
 }

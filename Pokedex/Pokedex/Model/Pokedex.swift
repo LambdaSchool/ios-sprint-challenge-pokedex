@@ -28,7 +28,7 @@ class Pokedex {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
+                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
                 
                 let name = searchResults.name
                 let id = searchResults.id
@@ -43,8 +43,7 @@ class Pokedex {
                 print("Pokemon Types: \(pokemon.types)")
                 print("Pokemon Abilities: \(pokemon.abilities)")
                 
-                Model.shared.addPokemon(pokemon: pokemon, completion: {_ in})
-                print("Pokedex: \(Model.shared.pokedex)")
+                Model.shared.addPokemon(pokemon: pokemon)
                 // Send back the results to the completion handler
                 completion([pokemon], nil)
                 
