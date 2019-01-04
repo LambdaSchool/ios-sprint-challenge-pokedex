@@ -7,7 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    var viewController = ViewController()
+    var viewController = SearchViewController()
     
     var pokemon: Pokemon?
     
