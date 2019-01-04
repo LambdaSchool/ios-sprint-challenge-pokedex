@@ -22,25 +22,30 @@ class TableViewController: UITableViewController {
 
         let pokemon = Model.shared.savePokemon(at: indexPath)
         cell.nameLabel.text = pokemon.name.capitalized
+        
+        guard let url = URL(string: pokemon.sprites.frontDefault),
+            let imageData = try? Data(contentsOf: url) else { return cell }
+        cell.pokemonImage.image = UIImage(data: imageData)
 
         return cell
     }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        guard editingStyle == .delete else {return}
             // Delete the row from the data source
+            Model.shared.removePokemon(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            tableView.reloadData()
     }
  
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let destinationVC = segue.destination as? ViewController,
+            let indexPath = tableView.indexPathForSelectedRow else { return }
+            let pokemon = Model.shared.savePokemon(at: indexPath)
+            destinationVC.pokemon = pokemon
     }
 }
