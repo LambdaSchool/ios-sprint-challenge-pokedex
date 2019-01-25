@@ -60,7 +60,13 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             saveButtonProperties.isHidden = true
             return
         }
+        
         //pokemon was passed in
+        pokemonName.text = passedInPoke.name
+        id.text = String(passedInPoke.id)
+//        let stringTypes = passedInPoke.types.fl
+//        let a = stringTypes.joinwithSeparator(",")
+//        types.text = passedInPoke.types
         
         
     }
