@@ -35,6 +35,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         
         searchBar.text = ""
         
+        
         Model.shared.search(for: searchTerm.lowercased()) { (pokemon, error) in
             if let pokemon = pokemon, error == nil {
                 self.pokemon = pokemon
@@ -46,8 +47,11 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews() {
-        guard let pokemon = pokemon else { return }
-        
+        guard isViewLoaded else { return }
+        guard let pokemon = pokemon else {
+        title = "Pokemon Search"
+            return
+        }
         DispatchQueue.main.async {
             self.navigationItem.title = pokemon.name
             self.nameLabel.text = pokemon.name
