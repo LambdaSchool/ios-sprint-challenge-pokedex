@@ -10,8 +10,16 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
     
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
     var pokes : [Pokemon] = []
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("Name of pokemon in PokedexVC pokes: \(pokes.count)")
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonController.searchPokemon(searchTerm: "25") { (error) in
@@ -23,7 +31,7 @@ class PokedexTableViewController: UITableViewController {
             self.pokes.append(newPoke)
             DispatchQueue.main.async {
                 print("Pokemon data returned: \(self.pokemonController.pokemon)")
-                print("Number of pokemon in pokes : \(self.pokemonController.pokes.count)")
+                print("Number of pokemon in pokes : \(self.pokes.count)")
                 print(self.pokes)
                 self.tableView.reloadData()
             }
@@ -38,25 +46,23 @@ class PokedexTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
-    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.pokes.count
     }
     
-    /*
+    
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-     
-     // Configure the cell...
+     let cell = tableView.dequeueReusableCell(withIdentifier: "pokemoncell", for: indexPath)
+     let pokemon = pokes[indexPath.row]
+        print("Inside tableViewCell cellforrow method: \(pokemon.name)")
+     cell.textLabel!.text = pokemon.name
      
      return cell
      }
-     */
+    
     
     /*
      // Override to support conditional editing of the table view.
@@ -108,7 +114,7 @@ class PokedexTableViewController: UITableViewController {
         if segue.identifier == "pokemonSegue" {
             let cell = sender as! UITableViewCell
             guard let indexPath = tableView.indexPath(for: cell) else { return }
-            let pokemon = pokemonController.pokes[indexPath.row]
+            let pokemon = self.pokes[indexPath.row]
             let destinationVC = segue.destination as! PokemonSearchViewController
             destinationVC.pokemonController = pokemonController
             destinationVC.pokemon = pokemon
