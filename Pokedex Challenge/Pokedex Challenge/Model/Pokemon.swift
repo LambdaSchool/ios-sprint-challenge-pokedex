@@ -45,7 +45,7 @@ struct TypeDictionary: Codable, Equatable {
 }
 
 struct SpriteDictionary: Codable, Equatable {
-    let imageURL: URL
+    let imageURL: String
     
     enum CodingKeys: String, CodingKey {
         case imageURL = "front_default"
