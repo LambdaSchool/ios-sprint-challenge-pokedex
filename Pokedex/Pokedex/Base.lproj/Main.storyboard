@@ -13,18 +13,27 @@
         <!--Pokedex-->
         <scene sceneID="V8G-ug-RF8">
             <objects>
-                <tableViewController id="kgp-SJ-0mb" sceneMemberID="viewController">
+                <tableViewController id="kgp-SJ-0mb" customClass="TableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="b0s-3h-DOS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="4YM-pa-r8Y">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pokemonCell" textLabel="Tb8-wi-oYl" style="IBUITableViewCellStyleDefault" id="4YM-pa-r8Y">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4YM-pa-r8Y" id="znX-9R-seZ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tb8-wi-oYl">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -48,7 +57,7 @@
         <!--Title-->
         <scene sceneID="E3b-2O-hR1">
             <objects>
-                <viewController id="zY1-VA-oio" sceneMemberID="viewController">
+                <viewController id="zY1-VA-oio" customClass="DetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C58-88-dl0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,6 +103,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGb-F5-iLW">
                                         <rect key="frame" x="117" y="322.5" width="101" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="save:" destination="zY1-VA-oio" eventType="touchUpInside" id="9Sc-OG-yLv"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -110,6 +122,14 @@
                         <viewLayoutGuide key="safeArea" id="JNa-wc-Ty3"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="hxH-Vw-JQh"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="Ps8-OR-xId" id="eeI-1g-TeM"/>
+                        <outlet property="idLabel" destination="7EV-Ip-fIH" id="aL9-nj-jO2"/>
+                        <outlet property="nameLabel" destination="KUK-mP-pLe" id="4HY-2H-Kca"/>
+                        <outlet property="pokemonView" destination="LxT-Wg-lAx" id="gux-4z-ZtS"/>
+                        <outlet property="searchBar" destination="oQs-hF-Szw" id="xss-ae-dJD"/>
+                        <outlet property="typesLabel" destination="yaY-ET-1zP" id="36b-rY-CWW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="op8-St-yrZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
