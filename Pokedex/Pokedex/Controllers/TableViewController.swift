@@ -4,10 +4,11 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -27,7 +28,7 @@ class TableViewController: UITableViewController {
         guard editingStyle == .delete else { return }
             tableView.deleteRows(at: [indexPath], with: .fade)
         Model.shared.deletePokemon(at: indexPath)
-        tableView.reloadData()
+        //tableView.reloadData()
     }
 
     // MARK: - Navigation
