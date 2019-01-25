@@ -26,9 +26,9 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            //tableView.deleteRows(at: [indexPath], with: .fade)
         Model.shared.deletePokemon(at: indexPath)
-        //tableView.reloadData()
+        tableView.reloadData()
     }
 
     // MARK: - Navigation
