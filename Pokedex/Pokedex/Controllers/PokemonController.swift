@@ -17,6 +17,7 @@ class PokemonController {
     
     func createPokemon(name: String, id: Int, abilities: [Ability], types: [Type], sprites: Dictionary<String, URL>) -> Pokemon {
         let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
+        self.pokes.append(pokemon)
         return pokemon
     }
     

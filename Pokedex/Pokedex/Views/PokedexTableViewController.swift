@@ -11,11 +11,13 @@ import UIKit
 class PokedexTableViewController: UITableViewController {
     
     var pokemonController = PokemonController()
-    var pokes : [Pokemon] = []
     
     
     override func viewWillAppear(_ animated: Bool) {
-        print("Name of pokemon in PokedexVC pokes: \(pokes.count)")
+        print("Name of pokemon in PokedexVC pokes: \(self.pokemonController.pokes.count)")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -28,11 +30,11 @@ class PokedexTableViewController: UITableViewController {
             }
             let pokemon = self.pokemonController.pokemon
             let newPoke = self.pokemonController.createPokemon(name: (pokemon?.name)!, id: (pokemon?.id)!, abilities: (pokemon?.abilities)!, types: (pokemon?.types)!, sprites: (pokemon?.sprites)! as! Dictionary<String, URL>)
-            self.pokes.append(newPoke)
+            self.pokemonController.pokes.append(newPoke)
             DispatchQueue.main.async {
-                print("Pokemon data returned: \(self.pokemonController.pokemon)")
-                print("Number of pokemon in pokes : \(self.pokes.count)")
-                print(self.pokes)
+                print("Pokemon data returned: \(self.pokemonController.pokes[0])")
+                print("Number of pokemon in pokes : \(self.pokemonController.pokes.count)")
+                print(self.pokemonController.pokes)
                 self.tableView.reloadData()
             }
         }
@@ -50,13 +52,13 @@ class PokedexTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.pokes.count
+        return self.pokemonController.pokes.count
     }
     
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "pokemoncell", for: indexPath)
-     let pokemon = pokes[indexPath.row]
+     let pokemon = pokemonController.pokes[indexPath.row]
         print("Inside tableViewCell cellforrow method: \(pokemon.name)")
      cell.textLabel!.text = pokemon.name
      
@@ -107,16 +109,16 @@ class PokedexTableViewController: UITableViewController {
         
         if segue.identifier == "searchSegue" {
             let destinationVC = segue.destination as! PokemonSearchViewController
-            destinationVC.pokemonController = pokemonController
+            destinationVC.pokemonController = self.pokemonController
             
         }
         
         if segue.identifier == "pokemonSegue" {
             let cell = sender as! UITableViewCell
             guard let indexPath = tableView.indexPath(for: cell) else { return }
-            let pokemon = self.pokes[indexPath.row]
+            let pokemon = self.pokemonController.pokes[indexPath.row]
             let destinationVC = segue.destination as! PokemonSearchViewController
-            destinationVC.pokemonController = pokemonController
+            destinationVC.pokemonController = self.pokemonController
             destinationVC.pokemon = pokemon
             
             

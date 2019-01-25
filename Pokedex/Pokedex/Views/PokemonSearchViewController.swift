@@ -22,7 +22,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    var pokes : [Pokemon] = []
+//    var pokes : [Pokemon] = []
     
     
     @IBOutlet weak var search: UISearchBar!
@@ -37,8 +37,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         guard let pokemon = self.pokemonController!.pokemon else {
             print("There is no pokemon to save")
             return }
-        self.pokes.append(pokemon)
-        print("Name of pokemon in pokes: \(pokes[0].name)")
+        pokemonController?.pokes.append(pokemon)
+        print("Name of pokemon in pokes: \(pokemonController?.pokes[0].name)")
         self.navigationController?.popViewController(animated: true)
     }
     override func viewDidLoad() {
