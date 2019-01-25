@@ -25,10 +25,24 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        updateViews()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        <#code#>
+        searchBar.resignFirstResponder()
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        
+        searchBar.text = ""
+        
+        Model.shared.search(for: searchTerm.lowercased()) { (pokemon, error) in
+            if let pokemon = pokemon, error == nil {
+                self.pokemon = pokemon
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
+            }
+        }
     }
     
     func updateViews() {
