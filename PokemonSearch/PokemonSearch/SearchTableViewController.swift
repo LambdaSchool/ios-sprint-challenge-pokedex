@@ -20,9 +20,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
-        pokemonController.searchForPokemon(with: searchTerm.lowercased()) { (pokemons, error) in
+        pokemonController.searchForPokemon(with: searchTerm.lowercased()) { (pokemon, error) in
             DispatchQueue.main.async {
-                self.pokemons = pokemons ?? []
+               // self.pokemons = pokemons ?? []
+                self.tableView.reloadData()
             }
         }
     }
@@ -32,7 +33,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokemons.count
+        return pokemons.count
     }
 
     
@@ -41,9 +42,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
         let pokemon = self.pokemons[indexPath.row]
         cell.nameLabel.text = pokemon.name
-        cell.idLabel.text = String(pokemon.id)
-        cell.abilitiesLabel.text = pokemon.abilities.joined()
-        cell.typeLabel.text = pokemon.types.joined()
+        cell.idLabel.text = "ID: \(pokemon.id)"
+        cell.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({ $0.name }).joined(separator: ", ")
+        cell.typeLabel.text = "Types: " + pokemon.types.map({ $0.name }).joined(separator: ", ")
     
 
         return cell
@@ -55,17 +56,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             tableView.reloadData()
         }
     }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     
     @IBOutlet weak var searchBar: UISearchBar!

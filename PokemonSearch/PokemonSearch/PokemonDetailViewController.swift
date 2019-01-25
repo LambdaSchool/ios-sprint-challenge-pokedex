@@ -48,9 +48,9 @@ class PokemonDetailViewController: UIViewController {
         
         if let pokemon = pokemon, isViewLoaded {
             nameLabel.text = pokemon.name
-            idLabel.text = String(pokemon.id)
-            typeLabel.text = pokemon.types.joined()
-            abilitiesLabel.text = pokemon.abilities.joined()
+            idLabel.text = "ID: \(pokemon.id)"
+            typeLabel.text = "Abilities: " + pokemon.abilities.map({ $0.name }).joined(separator: ", ")
+            abilitiesLabel.text = "Types: " + pokemon.types.map({ $0.name }).joined(separator: ", ")
             
             navigationItem.title = pokemon.name
             
