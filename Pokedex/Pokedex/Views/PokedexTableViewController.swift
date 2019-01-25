@@ -24,20 +24,12 @@ class PokedexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokemonController.searchPokemon(searchTerm: "25") { (error) in
-            if let error = error {
-                print(error)
-            }
-            let pokemon = self.pokemonController.pokemon
-            let newPoke = self.pokemonController.createPokemon(name: (pokemon?.name)!, id: (pokemon?.id)!, abilities: (pokemon?.abilities)!, types: (pokemon?.types)!, sprites: (pokemon?.sprites)! as! Dictionary<String, URL>)
-            self.pokemonController.pokes.append(newPoke)
+        
             DispatchQueue.main.async {
-                print("Pokemon data returned: \(self.pokemonController.pokes[0])")
-                print("Number of pokemon in pokes : \(self.pokemonController.pokes.count)")
-                print(self.pokemonController.pokes)
+                
                 self.tableView.reloadData()
             }
-        }
+       
         // Do any additional setup after loading the view.
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
