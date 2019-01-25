@@ -11,6 +11,7 @@ class Model {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     //MARK: Properties
+    var pokemon: Pokemon?
     var pokemons: [Pokemon] = []
     
     //MARK: Methods
@@ -37,5 +38,37 @@ class Model {
     //update
     func updatePokemon(at indexPath: IndexPath) {
         let _ = pokemons[indexPath.row]
+    }
+    
+    //getting data from api
+    func search(for searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void ) {
+        
+        let requestURL = baseURL.appendingPathComponent(searchTerm)
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                NSLog("There was a problem getting data from JSON: \(error)")
+                completion(nil, error)
+                return
+            }
+            guard let data = data else {
+                NSLog("No data found")
+                completion(nil, error)
+                return
+            }
+            
+            do {
+                let jsonDecoder = JSONDecoder()
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.pokemon = pokemon
+                completion(pokemon, nil)
+            } catch {
+                NSLog("Unable to decode data: \(error)")
+                completion(nil, error)
+                return
+            }
+        }.resume()
     }
 }
