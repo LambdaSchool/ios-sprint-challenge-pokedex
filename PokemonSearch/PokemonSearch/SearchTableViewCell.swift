@@ -21,6 +21,10 @@ class SearchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var pokemon: Pokemon?
+    
+    var pokemonController: PokemonController?
+    
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var idLabel: UILabel!
@@ -31,6 +35,18 @@ class SearchTableViewCell: UITableViewCell {
     
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard let name = nameLabel.text, let id = Int(idLabel.text!), let types = typeLabel.text, let abilities = abilitiesLabel.text else { return }
+        
+            pokemonController?.create(withName: name, and: id, andAbility: [abilities], andType: [types], completion: { (error) in
+                if let error = error {
+                    print(error)
+                }
+              /*  DispatchQueue.main.async {
+                    UINavigationController?.popViewController(animated: true)
+                } */
+            })
+        
+        
     }
     
     
