@@ -11,7 +11,7 @@ import UIKit
 class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
-    
+    var searchBool: Bool = false
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
@@ -53,17 +53,20 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         DispatchQueue.main.async {
+            print("Current Pokemon is : \(self.pokemon?.name ?? "none")")
             self.updateViews()
         }
     }
     
     func searchBarSearchButtonClicked(_ search: UISearchBar) {
+        searchBool = true
         guard let searchTerm = search.text, !searchTerm.isEmpty else { return }
         
         pokemonController?.searchPokemon(searchTerm: searchTerm, completion: { (error) in
             print("Search Button was Clicked!!!!!")
             
             DispatchQueue.main.async {
+                self.pokemon!.name = (self.pokemonController!.pokemon?.name)!
                 self.updateViews()
                 print("Pokemon Name: \(self.pokemon?.name)")
                 print("\(self.pokemonController?.pokemon!.name)")
@@ -74,12 +77,18 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     func updateViews(){
         
-        guard let pokemon = self.pokemonController?.pokemon! else {
-            print("Pokemon var is nil")
-            return
-        }
+        guard let pokemon = searchBool == true ? pokemon : self.pokemonController?.pokemon! else { return }
+//        guard let pokemon = pokemon else {
+//            print("Pokemon var is nil")
+//            return
+//        }
+//
+//        guard let pokemon = self.pokemonController?.pokemon! else {
+//            print("Pokemon var is nil")
+//            return
+//        }
         
-        
+        searchBool = false
        
         self.nameLabel.text = capitalizeString(string: pokemon.name)
             let url = pokemon.sprites["front_default"]
