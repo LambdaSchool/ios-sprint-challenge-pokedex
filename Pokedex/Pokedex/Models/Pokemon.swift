@@ -27,9 +27,14 @@ struct Pokemon: Codable {
 }
 
 struct Ability: Codable {
-    let name : String?
+    let ability: LayeredString?
+    let slot: Int?
+}
+
+struct LayeredString: Codable {
+    let name: String?
 }
 
 struct Type: Codable {
-    let name : String?
+    let type : LayeredString?
 }
