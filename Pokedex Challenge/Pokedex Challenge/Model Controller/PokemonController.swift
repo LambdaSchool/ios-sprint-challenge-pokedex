@@ -25,7 +25,7 @@ class PokemonController {
     func fetchPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void) {
         //construct the url
         let url = baseURL.appendingPathComponent(searchTerm.lowercased())
-        
+        print(url)
         //the httpMethod is a get by default so we don't have to explicitly declare we can just call the urlsession
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             //check for error
@@ -46,6 +46,7 @@ class PokemonController {
                 
                 //since we are searching for one pokemon we can append it to the array
                 self.pokemons.append(returnedPokemon)
+                completion(nil)
             } catch {
                 print("Error decoding data: \(error.localizedDescription)")
                 completion(error)
@@ -54,9 +55,9 @@ class PokemonController {
         }.resume()
     }
     
-    func fetchImage(of pokemon: Pokemon, completion: @escaping (Error?) -> Void ){
+    func fetchImage(of pokemon: Pokemon, completion: @escaping (UIImage?) -> Void ){ //we want to get an image back so we put that in our closure.
         //new url for image.
-        let imageURL = URL(string: pokemon.sprites.imageURL)! //if it doesn't work then the app will crash but I'll know whats wrong
+        let imageURL = pokemon.sprites.imageURL //if it doesn't work then the app will crash but I'll know whats wrong
         
         //its another get so I don't have to construct the urlRequest because it defaults to it. So I can just start the urlsession
         
@@ -64,26 +65,19 @@ class PokemonController {
             //like always, check for the error
             if let error = error {
                 NSLog("Error fetching ImageData from server: \(error.localizedDescription)")
-                completion(error)
+                completion(nil)
                 return
             }
             
-            //unwrap data. Decode data. turn data into an uiimage.....
+            //unwrap data.turn data into an uiimage.....
             guard let data = data else {
-                completion(NSError())
+                completion(nil)
                 return
             }
-            
-            do{
-                let jd = JSONDecoder()
-               let returnedImage = try jd.decode(Pokemon.self, from: data)
+            //WHY DON'T WE DECODE THE DATA????*****************
                 let image = UIImage(data: data) //do i create an image array?
-            
-            } catch {
-                print("Error decoding data: \(error.localizedDescription)")
-                completion(error)
-                return
-            }
+                completion(image)
+            }.resume()
         }
     }
-}
+

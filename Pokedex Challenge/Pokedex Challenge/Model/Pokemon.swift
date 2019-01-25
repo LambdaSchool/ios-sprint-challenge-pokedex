@@ -13,39 +13,38 @@ struct Pokemon: Codable, Equatable {
     //REMEMBER EVERY OPEN BRACKET ON THE JSON means that we have to create a new struct.
     var name: String
     let id: Int
-    let abilities: [AbilityArray]
-    let types: [TypeArray]
+    let abilities: [AbilitDictionary] //need the [] because it tells the compiler that it's layred
+    let types: [TypeArray] //need the [] because it tells the compiler that it is layred
     let sprites: SpriteDictionary
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.name == rhs.name && lhs.id == rhs.id && lhs.abilities == rhs.abilities && lhs.sprites == rhs.sprites && lhs.types == rhs.types
+        return lhs.name == rhs.name && lhs.id == rhs.id && lhs.sprites == rhs.sprites && lhs.abilities == rhs.abilities  && lhs.types == rhs.types
     }
     
 }
 
-struct AbilityArray: Codable, Equatable {
-    let ability: [AbilityDictionary]
-    
-    static func == (lhs: AbilityArray, rhs: AbilityArray) -> Bool {
+struct AbilitDictionary: Codable, Equatable {
+    let ability: Ability
+
+    static func == (lhs: AbilitDictionary, rhs: AbilitDictionary) -> Bool {
         return lhs.ability == rhs.ability
     }
 }
 
-struct AbilityDictionary: Codable, Equatable {
+struct Ability: Codable, Equatable {
     let name: String
-    
 }
 
 struct TypeArray: Codable, Equatable {
-    let type:TypeDictionary
+    let type: Type
 }
 
-struct TypeDictionary: Codable, Equatable {
+struct Type: Codable, Equatable {
     let name: String
 }
 
 struct SpriteDictionary: Codable, Equatable {
-    let imageURL: String
+    let imageURL: URL
     
     enum CodingKeys: String, CodingKey {
         case imageURL = "front_default"

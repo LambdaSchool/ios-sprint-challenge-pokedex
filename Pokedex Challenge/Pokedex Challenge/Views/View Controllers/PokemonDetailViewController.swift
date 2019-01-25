@@ -42,7 +42,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: - PokemonController functions
     @IBAction func savePokemon(_ sender: UIButton) {
-        
+        navigationController?.popViewController(animated: true)
     }
     
     //search bar delegate function
@@ -58,7 +58,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             //this is where we append it to the array
             DispatchQueue.main.async {
                 self.updateViews()
-                //I have to display the ui here. 
+                //I have to display the ui here.
             }
         })
     }
