@@ -13,6 +13,15 @@ struct Pokemon: Codable {
     let id: Int
     let abilities: [AbilitiesArray]
     var types: [TypeObject]
+    var sprites: SpriteImages
+}
+
+struct SpriteImages: Codable {
+    let imageURL: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case imageURL = "front_default"
+    }
 }
 
 class AbilitiesArray: Codable {

@@ -26,6 +26,13 @@ class DetailViewController: UIViewController {
         
         abilitiesLabel.text = abilityName.first
         typesLabel.text = typeName.first
+        
+        pokemonController?.fetchImage(for: pokemon, completion: { (data) in
+            guard let data = data else { return }
+            
+            let image = UIImage(data: data)
+            self.imageView.image = image
+        })
     }
     
     
@@ -39,5 +46,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
     
 }

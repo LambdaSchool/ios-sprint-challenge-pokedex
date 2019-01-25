@@ -55,4 +55,18 @@ class PokemonController {
         
     }
     
+    func fetchImage(for pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
+        URLSession.shared.dataTask(with: pokemon.sprites.imageURL) { (data, _, error) in
+            if let error = error {
+                print(error)
+                completion(nil)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }.resume()
+    }
+    
 }
