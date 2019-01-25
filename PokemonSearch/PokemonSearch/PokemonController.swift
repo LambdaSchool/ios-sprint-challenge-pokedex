@@ -13,6 +13,8 @@ var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")! //{id or name}/
 
 class PokemonController {
     
+    var pokemons: [Pokemon] = []
+    
     func searchForPokemon(with searchTerm: String, completion: @escaping ([Pokemon]?, Error?) -> Void) {
       /*  var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
         let searchQueryItem = URLQueryItem(name: ", value: searchTerm)
@@ -55,6 +57,18 @@ class PokemonController {
         dataTask.resume()
         
     }
+    func create(withName name: String, and id: Int, completion: @escaping (Error?) -> Void) {
+        let pokemon = Pokemon(name: name, id: id)
+        pokemons.append(pokemon)
+        
+    }
+    
+    func delete(pokemon: Pokemon) {
+        guard let index = self.pokemons.index(of: pokemon) else {return}
+        pokemons.remove(at: index)
+    }
+    
+    
 }
 
 /*URLSession.shared.dataTask(with: url) { (data, _, error) in
