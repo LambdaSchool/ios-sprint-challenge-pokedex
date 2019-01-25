@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
@@ -21,23 +21,23 @@ struct Pokemon: Codable {
     }
 }
 
-struct Ability: Codable {
+struct Ability: Codable, Equatable {
     var name: String
 }
 
-struct AbilitySlot: Codable {
+struct AbilitySlot: Codable, Equatable {
     var ability: Ability
 }
 
-struct Type: Codable {
+struct Type: Codable, Equatable {
     var name: String
 }
 
-struct TypeSlot: Codable {
+struct TypeSlot: Codable, Equatable {
     var type: Type
 }
 
-struct Sprites: Codable {
+struct Sprites: Codable, Equatable {
     var frontDefault: URL
 }
 

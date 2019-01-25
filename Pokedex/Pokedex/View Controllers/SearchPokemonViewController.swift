@@ -36,11 +36,16 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
+        
         addButton.isHidden = false
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(pokemon.types.map {$0.type.name.capitalized}.joined(separator: "/"))"
-        abilityLabel.text = "Abilities: \(pokemon.abilities.map {$0.ability.name.capitalized}.joined(separator: ", "))"
+        
+        let typeString = pokemon.types.map {$0.type.name.capitalized}.joined(separator: "/")
+        typeLabel.text = "Types: \(typeString)"
+        
+        let abilityString = pokemon.abilities.map {$0.ability.name.capitalized}.joined(separator: ", ")
+        abilityLabel.text = "Abilities: \(abilityString)"
         
         pokemonController?.fetchImage(for: pokemon, completion: { (data) in
             guard let data = data else { return }

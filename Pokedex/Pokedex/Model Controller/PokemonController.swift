@@ -45,6 +45,11 @@ class PokemonController {
         pokedex.append(pokemon)
     }
     
+    func deletePokemon(pokemon: Pokemon) {
+        guard let index = pokedex.index(of: pokemon) else { return }
+        pokedex.remove(at: index)
+    }
+    
     func fetchImage(for pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
         let dataTask = URLSession.shared.dataTask(with: pokemon.sprites.frontDefault) { (data, _, error) in
             if let error = error {
