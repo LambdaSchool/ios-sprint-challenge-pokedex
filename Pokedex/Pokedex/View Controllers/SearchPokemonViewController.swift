@@ -12,18 +12,53 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // searchBar.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        searchBar.delegate = self
+        addButton.isHidden = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // guard text and search for pokemon with text
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        
+        pokemonController?.searchForPokemon(searchTerm: searchTerm, completion: { (pokemon, error) in
+            if let error = error {
+                NSLog("error finding pokemon with \(searchTerm): \(error)")
+                return
+            }
+            self.pokemon = pokemon ?? nil
+        })
     }
-
+    
+    @IBAction func addPokemonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.createPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        addButton.isHidden = false
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Types: \(pokemon.types.first?.type.name ?? "Unknown")"
+        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name ?? "Unknown")"
+    }
+    
     // MARK: - Properties
     
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
     
+    var pokemonController: PokemonController?
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var addButton: UIButton!
 }

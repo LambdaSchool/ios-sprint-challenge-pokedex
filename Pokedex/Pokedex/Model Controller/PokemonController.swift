@@ -12,8 +12,41 @@ let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController {
     
-    func searchForPokemon(searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func searchForPokemon(searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
+        let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if let error = error {
+                NSLog("error getting data: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            if let data = data {
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let decodedData = try jsonDecoder.decode(Pokemon.self, from: data)
+                    let pokemon = decodedData
+                    completion(pokemon, nil)
+                } catch {
+                    NSLog("error decoding data")
+                    completion(nil, error)
+                    return
+                }
+            }
+        }
+        dataTask.resume()
     }
     
+    func createPokemon(pokemon: Pokemon) {
+        let pokemon = pokemon
+        pokedex.append(pokemon)
+    }
+    
+    // MARK: - Properties
+    
+    var pokemon: Pokemon?
+    private(set) var pokedex: [Pokemon] = []
 }

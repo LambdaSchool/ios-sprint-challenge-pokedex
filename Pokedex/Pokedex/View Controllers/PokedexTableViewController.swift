@@ -10,14 +10,15 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return pokemonController.pokedex.count
     }
     
     let reuseIdentifier = "PokemonCell"
@@ -25,7 +26,8 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
-        // Configure the cell...
+        let pokemon = pokemonController.pokedex[indexPath.row]
+        cell.textLabel?.text = pokemon.name
 
         return cell
     }
@@ -41,12 +43,22 @@ class PokedexTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchPokemon" {
+            guard let destination = segue.destination as? SearchPokemonViewController else { return }
+            destination.pokemonController = pokemonController
+            destination.pokemon = pokemon
+            
+        } else if segue.identifier == "PokemonDetail" {
+            guard let destination = segue.destination as? PokemonDetailViewController,
+            let indexPath = tableView.indexPathForSelectedRow else { return }
+
+            destination.pokemonController = pokemonController
+            destination.pokemon = pokemonController.pokedex[indexPath.row]
+        }
     }
     
     // MARK: - Properties
     
-    //let pokemonController = PokemonController()
-    
+    var pokemon: Pokemon?
+    let pokemonController = PokemonController()
 }
