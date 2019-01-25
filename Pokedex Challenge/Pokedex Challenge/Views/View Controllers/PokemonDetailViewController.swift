@@ -42,12 +42,25 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: - PokemonController functions
     @IBAction func savePokemon(_ sender: UIButton) {
-        //putpokemon in the array to be displayed on the tableViewController
+        
     }
     
     //search bar delegate function
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //fetch the pokemon
+        
+        guard let name = searchBar.text, !name.isEmpty else { return }
+        pokemonController?.fetchPokemon(with: name, completion: { (error) in
+            if let error = error {
+                NSLog("Error fetching the pokemon from searchBar: \(error.localizedDescription)")
+                return
+            }
+            //this is where we append it to the array
+            DispatchQueue.main.async {
+                self.updateViews()
+                //I have to display the ui here. 
+            }
+        })
     }
 
     //MARK: - Custom Functions
@@ -55,15 +68,21 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         guard let passedInPoke = pokemon else {
             
             //no pokemon was passed in
-            title = "Pokemon Search"
-            searchBar.isHidden = true
+            pokemonName.isHidden = true
+            id.isHidden = true
+            types.isHidden = true
+            abilities.isHidden = true
             saveButtonProperties.isHidden = true
+            title = "Pokemon Search"
             return
         }
         
         //pokemon was passed in
+        searchBar.isHidden = true
+        saveButtonProperties.isHidden = true
         pokemonName.text = passedInPoke.name
         id.text = String(passedInPoke.id)
+        title = passedInPoke.name
 //        let stringTypes = passedInPoke.types.fl
 //        let a = stringTypes.joinwithSeparator(",")
 //        types.text = passedInPoke.types

@@ -15,10 +15,16 @@ class PokemonController {
     
     var pokemons: [Pokemon] = []
     
+    func delete(pokemon: Pokemon){
+        //find the index of the pokemon in the array
+        guard let index = pokemons.index(of: pokemon) else { return }
+        pokemons.remove(at: index)
+    }
+    
     //we have the data source on line 15 so we don't have to put it in the fetch function, we will append the array in the url session.
     func fetchPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void) {
         //construct the url
-        let url = baseURL.appendingPathComponent(searchTerm)
+        let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         
         //the httpMethod is a get by default so we don't have to explicitly declare we can just call the urlsession
         URLSession.shared.dataTask(with: url) { (data, _, error) in

@@ -11,7 +11,7 @@ import Foundation
 struct Pokemon: Codable, Equatable {
    
     //REMEMBER EVERY OPEN BRACKET ON THE JSON means that we have to create a new struct.
-    let name: String
+    var name: String
     let id: Int
     let abilities: [AbilityArray]
     let types: [TypeArray]
