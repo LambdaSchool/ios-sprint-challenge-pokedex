@@ -36,7 +36,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="31z-pV-TVi" kind="show" id="ILL-uX-cWk"/>
+                                    <segue destination="31z-pV-TVi" kind="show" identifier="pokemonSegue" id="ILL-uX-cWk"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -45,7 +45,13 @@
                             <outlet property="delegate" destination="uko-gH-ZaI" id="cCy-TU-I8I"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Pokedex" id="mrs-1d-6rt"/>
+                    <navigationItem key="navigationItem" title="Pokedex" id="mrs-1d-6rt">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="b1L-cu-8Ic">
+                            <connections>
+                                <segue destination="31z-pV-TVi" kind="show" identifier="searchSegue" id="t6H-yC-HhW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gqt-23-FBP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -76,23 +82,27 @@
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="321"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVI-E6-N2M">
-                                        <rect key="frame" x="0.0" y="349" width="398" height="25.5"/>
+                                        <rect key="frame" x="0.0" y="334.5" width="398" height="25.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctX-OA-gtb">
-                                        <rect key="frame" x="0.0" y="402.5" width="398" height="25.5"/>
+                                        <rect key="frame" x="0.0" y="373.5" width="398" height="25.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5b-KZ-Abc">
-                                        <rect key="frame" x="0.0" y="456" width="398" height="25.5"/>
+                                        <rect key="frame" x="0.0" y="412.5" width="398" height="25.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4Z-4B-I8s">
+                                        <rect key="frame" x="0.0" y="451.5" width="398" height="30"/>
+                                        <state key="normal" title="Save Pokemon"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="L5V-AK-igm" firstAttribute="height" secondItem="p20-vv-wJZ" secondAttribute="height" multiplier="2/3" id="dkH-eU-CNi"/>
@@ -119,6 +129,7 @@
                         <outlet property="abilitiesLabel" destination="h5b-KZ-Abc" id="3Al-bB-61L"/>
                         <outlet property="idLabel" destination="FVI-E6-N2M" id="eOy-Fv-oIS"/>
                         <outlet property="nameLabel" destination="cpz-N0-eJw" id="l31-Yf-25m"/>
+                        <outlet property="search" destination="Olm-M9-x4F" id="yOG-ia-Mxy"/>
                         <outlet property="spriteImage" destination="L5V-AK-igm" id="OcT-Je-cVL"/>
                         <outlet property="typesLabel" destination="ctX-OA-gtb" id="BpR-KZ-Q9s"/>
                     </connections>
@@ -146,4 +157,7 @@
             <point key="canvasLocation" x="-242.0289855072464" y="97.767857142857139"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="t6H-yC-HhW"/>
+    </inferredMetricsTieBreakers>
 </document>

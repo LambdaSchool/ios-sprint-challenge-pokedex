@@ -18,11 +18,13 @@ class PokedexTableViewController: UITableViewController {
             if let error = error {
                 print(error)
             }
-            let pokemon = self.pokemonController.pokeInfo
-            let newPoke = self.pokemonController.createPokemon(name: (pokemon?.name)!, id: (pokemon?.id)!, abilities: (pokemon?.abilities)!, types: (pokemon?.types)!, sprites: (pokemon?.sprites!)!)
+            let pokemon = self.pokemonController.pokemon
+            let newPoke = self.pokemonController.createPokemon(name: (pokemon?.name)!, id: (pokemon?.id)!, abilities: (pokemon?.abilities)!, types: (pokemon?.types)!, sprites: (pokemon?.sprites)! as! Dictionary<String, URL>)
             self.pokes.append(newPoke)
             DispatchQueue.main.async {
-                print("Pokemon data returned: \(self.pokemonController.pokeInfo)")
+                print("Pokemon data returned: \(self.pokemonController.pokemon)")
+                print("Number of pokemon in pokes : \(self.pokemonController.pokes.count)")
+                print(self.pokes)
                 self.tableView.reloadData()
             }
         }
@@ -91,14 +93,31 @@ class PokedexTableViewController: UITableViewController {
      }
      */
     
-    /*
+
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "searchSegue" {
+            let destinationVC = segue.destination as! PokemonSearchViewController
+            destinationVC.pokemonController = pokemonController
+            
+        }
+        
+        if segue.identifier == "pokemonSegue" {
+            let cell = sender as! UITableViewCell
+            guard let indexPath = tableView.indexPath(for: cell) else { return }
+            let pokemon = pokemonController.pokes[indexPath.row]
+            let destinationVC = segue.destination as! PokemonSearchViewController
+            destinationVC.pokemonController = pokemonController
+            destinationVC.pokemon = pokemon
+            
+            
+        }
      // Get the new view controller using segue.destination.
      // Pass the selected object to the new view controller.
      }
-     */
+  
     
 }
