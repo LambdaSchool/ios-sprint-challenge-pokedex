@@ -59,7 +59,7 @@ class PokemonController {
         dataTask.resume()
         
     }
-    func create(withName name: String, and id: Int, andAbility abilities: [Pokemon.Ability], andType types: [Pokemon.TypeName], completion: @escaping (Error?) -> Void) {
+    func create(withName name: String, and id: Int, andAbility abilities: [Pokemon.AbilityHelp], andType types: [Pokemon.TypeHelp], completion: @escaping (Error?) -> Void) {
         let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types)
         pokemons.append(pokemon)
         

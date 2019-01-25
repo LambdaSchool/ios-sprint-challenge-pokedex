@@ -43,20 +43,16 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         let pokemon = self.pokemons[indexPath.row]
         cell.nameLabel.text = pokemon.name
         cell.idLabel.text = "ID: \(pokemon.id)"
-        cell.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({ $0.name }).joined(separator: ", ")
-        cell.typeLabel.text = "Types: " + pokemon.types.map({ $0.name }).joined(separator: ", ")
-    
-
+        cell.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({ $0.ability.name }).joined(separator: ", ")
+        cell.typeLabel.text = "Types: " + pokemon.types.map({ $0.type.name }).joined(separator: ", ")
         return cell
     }
-    
     
     var pokemons: [Pokemon] = [] {
         didSet {
             tableView.reloadData()
         }
     }
-    
     
     @IBOutlet weak var searchBar: UISearchBar!
     

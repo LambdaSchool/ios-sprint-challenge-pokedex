@@ -12,21 +12,31 @@ struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
-    var abilities: [Pokemon.Ability] //does it need to be an array?
-    var types: [Pokemon.TypeName]
+   // var sprites:
+    var abilities: [Pokemon.AbilityHelp]
+    var types: [Pokemon.TypeHelp]
     
-    init(name: String, id: Int, abilities: [Pokemon.Ability] = [], types: [Pokemon.TypeName] = []) {
+    init(name: String, id: Int, abilities: [Pokemon.AbilityHelp] = [], types: [Pokemon.TypeHelp] = []) {
         self.name = name
         self.id = id
         self.abilities = abilities
         self.types = types
     }
     
-    struct Ability: Codable, Equatable {
-        var name: String
+    struct AbilityHelp: Codable, Equatable {
+        var ability: Ability
+        
+        struct Ability: Codable, Equatable {
+            var name: String
+        }
     }
-    struct TypeName: Codable, Equatable {
-        var name: String
+    
+    struct TypeHelp: Codable, Equatable {
+        var type: TypeName
+        
+        struct TypeName: Codable, Equatable {
+            var name: String
+        }
     }
 }
 
