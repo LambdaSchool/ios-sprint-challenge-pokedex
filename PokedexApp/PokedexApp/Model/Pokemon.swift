@@ -10,7 +10,7 @@ import Foundation
 
 struct Pokemon: Equatable, Codable {
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.id == rhs.id && lhs.name == rhs.name
     }
     
     var id: Int

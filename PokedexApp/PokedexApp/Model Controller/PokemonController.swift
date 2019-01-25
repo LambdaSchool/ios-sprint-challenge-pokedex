@@ -10,8 +10,8 @@ import Foundation
 
 class PokemonController {
     
-    static let shared = PokemonController()
-    private init () { }
+//    static let shared = PokemonController()
+//    private init () { }
     private(set) var pokemons: [Pokemon] = []
     
     func addPokemon(pokemon: Pokemon){

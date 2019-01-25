@@ -34,7 +34,7 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
             
         }
     }
-  //  var pokemonController =  PokemonController()
+    var pokemonController:  PokemonController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,8 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let searchTerm = pokeSearchBar.text, !searchTerm.isEmpty else {return}
-        PokemonController.shared.searchPokemon(with: searchTerm, completion: { (pokemon, error) in
+       // PokemonController.shared.searchPokemon(with: searchTerm, completion: { (pokemon, error) in
+        pokemonController?.searchPokemon(with: searchTerm, completion: { (pokemon, error) in
             if error != nil {
                 print(error!.localizedDescription)
             }
@@ -98,7 +99,8 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         
         guard let pokemon = pokemon else {return}
-        PokemonController.shared.addPokemon(pokemon: pokemon)
+       // PokemonController.shared.addPokemon(pokemon: pokemon)
+        pokemonController?.addPokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     

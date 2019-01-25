@@ -10,7 +10,7 @@ import UIKit
 
 class PokeListTableViewController: UITableViewController {
     
- //   var pokemonController = PokemonController()
+    var pokemonController: PokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +26,16 @@ class PokeListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return PokemonController.shared.pokemons.count
+       // return PokemonController.shared.pokemons.count
+        return pokemonController.pokemons.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokeCell", for: indexPath)
 
-        let pokemons = PokemonController.shared.pokemons[indexPath.row]
+     //   let pokemons = PokemonController.shared.pokemons[indexPath.row]
+        let pokemons = pokemonController.pokemons[indexPath.row]
         
         cell.textLabel?.text = pokemons.name
         guard let imageUrl = URL(string: pokemons.sprites.frontDefault), let imageData = try? Data(contentsOf: imageUrl) else {return cell}
@@ -46,9 +48,11 @@ class PokeListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            let pokemon = PokemonController.shared.pokemons[indexPath.row]
+         //   let pokemon = PokemonController.shared.pokemons[indexPath.row]
+             let pokemon = pokemonController.pokemons[indexPath.row]
             
-            PokemonController.shared.deletePokemon(pokemon: pokemon)
+         //   PokemonController.shared.deletePokemon(pokemon: pokemon)
+             pokemonController.deletePokemon(pokemon: pokemon)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
@@ -62,11 +66,20 @@ class PokeListTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "fromCell" {
             let destinationVC = segue.destination as? PokeSearchViewController
+            destinationVC?.pokemonController = pokemonController
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
-            let pokemon = PokemonController.shared.pokemons[indexPath.row]
+       //     let pokemon = PokemonController.shared.pokemons[indexPath.row]
+             let pokemon = pokemonController.pokemons[indexPath.row]
             destinationVC?.pokemon = pokemon
             
-        } 
+            
+        } else if segue.identifier == "fromSearch" {
+            let destinationVC = segue.destination as? PokeSearchViewController
+            destinationVC?.pokemonController = pokemonController
+           // destinationVC?.pokemon = pokemon
+            
+            
+        }
     }
     
 
