@@ -32,6 +32,10 @@ class TableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? DetailViewController,
+            let indexPath = tableView.indexPathForSelectedRow else { return }
         
+        let pokemon = Model.shared.pokemon(at: indexPath)
+        destination.pokemon = pokemon
     }
 }

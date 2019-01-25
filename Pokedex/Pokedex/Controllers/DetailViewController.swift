@@ -5,6 +5,9 @@ import UIKit
 class DetailViewController: UIViewController {
 
     //MARK: Properties
+    
+    var pokemon: Pokemon?
+    
     @IBOutlet weak var pokemonView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
