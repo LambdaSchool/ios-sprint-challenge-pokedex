@@ -21,6 +21,10 @@ class PokemonController {
         return pokemon
     }
     
+    func deletePokemon(index: Int){
+        pokes.remove(at: index)
+    }
+    
     
     func searchPokemon(searchTerm: String, completion: @escaping(Error?) -> Void) {
         let queryTerm = searchTerm.lowercased()

@@ -74,17 +74,22 @@ class PokedexTableViewController: UITableViewController {
      }
      */
     
-    /*
+    
      // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
      if editingStyle == .delete {
+        
+        
+        self.pokemonController.pokes.remove(at: indexPath.row)
      // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        DispatchQueue.main.async {
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.reloadData()
+            print("New number of pokemon: \(self.pokemonController.pokes.count)")
+        }
      }
      }
-     */
+    
     
     /*
      // Override to support rearranging the table view.

@@ -66,7 +66,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             print("Search Button was Clicked!!!!!")
             
             DispatchQueue.main.async {
-                self.pokemon!.name = (self.pokemonController!.pokemon?.name)!
+                
+                self.pokemon = (self.pokemonController!.pokemon)
+                
                 self.updateViews()
                 print("Pokemon Name: \(self.pokemon?.name)")
                 print("\(self.pokemonController?.pokemon!.name)")
@@ -88,7 +90,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 //            return
 //        }
         
-        searchBool = false
+        searchBool = !searchBool
        
         self.nameLabel.text = capitalizeString(string: pokemon.name)
             let url = pokemon.sprites["front_default"]
