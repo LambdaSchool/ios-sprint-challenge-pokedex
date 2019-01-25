@@ -18,6 +18,10 @@ class PokemonController {
         pokemonList.append(pokemon)
     }
     
+    func deletePokemon(index: IndexPath) {
+        pokemonList.remove(at: index.row)
+    }
+    
     func searchPokemon(with term: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
         let searchURL = baseURL.appendingPathComponent(term.lowercased())
