@@ -11,6 +11,12 @@
 		F847BC2021FB7C2700DC691B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F847BC1E21FB7C2700DC691B /* Main.storyboard */; };
 		F847BC2221FB7C2700DC691B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F847BC2121FB7C2700DC691B /* Assets.xcassets */; };
 		F847BC2521FB7C2700DC691B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F847BC2321FB7C2700DC691B /* LaunchScreen.storyboard */; };
+		F847BC3121FB7E2000DC691B /* PokedexAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3021FB7E2000DC691B /* PokedexAPI.swift */; };
+		F847BC3321FB7E2B00DC691B /* PokedexModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3221FB7E2B00DC691B /* PokedexModel.swift */; };
+		F847BC3521FB7E3100DC691B /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3421FB7E3100DC691B /* Pokemon.swift */; };
+		F847BC3721FB7E5200DC691B /* PokedexTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3621FB7E5200DC691B /* PokedexTableViewController.swift */; };
+		F847BC3921FB7E7500DC691B /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3821FB7E7500DC691B /* PokemonDetailViewController.swift */; };
+		F847BC3B21FB7E9B00DC691B /* PokemonSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F847BC3A21FB7E9B00DC691B /* PokemonSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +26,12 @@
 		F847BC2121FB7C2700DC691B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F847BC2421FB7C2700DC691B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F847BC2621FB7C2700DC691B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F847BC3021FB7E2000DC691B /* PokedexAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexAPI.swift; sourceTree = "<group>"; };
+		F847BC3221FB7E2B00DC691B /* PokedexModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexModel.swift; sourceTree = "<group>"; };
+		F847BC3421FB7E3100DC691B /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		F847BC3621FB7E5200DC691B /* PokedexTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexTableViewController.swift; sourceTree = "<group>"; };
+		F847BC3821FB7E7500DC691B /* PokemonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewController.swift; sourceTree = "<group>"; };
+		F847BC3A21FB7E9B00DC691B /* PokemonSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +64,51 @@
 		F847BC1921FB7C2700DC691B /* PokedexSprint3 */ = {
 			isa = PBXGroup;
 			children = (
+				F847BC2F21FB7DF900DC691B /* Views */,
+				F847BC2E21FB7DA300DC691B /* Models */,
+				F847BC2D21FB7D9C00DC691B /* View Controllers */,
+				F847BC2C21FB7D9700DC691B /* Set and Forget */,
+			);
+			path = PokedexSprint3;
+			sourceTree = "<group>";
+		};
+		F847BC2C21FB7D9700DC691B /* Set and Forget */ = {
+			isa = PBXGroup;
+			children = (
 				F847BC1A21FB7C2700DC691B /* AppDelegate.swift */,
-				F847BC1E21FB7C2700DC691B /* Main.storyboard */,
 				F847BC2121FB7C2700DC691B /* Assets.xcassets */,
 				F847BC2321FB7C2700DC691B /* LaunchScreen.storyboard */,
 				F847BC2621FB7C2700DC691B /* Info.plist */,
 			);
-			path = PokedexSprint3;
+			path = "Set and Forget";
+			sourceTree = "<group>";
+		};
+		F847BC2D21FB7D9C00DC691B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F847BC3621FB7E5200DC691B /* PokedexTableViewController.swift */,
+				F847BC3821FB7E7500DC691B /* PokemonDetailViewController.swift */,
+				F847BC3A21FB7E9B00DC691B /* PokemonSearchViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F847BC2E21FB7DA300DC691B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F847BC3021FB7E2000DC691B /* PokedexAPI.swift */,
+				F847BC3221FB7E2B00DC691B /* PokedexModel.swift */,
+				F847BC3421FB7E3100DC691B /* Pokemon.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F847BC2F21FB7DF900DC691B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F847BC1E21FB7C2700DC691B /* Main.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +183,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F847BC1B21FB7C2700DC691B /* AppDelegate.swift in Sources */,
+				F847BC3721FB7E5200DC691B /* PokedexTableViewController.swift in Sources */,
+				F847BC3B21FB7E9B00DC691B /* PokemonSearchViewController.swift in Sources */,
+				F847BC3521FB7E3100DC691B /* Pokemon.swift in Sources */,
+				F847BC3321FB7E2B00DC691B /* PokedexModel.swift in Sources */,
+				F847BC3121FB7E2000DC691B /* PokedexAPI.swift in Sources */,
+				F847BC3921FB7E7500DC691B /* PokemonDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +336,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6Y6994DAGM;
-				INFOPLIST_FILE = PokedexSprint3/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/PokedexSprint3/Set and Forget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,7 +354,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6Y6994DAGM;
-				INFOPLIST_FILE = PokedexSprint3/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/PokedexSprint3/Set and Forget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
