@@ -27,7 +27,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tED-lS-8AH">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Name of Found Pokemon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tED-lS-8AH">
                                             <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -112,6 +112,14 @@
                         <viewLayoutGuide key="safeArea" id="wOU-uj-GE4"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Name" largeTitleDisplayMode="always" id="Sw1-wh-tcw"/>
+                    <connections>
+                        <outlet property="pokemonAbilities" destination="ePK-99-gZq" id="vKb-Ba-Egd"/>
+                        <outlet property="pokemonID" destination="90z-ev-YgR" id="lWy-27-oDt"/>
+                        <outlet property="pokemonName" destination="Tmy-Hn-n5d" id="GXP-mP-dUH"/>
+                        <outlet property="pokemonSprite" destination="cHV-FU-paJ" id="XmN-jH-Qxq"/>
+                        <outlet property="pokemonTitleName" destination="Sw1-wh-tcw" id="hNl-AX-Coh"/>
+                        <outlet property="pokemonTypes" destination="Jt4-U2-J8D" id="CPl-As-Kth"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hds-D8-5vB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -174,6 +182,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5c-1Z-B0M">
                                         <rect key="frame" x="0.0" y="250" width="335" height="277"/>
                                         <state key="normal" title="Save Pokemon to Pokedex"/>
+                                        <connections>
+                                            <action selector="savePokemon:" destination="YIh-Oh-72U" eventType="touchUpInside" id="9Vs-61-Y3f"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -195,6 +206,14 @@
                         <viewLayoutGuide key="safeArea" id="eJf-ry-CRg"/>
                     </view>
                     <navigationItem key="navigationItem" title="Search Pokemon" largeTitleDisplayMode="always" id="lvE-We-xHy"/>
+                    <connections>
+                        <outlet property="pokemonAbilities" destination="ZEX-Hi-NGO" id="6nN-fP-dIY"/>
+                        <outlet property="pokemonID" destination="em5-0o-hUW" id="4AO-Kk-FLu"/>
+                        <outlet property="pokemonName" destination="Pay-0O-4VX" id="3oh-iV-ceU"/>
+                        <outlet property="pokemonSearchBar" destination="BOQ-M4-pbV" id="4Ua-9Y-UOy"/>
+                        <outlet property="pokemonSprite" destination="KBc-Dh-wP2" id="cBB-l7-Lec"/>
+                        <outlet property="pokemonTypes" destination="xRw-1e-21i" id="JyL-yJ-2iP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eR4-RB-rwS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
