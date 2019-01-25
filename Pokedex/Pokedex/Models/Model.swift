@@ -1,41 +1,41 @@
-//
-//  Model.swift
-//  Pokedex
-//
-//  Created by Lambda_School_Loaner_34 on 1/25/19.
 //  Copyright © 2019 Frulwinn. All rights reserved.
-//
 
 import Foundation
 
-struct Pokemon: Codable {
-    let name: String
-    let id: Int
-    let abilities: [Abilities]
-    let sprites: Sprites
-    let types: [Types]
-}
-
-struct Abilities: Codable {
-    let ability: Ability
-}
-
-struct Ability: Codable {
-    let name: String
-}
-
-struct Sprites: Codable {
-    let frontDefault: String
+class Model {
     
-    enum CodingKeys: String, CodingKey {
-        case frontDefault = "front_default"
+    static let shared = Model()
+    private init () {}
+    
+    //baseURL for api
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    
+    //MARK: Properties
+    var pokemons: [Pokemon] = []
+    
+    //MARK: Methods
+    //count
+    func numberOfPokemons() -> Int {
+        return pokemons.count
     }
-}
-
-struct Types: Codable {
-    let type: SubType
-}
-
-struct SubType: Codable {
-    let name: String
+    
+    //access pokemon at index
+    func pokemon(at indexPath: IndexPath) -> Pokemon {
+        return pokemons[indexPath.row]
+    }
+    
+    //add
+    func addPokemon(pokemon: Pokemon) {
+        pokemons.append(pokemon)
+    }
+    
+    //delete
+    func deletePokemon(at indexPath: IndexPath) {
+        pokemons.remove(at: indexPath.row)
+    }
+    
+    //update
+    func updatePokemon(at indexPath: IndexPath) {
+        let _ = pokemons[indexPath.row]
+    }
 }
