@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchTableViewController: UITableViewController {
+class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     var pokemonController = PokemonController()
     
@@ -20,14 +20,13 @@ class SearchTableViewController: UITableViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
-        pokemonController.searchForPokemon(with: searchTerm) { (pokemons, error) in
+        pokemonController.searchForPokemon(with: searchTerm.lowercased()) { (pokemons, error) in
             DispatchQueue.main.async {
                 self.pokemons = pokemons ?? []
             }
-        
         }
     }
-
+    
     // MARK: - Table view data source
 
 

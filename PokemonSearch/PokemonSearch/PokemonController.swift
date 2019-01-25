@@ -20,7 +20,7 @@ class PokemonController {
         let searchQueryItem = URLQueryItem(name: ", value: searchTerm)
         urlComponents.queryItems = [searchQueryItem]*/
         
-        let url = baseURL.appendingPathComponent(searchTerm)
+        let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         
      /*   guard let requestURL = urlComponents.url else {
             NSLog("Problem constructing search URL for \(searchTerm)")
@@ -44,9 +44,10 @@ class PokemonController {
             do {
                 let jsonDecoder = JSONDecoder()
                 //jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                let pokemon = searchResults.results
-                completion(pokemon, nil)
+                let searchResults = try jsonDecoder.decode([String: Pokemon].self, from: data)
+                let pokemons = Array(searchResults.values)
+                self.pokemons = pokemons
+                completion(pokemons, nil)
             } catch {
                 NSLog("Unable to decode data into people: \(error)")
                 completion(nil, error)
