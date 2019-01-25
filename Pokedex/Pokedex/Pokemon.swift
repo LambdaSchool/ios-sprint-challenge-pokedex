@@ -13,6 +13,11 @@ struct Pokemon: Equatable, Codable {
     var id: Int
 //    var abilities: PokemonAbilities
 //    var types: PokemonTypes
+    
+    init(name: String, id: Int) {
+        self.name = name
+        self.id = id
+    }
 }
 
 struct PokemonAbilities: Equatable, Codable {

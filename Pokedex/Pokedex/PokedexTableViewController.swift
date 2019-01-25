@@ -12,6 +12,12 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,6 +36,12 @@ class PokedexTableViewController: UITableViewController {
         if segue.identifier == "Search" {
             guard let searchVC = segue.destination as? SearchViewController else { return }
             searchVC.pokemonController = pokemonController
+        }
+        if segue.identifier == "Detail" {
+            guard let detailVC = segue.destination as? DetailViewController,
+            let index = tableView.indexPathForSelectedRow else { return }
+            detailVC.pokemonController = pokemonController
+            detailVC.pokemon = pokemonController.pokemonList[index.row]
         }
     }
     
