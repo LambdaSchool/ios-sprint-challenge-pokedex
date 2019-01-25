@@ -27,7 +27,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SavedCell", for: indexPath)
      
-        cell.textLabel?.text = pokemonController.pokemonList[indexPath.row].name
+        cell.textLabel?.text = pokemonController.pokemonList[indexPath.row].name.capitalized
 
         return cell
     }

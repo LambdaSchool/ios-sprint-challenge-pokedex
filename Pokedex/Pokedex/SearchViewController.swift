@@ -28,8 +28,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews() {
-        guard let result = result else { return }
-        nameLabel.text = result.name
+        guard let result = result else {
+            nameLabel.text = ""
+            idLabel.text = ""
+            return
+        }
+        nameLabel.text = result.name.capitalized
         idLabel.text = String("\(result.id)")
     }
     

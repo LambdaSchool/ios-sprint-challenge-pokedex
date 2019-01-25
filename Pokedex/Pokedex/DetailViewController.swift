@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     func updateViews() {
         guard isViewLoaded else { return }
         guard let pokemon = pokemon else { return }
-        nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name.capitalized
         idLabel.text = "\(pokemon.id)"
     }
     
