@@ -8,34 +8,55 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
+class PokemonDetailViewController: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var button: UIButton!
     
-    var searchedPokemon : Pokemon?
-    var model : Model = Model()
+    var model : Model?
     var pokemon : Pokemon?
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var imageCount = 0
+        
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCollectionViewCell
+        return cell
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateViews()
     }
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        model.pokemonSearch(term: searchBar.text!) { (resultPokemon, error) in
+        model!.pokemonSearch(term: searchBar.text!) { (resultPokemon, error) in
             DispatchQueue.main.async {
                 self.pokemon = resultPokemon
                 self.updateViews()
             }
         }
     }
+    
+    
     func updateViews(){
         guard let currentPokemon = pokemon else{
             self.nameLabel.text = "No Pokémon found."
@@ -45,7 +66,6 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             self.button.isHidden = true
             return
         }
-        self.searchedPokemon = currentPokemon
         print("\((pokemon?.types[0].type)!)")
         self.abilitiesLabel.isHidden = false
         self.button.isHidden = false
@@ -73,12 +93,11 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         }
         self.abilitiesLabel.text = abilities
     }
+    
+    
     @IBAction func SaveButtonTapped(_ sender: UIButton) {
-        model.savedPokemon.append(searchedPokemon!)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! PokemonTableViewController
-        destination.model = self.model
+        model!.savedPokemon.append(pokemon!)
+        navigationController?.popToRootViewController(animated: true)
     }
     
 }
