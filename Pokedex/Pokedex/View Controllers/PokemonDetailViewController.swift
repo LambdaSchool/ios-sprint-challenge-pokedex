@@ -23,6 +23,10 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateViews()
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         model.pokemonSearch(term: searchBar.text!) { (resultPokemon, error) in
@@ -71,10 +75,9 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     }
     @IBAction func SaveButtonTapped(_ sender: UIButton) {
         model.savedPokemon.append(searchedPokemon!)
-        navigationController?.popToRootViewController(animated: true)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = PokemonTableViewController()
+        let destination = segue.destination as! PokemonTableViewController
         destination.model = self.model
     }
     

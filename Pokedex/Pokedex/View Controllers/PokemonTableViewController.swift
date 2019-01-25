@@ -37,7 +37,7 @@ class PokemonTableViewController: UIViewController, UITableViewDelegate, UITable
             let newSender = sender as! PokemonTableViewCell
             let indexPath = tableView.indexPath(for: newSender)
             let destination = segue.destination as! PokemonDetailViewController
-            destination.searchedPokemon = model?.savedPokemon[indexPath!.row]
+            destination.pokemon = model?.savedPokemon[indexPath!.row]
         default:
             print("Unkown Segue")
         }
