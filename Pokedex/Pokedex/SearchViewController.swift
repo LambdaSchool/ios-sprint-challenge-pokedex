@@ -13,18 +13,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        guard let pokemonController = pokemonController else { return }
-        pokemonController.searchPokemon(with: "Eevee", completion: { (result, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-
-            DispatchQueue.main.async {
-                self.result = result
-                self.updateViews()
-            }
-        })
     }
     
     func updateViews() {
@@ -32,6 +20,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             nameLabel.text = ""
             idLabel.text = ""
             abilitiesLabel.text = ""
+            typesLabel.text = ""
             return
         }
         nameLabel.text = result.name.capitalized

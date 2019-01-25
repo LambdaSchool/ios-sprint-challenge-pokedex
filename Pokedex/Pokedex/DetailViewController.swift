@@ -20,6 +20,12 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = "\(pokemon.id)"
+        
+        let abilityName = pokemon.abilities.map { $0.ability.name }
+        let typeName = pokemon.types.map { $0.type.name }
+        
+        abilitiesLabel.text = abilityName.first
+        typesLabel.text = typeName.first
     }
     
     
