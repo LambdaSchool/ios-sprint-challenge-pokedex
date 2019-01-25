@@ -31,10 +31,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         guard let result = result else {
             nameLabel.text = ""
             idLabel.text = ""
+            abilitiesLabel.text = ""
             return
         }
         nameLabel.text = result.name.capitalized
-        idLabel.text = String("\(result.id)")
+        idLabel.text = "\(result.id)"
+        
+        let abilityName = result.abilities.map { $0.ability.name }
+        let typeName = result.types.map { $0.type.name }
+        
+        abilitiesLabel.text = abilityName.first
+        typesLabel.text = typeName.first
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
