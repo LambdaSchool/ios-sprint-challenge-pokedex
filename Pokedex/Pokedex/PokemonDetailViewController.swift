@@ -54,7 +54,8 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
             guard let url = URL(string: pokemon.sprites.frontDefault),
                 let data = try? Data(contentsOf: url) else { return }
             self.navigationItem.title = pokemon.name
-            self.idLabel.text = "ID: \(pokemon.name)"
+            self.nameLabel.text = pokemon.name
+            self.idLabel.text = "ID: \(pokemon.id)"
             let types: [String] = pokemon.types.map{$0.type.name}
             self.typeLabel.text = "Types: \(types.joined(separator: ", "))"
             let abilities: [String] = pokemon.abilities.map{$0.ability.name}
