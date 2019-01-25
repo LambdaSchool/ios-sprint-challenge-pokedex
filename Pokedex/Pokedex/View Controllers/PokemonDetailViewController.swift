@@ -20,8 +20,8 @@ class PokemonDetailViewController: UIViewController {
         
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(pokemon.types.first?.type.name.capitalized ?? "Unknown")"
-        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name.capitalized ?? "Unknown")"
+        typeLabel.text = "Types: \(pokemon.types.map {$0.type.name.capitalized}.joined(separator: "/"))"
+        abilityLabel.text = "Abilities: \(pokemon.abilities.map {$0.ability.name.capitalized}.joined(separator: ", "))"
     
         pokemonController?.fetchImage(for: pokemon, completion: { (data) in
             guard let data = data else { return }
