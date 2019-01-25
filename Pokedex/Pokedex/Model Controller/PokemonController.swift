@@ -45,6 +45,21 @@ class PokemonController {
         pokedex.append(pokemon)
     }
     
+    func fetchImage(for pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
+        let dataTask = URLSession.shared.dataTask(with: pokemon.sprites.frontDefault) { (data, _, error) in
+            if let error = error {
+                print(error)
+                completion(nil)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }
+        dataTask.resume()
+    }
+    
     // MARK: - Properties
     
     var pokemon: Pokemon?

@@ -27,7 +27,7 @@ class PokedexTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
         let pokemon = pokemonController.pokedex[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
 
         return cell
     }
@@ -39,14 +39,12 @@ class PokedexTableViewController: UITableViewController {
         }
     }
     
-    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchPokemon" {
             guard let destination = segue.destination as? SearchPokemonViewController else { return }
             destination.pokemonController = pokemonController
-            destination.pokemon = pokemon
             
         } else if segue.identifier == "PokemonDetail" {
             guard let destination = segue.destination as? PokemonDetailViewController,

@@ -37,10 +37,15 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         addButton.isHidden = false
-        nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(pokemon.types.first?.type.name ?? "Unknown")"
-        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name ?? "Unknown")"
+        typeLabel.text = "Types: \(pokemon.types.first?.type.name.capitalized ?? "Unknown")"
+        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name.capitalized ?? "Unknown")"
+        pokemonController?.fetchImage(for: pokemon, completion: { (data) in
+            guard let data = data else { return }
+            let image = UIImage(data: data)
+            self.imageView.image = image
+        })
     }
     
     // MARK: - Properties
@@ -57,6 +62,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!

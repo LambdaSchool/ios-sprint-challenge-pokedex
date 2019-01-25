@@ -18,12 +18,18 @@ class PokemonDetailViewController: UIViewController {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         
-        nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(pokemon.types.first?.type.name ?? "Unknown")"
-        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name ?? "Unknown")"
-    }
+        typeLabel.text = "Types: \(pokemon.types.first?.type.name.capitalized ?? "Unknown")"
+        abilityLabel.text = "Abilities: \(pokemon.abilities.first?.ability.name.capitalized ?? "Unknown")"
     
+        pokemonController?.fetchImage(for: pokemon, completion: { (data) in
+            guard let data = data else { return }
+            let image = UIImage(data: data)
+            self.imageView.image = image
+        })
+    }
+
     // MARK: - Properties
 
     var pokemon: Pokemon?
