@@ -7,6 +7,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
     //MARK: Properties
     var pokemon: Pokemon?
     
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var pokemonView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -50,6 +51,7 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
         guard isViewLoaded else { return }
         guard let pokemon = pokemon else {
         title = "Pokemon Search"
+        saveButton.isHidden = true
             return
         }
         DispatchQueue.main.async {
@@ -67,6 +69,8 @@ class DetailViewController: UIViewController, UISearchBarDelegate {
                 let imageData = try? Data(contentsOf: url) else { return }
             
             self.pokemonView.image = UIImage(data: imageData)
+            
+            self.saveButton.isHidden = false
         }
     }
     
