@@ -10,13 +10,13 @@ import Foundation
 
 struct Pokemon: Equatable, Codable {
     var name: String
-    var id: String
-    var abilities: [PokemonAbilities]
-    var types: [PokemonTypes]
+    var id: Int
+//    var abilities: PokemonAbilities
+//    var types: PokemonTypes
 }
 
 struct PokemonAbilities: Equatable, Codable {
-    var ability: [Ability]
+    var ability: Ability
 }
 
 struct Ability: Equatable, Codable {
@@ -24,7 +24,7 @@ struct Ability: Equatable, Codable {
 }
 
 struct PokemonTypes: Equatable, Codable {
-    var types: [Type]
+    var types: Type
 }
 
 struct Type: Equatable, Codable {
