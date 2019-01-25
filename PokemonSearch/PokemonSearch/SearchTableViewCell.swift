@@ -38,11 +38,13 @@ class SearchTableViewCell: UITableViewCell {
        /* guard let name = nameLabel.text, let id = Int(idLabel.text!), let types = typeLabel.text, let abilities = abilitiesLabel.text else { return } */
         
         if let pokemon = pokemon {
-            pokemonController?.create(withName: pokemon.name, and: pokemon.id, andAbility: pokemon.abilities, andType: pokemon.types, completion: { (error) in
+            pokemonController?.addPokemon(pokemon: pokemon)
+            
+            /*pokemonController?.create(withName: pokemon.name, and: pokemon.id, andAbility: pokemon.abilities, andType: pokemon.types, completion: { (error) in
                 if let error = error {
                     print(error)
                 }
-            })
+            })*/
         
               /*  DispatchQueue.main.async {
                     UINavigationController?.popViewController(animated: true)

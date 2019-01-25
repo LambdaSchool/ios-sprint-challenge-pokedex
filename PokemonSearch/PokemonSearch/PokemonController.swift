@@ -17,19 +17,11 @@ class PokemonController {
     
     
     func searchForPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
-      /*  var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
-        let searchQueryItem = URLQueryItem(name: ", value: searchTerm)
-        urlComponents.queryItems = [searchQueryItem]*/
+     
+        let url = PokemonController.baseURL.appendingPathComponent(searchTerm.lowercased())
         
-        PokemonController.baseURL.appendPathComponent(searchTerm.lowercased())
         
-     /*   guard let requestURL = urlComponents.url else {
-            NSLog("Problem constructing search URL for \(searchTerm)")
-            completion(nil, NSError())
-            return
-        }*/
-        
-        let dataTask = URLSession.shared.dataTask(with: PokemonController.baseURL) { (data, _, error) in
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 NSLog("Error fetching data: \(error)")
                 completion(nil, error)
@@ -59,11 +51,15 @@ class PokemonController {
         dataTask.resume()
         
     }
-    func create(withName name: String, and id: Int, andAbility abilities: [Pokemon.AbilityHelp], andType types: [Pokemon.TypeHelp], completion: @escaping (Error?) -> Void) {
+    
+    func addPokemon(pokemon: Pokemon) {
+        pokemons.append(pokemon)
+    }
+   /* func create(withName name: String, and id: Int, andAbility abilities: [Pokemon.AbilityHelp], andType types: [Pokemon.TypeHelp], completion: @escaping (Error?) -> Void) {
         let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types)
         pokemons.append(pokemon)
         
-    }
+    }*/
     
     func delete(pokemon: Pokemon) {
         guard let index = self.pokemons.index(of: pokemon) else {return}

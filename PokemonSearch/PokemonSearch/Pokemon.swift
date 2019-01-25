@@ -16,12 +16,12 @@ struct Pokemon: Codable, Equatable {
     var abilities: [Pokemon.AbilityHelp]
     var types: [Pokemon.TypeHelp]
     
-    init(name: String, id: Int, abilities: [Pokemon.AbilityHelp] = [], types: [Pokemon.TypeHelp] = []) {
+   /* init(name: String, id: Int, abilities: [Pokemon.AbilityHelp] = [], types: [Pokemon.TypeHelp] = []) {
         self.name = name
         self.id = id
         self.abilities = abilities
         self.types = types
-    }
+    }*/
     
     struct AbilityHelp: Codable, Equatable {
         var ability: Ability
@@ -29,15 +29,18 @@ struct Pokemon: Codable, Equatable {
         struct Ability: Codable, Equatable {
             var name: String
         }
+        
     }
     
     struct TypeHelp: Codable, Equatable {
         var type: TypeName
-        
+    
         struct TypeName: Codable, Equatable {
             var name: String
         }
     }
+    
+    
 }
 
 struct PokemonSearchResults: Codable, Equatable {

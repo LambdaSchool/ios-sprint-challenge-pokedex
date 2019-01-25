@@ -12,6 +12,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     var pokemonController = PokemonController()
     
+    var pokemon: Pokemon?
+    
    /* override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -22,8 +24,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
         pokemonController.searchForPokemon(with: searchTerm.lowercased()) { (pokemon, error) in
             DispatchQueue.main.async {
-               // self.pokemons = pokemons ?? []
-                self.tableView.reloadData()
+                self.pokemon = pokemon
+              //  self.tableView.reloadData()
             }
         }
     }
