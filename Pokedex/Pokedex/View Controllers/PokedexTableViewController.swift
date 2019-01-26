@@ -11,7 +11,7 @@ import UIKit
 class PokedexTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
 
@@ -29,12 +29,12 @@ class PokedexTableViewController: UITableViewController {
         let pokemon = pokemonController.pokedex[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
         
-        pokemonController.fetchImage(for: pokemon, completion: { (data) in
-            guard let data = data else { return }
-            let image = UIImage(data: data)
-            cell.imageView?.image = image
-            tableView.reloadData()
-        })
+//        pokemonController.fetchImage(for: pokemon, completion: { (data) in
+//            guard let data = data else { return }
+//            let image = UIImage(data: data)
+//            cell.imageView?.image = image
+//            tableView.reloadData()
+//        })
 
         return cell
     }

@@ -10,10 +10,11 @@ import UIKit
 
 class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         searchBar.delegate = self
         addButton.isHidden = true
+        imageView.isHidden = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -24,8 +25,10 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                 NSLog("error finding pokemon with \(searchTerm): \(error)")
                 return
             }
-            self.pokemon = pokemon ?? nil
+            self.pokemon = pokemon
         })
+        
+        self.searchBar.endEditing(true)
     }
     
     @IBAction func addPokemonTapped(_ sender: Any) {
@@ -49,6 +52,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         
         pokemonController?.fetchImage(for: pokemon, completion: { (data) in
             guard let data = data else { return }
+            self.imageView.isHidden = false
             let image = UIImage(data: data)
             self.imageView.image = image
         })

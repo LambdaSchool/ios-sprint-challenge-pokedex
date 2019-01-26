@@ -10,9 +10,10 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateViews()
+        imageView.isHidden = true
     }
     
     private func updateViews() {
@@ -29,6 +30,7 @@ class PokemonDetailViewController: UIViewController {
     
         pokemonController?.fetchImage(for: pokemon, completion: { (data) in
             guard let data = data else { return }
+            self.imageView.isHidden = false
             let image = UIImage(data: data)
             self.imageView.image = image
         })

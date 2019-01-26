@@ -57,7 +57,6 @@ class PokemonController {
                 completion(nil)
                 return
             }
-            
             DispatchQueue.main.async {
                 completion(data)
             }
@@ -67,6 +66,5 @@ class PokemonController {
     
     // MARK: - Properties
     
-    var pokemon: Pokemon?
     private(set) var pokedex: [Pokemon] = []
 }
