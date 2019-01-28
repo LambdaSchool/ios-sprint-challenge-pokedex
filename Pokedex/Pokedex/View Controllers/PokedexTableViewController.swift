@@ -9,36 +9,31 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokedex.count
     }
     
     let reuseIdentifier = "PokemonCell"
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-
         let pokemon = pokemonController.pokedex[indexPath.row]
-        cell.textLabel?.text = pokemon.name.capitalized
+        guard let imageData = pokemon.imageData else { return cell }
         
-//        pokemonController.fetchImage(for: pokemon, completion: { (data) in
-//            guard let data = data else { return }
-//            let image = UIImage(data: data)
-//            cell.imageView?.image = image
-//            tableView.reloadData()
-//        })
-
+        cell.textLabel?.text = pokemon.name.capitalized
+        cell.imageView?.image = UIImage(data: imageData)
+        
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let pokemon = pokemonController.pokedex[indexPath.row]
         if editingStyle == .delete {
@@ -48,7 +43,7 @@ class PokedexTableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchPokemon" {
             guard let destination = segue.destination as? SearchPokemonViewController else { return }
@@ -56,8 +51,8 @@ class PokedexTableViewController: UITableViewController {
             
         } else if segue.identifier == "PokemonDetail" {
             guard let destination = segue.destination as? PokemonDetailViewController,
-            let indexPath = tableView.indexPathForSelectedRow else { return }
-
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            
             destination.pokemonController = pokemonController
             destination.pokemon = pokemonController.pokedex[indexPath.row]
         }
@@ -65,6 +60,5 @@ class PokedexTableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    var pokemon: Pokemon?
     let pokemonController = PokemonController()
 }

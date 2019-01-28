@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
@@ -50,15 +51,19 @@ class PokemonController {
         pokedex.remove(at: index)
     }
     
-    func fetchImage(for pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
-        let dataTask = URLSession.shared.dataTask(with: pokemon.sprites.frontDefault) { (data, _, error) in
+    func fetchImage(url: URL, completion: @escaping (Data?) -> Void) {
+        let url = url 
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                print(error)
+                NSLog("Error finding data \(error)")
                 completion(nil)
                 return
             }
-            DispatchQueue.main.async {
+            
+            if let data = data {
                 completion(data)
+                return
             }
         }
         dataTask.resume()

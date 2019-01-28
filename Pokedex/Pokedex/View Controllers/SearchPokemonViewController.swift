@@ -26,8 +26,12 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                 return
             }
             self.pokemon = pokemon
+            
+            guard let url = pokemon?.sprites.frontDefault else { return }
+            self.pokemonController?.fetchImage(url: url , completion: { (data) in
+                self.pokemon?.imageData = data
+            })
         })
-        
         self.searchBar.endEditing(true)
     }
     
@@ -38,7 +42,8 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     }
     
     private func updateViews() {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon,
+            let imageData = pokemon.imageData else { return }
         
         addButton.isHidden = false
         nameLabel.text = pokemon.name.capitalized
@@ -50,12 +55,8 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         let abilityString = pokemon.abilities.map {$0.ability.name.capitalized}.joined(separator: ", ")
         abilityLabel.text = "Abilities: \(abilityString)"
         
-        pokemonController?.fetchImage(for: pokemon, completion: { (data) in
-            guard let data = data else { return }
-            self.imageView.isHidden = false
-            let image = UIImage(data: data)
-            self.imageView.image = image
-        })
+        imageView.isHidden = false
+        imageView.image = UIImage(data: imageData)
     }
     
     // MARK: - Properties

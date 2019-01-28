@@ -9,15 +9,15 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateViews()
-        imageView.isHidden = true
     }
     
     private func updateViews() {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon,
+            let imageData = pokemon.imageData else { return }
         
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
@@ -27,20 +27,15 @@ class PokemonDetailViewController: UIViewController {
         
         let abilityString = pokemon.abilities.map {$0.ability.name.capitalized}.joined(separator: ", ")
         abilityLabel.text = "Abilities: \(abilityString)"
-    
-        pokemonController?.fetchImage(for: pokemon, completion: { (data) in
-            guard let data = data else { return }
-            self.imageView.isHidden = false
-            let image = UIImage(data: data)
-            self.imageView.image = image
-        })
+        
+        imageView.image = UIImage(data: imageData)
     }
-
+    
     // MARK: - Properties
-
+    
     var pokemon: Pokemon?
     var pokemonController: PokemonController?
-
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!

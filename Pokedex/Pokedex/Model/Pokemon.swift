@@ -15,10 +15,15 @@ struct Pokemon: Codable, Equatable {
     var types: [TypeSlot]
     var abilities: [AbilitySlot]
     var sprites: Sprites
+    var imageData: Data?
     
-    init(name: String, id: Int, types: [TypeSlot], abilities: [AbilitySlot], sprites: Sprites) {
-        (self.name, self.id, self.types, self.abilities, self.sprites) = (name, id, types, abilities, sprites)
+    init(name: String, id: Int, types: [TypeSlot], abilities: [AbilitySlot], sprites: Sprites, imageData: Data? = nil) {
+        (self.name, self.id, self.types, self.abilities, self.sprites, self.imageData) = (name, id, types, abilities, sprites, imageData)
     }
+}
+
+struct Pokedex: Codable, Equatable {
+    var pokemon: [Pokemon]
 }
 
 struct Ability: Codable, Equatable {
