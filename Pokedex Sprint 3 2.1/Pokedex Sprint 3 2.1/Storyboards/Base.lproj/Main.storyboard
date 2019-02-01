@@ -26,18 +26,32 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcW-99-cHn">
-                                            <rect key="frame" x="240" y="32" width="87" height="81"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSe-RN-lTz">
-                                            <rect key="frame" x="88" y="62" width="42" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1AU-FS-LbB">
+                                            <rect key="frame" x="16" y="11" width="343" height="138"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSe-RN-lTz">
+                                                    <rect key="frame" x="0.0" y="59" width="260" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KcW-99-cHn">
+                                                    <rect key="frame" x="268" y="31.5" width="75" height="75"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="KcW-99-cHn" secondAttribute="height" id="An7-e4-Kul"/>
+                                                        <constraint firstAttribute="height" constant="75" id="MLW-Z6-Kim"/>
+                                                        <constraint firstAttribute="width" constant="75" id="afh-HG-CQk"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1AU-FS-LbB" secondAttribute="bottom" id="9vs-Rh-mpY"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1AU-FS-LbB" secondAttribute="trailing" id="cFL-3p-hqo"/>
+                                        <constraint firstItem="1AU-FS-LbB" firstAttribute="top" secondItem="cDf-cU-t3w" secondAttribute="topMargin" id="clJ-Zj-0tH"/>
+                                        <constraint firstItem="1AU-FS-LbB" firstAttribute="leading" secondItem="cDf-cU-t3w" secondAttribute="leadingMargin" id="jgn-64-Dxy"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="imagePokemon" destination="KcW-99-cHn" id="FSg-bu-GbX"/>
