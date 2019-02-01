@@ -12,6 +12,14 @@ class PokemonController {
     var pokemon: Pokemon?
     var pokedex: [Pokemon] = []
     
+    var pokedexSortedByID: [Pokemon] {
+        return pokedex.sorted() { $0.id < $1.id }
+    }
+    
+    var pokedexSortedByName: [Pokemon] {
+        return pokedex.sorted() { $0.name < $1.name }
+    }
+    
     // Add a baseURL constant
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
