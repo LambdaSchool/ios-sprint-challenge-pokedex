@@ -22,7 +22,7 @@ class DetailViewController: UIViewController {
         }
         
         var abilitiesArray: [String] = []
-        for each in pokemon.abilites {
+        for each in pokemon.abilities {
             abilitiesArray.append(each.ability.name.capitalized)
         }
         

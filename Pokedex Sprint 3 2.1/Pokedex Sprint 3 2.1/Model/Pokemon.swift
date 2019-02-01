@@ -1,14 +1,17 @@
 import Foundation
 
-struct Pokemon: Codable {  // , Equatable {
+
+struct Pokemon: Codable {
     
-    var name: String
-    var abilites: [Ability]
-    var id: Int
-    var sprites: Sprites
-    var types: [TypeElement]
-    
-    
+    let name: String
+    let id: Int
+    let types: [TypeElement]
+    let abilities: [Ability]
+    let sprites: Sprites
+}
+
+struct TypeElement: Codable {
+    let type: Species
 }
 
 struct Ability: Codable {
@@ -23,6 +26,3 @@ struct Sprites: Codable {
     let frontDefault: String
 }
 
-struct TypeElement: Codable {
-    let type: Species
-}

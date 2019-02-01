@@ -49,11 +49,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             do {
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 var abilityArray: [String] = []
-                for each in pokemon.abilites {
+                for each in pokemon.abilities {
                 abilityArray.append(each.ability.name.capitalized)
             }
                 var typeArray: [String] = []
-                for each in pokemon.abilites {
+                for each in pokemon.abilities {
                     typeArray.append(each.ability.name.capitalized)
                 }
                 
@@ -83,14 +83,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }.resume()
     }
     
-    func searchBarSearch(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         searchBar.resignFirstResponder()
         
         guard let searchPokemon = searchBar.text, !searchPokemon.isEmpty else { return }
-        print("searchBarSearch running")
+        
         searchBar.text = nil
         
-        performSearch(for: searchPokemon) { (error)  in
+        performSearch(for: searchPokemon) { (error) in
             if error == nil {
                 DispatchQueue.main.async {
                     self.nameLabel.text = self.pokemon?.name.capitalized
