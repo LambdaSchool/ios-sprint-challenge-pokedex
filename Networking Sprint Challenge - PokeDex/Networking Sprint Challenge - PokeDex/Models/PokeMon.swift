@@ -15,12 +15,36 @@ struct Pokemon: Codable {
     
     let name: String
     let id: Int
-    let abilities: [String] = []
-    let type: [String] = []
-//    let sprites:
+    let abilities: [Ability] = []
+    let type: [Type] = []
+    let sprites: [Sprites]
+    var imageData: Data?
     
     // need arrays for abilities, types ??
 }
+
+struct Sprites: Codable, Equatable {
+    let frontDefault: String
+}
+
+struct Ability: Codable,Equatable {
+    let subAbility: subAbility
+
+}
+
+struct subAbility: Codable, Equatable {
+    let name: String
+    
+}
+
+struct Type: Codable, Equatable {
+    let subType: String
+}
+
+struct subType: Codable, Equatable {
+    let type: String
+}
+
 
 
 
