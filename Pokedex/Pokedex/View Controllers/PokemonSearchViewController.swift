@@ -27,7 +27,11 @@ class PokemonSearchViewController: UIViewController, UISearchResultsUpdating {
         search.searchBar.placeholder = "Search Pokemon"
         navigationItem.searchController = search
         definesPresentationContext = true
+        
+        updateViews()
     }
+    
+    
     
     func updateViews() {
         if let pokemon = pokemonController?.pokemon {
@@ -46,7 +50,7 @@ class PokemonSearchViewController: UIViewController, UISearchResultsUpdating {
     }
     
     @IBAction func savePokemon(_ sender: Any) {
-        guard let pokemon = pokemonController!.pokemon else { return }
+        guard let pokemon = pokemonController?.pokemon else { return }
         pokemonController?.create(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
