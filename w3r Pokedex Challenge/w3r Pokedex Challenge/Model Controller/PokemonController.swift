@@ -27,7 +27,7 @@ class PokemonController {
         
         //pathcomponent url with name per api requirements
         let url = baseURL.appendingPathComponent(name.lowercased())
-        
+        print(url)
         //since the default of the httpMethod is GET we don't need to construct the request url, we can just start the data task
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
@@ -58,7 +58,7 @@ class PokemonController {
     //we want an UIIMage back so we have to put it in the completion handler
     func fetchSprites(with pokemon: Pokemon, completion: @escaping (UIImage?, Error?) ->Void){
         //get the url from the pokemon...dont need to append the base url because the sprites are another, indenpendent url
-        let url = URL(string: pokemon.sprites.urlImage)!
+        let url = pokemon.sprites.urlImage
         
         //again we are just getting something from the api so we can just start the data task
         URLSession.shared.dataTask(with: url) { (data, _, error) in
@@ -76,6 +76,6 @@ class PokemonController {
             let pokeImage = UIImage(data: data)
             completion(pokeImage, nil)
             //return
-        }
+        }.resume()
     }
 }

@@ -33,7 +33,7 @@ struct Ability: Codable, Equatable {
 }
 
 struct SpriteDictionary: Codable, Equatable {
-    let urlImage: String
+    let urlImage: URL
     
     enum CodingKeys: String, CodingKey {
         case urlImage = "front_default"
@@ -41,5 +41,9 @@ struct SpriteDictionary: Codable, Equatable {
 }
 
 struct TypeArray: Codable, Equatable{
-    let type: String
+    let type: Type
+}
+
+struct Type: Codable, Equatable {
+    let name: String
 }

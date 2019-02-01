@@ -11,10 +11,6 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     let pC = PokemonController()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
