@@ -10,6 +10,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+
     let pokemonController = PokemonController()
     
     override func viewDidLoad() {
