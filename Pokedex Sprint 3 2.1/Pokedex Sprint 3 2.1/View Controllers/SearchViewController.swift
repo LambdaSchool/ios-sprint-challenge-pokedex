@@ -1,6 +1,8 @@
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    var pokemon = PokemonController.shared.pokemon
     
     @IBOutlet weak var searchPokiBar: UISearchBar!
     @IBOutlet weak var imagePokemon: UIImageView!
@@ -11,7 +13,11 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var savedButtonOutlet: UIButton!
     
     @IBAction func SaveButtonPressed(_ sender: Any) {
-        // save above to model
+        guard let pokemon = pokemon else { return }
+        
+        PokemonController.shared.addPokemon(pokemon: pokemon)
+        
+        navigationController?.popToRootViewController(animated: true)
     }
     
 

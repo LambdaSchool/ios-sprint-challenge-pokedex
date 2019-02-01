@@ -14,14 +14,18 @@ class PokemonTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return PokemonController.shared.savedPokemon.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? PokemonTableViewCell else { fatalError("No cell.")}
+        
+        let text = PokemonController.shared.savedPokemon[indexPath.row].name
+    //    let image = PokemonController.shared.savedPokemon[indexPath.row].image
 
-        // Configure the cell...
+        cell.label.text = text
+  //      cell.imagePokemon.image = image
 
         return cell
     }
