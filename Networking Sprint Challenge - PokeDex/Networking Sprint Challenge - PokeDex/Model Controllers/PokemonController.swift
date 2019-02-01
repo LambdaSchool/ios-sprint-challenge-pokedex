@@ -16,6 +16,15 @@ class PokemonController {
     
     var pokemonArray: [Pokemon] = []
     
+    func savePokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+    }
+    
+    func removePokemon(index: IndexPath) {
+        pokemonArray.remove(at: index.row)
+    }
+    
+    
     func searchPokemon(with term: String, completion: @escaping (Error?) -> Void){
         let searchURL = baseURL.appendingPathComponent(term.lowercased())
         URLSession.shared.dataTask(with: searchURL) { (data, _, error) in
