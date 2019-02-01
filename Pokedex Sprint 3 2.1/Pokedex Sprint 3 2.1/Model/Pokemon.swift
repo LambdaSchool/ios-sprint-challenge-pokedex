@@ -5,7 +5,7 @@ struct Pokemon: Codable {  // , Equatable {
     var name: String
     var abilites: [Ability]
     var id: Int
-    var image: Sprites
+    var sprites: Sprites
     var types: [TypeElement]
     
     
