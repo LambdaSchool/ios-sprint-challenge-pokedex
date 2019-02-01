@@ -11,6 +11,12 @@ import UIKit
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
+    
+    var result: Pokemon?
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +27,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     
     @IBOutlet weak var searchBar: UISearchBar!
+
     
     
     
-    
+    @IBAction func saveButton(_ sender: UIButton) {
+        guard let result = result else { return }
+        pokemonController?.savePokemon(pokemon: result)
+        navigationController?.popViewController(animated: true)
+        
+    }
     
    
 
