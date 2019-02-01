@@ -19,6 +19,7 @@ struct Pokemon: Codable {
     let type: [String] = []
 //    let sprites:
     
+    // need arrays for abilities, types ??
 }
 
 
