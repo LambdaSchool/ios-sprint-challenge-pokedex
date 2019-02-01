@@ -9,6 +9,8 @@
 import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    var pokemonController: PokemonController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

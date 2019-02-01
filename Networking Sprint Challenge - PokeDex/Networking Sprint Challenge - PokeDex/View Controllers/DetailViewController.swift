@@ -9,6 +9,16 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    
+    var pokemonController: PokemonController?
+    
+//    var pokemon: Pokemon {
+//        didSet {
+//            updateViews()
+//        }
+//    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

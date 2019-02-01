@@ -44,11 +44,33 @@ class PokemonTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "search" {
+            guard let searchVC = segue.destination as? SearchViewController else { return }
+            searchVC.pokemonController = pokemonController
+            
+
+        }
+        if segue.identifier == "detail" {
+            guard let detailVC = segue.destination as? DetailViewController else { return }
+            let index = tableView.indexPathForSelectedRow else { return }
+            detailVC.pokemonController = pokemonController
+ //           detailVC.
+            
+            
         }
     }
     
     
-        
     
+    
+    
+    }
+    
+    
+        
+
 
 
