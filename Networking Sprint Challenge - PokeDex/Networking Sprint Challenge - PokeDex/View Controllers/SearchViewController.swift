@@ -21,16 +21,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
     
-    var result: Pokemon?
-    // {
-    // didSet {
-    // updateViews()
-    // }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // updateViews()
+    var result: Pokemon? {
+        didSet {
+            updateViews()
+        }
     }
+
+
 
 // updateViews method needs to be added
     
@@ -77,7 +74,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty,
         let pokemonController = pokemonController else { return }
-        
+        pokemonController.searchPokemon(with: searchTerm, completion: { (error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                
+                self.updateViews()
+            }
+            
+        })
+            
+            
+        }
    
 
         
@@ -86,4 +97,5 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
 }
 
-}
+
+

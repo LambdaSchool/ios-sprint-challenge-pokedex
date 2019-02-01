@@ -28,7 +28,7 @@ struct SpriteImages: Codable, Equatable {
     let imageURL: URL
     
     enum CodingKeys: String, CodingKey {
-        case imageURL = "frontDefault"
+        case imageURL = "front_default"
 }
 }
 
