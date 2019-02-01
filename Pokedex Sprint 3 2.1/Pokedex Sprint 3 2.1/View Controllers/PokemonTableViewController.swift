@@ -5,6 +5,7 @@ class PokemonTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        PokemonController.shared.loadToPersistence()
     }
 
     override func viewDidLoad() {
