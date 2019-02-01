@@ -11,11 +11,22 @@ import UIKit
 class PokemonDetailViewController: UIViewController {
     var pokemon: Pokemon?
     var pokemonController: PokemonController?
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        abilitiesLabel.text = pokemon.abilities[0].ability.name
+        typeLabel.text = pokemon.types[0].type.name
     }
     
 

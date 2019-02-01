@@ -8,12 +8,12 @@
 
 import Foundation
 
-// Add a baseURL constant
-private let baseURL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
-
 class PokemonController {
     var pokemon: Pokemon?
     var pokedex: [Pokemon] = []
+    
+    // Add a baseURL constant
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     // MARK: - Create & Delete methods
     func create(pokemon: Pokemon) {
