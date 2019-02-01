@@ -11,3 +11,18 @@
 
 import Foundation
 
+struct Pokemon: Codable {
+    
+    let name: String
+    let id: Int
+    let abilities // need array for abilities defined below
+    let type: // need array for types below
+    let sprites: // need type for this below
+    
+    
+    
+    
+    
+    
+}
+
