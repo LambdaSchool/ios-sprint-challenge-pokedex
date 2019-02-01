@@ -11,13 +11,14 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var savedButtonOutlet: UIButton!
     
     @IBAction func SaveButtonPressed(_ sender: Any) {
+        // save above to model
     }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // updateviews
     }
     
 
