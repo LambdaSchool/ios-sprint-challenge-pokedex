@@ -9,3 +9,22 @@
 // file for model controller
 
 import Foundation
+
+class PokemonController {
+
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")
+    
+    var pokemonArray: [Pokemon] = []
+    
+    func searchPokemon(with term: String, completion: @escaping (Pokemon?, Error?) -> Void){
+        
+        let searchURL = baseURL?.appendingPathComponent(term.lowercased())
+        
+
+        
+        
+        
+        
+    }
+    
+}
