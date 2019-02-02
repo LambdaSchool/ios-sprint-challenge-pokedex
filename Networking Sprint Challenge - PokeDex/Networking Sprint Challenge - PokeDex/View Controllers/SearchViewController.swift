@@ -38,10 +38,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         
         let ability = result.abilities.map { $0.subAbility.name}
-        let type = result.type.map { $0.subType}
+        let type = result.type.map { $0.type}
         
         resultAbilitiesLabel.text = ability.first
-        resultTypeLabel.text = type.first
+        resultTypeLabel.text = 
         
         
         pokemonController?.fetchImage(for: result, completion: { (data) in

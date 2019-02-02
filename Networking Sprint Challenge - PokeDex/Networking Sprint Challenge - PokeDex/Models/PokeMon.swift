@@ -43,11 +43,11 @@ struct subAbility: Codable, Equatable {
 }
 
 struct Type: Codable, Equatable {
-    let subType: String
+    let type: SubType
 }
 
-struct subType: Codable, Equatable {
-    let type: String
+struct SubType: Codable, Equatable {
+    let name: String
 }
 
 
