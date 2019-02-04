@@ -16,6 +16,8 @@ class PokemonSearchViewController: UIViewController, UISearchResultsUpdating {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonImageView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     
 
     override func viewDidLoad() {
@@ -30,53 +32,52 @@ class PokemonSearchViewController: UIViewController, UISearchResultsUpdating {
         
         updateViews()
     }
-    
-    
-    
+
     func updateViews() {
-        if let pokemon = pokemonController?.pokemon {
-            title = pokemon.name
-            nameLabel.text = pokemon.name
-            idLabel.text = String(pokemon.id)
-            typeLabel.text = pokemon.types.first?.type.name
-            abilitiesLabel.text = pokemon.abilities.first?.ability.name
-        } else {
+        guard isViewLoaded, let pokemon = pokemon else {
             title = "Pokemon Search"
-            nameLabel.text = ""
-            idLabel.text = ""
-            typeLabel.text = ""
-            abilitiesLabel.text = ""
+            nameLabel.text = " "
+            idLabel.text = " "
+            abilitiesLabel.text = " "
+            saveButton.isEnabled = false
+            return
+        }
+        
+        title = pokemon.name.capitalized
+        nameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Types: \(pokemon.typesString)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilityString)"
+        saveButton.isEnabled = true
+        if let imageData = pokemon.imageData {
+            pokemonImageView.image = UIImage(data: imageData)
+        } else {
+            pokemonImageView.isHidden = true
         }
     }
     
     @IBAction func savePokemon(_ sender: Any) {
-        guard let pokemon = pokemonController?.pokemon else { return }
-        pokemonController?.create(pokemon: pokemon)
+        guard let pokemon = pokemon else { return }
+        
+        pokemonController?.createPokemon(pokemon)
+        
         navigationController?.popViewController(animated: true)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
+        guard let text = searchController.searchBar.text, !text.isEmpty else { return }
         
-        pokemonController?.fetch(searchName: text, completion: { (error) in
-            if let error = error {
-                NSLog("Error fetching: \(error)")
-                return
-            }
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
+        pokemonController?.searchForPokemon(searchText: text.lowercased(), completion: { (_, pokemon) in
+            guard let pokemon = pokemon else { return }
+            
+            self.pokemon = pokemon
+            self.pokemonController?.fetchImageFor(pokemon: pokemon, completion: { (_, pokemon) in
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+            })
         })
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

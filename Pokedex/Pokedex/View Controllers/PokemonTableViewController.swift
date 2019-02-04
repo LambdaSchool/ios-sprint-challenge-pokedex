@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     let pokemonController = PokemonController()
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -18,26 +18,31 @@ class PokemonTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokedex.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        let pokemon = pokemonController.pokedexSortedByName[indexPath.row]
 
-        cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name
+        cell.textLabel?.text = pokemon.name
+        cell.detailTextLabel?.text = "\(pokemon.id)"
+        if let imageData = pokemon.imageData {
+            cell.imageView?.image = UIImage(data: imageData)
+        }
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let pokemon = pokemonController.pokedex[indexPath.row]
-            pokemonController.delete(pokemon: pokemon)
+            let pokemon = pokemonController.pokedexSortedByName[indexPath.row]
+        
+            pokemonController.deletePokemon(pokemon)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }    
     }

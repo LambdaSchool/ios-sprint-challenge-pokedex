@@ -16,6 +16,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonImageView: UIImageView!
     
 
     override func viewWillAppear(_ animated: Bool) {
@@ -23,21 +24,16 @@ class PokemonDetailViewController: UIViewController {
         
         guard let pokemon = pokemon else { return }
         
-        nameLabel.text = pokemon.name
-        idLabel.text = String(pokemon.id)
-        abilitiesLabel.text = pokemon.abilities[0].ability.name
-        typeLabel.text = pokemon.types[0].type.name
+        title = pokemon.name.capitalized
+        nameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Types: \(pokemon.typesString)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilityString)"
+        if let imageData = pokemon.imageData {
+            pokemonImageView.image = UIImage(data: imageData)
+        } else {
+            pokemonImageView.isHidden = true
+        }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

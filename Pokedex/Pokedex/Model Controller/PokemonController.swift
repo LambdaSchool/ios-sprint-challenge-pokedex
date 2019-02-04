@@ -9,65 +9,84 @@
 import Foundation
 
 class PokemonController {
-    var pokemon: Pokemon?
     var pokedex: [Pokemon] = []
-    
     var pokedexSortedByID: [Pokemon] {
         return pokedex.sorted() { $0.id < $1.id }
     }
-    
     var pokedexSortedByName: [Pokemon] {
         return pokedex.sorted() { $0.name < $1.name }
     }
     
     // Add a baseURL constant
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     // MARK: - Create & Delete methods
-    func create(pokemon: Pokemon) {
+    func createPokemon(_ pokemon: Pokemon) {
         pokedex.append(pokemon)
     }
     
-    func delete(pokemon: Pokemon) {
+    func deletePokemon(_ pokemon: Pokemon) {
         guard let index = pokedex.index(of: pokemon) else { return }
         pokedex.remove(at: index)
     }
     
-    func fetch(searchName: String, completion: @escaping (Error?) -> Void) {
-        let url = baseURL.appendingPathComponent(searchName.lowercased())
+    // MARK: - Networking
+    
+    func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void ) {
+        var requestURl = baseURL.appendingPathComponent("pokemon")
+        requestURl.appendPathComponent(searchText)
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        // Create a data task
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            // Check for errors
+        URLSession.shared.dataTask(with: requestURl) { (data, _, error) in
             if let error = error {
-                NSLog("Error: \(error.localizedDescription)")
-                completion(error)
+                NSLog("Error searching for Pokemon: \(error)")
+                completion(error, nil)
                 return
             }
-            // Unwrap the data
+            
             guard let data = data else {
-                NSLog("Data was not received.")
-                completion(error)
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
                 return
             }
-            // Decode pokemon from the data returned from the data task
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
             do {
-                let jsonDecoder = JSONDecoder()
-                let decodedPokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemon = decodedPokemon
-                // call completion with nil
-                completion(nil)
-            }
-            catch {
-                NSLog("Error: \(error.localizedDescription)")
-                // call completion with error
-                completion(error)
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(nil, pokemon)
+            } catch {
+                NSLog("Error decoding data: \(error)")
+                completion(error, nil)
                 return
             }
-            // Newly-initiated tasks begin in a suspended state, so you need to call this method to start the task
-        }.resume()
+            
+            }.resume()
+    }
+    
+    func fetchImageFor(pokemon: Pokemon, completion: @escaping (Error?, Pokemon?) -> Void ){
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault) else {
+            NSLog("Was unable to make URL from sprite string")
+            completion(NSError(), nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(error, nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
+                return
+            }
+            
+            pokemon.imageData = data
+            completion(nil, pokemon)
+            return
+            
+            }.resume()
     }
 }
