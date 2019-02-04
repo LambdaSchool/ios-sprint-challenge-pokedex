@@ -15,7 +15,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
-                print("This is the didSet func: \(self.pokemon?.name)")
+                print("This is the didSet func: \(self.pokemon?.name ?? "none")")
                 self.updateViews()
                 
             }
@@ -38,7 +38,13 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             print("There is no pokemon to save")
             return }
         pokemonController?.pokes.append(pokemon)
-        print("Name of pokemon in pokes: \(pokemonController?.pokes[0].name)")
+        let encoder = JSONEncoder()
+        let pokeData = pokemonController
+        if let encoded = try? encoder.encode(pokeData) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "pokemon")
+        }
+        print("Name of pokemon in pokes: \(pokemonController?.pokes[0].name ?? "none")")
         self.navigationController?.popViewController(animated: true)
     }
     override func viewDidLoad() {

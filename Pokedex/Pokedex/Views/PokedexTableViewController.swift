@@ -16,6 +16,18 @@ class PokedexTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         print("Name of pokemon in PokedexVC pokes: \(self.pokemonController.pokes.count)")
         DispatchQueue.main.async {
+            
+            if let pokeArray = UserDefaults.standard.object(forKey: "pokemon"){
+                let decoder = JSONDecoder()
+                if let loadedPokemon = try? decoder.decode(PokemonController.self, from: pokeArray as! Data) {
+                    print(loadedPokemon)
+                    self.pokemonController = loadedPokemon
+                }
+            }
+            
+            
+            
+            
             self.tableView.reloadData()
         }
     }
@@ -51,7 +63,7 @@ class PokedexTableViewController: UITableViewController {
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "pokemoncell", for: indexPath)
      let pokemon = pokemonController.pokes[indexPath.row]
-        print("Inside tableViewCell cellforrow method: \(pokemon.name)")
+        print("Inside tableViewCell cell for row method: \(pokemon.name)")
      cell.textLabel!.text = pokemon.name
      
      return cell
@@ -76,6 +88,7 @@ class PokedexTableViewController: UITableViewController {
      // Delete the row from the data source
         DispatchQueue.main.async {
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            UserDefaults.standard.removeObject(forKey: "<#T##String#>")
             self.tableView.reloadData()
             print("New number of pokemon: \(self.pokemonController.pokes.count)")
         }

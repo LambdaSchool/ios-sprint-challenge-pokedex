@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PokemonController {
+class PokemonController: Codable {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
