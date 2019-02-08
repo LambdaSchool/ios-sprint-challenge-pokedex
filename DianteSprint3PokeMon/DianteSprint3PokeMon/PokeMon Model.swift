@@ -17,7 +17,8 @@ struct Pokemon: Equatable, Codable {
     let id: Int
     let abilities: [Abilities]
     let types: [Types]
-
+    let sprites: Sprites
+    var imageData: Data?
 
     struct Types: Codable {
         let type: Name

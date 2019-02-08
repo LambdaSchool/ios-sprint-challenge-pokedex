@@ -14,34 +14,79 @@ class PokemonController {
     private(set) var pokemons: [Pokemon] = []
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
+
+
     func addPokemon(withName name: Pokemon) {
         pokemons.append(name)
     }
+
+
+
     func delete(name: Pokemon) {
         guard let index = pokemons.index(of: name) else { return }
         pokemons.remove(at: index)
     }
 
-    func fetchPakemon(with searchWord: String, completion: @escaping (Pokemon?, Error?) -> Void) {
-        let url = baseUrl.appendingPathComponent(searchWord.lowercased())
-        let urlRequest = URLRequest(url: url)
 
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            guard let data = data else {
-                completion(nil, NSError())
-                return
-            }
-            do {
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-                completion(pokemon, nil)
-            } catch {
-                completion(nil, error)
-                return
-            }
-        } .resume()
+
+    func savePokemon(pokemon: Pokemon) {
+        pokemons.append(pokemon)
     }
-}
+
+    func deletePokemon(index: IndexPath) {
+        pokemons.remove(at: index.row)
+    }
+
+        func fetchPokemon(with searchWord: String, completion: @escaping (Pokemon?, Error?) -> Void) {
+            let url = baseUrl.appendingPathComponent(searchWord.lowercased())
+            let urlRequest = URLRequest(url: url)
+
+            URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                guard let data = data else {
+                    completion(nil, NSError())
+                    return
+                }
+                do {
+                    let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                    completion(pokemon, nil)
+                    return
+                } catch {
+                    completion(nil, error)
+                    return
+                }
+                } .resume()
+        }
+    func fetchImage(pokemon: Pokemon, completion: @escaping (Error?, Pokemon?) -> Void ){
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault!) else {
+            NSLog("Error")
+            completion(NSError(), nil)
+            return
+        }
+
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(error, nil)
+                return
+            }
+
+            guard let data = data else {
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
+                return
+            }
+
+            pokemon.imageData = data
+            completion(nil, pokemon)
+            return
+
+            }.resume()
+    }
+
+
+    }
+
