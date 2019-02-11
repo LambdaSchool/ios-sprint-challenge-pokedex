@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         abilitiesLabel.text = abilityName.first
         typesLabel.text = typeName.first
 
-        pokemonController.fetchImage(pokemon: result, completion: { (data) in
+        pokemonController.fetchImage(pokemon: result, completion: { (data, uiimage ) in
             guard let data = data else { return }
 
             let image = UIImage(data: data)

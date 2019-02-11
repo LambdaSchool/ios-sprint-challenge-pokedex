@@ -30,13 +30,11 @@ class PokemonController {
 
 
     func savePokemon(pokemon: Pokemon) {
-        pokemons.append(pokemon)
-    }
 
-    func deletePokemon(index: IndexPath) {
-        pokemons.remove(at: index.row)
-    }
 
+        // edit here for save persistence
+    }
+        
         func fetchPokemon(with searchWord: String, completion: @escaping (Pokemon?, Error?) -> Void) {
             let url = baseUrl.appendingPathComponent(searchWord.lowercased())
             let urlRequest = URLRequest(url: url)
@@ -74,13 +72,13 @@ class PokemonController {
                 return
             }
 
-            guard let data = data else {
+            guard let imagedata = data else {
                 NSLog("No data was returned.")
                 completion(NSError(), nil)
                 return
             }
 
-            pokemon.imageData = data
+            pokemon.imageData = imagedata
             completion(nil, pokemon)
             return
 
