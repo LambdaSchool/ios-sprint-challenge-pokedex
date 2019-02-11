@@ -14,26 +14,16 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         searchBar.delegate = self
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        updateViews()
+        
+        self.updateViews()
     }
     
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
-    
-    var pokedex: [Pokemon] = [] {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
+    var pokedex: [Pokemon] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -45,8 +35,9 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var spriteImage: UIImageView!
     
     @IBAction func save(_ sender: Any) {
-        self.updateViews()
         
+        guard let pokemon = pokemon else { return }
+        Model.shared.addPokemon(pokemon: pokemon)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -57,50 +48,41 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
             Pokedex.searchForPokemon(with: searchTerm.lowercased()) { (pokedex, error) in
                 if let error = error {
                     NSLog("Error fetching Pokemon: \(error)")
-                    
-                DispatchQueue.global().async {
-                    guard let pokemon = self.pokemon else { return }
-                    Model.shared.addPokemon(pokemon: pokemon)
-                    
-                    self.pokedex = Model.shared.pokedex
-                    self.updateViews()
-                    print("1: \(Model.shared.pokedex)")
                     return
+                } else {
+                    self.pokemon = Model.shared.pokemon
                 }
-                //self.pokedex = Model.shared.pokedex
-                //self.updateViews()
-                print("2: \(Model.shared.pokedex)")
             }
-//            self.pokedex = Model.shared.pokedex
-//            self.updateViews()
-            print("3: \(Model.shared.pokedex)")
-        }
-        self.updateViews()
-        print("4")
         
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
     }
     
     func updateViews() {
-        guard let pokemon = pokemon,
-            isViewLoaded else { return }
         
-        navigationItem.title = pokemon.name
-        nameLabel.text = "Front view of \(pokemon.name.capitalized)"
-        idLabel.text = "Id: \(pokemon.id)"
-        
-        let abilities = pokemon.abilities.map { $0.ability.name }
-        var abilityString = ""
-        for index in abilities { abilityString.append("\(index) ") }
-        abilitiesLabel.text = "Abilities: \(abilityString) "
-        
-        let types = pokemon.types.map {$0.type.name}
-        var typeString = ""
-        for index in types { typeString.append("\(index) ") }
-        typesLabel.text = "Types: \(typeString) "
-        
-        let urlToImage = pokemon.sprites.frontDefault
-        let imageURL = URL(string: urlToImage)!
-        spriteImage.load(url: imageURL)
-        
+        DispatchQueue.main.async {
+            guard let pokemon = self.pokemon,
+                self.isViewLoaded else { return }
+            
+            self.navigationItem.title = pokemon.name
+            self.nameLabel.text = "Front view of \(pokemon.name.capitalized)"
+            self.idLabel.text = "Id: \(pokemon.id)"
+            
+            let abilities = pokemon.abilities.map { $0.ability.name }
+            var abilityString = ""
+            for index in abilities { abilityString.append("\(index) ") }
+            self.abilitiesLabel.text = "Abilities: \(abilityString) "
+            
+            let types = pokemon.types.map {$0.type.name}
+            var typeString = ""
+            for index in types { typeString.append("\(index) ") }
+            self.typesLabel.text = "Types: \(typeString) "
+            
+            let urlToImage = pokemon.sprites.frontDefault
+            let imageURL = URL(string: urlToImage)!
+            self.spriteImage.load(url: imageURL)
+            
+        }
     }
 }

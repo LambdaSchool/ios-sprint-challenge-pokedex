@@ -51,8 +51,6 @@ struct Pokemon: Codable, Equatable {
     struct TypeElement: Codable, Equatable {
         let slot: Int
         let type: Type
-        
-        
     }
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -61,7 +59,5 @@ struct Pokemon: Codable, Equatable {
             lhs.id == rhs.id &&
             lhs.name == rhs.name &&
             lhs.types == rhs.types
-        
     }
-    
 }

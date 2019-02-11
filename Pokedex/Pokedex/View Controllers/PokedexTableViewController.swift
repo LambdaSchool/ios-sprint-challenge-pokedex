@@ -13,7 +13,9 @@ class PokedexTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Model.shared.updateHandler = { self.tableView.reloadData() }
+        Model.shared.updateHandler = {
+            self.tableView.reloadData()
+        }
     }
     
     deinit {
@@ -41,11 +43,9 @@ class PokedexTableViewController: UITableViewController {
         guard editingStyle == .delete else { return }
         
         Model.shared.deletePokemon(index: indexPath.row)
-        
     }
     
     // MARK: - Navigation
-    // PokemonDetail // SearchPokedex
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PokemonDetail" {
@@ -53,12 +53,10 @@ class PokedexTableViewController: UITableViewController {
                 let destination = segue.destination as? PokeDetailViewController else { return }
             
             let pokemon = Model.shared.findPokemon(at: indexPath.row)
+            let searchBar = destination.searchBar
+            destination.searchBar = searchBar
             destination.pokemon = pokemon
             
-        } else if segue.identifier == "SearchPokedex" {
-            guard let destination = segue.destination as? PokeDetailViewController else { return }
-            let pokemon = Model.shared.pokemon
-            destination.pokemon = pokemon
         }
     }
 
