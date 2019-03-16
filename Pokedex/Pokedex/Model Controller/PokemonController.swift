@@ -23,7 +23,7 @@ class PokemonController {
     }
     
     
-    func fetchPokemon(name: String, completion: @escaping (Error?) -> Void){
+    func fetchPokemon(name: String, completion: @escaping (Pokemon?, Error?) -> Void){
         let url = baseURL.appendingPathComponent(name.lowercased())
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -31,7 +31,7 @@ class PokemonController {
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 NSLog("Error occured trying to fetch data from api: \(error)")
-                completion(error)
+                completion(nil,error)
                 return
             }
             guard let data = data else {return}
@@ -39,8 +39,10 @@ class PokemonController {
             do{
                 let dicodePoke = try JSONDecoder().decode(Pokemon.self, from: data)
                 self.pokemon = dicodePoke
+                completion(self.pokemon, nil)
             }catch{
                 NSLog("error decoding: \(error)")
+                completion(nil, error)
                 return
             }
         }.resume()

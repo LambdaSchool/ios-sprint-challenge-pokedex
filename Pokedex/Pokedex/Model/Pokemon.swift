@@ -10,14 +10,14 @@ import Foundation
 
 struct Pokemon:Codable, Equatable {
     
-    var id: Int
-    var name: String
-    var abilities: [Ability]
-    var types: [Types]
-    var  sprites: [Sprites]
+    let id: Int
+    let name: String
+    let abilities: [Ability]
+    let types: [Types]
+    //let  sprites: [Sprites]
     
     struct Ability: Equatable, Codable {
-        let ability: [SubAbility]
+        let ability: SubAbility
         
         struct SubAbility: Equatable, Codable {
             let name: String
@@ -25,7 +25,7 @@ struct Pokemon:Codable, Equatable {
     }
     
     struct Types: Equatable, Codable {
-        let type: [type]
+        let type: type
         
         struct type: Equatable, Codable {
             let name: String
@@ -33,13 +33,14 @@ struct Pokemon:Codable, Equatable {
         
     }
     
-    struct Sprites: Equatable, Codable {
+    /*struct Sprites: Equatable, Codable {
         let spriteName: String
         
         enum CodingKeys: String, CodingKey {
             case spriteName = "front_default"
         }
     }
+ */
     
 }
 
