@@ -9,6 +9,8 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+    
+    var characterController: CharacterController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

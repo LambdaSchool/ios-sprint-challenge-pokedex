@@ -39,12 +39,16 @@ class CaracterTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
             if let detailVC = segue.destination as? DetailViewController {
-                
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    detailVC.character = characterController.characters[indexPath.row]
+                }
+                detailVC.characterController = characterController
+            }
+        } else if segue.identifier == "SearchSegue" {
+            // inject dependencies
+            if let searchVC = segue.destination as? SearchViewController {
+                searchVC.characterController = characterController
             }
         }
-        
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-
 }
