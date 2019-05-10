@@ -23,6 +23,23 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         pokemonSearchBar.delegate = self
+        
+        if let selectedPokemon = pokemon {
+            updateView(with: selectedPokemon)
+            
+            guard let pokeController = pokemonController else { return }
+            
+            pokeController.getImage(at: selectedPokemon.sprites.frontDefault) { result in
+                do {
+                    let image = try result.get()
+                    DispatchQueue.main.async {
+                        self.pokemonImageView.image = image
+                    }
+                } catch {
+                    print("Could not load image")
+                }
+            }
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
