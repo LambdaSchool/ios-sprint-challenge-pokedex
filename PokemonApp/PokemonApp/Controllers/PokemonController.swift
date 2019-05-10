@@ -11,9 +11,9 @@ import UIKit
 
 class PokemonController {
 
-    private var pokemons: [Pokemon] = []
+     var pokemons: [Pokemon] = []
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-    var pokemon: Pokemon?
+     var pokemon: Pokemon?
 
 
     func create(pokemon: Pokemon) {
@@ -27,23 +27,20 @@ class PokemonController {
     }
 
 
-    func fetchPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func fetchPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
 
         let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
-
-
-
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
-                completion(error)
+                completion(nil, error)
                 return
             }
 
             guard let data = data else {
-                completion(NSError())
+                completion(nil, NSError())
                 return
             }
 
@@ -57,7 +54,7 @@ class PokemonController {
 
             } catch {
                 NSLog("Error decoding Pokemon: \(error)")
-                completion(nil)
+                completion(nil, error)
                 return
             }
         }.resume()
@@ -87,7 +84,7 @@ class PokemonController {
         }.resume()
     }
 
-
-
-
 }
+
+
+

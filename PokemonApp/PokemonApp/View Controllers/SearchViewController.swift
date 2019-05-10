@@ -8,23 +8,79 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+    }
+
+
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+
+        idLabel.text = "\(pokemon.id)"
+
+        let convertedTypeString = pokemon.types.map { $0.name}
+        typeLabel.text = "\(convertedTypeString)"
+
+        let convertedAbilityString = pokemon.abilities.map {$0.name}
+        abilityLabel.text = "\(convertedAbilityString)"
+
+        guard let imageData = pokemon.imageData else { return }
+        imageView.image = UIImage(data: imageData)
+
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+
+        pokemonController?.fetchPokemon(with: searchTerm.lowercased(), completion: { (pokemon, error) in
+            if let error = error {
+                NSLog("Error finding pokemon: \(error)")
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+            }
+        })
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+
+        pokemonController?.create(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
-    */
+    
+
+
+
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+
 
 }
+
+
+
+
+
+
