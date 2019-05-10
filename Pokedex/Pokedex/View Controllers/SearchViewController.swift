@@ -48,6 +48,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         idLbl?.text = String(pokemon.id)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        pokemonController?.performSearch(searchTerm: searchTerm, completion: { (pokemon, error) in
+            if let error = error {
+                print("There was an error \(error)")
+                return
+            }
+            self.pokemon = pokemon
+        })
+        self.searchBar.endEditing(true)
+        updateViews()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self

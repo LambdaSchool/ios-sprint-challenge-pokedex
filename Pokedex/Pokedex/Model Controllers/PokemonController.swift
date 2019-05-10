@@ -29,6 +29,7 @@ class PokemonController {
         // 1. build base URL to use
         var url = baseURL.appendingPathComponent("pokemon").appendingPathComponent(searchTerm.lowercased())
         
+        // 2. request data
         let dataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 NSLog("Error: \(error)")
