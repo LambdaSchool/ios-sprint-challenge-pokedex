@@ -25,5 +25,13 @@ class PokeListTableViewController: UITableViewController {
 		return cell
 	}
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "GetPokemonSegue" {
+			guard let vc = segue.destination as? PokeDetailViewController else { return }
+			vc.pokeController = pokeController
+		}
+	}
+	
+	
 	let pokeController = PokeController()
 }
