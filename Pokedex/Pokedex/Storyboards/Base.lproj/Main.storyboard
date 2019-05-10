@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sdg-6m-K3G">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" id="sdg-6m-K3G">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sdg-6m-K3G" id="sRn-FM-lty">
@@ -27,7 +27,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="3l6-qA-5UE" kind="show" id="fwf-yf-chr"/>
+                                    <segue destination="3l6-qA-5UE" kind="show" identifier="DetailSegue" id="fwf-yf-chr"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -39,7 +39,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="Wyg-Qw-EsD">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="5Cv-hH-HZ9">
                             <connections>
-                                <segue destination="P1K-De-Nch" kind="show" id="pm8-uc-hpy"/>
+                                <segue destination="P1K-De-Nch" kind="show" identifier="SearchSegue" id="pm8-uc-hpy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -59,7 +59,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="MWK-Zx-o7K">
                                 <rect key="frame" x="0.0" y="140" width="414" height="373.5"/>
                                 <subviews>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="KZQ-4B-goa">
+                                    <searchBar contentMode="redraw" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="KZQ-4B-goa">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
