@@ -43,8 +43,8 @@ class PokemonSearchViewController: UIViewController {
 		showViews(show: true, hideButton: alreadyCaught)
 		pokemonNameLabel.text = pokemon.name.capitalized
 		pokemonIDLabel.text = "\(pokemon.id)"
-		typeLabel.text = pokemon.types.reduce ("") { $0 + $1.type.name + " " }
-		abilitiesLabel.text = pokemon.abilities.reduce("") { $0 + $1.ability.name + " " }
+		typeLabel.text = pokemon.types.reduce ([String]()) { $0 + [$1.type.name]}.joined(separator: ", ")
+		abilitiesLabel.text = pokemon.abilities.reduce([String]()) { $0 + [$1.ability.name]}.joined(separator: ", ")
 		spritesURLs = pokemon.sprites.compactMap { $0.value }.sorted()
 		spriteCollectionView.reloadData()
 	}
