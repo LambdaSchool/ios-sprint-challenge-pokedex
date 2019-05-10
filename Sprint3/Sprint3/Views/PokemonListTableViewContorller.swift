@@ -27,4 +27,8 @@ class PokemonListTableViewContorller: UITableViewController {
         return cell
     }
     
+    @IBAction func searchButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "search", sender: self)
+    }
+    
 }

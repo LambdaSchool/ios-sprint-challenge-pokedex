@@ -43,10 +43,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" id="Nbd-F7-S1v">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="LSp-bv-HiJ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="LSp-bv-HiJ">
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="Irt-Fy-Vlu" id="IZA-b1-soR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" id="0xc-J6-8AZ"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="search" id="0xc-J6-8AZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="irX-pd-LYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -62,7 +66,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search by name or ID" translatesAutoresizingMaskIntoConstraints="NO" id="75j-8v-1ff">
-                                <rect key="frame" x="0.0" y="140" width="414" height="82.5"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hEt-dP-rcx">
@@ -107,10 +111,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="hEt-dP-rcx" firstAttribute="top" secondItem="75j-8v-1ff" secondAttribute="bottom" constant="42.5" id="DR5-5w-khB"/>
                             <constraint firstItem="75j-8v-1ff" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Frr-rw-UcX"/>
                             <constraint firstItem="75j-8v-1ff" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ca5-ny-Xyh"/>
                             <constraint firstItem="hEt-dP-rcx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ctn-cW-VaG"/>
-                            <constraint firstItem="hEt-dP-rcx" firstAttribute="top" secondItem="75j-8v-1ff" secondAttribute="bottom" constant="16" id="diy-PB-PbB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hEt-dP-rcx" secondAttribute="bottom" constant="260.5" id="hMg-6H-BUN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hEt-dP-rcx" secondAttribute="trailing" constant="20" id="jLW-PX-b8N"/>
                             <constraint firstItem="75j-8v-1ff" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="koh-2q-Lgo"/>
@@ -124,6 +128,7 @@
                         <outlet property="pokemonName" destination="XvI-S5-qVe" id="ytb-6f-oOg"/>
                         <outlet property="pokemonTypes" destination="Sqv-iq-EsI" id="deS-7O-sfH"/>
                         <outlet property="saveButton" destination="ih6-1h-zh2" id="b8X-S5-mhn"/>
+                        <outlet property="searchBar" destination="75j-8v-1ff" id="i7i-O6-RUg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
