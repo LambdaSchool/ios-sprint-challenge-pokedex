@@ -48,11 +48,11 @@ class PokeController {
 			}
 			
 			let decoder = JSONDecoder()
-			let poke: Pokemon
+			let pokemon: Pokemon
 			do {
-				poke = try decoder.decode(Pokemon.self, from: data)
-				print(poke.name, poke.id)//, poke.types)
-				self.currentPokemon = poke
+				pokemon = try decoder.decode(Pokemon.self, from: data)
+				print(pokemon.name, pokemon.id)
+				self.currentPokemon = pokemon
 			} catch {
 				print("error decoding pokemon")
 				completion(error)

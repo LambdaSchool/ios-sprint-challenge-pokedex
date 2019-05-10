@@ -28,21 +28,25 @@ class Pokemon: Codable, Equatable {
 }
 
 
-class Type: Codable{
+class Type: Codable, Equatable{
+	static func == (lhs: Type, rhs: Type) -> Bool {
+		return lhs.slot == rhs.slot
+	}
+	
 	let slot: Int
-	let typeNames: [TypeNames]
+	let type: [TypeNames]
 	
 	
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		
-		let typesDictionaries = try container.decodeIfPresent([String: TypeNames].self, forKey: .typeNames)
+		let typesDictionaries = try container.decodeIfPresent([String: TypeNames].self, forKey: .type)
 		let typeNames = typesDictionaries?.compactMap({ $0.value }) ?? []
 
 		let slot = try container.decode(Int.self, forKey: .slot)
 		
 		self.slot = slot
-		self.typeNames = typeNames
+		self.type = typeNames
 	
 	}
 	
@@ -50,6 +54,6 @@ class Type: Codable{
 	
 }
 
-struct TypeNames: Codable {
+struct TypeNames: Codable, Equatable {
 	var name: String
 }
