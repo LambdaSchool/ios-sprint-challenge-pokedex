@@ -51,7 +51,7 @@ class PokeController {
 			let poke: Pokemon
 			do {
 				poke = try decoder.decode(Pokemon.self, from: data)
-				print(poke.name, poke.id)
+				print(poke.name, poke.id)//, poke.types)
 				self.currentPokemon = poke
 			} catch {
 				print("error decoding pokemon")
