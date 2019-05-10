@@ -20,6 +20,8 @@ class PokemonSearchViewController: UIViewController {
 
 	@IBOutlet var spriteCollectionView: UICollectionView!
 
+	var alreadyCaught = false
+
 	var pokemonController: PokemonController?
 	var pokemon: Pokemon? {
 		didSet {
@@ -30,7 +32,7 @@ class PokemonSearchViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		showViews(show: false)
+		showViews(show: false, hideButton: alreadyCaught)
 		updateViews()
 
 		pokemonSearchBar.delegate = self
@@ -38,7 +40,7 @@ class PokemonSearchViewController: UIViewController {
 
 	func updateViews() {
 		guard let pokemon = pokemon, isViewLoaded else { return }
-		showViews(show: true)
+		showViews(show: true, hideButton: alreadyCaught)
 		pokemonNameLabel.text = pokemon.name
 		pokemonIDLabel.text = "\(pokemon.id)"
 		typeLabel.text = pokemon.types.reduce ("") { $0 + $1.type.name + " " }

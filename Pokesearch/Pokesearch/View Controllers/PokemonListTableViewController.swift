@@ -13,12 +13,18 @@ class PokemonListTableViewController: UITableViewController {
 	let pokemonController = PokemonController()
 
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.reloadData()
+	}
+
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let dest = segue.destination as? PokemonSearchViewController {
 			dest.pokemonController = pokemonController
 			if segue.identifier == "SearchForPokemon" {
 			} else if segue.identifier == "ShowExistingPokemon" {
 				guard let indexPath = tableView.indexPathForSelectedRow else { return }
+				dest.alreadyCaught = true
 				dest.pokemon = pokemonController.pokemons[indexPath.row]
 			}
 
