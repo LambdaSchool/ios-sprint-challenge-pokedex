@@ -75,7 +75,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		pokeidLabel?.text = String(pokemon.id)
 		pokeTypeLabel?.text = typesStr
 		pokeAbilitiesLabel?.text = abilitiesStr
-		print(pokemon.abilities.count)
+		print(pokemon.sprites.front_default)
 	}
 	
 	@IBOutlet var catchButtonOutlet: UIButton!
