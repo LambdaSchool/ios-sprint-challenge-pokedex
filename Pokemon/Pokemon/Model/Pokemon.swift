@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let id: Int
     let name: String
     let abilities: [AbilityArray]
     let sprities: Sprite
     let types: [TypeArray]
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name // && lhs.id == rhs.id
+    }
 }
 
 struct AbilityArray: Codable {
