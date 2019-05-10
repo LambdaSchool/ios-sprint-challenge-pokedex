@@ -38,6 +38,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             idLabel.text = String(pokemon.id)
             typeLabel.text = pokemon.types.first?.type.name
             abilitiesLabel.text = pokemon.abilities.first?.ability.name
+            
+            let spriteURL = URL(string: pokemon.sprites.frontDefault)!
+            pokemonImage.load(url: spriteURL) 
         } else {
             title = "Pokemon Search"
             nameLabel.text = "Pokemon"

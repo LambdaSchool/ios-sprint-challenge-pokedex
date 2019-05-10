@@ -35,7 +35,10 @@ class PokemonTableViewController: UITableViewController {
 
         cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name.capitalized
 //        cell.imageView?.image = UIImage(contentsOfFile: pokemonController.pokedex[indexPath.row].sprites.frontDefault)
-
+        
+        let spriteURL = URL(string: pokemonController.pokedex[indexPath.row].sprites.frontDefault)!
+        cell.imageView!.load(url: spriteURL)
+        
         return cell
     }
 

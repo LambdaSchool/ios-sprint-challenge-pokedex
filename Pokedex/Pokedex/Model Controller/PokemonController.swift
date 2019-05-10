@@ -52,6 +52,7 @@ class PokemonController {
             
             do {
                 let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 let decodedPokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 self.pokemon = decodedPokemon
                 completion(nil)
@@ -90,4 +91,18 @@ class PokemonController {
 //            completion(image, nil)
 //            }.resume()
 //    }
+}
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }

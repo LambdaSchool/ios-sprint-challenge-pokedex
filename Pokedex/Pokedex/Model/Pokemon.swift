@@ -14,11 +14,11 @@ class Pokemon: Equatable, Codable {
     let id: Int
     let abilities: [Ability]
     let types: [PokemonType]
-//    let sprites: SpriteStruct
-//
-//    struct SpriteStruct: Equatable, Codable {
-//        let frontDefault: String
-//    }
+    let sprites: PokemonSprites
+
+    struct PokemonSprites: Equatable, Codable {
+        let frontDefault: String
+    }
     
     struct Ability: Equatable, Codable {
         let ability: SubAbility
@@ -37,6 +37,6 @@ class Pokemon: Equatable, Codable {
     }
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.name == rhs.name && lhs.id == rhs.id && lhs.abilities == rhs.abilities && lhs.types == rhs.types //&& lhs.sprites == rhs.sprites
+        return lhs.name == rhs.name && lhs.id == rhs.id && lhs.abilities == rhs.abilities && lhs.types == rhs.types && lhs.sprites == rhs.sprites
     }
 }

@@ -38,5 +38,8 @@ class PokemonDetailViewController: UIViewController {
         typeLabel.text = pokemon.types[0].type.name
         abilitiesLabel.text = pokemon.abilities[0].ability.name
 //        pokemonImage.image = UIImage(contentsOfFile: pokemon.sprites.frontDefault)
+        
+        let spriteURL = URL(string: pokemon.sprites.frontDefault)!
+        pokemonImage.load(url: spriteURL)
     }
 }
