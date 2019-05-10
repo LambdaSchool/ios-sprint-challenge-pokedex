@@ -8,14 +8,21 @@
 
 import UIKit
 
-class PokeDetailViewController: UIViewController {
+class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		searchBar.delegate = self
 
     }
     
-
-
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		print("searchBar BUtton Clicked")
+	}
+	
+	
+	
+	@IBOutlet var searchBar: UISearchBar!
+	
 }
