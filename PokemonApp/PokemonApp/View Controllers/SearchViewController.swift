@@ -16,7 +16,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        updateViews()
+    }
+
+     
 
 
     private func updateViews() {
@@ -33,6 +42,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         guard let imageData = pokemon.imageData else { return }
         imageView.image = UIImage(data: imageData)
 
+        
+
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -45,6 +56,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             }
 
             DispatchQueue.main.async {
+                //should put the pokemon back on the main thread and show info
+                self.updateViews()
                 self.pokemon = pokemon
             }
         })
@@ -56,7 +69,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         guard let pokemon = pokemon else { return }
 
         pokemonController?.create(pokemon: pokemon)
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
 

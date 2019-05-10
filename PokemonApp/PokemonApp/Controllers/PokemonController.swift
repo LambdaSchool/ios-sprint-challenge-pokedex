@@ -60,9 +60,9 @@ class PokemonController {
         }.resume()
     }
 
-    func fetchImage(url: String, completion: @escaping (UIImage?, Error?) -> Void) {
+    func fetchImage(at urlSprite: Pokemon, completion: @escaping (UIImage?, Error?) -> Void) {
 
-        let urlImage = URL(string: url)!
+        let urlImage = URL(string: urlSprite.sprites.frontDefault)!
 
         var request = URLRequest(url: urlImage)
         request.httpMethod = "GET"
