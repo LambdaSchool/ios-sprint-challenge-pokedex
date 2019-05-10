@@ -37,6 +37,18 @@ class PokeController {
 				return
 			}
 			
+			let decoder = JSONDecoder()
+			do {
+				let pokemon = try decoder.decode(Pokemon.self, from: data)
+				print(pokemon.name, pokemon.id)
+				self.pokemons.append(pokemon)
+			} catch {
+				print("error decoding pokemon")
+				completion(error)
+				return
+			}
+			
+			
 			print(data)
 			completion(nil)
 		}.resume()
