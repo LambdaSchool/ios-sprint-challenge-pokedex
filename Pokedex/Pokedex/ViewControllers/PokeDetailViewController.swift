@@ -18,11 +18,16 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
     
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		print("searchBar BUtton Clicked")
+		guard let text = searchBar.text else { return }
+		print(text)
+		
 	}
 	
 	
-	
+	@IBOutlet var pokeLabel: UILabel!
+	@IBOutlet var pokeidLabel: UILabel!
+	@IBOutlet var pokeAbilitiesLabel: UILabel!
+	@IBOutlet var pokeImageView: UIImageView!
 	@IBOutlet var searchBar: UISearchBar!
 	
 }
