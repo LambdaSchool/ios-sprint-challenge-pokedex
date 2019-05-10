@@ -32,6 +32,9 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func savePokemon(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
+        pc?.save(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     func updateViews(){
@@ -40,16 +43,14 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
             title = "Search for Pokemon"
             return }
         title = passedInPokemon.name
-        idLabel.text = String(passedInPokemon.id)
+        idLabel.text = "ID:\(passedInPokemon.id)"
         
         let types = passedInPokemon.types.map { $0.type.name}.joined(separator: ",")
-        typesLabel.text = types
+        typesLabel.text = "Types: \(types)"
         
         let abilties = passedInPokemon.abilities.map { $0.ability.name}.joined(separator: ",")
-        abilitiesLabel.text = abilties
-        saveButtonProperties.isHidden = true
-        searchBar.isHidden = true
-        
+        abilitiesLabel.text = "Abilities: \(abilties)"
+    
 //        imageView.image = UIImage(named: passedInPokemon.sprities.imageURL)
     }
     

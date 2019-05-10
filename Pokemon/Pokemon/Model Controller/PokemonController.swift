@@ -14,15 +14,20 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     var pokemons = [Pokemon]()
     
+    init() {
+        loadFromPersistentStore()
+    }
     //when the user swipes to delete, this is th function that will get called to remove said pokemon from the data source of truth
     func delete(pokemon: Pokemon){
         guard let pokeToDelete = pokemons.firstIndex(of: pokemon) else { return }
         pokemons.remove(at: pokeToDelete)
+        saveToPersistentStore()
     }
     
     //when the save button is hit on the detail view controller,this is the function that will get called to append the pokemon to show up in the tableView cells
     func save(pokemon: Pokemon){
         pokemons.append(pokemon)
+        saveToPersistentStore()
     }
     
     //create a fetch Pokemon function
@@ -85,5 +90,42 @@ class PokemonController {
             let image = UIImage(data: data)
             completion(image, nil)
         }.resume()
+    }
+    
+    var persistenceURL: URL? {
+        let fileManager = FileManager.default
+        guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        let fileName = documentDirectory.appendingPathComponent("pokemon.plist")
+        return fileName
+    }
+    
+    func saveToPersistentStore(){
+        guard let url = persistenceURL else { return }
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(pokemons)
+            try data.write(to: url)
+        } catch {
+            print("Error with propertylistencoder: \(error.localizedDescription)")
+            return
+        }
+    }
+    
+    func loadFromPersistentStore(){
+        let fm = FileManager.default
+        guard let url = persistenceURL, fm.fileExists(atPath: url.path) else { return }
+        
+        let decoder = PropertyListDecoder()
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let returnedPokemons = try decoder.decode([Pokemon].self, from: data)
+            pokemons = returnedPokemons
+        } catch  {
+            print("Error with propertylistencoder: \(error.localizedDescription)")
+            return
+        }
     }
 }
