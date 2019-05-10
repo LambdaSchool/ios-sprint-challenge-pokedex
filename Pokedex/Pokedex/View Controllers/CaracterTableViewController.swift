@@ -16,6 +16,10 @@ class CaracterTableViewController: UITableViewController {
         super.viewDidLoad()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -37,18 +41,18 @@ class CaracterTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchSegue" {
+        if segue.identifier == "DetailSegue" {
             if let detailVC = segue.destination as? DetailViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
                     detailVC.character = characterController.characters[indexPath.row]
                 }
-                detailVC.characterController = characterController
             }
         } else if segue.identifier == "SearchSegue" {
-            // inject dependencies
             if let searchVC = segue.destination as? SearchViewController {
+//                searchVC.characters = characterController.characters
                 searchVC.characterController = characterController
             }
         }
     }
 }
+

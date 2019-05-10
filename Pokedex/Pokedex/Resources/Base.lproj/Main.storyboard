@@ -57,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="1034.7826086956522" y="141.96428571428569"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="Drq-WD-LU9">
             <objects>
-                <viewController id="TdD-g2-3u0" sceneMemberID="viewController">
+                <viewController id="TdD-g2-3u0" customClass="DetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U1S-nA-E5l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,6 +106,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lcS-Ua-Ewd"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="3xW-pO-O5t" id="5Cb-4j-slf"/>
+                        <outlet property="idLabel" destination="YCS-jF-pHE" id="qeG-FG-1K6"/>
+                        <outlet property="nameLabel" destination="Vqz-8R-eXW" id="BD4-aF-job"/>
+                        <outlet property="typesLabel" destination="2cb-eE-GoY" id="xre-kB-GR1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ej-yf-KNy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -153,6 +159,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTS-aG-amC">
                                         <rect key="frame" x="0.0" y="268.5" width="334" height="30"/>
                                         <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="C34-gr-Hg1" eventType="touchUpInside" id="ASY-XC-FeG"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -173,6 +182,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="S7L-9s-KzF"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="FOL-gZ-4n9" id="rVv-Y2-To1"/>
+                        <outlet property="idLabel" destination="c6Y-jt-QpP" id="Rl0-F1-Ap4"/>
+                        <outlet property="nameLabel" destination="5BE-Si-Elu" id="eG6-iv-VL1"/>
+                        <outlet property="saveButton" destination="kTS-aG-amC" id="6bD-qc-QSG"/>
+                        <outlet property="searchBar" destination="Rit-AK-SZe" id="cVs-VI-kOy"/>
+                        <outlet property="typesLabel" destination="i2s-4m-mHs" id="g4a-rE-ZJY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNQ-TU-k0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

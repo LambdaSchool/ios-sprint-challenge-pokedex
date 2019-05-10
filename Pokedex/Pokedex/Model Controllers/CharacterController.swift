@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum NetworkError: Error {
+    case badURL
+    case badData
+    case badDecode
+}
+
 class CharacterController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
@@ -16,18 +22,10 @@ class CharacterController {
         case get = "GET"
     }
     
-    func searchForCharacters(with searchTerm: String, completion: @escaping () -> Void) {
+    func searchForCharacters(with searchTerm: String, completion: @escaping (Result<Character, NetworkError>) -> Void) {
         
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "", value: searchTerm)
-        
-        urlComponents?.queryItems = [searchTermQueryItem]
-        guard let requestURL = urlComponents?.url else {
-            NSLog("requestURL is nil")
-            completion()
-            return
-        }
-        var request = URLRequest(url: requestURL)
+        let characterSearchURL = baseURL.appendingPathComponent(searchTerm)
+        var request = URLRequest(url: characterSearchURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
@@ -36,18 +34,17 @@ class CharacterController {
             }
             guard let data = data else {
                 NSLog("No data returned from data task")
+                completion(.failure(.badData))
                 return
             }
             let jsonDecoder = JSONDecoder()
             do {
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                let characterSearch = try jsonDecoder.decode(CharacterSearch.self, from: data)
-                self.characters = characterSearch.results
+                let characterSearch = try jsonDecoder.decode(Character.self, from: data)
+                completion(.success(characterSearch))
             } catch {
                 NSLog("Unable to decode data into object of type [Character]: \(error)")
+                completion(.failure(.badDecode))
             }
-            print(requestURL)
-            completion()
             }.resume()
     }
 }
