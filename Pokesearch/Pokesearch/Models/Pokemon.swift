@@ -18,6 +18,8 @@ struct Pokemon: Equatable, Codable {
 	let sprites: [String: String?]
 	let types: [PokemonTypeInfo]
 
+	let uuid = UUID().uuidString
+
 	struct PokemonAbilityInfo: Equatable, Codable {
 		struct PokemonAbility: Equatable, Codable {
 			let name: String
@@ -35,5 +37,9 @@ struct Pokemon: Equatable, Codable {
 			let name: String
 			let url: String
 		}
+	}
+
+	static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+		return lhs.uuid == rhs.uuid
 	}
 }
