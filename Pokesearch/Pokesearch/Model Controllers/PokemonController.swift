@@ -27,7 +27,7 @@ class PokemonController {
 
 	func searchForPokemon(named: String, completion: @escaping (Result<Pokemon, Error>)->Void) {
 		var pokeSearchURL = baseURL.appendingPathComponent("pokemon")
-		pokeSearchURL = pokeSearchURL.appendingPathComponent(named)
+		pokeSearchURL = pokeSearchURL.appendingPathComponent(named.lowercased())
 
 		var request = URLRequest(url: pokeSearchURL)
 		request.httpMethod = HTTPMethods.get.rawValue
@@ -44,6 +44,7 @@ class PokemonController {
 			}
 
 			let decoder = JSONDecoder()
+			decoder.keyDecodingStrategy = .convertFromSnakeCase
 			do {
 				let newPokemon = try decoder.decode(Pokemon.self, from: data)
 //				self?.pokemons.append(newPokemon)

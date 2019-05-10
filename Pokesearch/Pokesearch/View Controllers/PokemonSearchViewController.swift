@@ -32,6 +32,8 @@ class PokemonSearchViewController: UIViewController {
 		super.viewWillAppear(animated)
 		showViews(show: false)
 		updateViews()
+
+		pokemonSearchBar.delegate = self
 	}
 
 	func updateViews() {
@@ -61,6 +63,23 @@ class PokemonSearchViewController: UIViewController {
 	}
 }
 
+
+extension PokemonSearchViewController: UISearchBarDelegate {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+		searchBar.resignFirstResponder()
+		pokemonController?.searchForPokemon(named: searchText, completion: { [weak self] (result) in
+			DispatchQueue.main.async {
+				do {
+					let pokemon = try result.get()
+					self?.pokemon = pokemon
+				} catch {
+					print("error getting pokemon: \(error)")
+				}
+			}
+		})
+	}
+}
 
 extension PokemonSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
