@@ -16,6 +16,7 @@ struct Pokemon: Codable {
 	let weight: Int
 	let abilities: [PokemonAbilityInfo]
 	let sprites: [String: String]
+	let types: [PokemonTypeInfo]
 
 	struct PokemonAbilityInfo: Codable {
 		struct PokemonAbility: Codable {
@@ -25,5 +26,14 @@ struct Pokemon: Codable {
 		let ability: PokemonAbility
 		let isHidden: Bool
 		let slot: Int
+	}
+
+	struct PokemonTypeInfo: Codable {
+		let slot: Int
+		let type: PokemonType
+		struct PokemonType: Codable {
+			let name: String
+			let url: String
+		}
 	}
 }
