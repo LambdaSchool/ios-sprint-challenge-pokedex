@@ -10,6 +10,11 @@ import UIKit
 
 class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		searchBar.delegate = self
@@ -20,12 +25,24 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text else { return }
 		
-		pokeController?.fetchPokemonData(text) {
-			error in
+		pokeController?.fetchPokemonData(text, completion: { error in
 			if let error = error {
-				print(error)
+				print("error fetching \(error)")
+				return
+			} else {
+				
+				DispatchQueue.main.async {
+					self.pokemon = self.pokeController?.currentPokemon
+					
+				}
 			}
-		}
+		})
+	}
+	
+	func setupViews () {
+		guard let pokemon = pokemon else { return }
+		pokeLabel?.text = pokemon.name
+		pokeidLabel?.text = String(pokemon.id)
 	}
 	
 	
@@ -34,5 +51,12 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var pokeAbilitiesLabel: UILabel!
 	@IBOutlet var pokeImageView: UIImageView!
 	@IBOutlet var searchBar: UISearchBar!
+	
+	
 	var pokeController: PokeController? { didSet {print("Controller passed")}}
+	var pokemon: Pokemon? {
+		didSet {
+			setupViews()
+		}
+	}
 }

@@ -10,6 +10,11 @@ import UIKit
 
 class PokeListTableViewController: UITableViewController {
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		tableView.reloadData()
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 

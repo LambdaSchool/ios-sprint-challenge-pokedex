@@ -8,9 +8,17 @@
 
 import Foundation
 
+enum NetworkError: Error {
+	case noAuth
+	case badAuth
+	case otherError
+	case badData
+	case noDecode
+}
+
 class PokeController {
 	
-	func fetchPokemonData(_ name: String, completion: @escaping (Error?) -> Void) {
+	func fetchPokemonData(_ name: String, completion: @escaping (Error?) -> ()){
 		let url = baseUrl.appendingPathComponent(name)
 
 		var request = URLRequest(url: url)
@@ -33,28 +41,29 @@ class PokeController {
 			
 			guard let data = data else {
 				print("error fetching Data")
-				completion(NSError(domain: "", code: 0, userInfo: nil))
+				completion(nil)
 				return
 			}
 			
 			let decoder = JSONDecoder()
+			let poke: Pokemon
 			do {
-				let pokemon = try decoder.decode(Pokemon.self, from: data)
-				print(pokemon.name, pokemon.id)
-				self.pokemons.append(pokemon)
+				poke = try decoder.decode(Pokemon.self, from: data)
+				print(poke.name, poke.id)
+				self.currentPokemon = poke
+				self.pokemons.append(poke)
 			} catch {
 				print("error decoding pokemon")
 				completion(error)
 				return
 			}
-			
-			
-			print(data)
 			completion(nil)
 		}.resume()
 		
 	}
 	
+	
 	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	private(set) var pokemons: [Pokemon] = []
+	private(set) var currentPokemon: Pokemon? = nil
 }
