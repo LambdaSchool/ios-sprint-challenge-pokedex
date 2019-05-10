@@ -55,4 +55,13 @@ class PokemonListTableViewContorller: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let pokemon = pokemonController.pokemons[indexPath.row]
+            pokemonController.delete(pokemon: pokemon)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    
 }
