@@ -89,6 +89,10 @@ class PokemonController {
         pokemon.append(poke)
     }
     
+    func delete(indexOfPokemon: IndexPath) {
+        pokemon.remove(at: indexOfPokemon.row)
+    }
+    
     
     
 }
