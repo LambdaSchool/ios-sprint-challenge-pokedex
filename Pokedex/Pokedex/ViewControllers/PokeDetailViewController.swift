@@ -61,8 +61,11 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		pokeLabel?.text = pokemon.name
 		pokeidLabel?.text = String(pokemon.id)
 		
-		print( pokemon.types.count)
-		
+		for types in pokemon.types {
+			print(types.type.name)
+			
+		}
+		print(pokemon.abilities.count)
 	}
 	
 	@IBOutlet var catchButtonOutlet: UIButton!
