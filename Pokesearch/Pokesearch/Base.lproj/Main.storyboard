@@ -28,9 +28,9 @@
                                 <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJn-zv-uys">
-                                <rect key="frame" x="146" y="808" width="122" height="30"/>
-                                <state key="normal" title="Throw a Pokeball!"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AJn-zv-uys">
+                                <rect key="frame" x="187.5" y="800" width="39" height="38"/>
+                                <state key="normal" image="pokeball_button"/>
                                 <connections>
                                     <action selector="throwPokeballPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h5D-IR-rKL"/>
                                 </connections>
@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="MNe-M2-J7w">
-                                <rect key="frame" x="24" y="319" width="366" height="465"/>
+                                <rect key="frame" x="24" y="319" width="366" height="457"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2Dx-4F-QFJ">
                                         <rect key="frame" x="0.0" y="0.0" width="366" height="20.5"/>
@@ -82,7 +82,7 @@
                                         </subviews>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Q8-mI-d4d">
-                                        <rect key="frame" x="0.0" y="91" width="366" height="374"/>
+                                        <rect key="frame" x="0.0" y="91" width="366" height="366"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZIp-nX-zvK">
                                             <size key="itemSize" width="112" height="112"/>
@@ -204,7 +204,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Pokedex" id="ELo-fH-lyz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="uUB-34-WdT">
+                        <barButtonItem key="rightBarButtonItem" image="pokeball" id="uUB-34-WdT">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" identifier="SearchForPokemon" id="2eN-fA-Uat"/>
                             </connections>
@@ -234,6 +234,10 @@
             <point key="canvasLocation" x="-117" y="826"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pokeball" width="19" height="19"/>
+        <image name="pokeball_button" width="39" height="38"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2eN-fA-Uat"/>
     </inferredMetricsTieBreakers>
