@@ -64,34 +64,9 @@ class PokemonController {
             }
             }.resume()
     }
-    
-    // MARK: - Image Loading
-    
-//    func fetchImage(at urlString: String, completion: @escaping (UIImage?, Error?) -> Void) {
-//
-//        let imageURL = URL(string: urlString)!
-//
-//        var request = URLRequest(url: imageURL)
-//        request.httpMethod = "GET"
-//
-//        URLSession.shared.dataTask(with: request) { (data, _, error) in
-//            if let error = error {
-//                NSLog("There was an error with your image session: \(error)")
-//                completion(nil, error)
-//                return
-//            }
-//
-//            guard let data = data else {
-//                NSLog("Image data was not recieved.")
-//                completion(nil, error)
-//                return
-//            }
-//
-//            let image = UIImage(data: data)!
-//            completion(image, nil)
-//            }.resume()
-//    }
 }
+
+// MARK: - Image Loading
 
 extension UIImageView {
     func load(url: URL) {

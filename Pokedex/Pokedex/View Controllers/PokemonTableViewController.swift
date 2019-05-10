@@ -12,7 +12,7 @@ class PokemonTableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
 
     // MARK: - View Loading Methods
     
@@ -34,7 +34,6 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
         cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name.capitalized
-//        cell.imageView?.image = UIImage(contentsOfFile: pokemonController.pokedex[indexPath.row].sprites.frontDefault)
         
         let spriteURL = URL(string: pokemonController.pokedex[indexPath.row].sprites.frontDefault)!
         cell.imageView!.load(url: spriteURL)

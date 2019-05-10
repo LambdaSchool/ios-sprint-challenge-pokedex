@@ -70,18 +70,6 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             DispatchQueue.main.async {
                 self.updateViews()
             }
-            
-//            self.pokemonController?.fetchImage(at: (self.pokemon?.sprites.frontDefault)!, completion: { (image, error) in
-//                if let error = error {
-//                    NSLog("There was an error fetching the image: \(error)")
-//                    return
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.pokemonImage.image = image
-//                    self.updateViews()
-//                }
-//            })
         })
     }
 }
