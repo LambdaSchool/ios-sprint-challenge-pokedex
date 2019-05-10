@@ -18,6 +18,10 @@ enum NetworkError: Error {
 
 class PokeController {
 	
+	func catchPokemon(poke: Pokemon) {
+		pokemons.append(poke)
+	}
+	
 	func fetchPokemonData(_ name: String, completion: @escaping (Error?) -> ()){
 		let url = baseUrl.appendingPathComponent(name)
 
@@ -51,7 +55,6 @@ class PokeController {
 				poke = try decoder.decode(Pokemon.self, from: data)
 				print(poke.name, poke.id)
 				self.currentPokemon = poke
-				self.pokemons.append(poke)
 			} catch {
 				print("error decoding pokemon")
 				completion(error)
@@ -61,7 +64,6 @@ class PokeController {
 		}.resume()
 		
 	}
-	
 	
 	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	private(set) var pokemons: [Pokemon] = []
