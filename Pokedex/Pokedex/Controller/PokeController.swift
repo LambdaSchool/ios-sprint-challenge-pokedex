@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum NetworkError: Error {
-	case otherError
-	case badData
-	case noDecode
-}
-
 class PokeController {
 	func loadFromPersistentStore() {
 		let fileManager = FileManager.default
