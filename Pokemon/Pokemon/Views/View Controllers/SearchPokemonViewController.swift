@@ -9,6 +9,9 @@
 import UIKit
 
 class SearchPokemonViewController: UIViewController {
+    
+    var pc: PokemonController?
+    var pokemon: Pokemon?
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var idLabel: UILabel!
