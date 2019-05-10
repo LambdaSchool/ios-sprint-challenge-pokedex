@@ -11,15 +11,58 @@ import UIKit
 class PokemonController {
 	private(set) var pokemons: [Pokemon] = []
 
+	init() {
+		loadPokemon()
+	}
+
 
 	func catchPokemon(_ pokemon: Pokemon) {
 		pokemons.append(pokemon)
+		savePokemon()
 	}
 
 	func releasePokemon(_ pokemon: Pokemon) {
 		guard let index = pokemons.firstIndex(of: pokemon) else { return }
 		pokemons.remove(at: index)
+		savePokemon()
 	}
+
+
+	//MARK:- persistence
+
+	var pokemonSaveURL: URL? {
+		let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+		return documents?.appendingPathComponent("pokemon", isDirectory: false).appendingPathExtension("plist")
+	}
+
+	private func savePokemon() {
+		let encoder = PropertyListEncoder()
+		guard let pokemonSaveURL = pokemonSaveURL else { return }
+		do {
+			let saveData = try encoder.encode(pokemons)
+			try saveData.write(to: pokemonSaveURL)
+		} catch {
+			print(error)
+		}
+	}
+
+	private func loadPokemon() {
+		let decoder = PropertyListDecoder()
+		guard let pokemonSaveURL = pokemonSaveURL, FileManager.default.fileExists(atPath: pokemonSaveURL.path) else {
+			print("path: \(self.pokemonSaveURL?.path)")
+			return
+		}
+
+		do {
+			let data = try Data(contentsOf: pokemonSaveURL)
+			pokemons = try decoder.decode([Pokemon].self, from: data)
+		} catch {
+			print(error)
+		}
+
+
+	}
+
 
 	//MARK:- Netstuff
 
