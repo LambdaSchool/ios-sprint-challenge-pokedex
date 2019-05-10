@@ -71,7 +71,8 @@ extension PokemonSearchViewController: UICollectionViewDelegate, UICollectionVie
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpriteCell", for: indexPath)
 		guard let spriteCell = cell as? PokeSpriteCollectionViewCell else { return cell }
 
-//		spriteCell.
+		spriteCell.pokemonController = pokemonController
+		spriteCell.spriteURLString = spritesURLs?[indexPath.item]
 
 		return cell
 	}
