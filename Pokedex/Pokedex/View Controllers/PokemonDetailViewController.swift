@@ -21,22 +21,21 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    // MARK: - View Loading Methods
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        typeLabel.text = pokemon.types[0].type.name
+        abilitiesLabel.text = pokemon.abilities[0].ability.name
+        pokemonImage.image = UIImage(contentsOfFile: pokemon.sprites[0].frontDefault)
     }
-    */
-
 }
