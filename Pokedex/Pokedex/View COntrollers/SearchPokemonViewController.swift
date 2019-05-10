@@ -31,12 +31,22 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         pokeController.search(for: text) { (result) in
             do {
                 let thisPokemon = try result.get()
+                DispatchQueue.main.async {
+                    self.updateView(with: thisPokemon)
+                }
             }
             catch {
                 print(error)
             }
         }
         
+    }
+    
+    func updateView(with pokemnoSearchedFor: Pokemon) {
+        pokemonNameLabel.text = pokemnoSearchedFor.name
+        pokemonIDLabel.text = String(pokemnoSearchedFor.id)
+        pokemonTypesLabel.text = pokemnoSearchedFor.types[0].type.name
+        pokemonAbilitiesLabel.text = pokemnoSearchedFor.abilities[0].ability.name
     }
 
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
