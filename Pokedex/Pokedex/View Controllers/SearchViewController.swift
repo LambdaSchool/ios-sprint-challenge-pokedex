@@ -8,26 +8,55 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet{
+            updateViews()
+        }
+    }
+    
+    // MARK: - Outlets
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var idLbl: UILabel!
+    @IBOutlet var typesLbl: UILabel!
+    @IBOutlet var nameLbl: UILabel!
+    @IBOutlet var abilitiesLbl: UILabel!
+    
+    // MARK: - Actions
+    @IBAction func saveBtnPressed(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.createPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func updateViews() {
+        guard let pokemon = pokemon else {
+            idLbl.isHidden = true
+            typesLbl.isHidden = true
+            abilitiesLbl.isHidden = true
+            return
+        }
+        // unhide hidden labels
+        idLbl.isHidden = false
+        typesLbl.isHidden = false
+        abilitiesLbl.isHidden = false
+        // set labels
+        nameLbl?.text = pokemon.name
+        idLbl?.text = String(pokemon.id)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateViews()
     }
-    */
 
+    
 }

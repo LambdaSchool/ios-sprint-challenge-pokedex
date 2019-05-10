@@ -24,11 +24,6 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var idLbl: UILabel!
     @IBOutlet var typesLbl: UILabel!
     @IBOutlet var abilitiesLbl: UILabel!
-    @IBOutlet var savePokemonBtn: UIButton!
-    
-    // MARK: - Actions
-    @IBAction func savePokemonBtnPressed(_ sender: UIButton) {
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
