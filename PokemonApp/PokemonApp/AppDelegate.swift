@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  DianteSprint3PokeMon
+//  PokemonApp
 //
-//  Created by Diante Lewis-Jolley on 2/1/19.
+//  Created by Diante Lewis-Jolley on 5/10/19.
 //  Copyright © 2019 Diante Lewis-Jolley. All rights reserved.
 //
 
