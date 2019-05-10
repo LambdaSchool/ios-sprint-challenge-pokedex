@@ -18,7 +18,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 		searchBar.delegate = self
-
+		setupViews()
     }
     
 	
@@ -40,11 +40,26 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	}
 	
 	func setupViews () {
-		guard let pokemon = pokemon else { return }
+		guard let pokemon = pokemon else {
+			
+			idvisibleLabel.isHidden = true
+			typeVisibleLabel.isHidden = true
+			abilitiesVisiblelable.isHidden = true
+			
+			return
+		}
+		idvisibleLabel.isHidden = false
+		typeVisibleLabel.isHidden = false
+		abilitiesVisiblelable.isHidden = false
+		
+		
 		pokeLabel?.text = pokemon.name
 		pokeidLabel?.text = String(pokemon.id)
 	}
 	
+	@IBOutlet var idvisibleLabel: UILabel!
+	@IBOutlet var typeVisibleLabel: UILabel!
+	@IBOutlet var abilitiesVisiblelable: UILabel!
 	
 	@IBOutlet var pokeLabel: UILabel!
 	@IBOutlet var pokeidLabel: UILabel!
@@ -53,7 +68,11 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var searchBar: UISearchBar!
 	
 	
-	var pokeController: PokeController? { didSet {print("Controller passed")}}
+	var pokeController: PokeController? {
+		didSet {
+			
+		}
+	}
 	var pokemon: Pokemon? {
 		didSet {
 			setupViews()
