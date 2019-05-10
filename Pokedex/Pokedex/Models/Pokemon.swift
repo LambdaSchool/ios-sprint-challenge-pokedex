@@ -6,11 +6,10 @@
 //  Copyright © 2019 Sameera Roussi. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
 
 class Pokemon {
+
     var name: String?
     var id: String
     var abilities: String

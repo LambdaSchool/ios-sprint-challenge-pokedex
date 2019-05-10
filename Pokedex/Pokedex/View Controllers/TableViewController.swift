@@ -9,6 +9,11 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var selectSortSegmentControl: UISegmentedControl!
+    
 
     // MARK: - Properties
     
@@ -37,6 +42,8 @@ class TableViewController: UITableViewController {
         // Get the saved Pokemon
         let savedPokemon = PersistentData.shared.getPokemon(at: indexPath.row)
         //And list them
+        
+        
         cell.imageView?.image = savedPokemon.sprite
         cell.textLabel?.text = savedPokemon.name
         

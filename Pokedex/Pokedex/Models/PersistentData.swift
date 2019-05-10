@@ -26,12 +26,14 @@ class PersistentData {
     // MARK: - CRUD Methods
     func add(pokemon: Pokemon) {
         savedPokemon.append(pokemon)
+        
         saveData()
     }
     
     func getPokemon(at index: Int) -> Pokemon {
         return savedPokemon[index]
     }
+    
     
     func removePokemon(at index: Int) {
         savedPokemon.remove(at: index)
