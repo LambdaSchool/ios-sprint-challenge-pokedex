@@ -23,7 +23,7 @@ class Pokemon: Codable, Equatable {
 			self.name = name
 		}
 	}
-	
+	// let abilities: [abilities]
 //	let types: [types]
 	let name: String
 	let id: Int

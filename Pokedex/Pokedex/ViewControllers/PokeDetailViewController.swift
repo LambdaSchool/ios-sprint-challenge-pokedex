@@ -38,6 +38,11 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 			}
 		})
 	}
+	@IBAction func catchPokemonButton(_ sender: Any) {
+	
+	
+	
+	}
 	
 	func setupViews () {
 		guard let pokemon = pokemon else {
@@ -45,18 +50,19 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 			idvisibleLabel.isHidden = true
 			typeVisibleLabel.isHidden = true
 			abilitiesVisiblelable.isHidden = true
-			
+			catchButtonOutlet.isHidden = true
 			return
 		}
 		idvisibleLabel.isHidden = false
 		typeVisibleLabel.isHidden = false
 		abilitiesVisiblelable.isHidden = false
-		
+		catchButtonOutlet.isHidden = false
 		
 		pokeLabel?.text = pokemon.name
 		pokeidLabel?.text = String(pokemon.id)
 	}
 	
+	@IBOutlet var catchButtonOutlet: UIButton!
 	@IBOutlet var idvisibleLabel: UILabel!
 	@IBOutlet var typeVisibleLabel: UILabel!
 	@IBOutlet var abilitiesVisiblelable: UILabel!
