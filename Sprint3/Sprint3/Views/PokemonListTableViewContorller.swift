@@ -13,7 +13,6 @@ class PokemonListTableViewContorller: UITableViewController {
     
     let pokemonController = PokemonController()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,6 +28,23 @@ class PokemonListTableViewContorller: UITableViewController {
     
     @IBAction func searchButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "search", sender: self)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "search" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController
+                else { return }
+            searchVC.pokemonController = pokemonController
+            pokemonController.pokemon = nil
+        } else if segue.identifier == "detail" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController,
+                let indexPath = tableView.indexPathForSelectedRow
+                else { return }
+            
+            pokemonController.pokemon = pokemonController.pokemons[indexPath.row]
+            searchVC.pokemonController = pokemonController
+        }
     }
     
 }

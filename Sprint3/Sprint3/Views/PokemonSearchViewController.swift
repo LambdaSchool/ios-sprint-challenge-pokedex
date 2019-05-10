@@ -89,6 +89,5 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     
-    
-    
+
 }
