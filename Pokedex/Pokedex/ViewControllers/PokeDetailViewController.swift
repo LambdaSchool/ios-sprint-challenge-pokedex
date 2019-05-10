@@ -12,13 +12,14 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
+		setupViews()
 	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		searchBar.delegate = self
 		setupViews()
+		
     }
     
 	
@@ -68,11 +69,11 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	}
 	
 	func setupLabels(_ pokemon: Pokemon) {
-		idvisibleLabel.isHidden = false
-		typeVisibleLabel.isHidden = false
-		abilitiesVisiblelable.isHidden = false
-		catchButtonOutlet.isHidden = false
-		pokeImageView.isHidden = false
+		idvisibleLabel?.isHidden = false
+		typeVisibleLabel?.isHidden = false
+		abilitiesVisiblelable?.isHidden = false
+		catchButtonOutlet?.isHidden = false
+		pokeImageView?.isHidden = false
 		
 		var typesStr = " "
 		var abilitiesStr = " "

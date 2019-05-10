@@ -30,10 +30,29 @@ class PokeListTableViewController: UITableViewController {
 		return cell
 	}
 	
+	
+	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "GetPokemonSegue" {
 			guard let vc = segue.destination as? PokeDetailViewController else { return }
 			vc.pokeController = pokeController
+		} else if segue.identifier == "PokemonCellSegue" {
+			guard let vc = segue.destination as? PokeDetailViewController,
+				let cell = sender as? UITableViewCell,
+				let indexpath = tableView.indexPath(for: cell)	else { return }
+			
+			let pokemon = pokeController.pokemons[indexpath.row]
+			pokeController.fetchImage(with: pokemon.sprites.front_default) { error in
+				if let error = error {
+					print(error)
+					return
+				}
+				DispatchQueue.main.async {
+					vc.pokeImageView.image = self.pokeController.currentImage
+				}
+			}
+			
+			vc.pokemon = pokemon
 		}
 	}
 	
