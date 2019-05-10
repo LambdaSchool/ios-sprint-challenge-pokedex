@@ -72,7 +72,10 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchSegue" {
 
             guard let SearchVC = segue.destination as? SearchViewController else { return }
+
             SearchVC.pokemonController = pokemonController
+
+            //SearchVC.pokemon = pokemonController
             
         } else if segue.identifier == "DetailSegue" {
             guard let DetailVC = segue.destination as? DetailViewController,

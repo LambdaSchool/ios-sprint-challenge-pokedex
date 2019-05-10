@@ -55,13 +55,29 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 return
             }
 
-            DispatchQueue.main.async {
+            if let pokemon = pokemon {
+
+                DispatchQueue.main.async {
                 //should put the pokemon back on the main thread and show info
-                self.updateViews()
                 self.pokemon = pokemon
+                self.updateViews()
+            }
+
+                self.pokemonController?.fetchImage(at: pokemon, completion: { (image, error) in
+                    if let error = error {
+                        NSLog("Error getting images from pokemon: \(error)")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+
+                    }
+                })
             }
         })
     }
+
+
     
 
 
