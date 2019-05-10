@@ -11,6 +11,11 @@ import Foundation
 class PokemonController {
 	var pokemons: [Pokemon] = []
 
+
+	//MARK:- Netstuff
+
+	let baseURL = URL(string: "https://pokeapi.co/api/v2")!
+
 	func getAllPokemon() {
 
 	}
