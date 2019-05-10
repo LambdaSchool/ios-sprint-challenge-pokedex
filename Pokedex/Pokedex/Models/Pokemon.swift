@@ -23,5 +23,5 @@ struct Character: Decodable {
 }
 
 struct CharacterSearch: Decodable {
-    let result: [Character]
+    let results: [Character]
 }
