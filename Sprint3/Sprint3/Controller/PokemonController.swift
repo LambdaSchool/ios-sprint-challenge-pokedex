@@ -10,6 +10,8 @@ import Foundation
 
 class PokemonController {
     
+    //MARK: Properties
+    
     var pokemons: [Pokemon] = []
     var pokemon: Pokemon?
     let baseURL = URL(string: "https://pokeapi.co/api/v2")!
@@ -20,7 +22,10 @@ class PokemonController {
         case post = "POST"
         case delete = "DELETE"
     }
+    
+    //MARK: Methods
 
+    //method to save to array
     func save() {
         guard let pokemon = pokemon else { return }
         pokemons.append(pokemon)
@@ -28,18 +33,22 @@ class PokemonController {
         self.pokemon = nil
     }
     
+    //method to delete pokemon
     func delete(pokemon: Pokemon) {
         guard let index = pokemons.index(of: pokemon) else { return }
         pokemons.remove(at: index)
     }
     
+    //method to fetch data from url
     func fetchPokemons(for name: String, completion: @escaping (Error?) -> Void) {
+        //creating search url
         var searchURL = baseURL.appendingPathComponent("pokemon")
         searchURL = searchURL.appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: searchURL)
         request.httpMethod = HTTPMethod.get.rawValue
         URLSession.shared.dataTask(with: request) { (data, _, error) in
+            //error handling for fetched data
             if let error = error {
                 completion(error)
                 return
@@ -54,8 +63,8 @@ class PokemonController {
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
+                //logic to decode and store data
                 let data = try jsonDecoder.decode(Pokemon.self, from: data)
-                print(data)
                 self.pokemon = data
                 completion(nil)
             } catch {
@@ -65,6 +74,7 @@ class PokemonController {
             }
             }.resume()
     }
+    
     
     func getData(url: URL, completion: @escaping (Data?, Error?) -> Void) {
         let jsonUrl = url

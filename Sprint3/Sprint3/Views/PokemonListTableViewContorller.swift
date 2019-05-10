@@ -11,6 +11,7 @@ import UIKit
 
 class PokemonListTableViewContorller: UITableViewController {
     
+    //passing data
     let pokemonController = PokemonController()
     
     override func viewDidLoad() {
@@ -22,6 +23,8 @@ class PokemonListTableViewContorller: UITableViewController {
         tableView.reloadData()
     }
     
+    //MARK: Configure
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokemons.count
     }
@@ -29,15 +32,18 @@ class PokemonListTableViewContorller: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let pokemon = pokemonController.pokemons[indexPath.row]
+        
+        //updating attributes
         cell.textLabel?.text = pokemon.name
 
         return cell
     }
     
+    //MARK: Navigation
+    
     @IBAction func searchButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "search", sender: self)
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "search" {
@@ -54,7 +60,10 @@ class PokemonListTableViewContorller: UITableViewController {
             searchVC.pokemonController = pokemonController
         }
     }
+
+    //MARK: Editing
     
+    //allows for deletion of row
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let pokemon = pokemonController.pokemons[indexPath.row]
@@ -62,6 +71,4 @@ class PokemonListTableViewContorller: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-
-    
 }

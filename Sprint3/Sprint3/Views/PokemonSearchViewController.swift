@@ -11,6 +11,8 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
+    //MARK: Properties
+    
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonId: UILabel!
     @IBOutlet weak var pokemonTypes: UILabel!
@@ -23,6 +25,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         return pokemonController?.pokemon
     }
     
+    //checking for datat
     var pokemonController: PokemonController?
     
     override func viewDidLoad() {
@@ -31,9 +34,11 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         updateViews()
     }
     
+    
+    //MARK: Methods
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchInput = searchBar.text else { return }
-        
         pokemonController?.fetchPokemons(for: searchInput, completion: { (error) in
             if let error = error {
                 print(error)
@@ -47,6 +52,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     func updateViews() {
         
+        //logic to check for pokemon and update views accordingly
         if let pokemon = pokemon {
             fetchImage(pokemon)
             
@@ -72,6 +78,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
+    //fetchecs image
     private func fetchImage(_ pokemon: Pokemon) {
         pokemonController?.getData(url: URL(string: pokemon.sprites.frontDefault)!, completion: { (data, error) in
             guard let data = data else { return }
@@ -82,6 +89,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             }
         })
     }
+    
+    //MARK: Navigation
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         pokemonController?.save()

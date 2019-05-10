@@ -8,6 +8,7 @@
 
 import Foundation
 
+//model object
 struct Pokemon: Codable, Equatable {
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id
