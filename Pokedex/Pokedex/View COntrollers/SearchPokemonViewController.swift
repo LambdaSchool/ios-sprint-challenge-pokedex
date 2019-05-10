@@ -25,9 +25,9 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         pokemonSearchBar.delegate = self
         
         if let selectedPokemon = pokemon {
-            updateView(with: selectedPokemon)
-            
             guard let pokeController = pokemonController else { return }
+            
+            updateView(with: selectedPokemon)
             
             pokeController.getImage(at: selectedPokemon.sprites.frontDefault) { result in
                 do {
