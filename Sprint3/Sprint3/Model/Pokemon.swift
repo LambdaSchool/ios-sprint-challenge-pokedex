@@ -8,31 +8,31 @@
 
 import Foundation
 
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable {
     
-    let name: String
-    let id: Int
-    let abilities: [Abilities]
-    let types: [Types]
-    let sprites: Sprites
-    var spriteImage: Data?
+    var name: String
+    var id: Int
+    var abilities: [Abilities]
+    var types : [Types]
+    var sprites : Sprites
     
-    struct Abilities: Codable, Equatable {
+    struct Abilities: Equatable, Codable {
         let ability: Ability
-        struct Ability: Codable, Equatable {
-            let name: String
-        }
     }
     
-    struct Types: Codable, Equatable {
-        let type: AType
-        struct AType: Codable, Equatable {
-            let name: String
-        }
+    struct Ability: Equatable, Codable {
+        let name: String
     }
     
-    struct Sprites: Codable, Equatable {
-        let front_default: String
+    struct Types: Equatable, Codable {
+        let type:  Name
     }
     
+    struct Name: Equatable, Codable {
+        let name: String
+    }
+    
+    struct Sprites: Codable {
+        let frontDefault: String
+    }
 }
