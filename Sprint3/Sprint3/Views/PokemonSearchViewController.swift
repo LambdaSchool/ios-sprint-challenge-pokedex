@@ -106,8 +106,5 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         pokemonController?.save()
         navigationController?.popViewController(animated: true)
     }
-    
-   
-    
 
 }
