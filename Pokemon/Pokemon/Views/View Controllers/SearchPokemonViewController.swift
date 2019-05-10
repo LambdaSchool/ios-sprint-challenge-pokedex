@@ -38,10 +38,12 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews(){
+  
         //make sure you have a pokemon, and that the view is loaded
         guard let passedInPokemon = pokemon, isViewLoaded else {
             title = "Search for Pokemon"
             return }
+        
         title = passedInPokemon.name
         idLabel.text = "ID:\(passedInPokemon.id)"
         
@@ -50,8 +52,6 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         
         let abilties = passedInPokemon.abilities.map { $0.ability.name}.joined(separator: ",")
         abilitiesLabel.text = "Abilities: \(abilties)"
-    
-//        imageView.image = UIImage(named: passedInPokemon.sprities.imageURL)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -77,6 +77,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                     if let image = image {
                         DispatchQueue.main.async {
                             self.imageView.image = image
+                            self.saveButtonProperties.setTitle("Save \(pokemon.name)", for: .normal)
                         }
                     }
                 })
