@@ -16,6 +16,12 @@ class DetailViewController: UIViewController {
        updateViews()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        updateViews()
+    }
+
 
 
     private func updateViews() {
@@ -46,7 +52,7 @@ class DetailViewController: UIViewController {
         }
     }
 
-    var pokemonController: PokemonController?
+    
 
     @IBOutlet weak var saveButton: UIButton!
     
