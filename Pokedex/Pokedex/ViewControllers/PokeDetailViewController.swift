@@ -39,9 +39,9 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		})
 	}
 	@IBAction func catchPokemonButton(_ sender: Any) {
-	
-	
-	
+		guard let pokemon = pokemon else { return }
+		pokeController?.catchPokemon(poke: pokemon)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	func setupViews () {
