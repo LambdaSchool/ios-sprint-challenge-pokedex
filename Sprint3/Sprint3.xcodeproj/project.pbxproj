@@ -8,20 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		575EEA7B2285CE6000069259 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575EEA7A2285CE6000069259 /* AppDelegate.swift */; };
-		575EEA7D2285CE6000069259 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575EEA7C2285CE6000069259 /* ViewController.swift */; };
 		575EEA802285CE6000069259 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575EEA7E2285CE6000069259 /* Main.storyboard */; };
 		575EEA822285CE6800069259 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575EEA812285CE6800069259 /* Assets.xcassets */; };
 		575EEA852285CE6800069259 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575EEA832285CE6800069259 /* LaunchScreen.storyboard */; };
+		575EEA912285CFD800069259 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575EEA902285CFD800069259 /* Pokemon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		575EEA772285CE6000069259 /* Sprint3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sprint3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		575EEA7A2285CE6000069259 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		575EEA7C2285CE6000069259 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		575EEA7F2285CE6000069259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		575EEA812285CE6800069259 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		575EEA842285CE6800069259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		575EEA862285CE6800069259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		575EEA902285CFD800069259 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +54,46 @@
 		575EEA792285CE6000069259 /* Sprint3 */ = {
 			isa = PBXGroup;
 			children = (
-				575EEA7A2285CE6000069259 /* AppDelegate.swift */,
-				575EEA7C2285CE6000069259 /* ViewController.swift */,
+				575EEA8F2285CF3E00069259 /* Resources */,
+				575EEA8E2285CF2D00069259 /* Controller */,
+				575EEA8D2285CF1500069259 /* Views */,
+				575EEA8C2285CF0D00069259 /* Model */,
 				575EEA7E2285CE6000069259 /* Main.storyboard */,
-				575EEA812285CE6800069259 /* Assets.xcassets */,
 				575EEA832285CE6800069259 /* LaunchScreen.storyboard */,
-				575EEA862285CE6800069259 /* Info.plist */,
 			);
 			path = Sprint3;
+			sourceTree = "<group>";
+		};
+		575EEA8C2285CF0D00069259 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				575EEA902285CFD800069259 /* Pokemon.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		575EEA8D2285CF1500069259 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		575EEA8E2285CF2D00069259 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		575EEA8F2285CF3E00069259 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				575EEA862285CE6800069259 /* Info.plist */,
+				575EEA812285CE6800069259 /* Assets.xcassets */,
+				575EEA7A2285CE6000069259 /* AppDelegate.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +167,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				575EEA7D2285CE6000069259 /* ViewController.swift in Sources */,
 				575EEA7B2285CE6000069259 /* AppDelegate.swift in Sources */,
+				575EEA912285CFD800069259 /* Pokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +315,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Sprint3/Info.plist;
+				INFOPLIST_FILE = Sprint3/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,7 +332,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Sprint3/Info.plist;
+				INFOPLIST_FILE = Sprint3/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
