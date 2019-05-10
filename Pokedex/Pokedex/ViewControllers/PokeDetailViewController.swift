@@ -54,6 +54,17 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		}
 		
 		setupLabels(pokemon)
+		
+		pokeController?.fetchImage(with: pokemon.sprites.front_default, completion: { (error) in
+			if let error = error {
+				print("error: \(error)")
+				return
+			}
+			DispatchQueue.main.async {
+				self.pokeImageView.image = self.pokeController?.currentImage
+				
+			}
+		})
 	}
 	
 	func setupLabels(_ pokemon: Pokemon) {
@@ -61,6 +72,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		typeVisibleLabel.isHidden = false
 		abilitiesVisiblelable.isHidden = false
 		catchButtonOutlet.isHidden = false
+		pokeImageView.isHidden = false
 		
 		var typesStr = " "
 		var abilitiesStr = " "
@@ -75,6 +87,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		pokeidLabel?.text = String(pokemon.id)
 		pokeTypeLabel?.text = typesStr
 		pokeAbilitiesLabel?.text = abilitiesStr
+		
 		print(pokemon.sprites.front_default)
 	}
 	
@@ -87,18 +100,19 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var pokeLabel: UILabel!
 	@IBOutlet var pokeidLabel: UILabel!
 	@IBOutlet var pokeAbilitiesLabel: UILabel!
-	@IBOutlet var pokeImageView: UIImageView!
+	@IBOutlet var pokeImageView: UIImageView! {
+		didSet {
+			print("was set!")
+		}
+	}
+	
 	@IBOutlet var searchBar: UISearchBar!
 	
 	
-	var pokeController: PokeController? {
-		didSet {
-			
-		}
-	}
+	var pokeController: PokeController?
+		
 	var pokemon: Pokemon? {
 		didSet {
-			
 			setupViews()
 		}
 	}

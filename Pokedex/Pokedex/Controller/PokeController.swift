@@ -6,7 +6,7 @@
 //  Copyright © 2019 Hector Steven. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum NetworkError: Error {
 	case otherError
@@ -63,10 +63,26 @@ class PokeController {
 	}
 	
 	func fetchImage(with url: String, completion: @escaping (Error?) -> ()) {
+		let imageurl = URL(string: url)!
+		var request = URLRequest(url: imageurl)
+		request.httpMethod = "GET"
 		
+		URLSession.shared.dataTask(with: request) { (data, _, error) in
+			if let error = error {
+				completion(error)
+				return
+			}
+			guard let data = data else { return }
+			print(data)
+			let image = UIImage(data: data)
+			self.currentImage = image
+			completion(nil)
+		}.resume()
 	}
 	
 	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	private(set) var pokemons: [Pokemon] = []
 	private(set) var currentPokemon: Pokemon? = nil
+	
+	private(set) var currentImage: UIImage? = nil
 }
