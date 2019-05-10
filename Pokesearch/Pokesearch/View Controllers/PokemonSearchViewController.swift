@@ -41,7 +41,7 @@ class PokemonSearchViewController: UIViewController {
 	func updateViews() {
 		guard let pokemon = pokemon, isViewLoaded else { return }
 		showViews(show: true, hideButton: alreadyCaught)
-		pokemonNameLabel.text = pokemon.name
+		pokemonNameLabel.text = pokemon.name.capitalized
 		pokemonIDLabel.text = "\(pokemon.id)"
 		typeLabel.text = pokemon.types.reduce ("") { $0 + $1.type.name + " " }
 		abilitiesLabel.text = pokemon.abilities.reduce("") { $0 + $1.ability.name + " " }

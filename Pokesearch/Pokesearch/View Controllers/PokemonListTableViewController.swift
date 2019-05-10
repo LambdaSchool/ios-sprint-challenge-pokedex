@@ -40,7 +40,7 @@ extension PokemonListTableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonNameCell", for: indexPath)
-		cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name
+		cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name.capitalized
 
 		return cell
 	}
