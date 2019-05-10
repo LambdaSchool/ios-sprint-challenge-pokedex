@@ -58,7 +58,14 @@ class PokemonListTableViewContorller: UITableViewController {
             
             pokemonController.pokemon = pokemonController.pokemons[indexPath.row]
             searchVC.pokemonController = pokemonController
+            //searchVC.searchBar.barTintColor = .white
         }
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        navigationItem.backBarButtonItem = backItem
+        navigationItem.backBarButtonItem?.tintColor = .white
+        
     }
 
     //MARK: Editing

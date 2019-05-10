@@ -31,6 +31,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        self.navigationItem.backBarButtonItem?.tintColor = .white
         updateViews()
     }
     
