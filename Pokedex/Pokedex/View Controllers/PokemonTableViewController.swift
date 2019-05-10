@@ -34,7 +34,7 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
         cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name
-        cell.imageView?.image = UIImage(contentsOfFile: pokemonController.pokedex[indexPath.row].sprites.first!.frontDefault)
+//        cell.imageView?.image = UIImage(contentsOfFile: pokemonController.pokedex[indexPath.row].sprites.frontDefault)
 
         return cell
     }

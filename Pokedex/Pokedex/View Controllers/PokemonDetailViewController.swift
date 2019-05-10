@@ -36,6 +36,6 @@ class PokemonDetailViewController: UIViewController {
         idLabel.text = String(pokemon.id)
         typeLabel.text = pokemon.types[0].type.name
         abilitiesLabel.text = pokemon.abilities[0].ability.name
-        pokemonImage.image = UIImage(contentsOfFile: pokemon.sprites[0].frontDefault)
+//        pokemonImage.image = UIImage(contentsOfFile: pokemon.sprites.frontDefault)
     }
 }
