@@ -8,11 +8,13 @@
 
 import Foundation
 
+
+//VERY IMPORTANT -- IF ANY OF THE FOLLOWING WORDS ARE MISSPELLED OR WE'RE PARSING -DRILLING- DOWN THE JSON WRONG, THE ERROR WE WILL RECIEVE IS: "THE DATA COULDN'T BE READ BC IT'S MISSING"!!!!
 struct Pokemon: Codable, Equatable {
     let id: Int
     let name: String
     let abilities: [AbilityArray]
-    let sprities: Sprite
+    let sprites: Sprite
     let types: [TypeArray]
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -20,11 +22,13 @@ struct Pokemon: Codable, Equatable {
     }
 }
 
+//VERY IMPORTANT - The struct's property has to match the json, not it's type, For instance ths will work with xyz at the end. xyz's struct, though, would have to have a property in it that matches what is on the json.
+
 struct AbilityArray: Codable {
-    let ability: Ability
+    let ability: Abilityxyz
 }
 
-struct Ability: Codable {
+struct Abilityxyz: Codable {
     let name: String
 }
 

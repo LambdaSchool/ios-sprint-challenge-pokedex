@@ -62,7 +62,7 @@ class PokemonController {
     //remember we have to get the pokemon first, because it has the property of the url we need to get the image
     func fetchSprite(with pokemon: Pokemon, completion: @escaping (UIImage?, Error?) -> Void){
         //construct the url to get the image
-        let url = URL(string: pokemon.sprities.imageURL)!
+        let url = URL(string: pokemon.sprites.imageURL)!
         
         //now that we have the url we can create the reqeust
         let request = URLRequest(url: url)
