@@ -21,6 +21,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 		guard let text = searchBar.text else { return }
 		print(text)
 		
+		
 	}
 	
 	
@@ -29,5 +30,5 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var pokeAbilitiesLabel: UILabel!
 	@IBOutlet var pokeImageView: UIImageView!
 	@IBOutlet var searchBar: UISearchBar!
-	
+	var pokeController: PokeController?
 }

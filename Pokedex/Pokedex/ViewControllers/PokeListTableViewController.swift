@@ -15,4 +15,15 @@ class PokeListTableViewController: UITableViewController {
 
     }
 
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return pokeController.pokemons.count
+	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+		cell.textLabel?.text = pokeController.pokemons[indexPath.row].name
+		return cell
+	}
+	
+	let pokeController = PokeController()
 }
