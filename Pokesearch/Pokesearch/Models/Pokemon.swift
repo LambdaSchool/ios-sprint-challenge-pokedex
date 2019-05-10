@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Equatable, Codable {
 	let id: Int
 	let name: String
 	let baseExperience: Int
@@ -18,8 +18,8 @@ struct Pokemon: Codable {
 	let sprites: [String: String?]
 	let types: [PokemonTypeInfo]
 
-	struct PokemonAbilityInfo: Codable {
-		struct PokemonAbility: Codable {
+	struct PokemonAbilityInfo: Equatable, Codable {
+		struct PokemonAbility: Equatable, Codable {
 			let name: String
 			let url: String
 		}
@@ -28,10 +28,10 @@ struct Pokemon: Codable {
 		let slot: Int
 	}
 
-	struct PokemonTypeInfo: Codable {
+	struct PokemonTypeInfo: Equatable, Codable {
 		let slot: Int
 		let type: PokemonType
-		struct PokemonType: Codable {
+		struct PokemonType: Equatable, Codable {
 			let name: String
 			let url: String
 		}
