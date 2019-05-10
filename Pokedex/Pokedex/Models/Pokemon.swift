@@ -20,7 +20,7 @@ class Pokemon: Codable, Equatable {
 		self.types = types
 	}
 	
-	// let abilities: [abilities]
+//	 let abilities: [abilities]
 	
 	let types: [Type]
 	let name: String
@@ -34,26 +34,25 @@ class Type: Codable, Equatable{
 	}
 	
 	let slot: Int
-	let type: [TypeNames]
+	let type: TypeNames
 	
 	
-	required init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: CodingKeys.self)
-		
-		let typesDictionaries = try container.decodeIfPresent([String: TypeNames].self, forKey: .type)
-		let typeNames = typesDictionaries?.compactMap({ $0.value }) ?? []
-
-		let slot = try container.decode(Int.self, forKey: .slot)
-		
-		self.slot = slot
-		self.type = typeNames
-	
+	struct TypeNames: Codable, Equatable {
+		var name: String
 	}
-	
-	
-	
-}
 
-struct TypeNames: Codable, Equatable {
-	var name: String
+	
+
+//	required init(from decoder: Decoder) throws {
+//		let container = try decoder.container(keyedBy: CodingKeys.self)
+//
+//		let typesDictionaries = try container.decodeIfPresent([String: TypeNames].self, forKey: .type)
+//		let typeNames = typesDictionaries?.compactMap({ $0.value}) ?? []
+//
+//		let slot = try container.decode(Int.self, forKey: .slot)
+//
+//		self.slot = slot
+//		self.type = typeNames
+//
+//	}
 }
