@@ -34,6 +34,16 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.updateView(with: thisPokemon)
                 }
+                pokeController.getImage(at: thisPokemon.sprites.frontDefault, completion: { result in
+                    do {
+                        let image = try result.get()
+                        DispatchQueue.main.async {
+                            self.pokemonImageView.image = image
+                        }
+                    } catch {
+                        print("Could not load image")
+                    }
+                })
             }
             catch {
                 print(error)
