@@ -73,7 +73,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     private func fetchImage(_ pokemon: Pokemon) {
-        pokemonController?.getData(url: URL(string: pokemon.sprites.front_default)!, completion: { (data, error) in
+        pokemonController?.getData(url: URL(string: pokemon.sprites.frontDefault)!, completion: { (data, error) in
             guard let data = data else { return }
             
             DispatchQueue.main.async {

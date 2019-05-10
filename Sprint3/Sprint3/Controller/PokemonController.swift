@@ -12,7 +12,7 @@ class PokemonController {
     
     var pokemons: [Pokemon] = []
     var pokemon: Pokemon?
-    let baseURL: URL = URL(string: "http://pokeapi.co/api/v2/pokemon/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     
     private enum HTTPMethod: String {
         case get = "GET"
@@ -34,10 +34,11 @@ class PokemonController {
     }
     
     func fetchPokemons(for name: String, completion: @escaping (Error?) -> Void) {
-        let url = baseURL.appendingPathComponent(name).appendingPathExtension("json")
-        var request = URLRequest(url: url)
-        request.httpMethod = HTTPMethod.get.rawValue
+        var searchURL = baseURL.appendingPathComponent("pokemon")
+        searchURL = searchURL.appendingPathComponent(name.lowercased())
         
+        var request = URLRequest(url: searchURL)
+        request.httpMethod = HTTPMethod.get.rawValue
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 completion(error)
@@ -49,8 +50,10 @@ class PokemonController {
                 return
             }
             
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            
             do {
-                let jsonDecoder = JSONDecoder()
                 let data = try jsonDecoder.decode(Pokemon.self, from: data)
                 print(data)
                 self.pokemon = data
