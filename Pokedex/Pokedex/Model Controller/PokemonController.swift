@@ -85,6 +85,10 @@ class PokemonController {
             }.resume()
     }
     
+    func save(a poke: Pokemon) {
+        pokemon.append(poke)
+    }
+    
     
     
 }

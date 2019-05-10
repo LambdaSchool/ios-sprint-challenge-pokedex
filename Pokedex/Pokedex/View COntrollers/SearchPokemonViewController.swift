@@ -10,6 +10,7 @@ import UIKit
 
 class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     var pokemonController: PokemonController?
+    var pokemon: Pokemon?
 
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -44,6 +45,8 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                         print("Could not load image")
                     }
                 })
+                
+                self.pokemon = thisPokemon
             }
             catch {
                 print(error)
@@ -60,5 +63,11 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     }
 
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
+        guard let pokemonToSave = pokemon else { return }
+        guard let pokeController = pokemonController else { return }
+        
+        pokeController.save(a: pokemonToSave)
+        
+        navigationController?.popViewController(animated: true)
     }
 }
