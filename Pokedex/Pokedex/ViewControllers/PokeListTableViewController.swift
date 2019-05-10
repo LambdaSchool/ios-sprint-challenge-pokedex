@@ -17,7 +17,6 @@ class PokeListTableViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,7 +34,6 @@ class PokeListTableViewController: UITableViewController {
 			self.pokeController.deletePokemon(indexPath.row)
 			self.tableView.reloadData()
 		}
-		
 		return [delete]
 	}
 	
@@ -45,6 +43,7 @@ class PokeListTableViewController: UITableViewController {
 			guard let vc = segue.destination as? PokeDetailViewController else { return }
 			vc.pokeController = pokeController
 		} else if segue.identifier == "PokemonCellSegue" {
+			
 			guard let vc = segue.destination as? PokeDetailViewController,
 				let cell = sender as? UITableViewCell,
 				let indexpath = tableView.indexPath(for: cell)	else { return }
@@ -55,6 +54,7 @@ class PokeListTableViewController: UITableViewController {
 					print(error)
 					return
 				}
+				
 				DispatchQueue.main.async {
 					vc.pokeImageView.image = self.pokeController.currentImage
 				}
@@ -63,7 +63,6 @@ class PokeListTableViewController: UITableViewController {
 			vc.pokemon = pokemon
 		}
 	}
-	
 	
 	let pokeController = PokeController()
 }

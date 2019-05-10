@@ -61,10 +61,11 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 				print("error: \(error)")
 				return
 			}
+			
 			DispatchQueue.main.async {
 				self.pokeImageView.image = self.pokeController?.currentImage
-				
 			}
+			
 		})
 	}
 	
