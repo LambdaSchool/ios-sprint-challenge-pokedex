@@ -9,10 +9,22 @@
 import Foundation
 
 class Pokemon: Codable, Equatable {
+	
+	
+	
 	static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
 		return lhs.id == rhs.id
 	}
-
+	
+	struct types: Codable, Equatable {
+		let name: String
+		
+		init(name: String) {
+			self.name = name
+		}
+	}
+	
+//	let types: [types]
 	let name: String
 	let id: Int
 }
