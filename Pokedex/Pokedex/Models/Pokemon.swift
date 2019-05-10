@@ -8,7 +8,25 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     
+    var name: String
+    var id: Int
+    var abilities: [Abilities]
+    var types: [Types]
+    var sprites: [Sprites]
+    
+    
+    struct Abilities: Codable, Equatable {
+        let ability: String
+    }
+    
+    struct Types: Codable, Equatable {
+        let type: String
+    }
+    
+    struct Sprites: Codable, Equatable {
+        let frontDefault: String
+    }
     
 }
