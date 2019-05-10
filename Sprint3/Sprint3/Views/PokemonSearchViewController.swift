@@ -13,6 +13,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: Properties
     var searchBarAlpha = 1
+    var saveButtonAlpha = 1
     
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonId: UILabel!
@@ -33,6 +34,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         if searchBarAlpha == 0 {
             searchBar.alpha = CGFloat(searchBarAlpha)
+        }
+        if saveButtonAlpha == 0 {
+            saveButton.alpha = CGFloat(saveButtonAlpha)
         }
         searchBar.delegate = self
         self.navigationItem.backBarButtonItem?.tintColor = .white

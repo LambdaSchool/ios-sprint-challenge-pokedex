@@ -31,12 +31,14 @@ class PokemonController {
         pokemons.append(pokemon)
         pokemons = pokemons.sorted { $0.id < $1.id }
         self.pokemon = nil
+        saveToPersistentStore()
     }
     
     //method to delete pokemon
     func delete(pokemon: Pokemon) {
         guard let index = pokemons.index(of: pokemon) else { return }
         pokemons.remove(at: index)
+        saveToPersistentStore()
     }
     
     //method to fetch data from url
@@ -85,5 +87,41 @@ class PokemonController {
             completion(data, error)
             }.resume()
     }
+    
+    //saves data to url in document
+    func saveToPersistentStore() {
+        let plistEncoder = PropertyListEncoder()
+        do {
+            let data = try plistEncoder.encode(pokemons)
+            guard let shoppingItemsFileURL = pokemonFileURL else { return }
+            try data.write(to: shoppingItemsFileURL)
+        } catch {
+            NSLog("Error enconding shopping items: \(error)")
+        }
+        
+    }
+    
+    //loads data from url
+    func loadFromPersistentStore() {
+        do {
+            guard let pokemonFileURL = pokemonFileURL,
+                FileManager.default.fileExists(atPath: pokemonFileURL.path) else  { return }
+            let data = try Data(contentsOf: pokemonFileURL)
+            let plistDecoder = PropertyListDecoder()
+            self.pokemons = try plistDecoder.decode([Pokemon].self, from: data)
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    //creates url path 
+    var pokemonFileURL: URL? {
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let fileName = "pokemons.plist"
+        return documentDirectory?.appendingPathComponent(fileName)
+    }
+    
+    
     
 }

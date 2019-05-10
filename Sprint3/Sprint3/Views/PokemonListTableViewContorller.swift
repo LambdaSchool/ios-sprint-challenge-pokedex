@@ -20,6 +20,7 @@ class PokemonListTableViewContorller: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        pokemonController.loadFromPersistentStore()
         tableView.reloadData()
     }
     
@@ -59,6 +60,7 @@ class PokemonListTableViewContorller: UITableViewController {
             pokemonController.pokemon = pokemonController.pokemons[indexPath.row]
             searchVC.pokemonController = pokemonController
             searchVC.searchBarAlpha = 0
+            searchVC.saveButtonAlpha = 0
         }
         
         let backItem = UIBarButtonItem()
