@@ -54,7 +54,31 @@ class PokemonController {
 		}
 	}
 
-	func getSprite(withURLString urlString: String, completion: @escaping (Result<(id: String, image: UIImage), Error>) -> Void) {
+	func getSprite(withURL url: URL, requestID: String, completion: @escaping (Result<(id: String, image: UIImage), Error>) -> Void) {
+		var request = URLRequest(url: url)
+		request.httpMethod = HTTPMethods.get.rawValue
 
+		networkHandler.fetchMahDatas(with: request, requestID: requestID) { (requestID, data, error) in
+			if let error = error {
+				completion(.failure(error))
+				return
+			}
+
+			guard let data = data else {
+				completion(.failure(NetworkError.badData))
+				return
+			}
+
+			guard let requestID = requestID else {
+				completion(.failure(NetworkError.otherError))
+				return
+			}
+
+			guard let image = UIImage(data: data) else {
+				completion(.failure(NetworkError.noDecodeImage))
+				return
+			}
+			completion(.success((requestID, image)))
+		}
 	}
 }

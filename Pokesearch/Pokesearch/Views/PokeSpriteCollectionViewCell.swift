@@ -9,5 +9,32 @@
 import UIKit
 
 class PokeSpriteCollectionViewCell: UICollectionViewCell {
-    
+
+	@IBOutlet var spriteView: UIImageView!
+	var pokemonController: PokemonController?
+	private var imageId: String?
+	var spriteURLString: String? {
+		didSet {
+			fetchImage()
+		}
+	}
+
+	func fetchImage() {
+		guard let spriteURLString = spriteURLString, let url = URL(string: spriteURLString) else { return }
+		let newImageId = UUID().uuidString
+		imageId = newImageId
+		pokemonController?.getSprite(withURL: url, requestID: newImageId, completion: { [weak self] (result) in
+			do {
+				let (id, image) = try result.get()
+				if self?.imageId == id {
+					DispatchQueue.main.async {
+						self?.spriteView.image = image
+					}
+				}
+			} catch {
+				print("image fetch error: \(error)")
+			}
+		})
+		
+	}
 }

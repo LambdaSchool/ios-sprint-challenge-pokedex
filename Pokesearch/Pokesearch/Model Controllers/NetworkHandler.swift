@@ -21,6 +21,7 @@ enum NetworkError: Error {
 	case otherError
 	case badData
 	case noDecode
+	case noDecodeImage
 	case httpNon200StatusCode(code: Int)
 }
 

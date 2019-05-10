@@ -18,6 +18,8 @@ class PokemonSearchViewController: UIViewController {
 	@IBOutlet var abilitiesLabel: UILabel!
 	@IBOutlet var throwPokeballButton: UIButton!
 
+	@IBOutlet var spriteCollectionView: UICollectionView!
+
 	var pokemonController: PokemonController?
 	var pokemon: Pokemon? {
 		didSet {
@@ -40,6 +42,7 @@ class PokemonSearchViewController: UIViewController {
 		typeLabel.text = pokemon.types.reduce ("") { $0 + $1.type.name + " " }
 		abilitiesLabel.text = pokemon.abilities.reduce("") { $0 + $1.ability.name + " " }
 		spritesURLs = pokemon.sprites.compactMap { $0.value }.sorted()
+		spriteCollectionView.reloadData()
 	}
 
 	func showViews(show: Bool, hideButton: Bool = false) {
@@ -61,11 +64,16 @@ class PokemonSearchViewController: UIViewController {
 
 extension PokemonSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 0
+		return spritesURLs?.count ?? 0
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		return UICollectionViewCell()
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpriteCell", for: indexPath)
+		guard let spriteCell = cell as? PokeSpriteCollectionViewCell else { return cell }
+
+//		spriteCell.
+
+		return cell
 	}
 
 
