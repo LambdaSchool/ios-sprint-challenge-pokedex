@@ -25,7 +25,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = pokemonSearchBar.text else { return }
+        guard let text = pokemonSearchBar.text?.lowercased() else { return }
         guard let pokeController = pokemonController else { return }
         
         pokeController.search(for: text) { (result) in
