@@ -21,11 +21,11 @@ enum NetworkError: Error {
 }
 
 class PokemonController {
-    
+    var pokemon: [Pokemon] = []
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
-    func search(for pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let url = baseUrl.appendingPathComponent(pokemon)
+    func search(for poke: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let url = baseUrl.appendingPathComponent(poke)
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -63,5 +63,5 @@ class PokemonController {
             }.resume()
     }
     
-    
+
 }

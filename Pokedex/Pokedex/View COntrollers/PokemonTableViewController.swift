@@ -9,6 +9,7 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
+    var pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemon.count
     }
 
     /*
@@ -77,14 +78,16 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowSearch" {
+            let searchVC = segue.destination as? SearchPokemonViewController
+            searchVC?.pokemonController = pokemonController
+        }
     }
-    */
+
 
 }

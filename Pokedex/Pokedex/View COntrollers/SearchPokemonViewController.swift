@@ -9,6 +9,7 @@
 import UIKit
 
 class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
+    var pokemonController: PokemonController?
 
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -20,19 +21,23 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        pokemonSearchBar.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = pokemonSearchBar.text else { return }
+        guard let pokeController = pokemonController else { return }
+        
+        pokeController.search(for: text) { (result) in
+            do {
+                let thisPokemon = try result.get()
+            }
+            catch {
+                print(error)
+            }
+        }
+        
     }
-    */
 
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
     }
