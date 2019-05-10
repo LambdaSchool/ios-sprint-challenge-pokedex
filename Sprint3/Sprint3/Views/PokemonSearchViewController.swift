@@ -12,6 +12,7 @@ import UIKit
 class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: Properties
+    var searchBarAlpha = 1
     
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonId: UILabel!
@@ -30,9 +31,13 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if searchBarAlpha == 0 {
+            searchBar.alpha = CGFloat(searchBarAlpha)
+        }
         searchBar.delegate = self
         self.navigationItem.backBarButtonItem?.tintColor = .white
         updateViews()
+    
     }
     
     
@@ -98,6 +103,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+   
     
 
 }
