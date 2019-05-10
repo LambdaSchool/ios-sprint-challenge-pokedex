@@ -13,7 +13,7 @@
         <!--Pokedex-->
         <scene sceneID="aY5-xH-jEE">
             <objects>
-                <tableViewController id="SHP-PN-T8K" sceneMemberID="viewController">
+                <tableViewController id="SHP-PN-T8K" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="IjE-yf-Ybl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="-58" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Search View Controller-->
         <scene sceneID="P9v-ec-bAq">
             <objects>
-                <viewController id="P1K-De-Nch" sceneMemberID="viewController">
+                <viewController id="P1K-De-Nch" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Lb-EV-lPh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,6 +136,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTA-a2-ZKa">
                                         <rect key="frame" x="156.5" y="343.5" width="101" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="P1K-De-Nch" eventType="touchUpInside" id="BDy-9P-sPe"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -153,6 +156,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sh5-HM-XlZ"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="MM0-8A-LXD" id="FCH-Qb-Umt"/>
+                        <outlet property="idLabel" destination="PyL-7d-9fb" id="fCw-PU-pai"/>
+                        <outlet property="nameLabel" destination="nSe-r0-QdO" id="DfI-bc-gOF"/>
+                        <outlet property="pokemonImage" destination="mpe-ET-ofX" id="2uB-0h-ZdV"/>
+                        <outlet property="searchBar" destination="KZQ-4B-goa" id="OCA-nV-9uq"/>
+                        <outlet property="typeLabel" destination="oIc-P1-C0A" id="lKC-eq-tcW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z5E-Ah-cuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -174,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="-722" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="Lb6-HY-4nu">
             <objects>
-                <viewController id="3l6-qA-5UE" sceneMemberID="viewController">
+                <viewController id="3l6-qA-5UE" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gaq-YB-dQA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -271,6 +282,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fdg-c1-IPP"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="8kc-rr-hy0" id="MgQ-Gi-tWe"/>
+                        <outlet property="idLabel" destination="OO0-3A-2f9" id="269-q6-i8K"/>
+                        <outlet property="nameLabel" destination="zKy-1Y-B8z" id="pqg-S5-pXS"/>
+                        <outlet property="pokemonImage" destination="mhO-MQ-9hU" id="ADa-06-o2Y"/>
+                        <outlet property="typeLabel" destination="Q67-fN-ODG" id="R4c-ZC-3EH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bdu-cJ-Aim" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

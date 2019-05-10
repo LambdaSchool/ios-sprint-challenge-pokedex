@@ -9,6 +9,10 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
+    
+    // MARK: - Properties
+    
+    let pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
