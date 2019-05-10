@@ -46,25 +46,35 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	
 	func setupViews () {
 		guard let pokemon = pokemon else {
-			
 			idvisibleLabel.isHidden = true
 			typeVisibleLabel.isHidden = true
 			abilitiesVisiblelable.isHidden = true
 			catchButtonOutlet.isHidden = true
 			return
 		}
+		
+		setupLabels(pokemon)
+	}
+	
+	func setupLabels(_ pokemon: Pokemon) {
 		idvisibleLabel.isHidden = false
 		typeVisibleLabel.isHidden = false
 		abilitiesVisiblelable.isHidden = false
 		catchButtonOutlet.isHidden = false
 		
+		var typesStr = " "
+		var abilitiesStr = " "
+		for types in pokemon.types {
+			typesStr += "\(types.type.name), "
+		}
+		for ability in pokemon.abilities {
+			abilitiesStr += "\(ability.ability.name), "
+		}
+		
 		pokeLabel?.text = pokemon.name
 		pokeidLabel?.text = String(pokemon.id)
-		
-		for types in pokemon.types {
-			print(types.type.name)
-			
-		}
+		pokeTypeLabel?.text = typesStr
+		pokeAbilitiesLabel?.text = abilitiesStr
 		print(pokemon.abilities.count)
 	}
 	
@@ -73,6 +83,7 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var typeVisibleLabel: UILabel!
 	@IBOutlet var abilitiesVisiblelable: UILabel!
 	
+	@IBOutlet var pokeTypeLabel: UILabel!
 	@IBOutlet var pokeLabel: UILabel!
 	@IBOutlet var pokeidLabel: UILabel!
 	@IBOutlet var pokeAbilitiesLabel: UILabel!
