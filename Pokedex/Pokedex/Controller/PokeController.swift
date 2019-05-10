@@ -10,10 +10,36 @@ import Foundation
 
 class PokeController {
 	
-	func fetchPokemonData(_ name: String) {
-		var url = baseUrl.appendingPathComponent(name)
-		
+	func fetchPokemonData(_ name: String, completion: @escaping (Error?) -> Void) {
+		let url = baseUrl.appendingPathComponent(name)
+
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET"
 		print(url)
+		
+		URLSession.shared.dataTask(with: request) { data, response, error in
+			if let response = response as? HTTPURLResponse {
+				print("Fetch Data Response: ", response.statusCode)
+				if response.statusCode == 404 {
+					print("error: Wrong id or name")
+				}
+			}
+			
+			if let error = error {
+				print("error: \(error)")
+				completion(error)
+				return
+			}
+			
+			guard let data = data else {
+				print("error fetching Data")
+				completion(NSError(domain: "", code: 0, userInfo: nil))
+				return
+			}
+			
+			print(data)
+			completion(nil)
+		}.resume()
 		
 	}
 	
