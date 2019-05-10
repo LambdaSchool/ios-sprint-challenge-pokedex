@@ -33,8 +33,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     func updateViews() {
         if let pokemon = pokemonController?.pokemon {
-            title = pokemon.name
-            nameLabel.text = pokemon.name
+            title = pokemon.name.capitalized
+            nameLabel.text = pokemon.name.capitalized
             idLabel.text = String(pokemon.id)
             typeLabel.text = pokemon.types.first?.type.name
             abilitiesLabel.text = pokemon.abilities.first?.ability.name

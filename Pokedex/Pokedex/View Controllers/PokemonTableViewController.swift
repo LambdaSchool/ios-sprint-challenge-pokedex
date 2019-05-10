@@ -33,7 +33,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name
+        cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name.capitalized
 //        cell.imageView?.image = UIImage(contentsOfFile: pokemonController.pokedex[indexPath.row].sprites.frontDefault)
 
         return cell

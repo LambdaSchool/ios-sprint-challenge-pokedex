@@ -32,7 +32,8 @@ class PokemonDetailViewController: UIViewController {
     func updateViews() {
         guard let pokemon = pokemon else { return }
         
-        nameLabel.text = pokemon.name
+        title = pokemon.name.capitalized
+        nameLabel.text = pokemon.name.capitalized
         idLabel.text = String(pokemon.id)
         typeLabel.text = pokemon.types[0].type.name
         abilitiesLabel.text = pokemon.abilities[0].ability.name
