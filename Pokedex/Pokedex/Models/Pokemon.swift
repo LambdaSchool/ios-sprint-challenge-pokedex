@@ -6,7 +6,8 @@
 //  Copyright © 2019 Hector Steven. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
+
 
 class Pokemon: Codable, Equatable {
 	static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {

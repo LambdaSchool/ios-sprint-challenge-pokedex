@@ -18,6 +18,11 @@ class PokeController {
 	
 	func catchPokemon(poke: Pokemon) {
 		pokemons.append(poke)
+		
+	}
+	
+	func deletePokemon(_ index: Int) {
+		pokemons.remove(at: index)
 	}
 	
 	func fetchPokemonData(_ name: String, completion: @escaping (Error?) -> ()){
@@ -80,6 +85,7 @@ class PokeController {
 		}.resume()
 	}
 	
+	private(set) var SimplePokemon: [SimplePokemon] = []
 	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	private(set) var pokemons: [Pokemon] = []
 	private(set) var currentPokemon: Pokemon? = nil

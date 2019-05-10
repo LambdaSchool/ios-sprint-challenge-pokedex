@@ -30,6 +30,14 @@ class PokeListTableViewController: UITableViewController {
 		return cell
 	}
 	
+	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+		let delete = UITableViewRowAction(style: .destructive, title: "delete") { (action, indexpath) in
+			self.pokeController.deletePokemon(indexPath.row)
+			self.tableView.reloadData()
+		}
+		
+		return [delete]
+	}
 	
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
