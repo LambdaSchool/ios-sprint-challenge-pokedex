@@ -10,13 +10,13 @@ import Foundation
 
 class PokeController {
 	
-	func fetchPokemonData() {
-		var url = baseUrl.appendingPathComponent("pokemon")
+	func fetchPokemonData(_ name: String) {
+		var url = baseUrl.appendingPathComponent(name)
 		
 		print(url)
 		
 	}
 	
-	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
+	private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	private(set) var pokemons: [Pokemon] = []
 }

@@ -19,9 +19,8 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text else { return }
-		print(text)
 		
-		pokeController?.fetchPokemonData()
+		pokeController?.fetchPokemonData(text)
 	}
 	
 	
