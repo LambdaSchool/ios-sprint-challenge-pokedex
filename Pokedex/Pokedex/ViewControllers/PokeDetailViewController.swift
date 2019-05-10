@@ -25,8 +25,9 @@ class PokeDetailViewController: UIViewController, UISearchBarDelegate {
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text else { return }
-		
-		pokeController?.fetchPokemonData(text, completion: { error in
+		setupViews()
+//		pokemon = nil
+		pokeController?.fetchPokemonData(text.lowercased(), completion: { error in
 			if let error = error {
 				print("error fetching \(error)")
 				return

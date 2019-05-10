@@ -38,7 +38,6 @@ class PokeListTableViewController: UITableViewController {
 		return [delete]
 	}
 	
-	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "GetPokemonSegue" {
 			guard let vc = segue.destination as? PokeDetailViewController else { return }
