@@ -53,7 +53,6 @@ class PokemonController {
             let decoder = JSONDecoder()
             do {
                 let search = try decoder.decode(Pokemon.self, from: data)
-                print(search)
                 completion(.success(search))
             } catch {
                 print("Error decoding: \(error)")

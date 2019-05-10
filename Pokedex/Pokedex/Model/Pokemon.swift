@@ -16,19 +16,15 @@ struct Pokemon: Codable {
 }
 
 struct AbilityElement: Codable {
-    let isHidden: Bool
-    let slot: Int
     let ability: TypeClass
     
     enum CodingKeys: String, CodingKey {
-        case isHidden = "is_hidden"
-        case slot, ability
+        case ability
     }
 }
 
 struct TypeClass: Codable {
     let name: String
-    let url: String
 }
 
 struct Sprites: Codable {
@@ -40,7 +36,6 @@ struct Sprites: Codable {
 }
 
 struct TypeElement: Codable {
-    let slot: Int
     let type: TypeClass
 }
 
