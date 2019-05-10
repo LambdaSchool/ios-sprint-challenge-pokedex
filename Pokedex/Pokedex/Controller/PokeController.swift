@@ -60,6 +60,9 @@ class PokeController {
 			}
 			completion(nil)
 		}.resume()
+	}
+	
+	func fetchImage(with url: String, completion: @escaping (Error?) -> ()) {
 		
 	}
 	

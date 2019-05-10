@@ -13,30 +13,16 @@ class Pokemon: Codable, Equatable {
 		return lhs.id == rhs.id
 	}
 	
-
-//	init(name: String, id: Int, types: [Type], abilities: [Abilities]) {
-//		self.name = name
-//		self.id = id
-//		self.types = types
-//		self.abilities = abilities
-//	}
-	
-	
 	let sprites: SpriteList
 	let abilities: [Abilities]
 	let types: [Type]
 	let name: String
 	let id: Int
 	
-	
 	struct SpriteList: Codable {
-		
 		let front_default: String
 	}
 }
-
-
-
 
 struct Type: Codable, Equatable{
 	static func == (lhs: Type, rhs: Type) -> Bool {
