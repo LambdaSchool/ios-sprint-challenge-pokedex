@@ -16,7 +16,11 @@ import Foundation
 //    let sprites: String
 //}
 
-struct Character: Codable {
+struct Character: Codable, Equatable {
+    static func == (lhs: Character, rhs: Character) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
     let abilities: [AbilityDescription]
     let id: Int
     let name: String
