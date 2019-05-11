@@ -21,7 +21,7 @@ enum NetworkError: Error {
 	case badData
 	case dataDecodeError(specifically: Error)
 	case imageDecodeError
-	case noResponse
+	case noStatusCodeResponse
 	case httpNon200StatusCode(code: Int)
 }
 
@@ -48,7 +48,7 @@ class NetworkHandler {
 				}
 			} else {
 				self.printToConsole("Did not receive a proper response code")
-				completion(.failure(.noResponse))
+				completion(.failure(.noStatusCodeResponse))
 				return
 			}
 
