@@ -13,6 +13,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        saveButton.isHidden = true
+
        updateViews()
     }
 

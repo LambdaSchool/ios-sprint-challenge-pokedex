@@ -25,22 +25,26 @@ struct Pokemon: Codable, Equatable {
 
 
 
-    struct Name: Codable {
+    struct SubAbility: Codable, Equatable {
+        let name: String
+    }
+
+    struct SubType: Codable, Equatable {
         let name: String
     }
 
 
-    struct Ability: Codable {
-        let name: Name
+    struct Ability: Codable, Equatable {
+        let name: SubAbility
     }
 
 
-    struct Types: Codable {
-        let name: Name
+    struct Types: Codable, Equatable {
+        let name: SubType
     }
 
 
-    struct Sprite: Codable {
+    struct Sprite: Codable, Equatable {
         let frontDefault: String
 
         enum CodingKeys: String, CodingKey {

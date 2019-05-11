@@ -49,7 +49,9 @@ class PokemonController {
 
             do {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(pokemon, nil)
                 self.pokemon = pokemon
+
 
 
             } catch {
