@@ -47,13 +47,26 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
                     self.saveButton.tintColor = UIColor(displayP3Red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
                 }
+            } else {
+                DispatchQueue.main.async {
+                    let alertController = UIAlertController(title: "Sorry", message: "That is not a Pokemon.", preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "Search Again", style: .default, handler: nil)
+                    alertController.addAction(alertAction)
+                    self.present(alertController, animated: true, completion: {
+                        searchBar.text = ""
+                    })
+                }
             }
         })
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let characterController = characterController else { return }
         if let character = character {
-            characterController?.characters.append(character)
+            
+            if !characterController.characters.contains(character) {
+                characterController.characters.append(character)
+            }
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -68,12 +81,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         for typeDescription in character.types {
             typesArray.append(typeDescription.type.name)
         }
-        self.typesLabel.text = "Types: \(typesArray.joined(separator: ", "))"
+        self.typesLabel.text = "Types:\n\n\(typesArray.joined(separator: ", "))\n\n"
         var abilitiesArray: [String] = []
         for abilityDesription in character.abilities {
             abilitiesArray.append(abilityDesription.ability.name)
         }
-        self.abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
+        self.abilitiesLabel.text = "Abilities:\n\n\(abilitiesArray.joined(separator: ", "))\n"
         let spriteURL = character.sprites.front_default
         characterController?.fetchImage(at: spriteURL, completion: { result in
             DispatchQueue.main.async {

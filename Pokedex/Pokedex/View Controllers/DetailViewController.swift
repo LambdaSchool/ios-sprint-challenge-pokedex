@@ -40,12 +40,12 @@ class DetailViewController: UIViewController {
         for typeDescription in character.types {
             typesArray.append(typeDescription.type.name)
         }
-        self.typesLabel.text = "Types: \(typesArray.joined(separator: ", "))"
+        self.typesLabel.text = "Types:\n\n\(typesArray.joined(separator: ", "))\n\n"
         var abilitiesArray: [String] = []
         for abilityDesription in character.abilities {
             abilitiesArray.append(abilityDesription.ability.name)
         }
-        self.abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
+        self.abilitiesLabel.text = "Abilities:\n\n\(abilitiesArray.joined(separator: ", "))"
         let spriteURL = character.sprites.front_default
         characterController?.fetchImage(at: spriteURL, completion: { result in
             DispatchQueue.main.async {
