@@ -41,8 +41,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let convertedAbilityString = pokemon.abilities.map {$0.name}
         abilityLabel.text = "\(convertedAbilityString)"
 
-        guard let imageData = pokemon.imageData else { return }
-        imageView.image = UIImage(data: imageData)
 
         
 

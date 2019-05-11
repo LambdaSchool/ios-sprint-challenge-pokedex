@@ -13,7 +13,7 @@ class PokemonController {
 
      var pokemons: [Pokemon] = []
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-     var pokemon: Pokemon?
+
 
 
     func create(pokemon: Pokemon) {
@@ -48,10 +48,10 @@ class PokemonController {
 
 
             do {
+
+
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(pokemon, nil)
-                self.pokemon = pokemon
-
 
 
             } catch {

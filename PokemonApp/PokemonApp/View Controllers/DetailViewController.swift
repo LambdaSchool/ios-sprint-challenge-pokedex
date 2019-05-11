@@ -37,9 +37,7 @@ class DetailViewController: UIViewController {
         let convertedAbilityString = pokemon.abilities.map {$0.name}
         abilityLabel.text = "\(convertedAbilityString)"
 
-        guard let imageData = pokemon.imageData else { return }
-        pokemonImage.image = UIImage(data: imageData)
-
+        
     }
 
     
