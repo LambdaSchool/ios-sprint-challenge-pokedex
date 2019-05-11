@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol PokeSpriteCellDelegate: AnyObject {
+	func pokeCell(_ cell: PokeSpriteCollectionViewCell, hadAnError error: Error)
+}
+
 class PokeSpriteCollectionViewCell: UICollectionViewCell {
+
+	weak var delegate: PokeSpriteCellDelegate?
 
 	@IBOutlet var spriteView: UIImageView!
 	var pokemonController: PokemonController?
@@ -24,15 +30,18 @@ class PokeSpriteCollectionViewCell: UICollectionViewCell {
 		let newImageId = UUID().uuidString
 		imageId = newImageId
 		pokemonController?.getSprite(withURL: url, requestID: newImageId, completion: { [weak self] (result) in
+			guard let self = self else { return }
 			do {
 				let (requestId, image) = try result.get()
-				if self?.imageId == requestId {
+				if self.imageId == requestId {
 					DispatchQueue.main.async {
-						self?.spriteView.image = image
+						self.spriteView.image = image
 					}
 				}
 			} catch {
-				print("image fetch error: \(error)")
+				DispatchQueue.main.async {
+					self.delegate?.pokeCell(self, hadAnError: error)
+				}
 			}
 		})
 	}

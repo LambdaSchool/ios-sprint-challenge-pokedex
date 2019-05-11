@@ -74,10 +74,18 @@ extension PokemonSearchViewController: UISearchBarDelegate {
 					let pokemon = try result.get()
 					self?.pokemon = pokemon
 				} catch {
-					print("error getting pokemon: \(error)")
+					let alertVC = UIAlertController(error: error)
+					self?.present(alertVC, animated: true)
 				}
 			}
 		})
+	}
+}
+
+extension PokemonSearchViewController: PokeSpriteCellDelegate {
+	func pokeCell(_ cell: PokeSpriteCollectionViewCell, hadAnError error: Error) {
+		let alertVC = UIAlertController(error: error)
+		present(alertVC, animated: true)
 	}
 }
 
@@ -90,6 +98,7 @@ extension PokemonSearchViewController: UICollectionViewDelegate, UICollectionVie
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpriteCell", for: indexPath)
 		guard let spriteCell = cell as? PokeSpriteCollectionViewCell else { return cell }
 
+		spriteCell.delegate = self
 		spriteCell.pokemonController = pokemonController
 		spriteCell.spriteURLString = spritesURLs?[indexPath.item]
 
