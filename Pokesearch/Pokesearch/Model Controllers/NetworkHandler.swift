@@ -17,11 +17,10 @@ enum HTTPMethods: String {
 }
 
 enum NetworkError: Error {
-	case noAuth
 	case otherError(error: Error)
 	case badData
-	case noDecode
-	case noDecodeImage
+	case dataDecodeError
+	case imageDecodeError
 	case noResponse
 	case httpNon200StatusCode(code: Int)
 }
@@ -76,16 +75,19 @@ class NetworkHandler {
 				decoder.keyDecodingStrategy = .convertFromSnakeCase
 			}
 
+			var data = Data()
 			do {
-				let data = try result.get()
+				data = try result.get()
+			} catch {
+				completion(.failure(error as? NetworkError ?? NetworkError.otherError(error: error)))
+				return
+			}
+
+			do {
 				let newType = try decoder.decode(T.self, from: data)
 				completion(.success(newType))
 			} catch {
-				if let error = error as? NetworkError {
-					completion(.failure(error))
-				} else {
-					completion(.failure(NetworkError.otherError(error: error)))
-				}
+				completion(.failure(.dataDecodeError))
 			}
 		}
 	}

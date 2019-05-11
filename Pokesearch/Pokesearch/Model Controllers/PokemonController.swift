@@ -49,7 +49,7 @@ class PokemonController {
 	private func loadPokemon() {
 		let decoder = PropertyListDecoder()
 		guard let pokemonSaveURL = pokemonSaveURL, FileManager.default.fileExists(atPath: pokemonSaveURL.path) else {
-			print("path: \(self.pokemonSaveURL?.path)")
+			print("path: \(self.pokemonSaveURL?.path ?? "")")
 			return
 		}
 
@@ -95,7 +95,7 @@ class PokemonController {
 			do {
 				let data = try result.get()
 				guard let image = UIImage(data: data) else {
-					completion(.failure(.noDecodeImage))
+					completion(.failure(.imageDecodeError))
 					return
 				}
 				completion(.success((requestID, image)))
