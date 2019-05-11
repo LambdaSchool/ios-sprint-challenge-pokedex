@@ -87,6 +87,7 @@ class NetworkHandler {
 				let newType = try decoder.decode(T.self, from: data)
 				completion(.success(newType))
 			} catch {
+				self.printToConsole("Error decoding data: \(error)")
 				completion(.failure(.dataDecodeError(specifically: error)))
 			}
 		}
