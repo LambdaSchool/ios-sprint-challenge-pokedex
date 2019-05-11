@@ -15,6 +15,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var typesLabel: UILabel!
     @IBOutlet var abilitiesLabel: UILabel!
     @IBOutlet var saveButton: UIButton!
+    @IBOutlet var imageView: UIImageView!
     
     var characterController: CharacterController?
     var character: Character?
@@ -42,10 +43,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             if let character = try? result.get() {
                 self.character = character
                 DispatchQueue.main.async {
-                    self.nameLabel.text = character.name
-                    self.idLabel.text = "ID: \(String(character.id))"
-//                    self.typesLabel.text = character.types.
-//                    self.abilitiesLabel.text = String(character.abilities)
+                    self.setCharacterDetails(character: character)
+
                     self.saveButton.tintColor = UIColor(displayP3Red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
                 }
             }
@@ -61,6 +60,30 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    
+    func setCharacterDetails(character: Character?) {
+        guard let character = character else { return }
+        self.nameLabel.text = character.name
+        self.idLabel.text = "ID: \(String(character.id))"
+        var typesArray: [String] = []
+        for typeDescription in character.types {
+            typesArray.append(typeDescription.type.name)
+        }
+        self.typesLabel.text = "Types: \(typesArray.joined(separator: ", "))"
+        var abilitiesArray: [String] = []
+        for abilityDesription in character.abilities {
+            abilitiesArray.append(abilityDesription.ability.name)
+        }
+        self.abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
+        let spriteURL = character.sprites.front_default
+        characterController?.fetchImage(at: spriteURL, completion: { result in
+            DispatchQueue.main.async {
+                if let image = try? result.get() {
+                    self.imageView.image = image
+                }
+            }
+        })
+        
+        
+    }
     
 }

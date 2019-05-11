@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case badURL
     case badData
     case badDecode
+    case badImageURL
 }
 
 class CharacterController {
@@ -21,6 +23,7 @@ class CharacterController {
     enum HTTPMethod: String {
         case get = "GET"
     }
+    
     
     func searchForCharacters(with searchTerm: String, completion: @escaping (Result<Character, NetworkError>) -> Void) {
         
@@ -45,6 +48,28 @@ class CharacterController {
                 NSLog("Unable to decode data into object of type [Character]: \(error)")
                 completion(.failure(.badDecode))
             }
+            }.resume()
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageUrl = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let _ = error {
+                completion(.failure(.badImageURL))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
             }.resume()
     }
 }

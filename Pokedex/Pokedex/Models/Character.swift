@@ -8,11 +8,20 @@
 
 import Foundation
 
+//struct Character {
+//    let abilities: [String]
+//    let id: Int
+//    let name: String
+//    let types: [String]
+//    let sprites: String
+//}
+
 struct Character: Codable {
     let abilities: [AbilityDescription]
     let id: Int
     let name: String
     let types: [TypeDescription]
+    let sprites: Sprite
 }
 
 
@@ -33,7 +42,13 @@ struct TypeName: Codable {
     let name: String
 }
 
+struct Sprite: Codable {
+    let front_default: String
+}
 
+enum CodingKeys: String, CodingKey {
+    case frontDefault = "front_default"
+}
 
 
 //struct Character: Codable {

@@ -46,6 +46,7 @@ class CaracterTableViewController: UITableViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
                     detailVC.character = characterController.characters[indexPath.row]
                 }
+                detailVC.characterController = characterController
             }
         } else if segue.identifier == "SearchSegue" {
             if let searchVC = segue.destination as? SearchViewController {

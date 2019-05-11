@@ -13,7 +13,9 @@ class DetailViewController: UIViewController {
     @IBOutlet var idLabel: UILabel!
     @IBOutlet var typesLabel: UILabel!
     @IBOutlet var abilitiesLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
     
+    var characterController: CharacterController?
     var character: Character?
     
     override func viewDidLoad() {
@@ -27,10 +29,33 @@ class DetailViewController: UIViewController {
     
     func updateViews() {
         guard let character = character else { return }
-        nameLabel.text = character.name
-        idLabel.text = "ID: \(String(character.id))"
-//        typesLabel.text = String(character.types)
-//        abilitiesLabel.text = String(character.abilities)
+        setCharacterDetails(character: character)
+    }
+    
+    func setCharacterDetails(character: Character?) {
+        guard let character = character else { return }
+        self.nameLabel.text = character.name
+        self.idLabel.text = "ID: \(String(character.id))"
+        var typesArray: [String] = []
+        for typeDescription in character.types {
+            typesArray.append(typeDescription.type.name)
+        }
+        self.typesLabel.text = "Types: \(typesArray.joined(separator: ", "))"
+        var abilitiesArray: [String] = []
+        for abilityDesription in character.abilities {
+            abilitiesArray.append(abilityDesription.ability.name)
+        }
+        self.abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
+        let spriteURL = character.sprites.front_default
+        characterController?.fetchImage(at: spriteURL, completion: { result in
+            DispatchQueue.main.async {
+                if let image = try? result.get() {
+                    self.imageView.image = image
+                }
+            }
+        })
+        
+        
     }
 
 }
