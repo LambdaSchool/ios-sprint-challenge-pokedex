@@ -31,7 +31,8 @@ class CaracterTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath)
         
-        let character = characterController.characters[indexPath.row]
+        let sortedCharacters = characterController.characters.sorted { $0.name < $1.name }
+        let character = sortedCharacters[indexPath.row]
         cell.textLabel?.text = character.name
 
         return cell
