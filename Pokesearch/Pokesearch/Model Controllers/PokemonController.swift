@@ -74,6 +74,7 @@ class PokemonController {
 		var request = URLRequest(url: pokeSearchURL)
 		request.httpMethod = HTTPMethods.get.rawValue
 
+		networkHandler.netDecoder.keyDecodingStrategy = .convertFromSnakeCase
 		networkHandler.transferMahCodableDatas(with: request) { (result: Result<Pokemon, NetworkError>) in
 			do {
 				let pokemon = try result.get()

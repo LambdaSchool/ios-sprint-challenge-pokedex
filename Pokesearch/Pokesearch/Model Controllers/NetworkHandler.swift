@@ -29,6 +29,9 @@ class NetworkHandler {
 
 	var printErrorsToConsole = false
 	var strict200CodeResponse = true
+	lazy var netDecoder = {
+		return JSONDecoder()
+	}()
 
 	func transferMahDatas(with request: URLRequest, session: URLSession = URLSession.shared, completion: @escaping (Result<Data, NetworkError>) -> Void) {
 		session.dataTask(with: request) { [weak self] (data, response, error) in
@@ -66,13 +69,11 @@ class NetworkHandler {
 		}.resume()
 	}
 
-	func transferMahCodableDatas<T: Decodable>(with request: URLRequest, session: URLSession = URLSession.shared, convertFromSnakeCase: Bool = true, completion: @escaping (Result<T, NetworkError>) -> Void) {
+	func transferMahCodableDatas<T: Decodable>(with request: URLRequest, session: URLSession = URLSession.shared, completion: @escaping (Result<T, NetworkError>) -> Void) {
 
-		self.transferMahDatas(with: request) { (result) in
-			let decoder = JSONDecoder()
-			if convertFromSnakeCase {
-				decoder.keyDecodingStrategy = .convertFromSnakeCase
-			}
+		self.transferMahDatas(with: request) { [weak self] (result) in
+			guard let self = self else { return }
+			let decoder = self.netDecoder
 
 			var data = Data()
 			do {
