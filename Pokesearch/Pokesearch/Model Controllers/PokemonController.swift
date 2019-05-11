@@ -73,32 +73,19 @@ class PokemonController {
 		fatalError()
 	}
 
-	func searchForPokemon(named: String, completion: @escaping (Result<Pokemon, Error>)->Void) {
+	func searchForPokemon(named: String, completion: @escaping (Result<Pokemon, NetworkError>)->Void) {
 		var pokeSearchURL = baseURL.appendingPathComponent("pokemon")
 		pokeSearchURL = pokeSearchURL.appendingPathComponent(named.lowercased())
 
 		var request = URLRequest(url: pokeSearchURL)
 		request.httpMethod = HTTPMethods.get.rawValue
 
-		networkHandler.fetchMahDatas(with: request) { [weak self] (_, data, error) in
-			if let error = error {
-				completion(.failure(error))
-				return
-			}
-
-			guard let data = data else {
-				completion(.failure(NetworkError.badData))
-				return
-			}
-
-			let decoder = JSONDecoder()
-			decoder.keyDecodingStrategy = .convertFromSnakeCase
+		networkHandler.transferMahCodableDatas(with: request) { (result: Result<Pokemon, NetworkError>) in
 			do {
-				let newPokemon = try decoder.decode(Pokemon.self, from: data)
-//				self?.pokemons.append(newPokemon)
-				completion(.success(newPokemon))
+				let pokemon = try result.get()
+				completion(.success(pokemon))
 			} catch {
-				completion(.failure(error))
+				completion(.failure((error as? NetworkError) ?? NetworkError.otherError(error: error)))
 			}
 		}
 	}
@@ -119,7 +106,7 @@ class PokemonController {
 			}
 
 			guard let requestID = requestID else {
-				completion(.failure(NetworkError.otherError))
+				completion(.failure(NetworkError.noResponse)) // technically this is wrong, but its not the pattern im going forward with anyways so...
 				return
 			}
 

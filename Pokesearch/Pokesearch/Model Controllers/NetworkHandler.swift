@@ -18,14 +18,18 @@ enum HTTPMethods: String {
 
 enum NetworkError: Error {
 	case noAuth
-	case otherError
+	case otherError(error: Error)
 	case badData
 	case noDecode
 	case noDecodeImage
+	case noResponse
 	case httpNon200StatusCode(code: Int)
 }
 
 class NetworkHandler {
+
+	var printErrorsToConsole = false
+	var strict200CodeResponse = true
 
 	func fetchMahDatas(with request: URLRequest, requestID: String? = nil, completion: @escaping (String?, Data?, Error?) -> Void) {
 		URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -47,5 +51,68 @@ class NetworkHandler {
 		}.resume()
 	}
 
-//	func pushMahDatas(with request: URLRequest, )
+	func transferMahDatas(with request: URLRequest, session: URLSession = URLSession.shared, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+		session.dataTask(with: request) { [weak self] (data, response, error) in
+			guard let self = self else { return }
+			if let response = response as? HTTPURLResponse {
+				if self.strict200CodeResponse && response.statusCode != 200 {
+					self.printToConsole("Received a non 200 http response: \(response.statusCode)")
+					completion(.failure(.httpNon200StatusCode(code: response.statusCode)))
+					return
+				} else if !self.strict200CodeResponse && !(200..<300).contains(response.statusCode) {
+					self.printToConsole("Received a non 200 http response: \(response.statusCode)")
+					completion(.failure(.httpNon200StatusCode(code: response.statusCode)))
+					return
+				}
+			} else {
+				self.printToConsole("Did not receive a proper response code")
+				completion(.failure(.noResponse))
+				return
+			}
+
+			if let error = error {
+				self.printToConsole("An error was encountered: \(error)")
+				completion(.failure(.otherError(error: error)))
+				return
+			}
+
+			guard let data = data else {
+				self.printToConsole("\(NetworkError.badData)")
+				completion(.failure(.badData))
+				return
+			}
+
+			completion(.success(data))
+
+		}.resume()
+	}
+
+	func transferMahCodableDatas<T: Decodable>(with request: URLRequest, session: URLSession = URLSession.shared, convertFromSnakeCase: Bool = true, completion: @escaping (Result<T, NetworkError>) -> Void) {
+
+
+		self.transferMahDatas(with: request) { (result) in
+			let decoder = JSONDecoder()
+			if convertFromSnakeCase {
+				decoder.keyDecodingStrategy = .convertFromSnakeCase
+			}
+
+			do {
+				let data = try result.get()
+				let newType = try decoder.decode(T.self, from: data)
+				completion(.success(newType))
+			} catch {
+				if let error = error as? NetworkError {
+					completion(.failure(error))
+				} else {
+					completion(.failure(NetworkError.otherError(error: error)))
+				}
+			}
+		}
+	}
+
+	private func printToConsole(_ string: String) {
+		if printErrorsToConsole {
+			print(string)
+		}
+	}
 }
