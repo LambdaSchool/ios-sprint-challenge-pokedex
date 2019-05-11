@@ -25,8 +25,8 @@ class PokeSpriteCollectionViewCell: UICollectionViewCell {
 		imageId = newImageId
 		pokemonController?.getSprite(withURL: url, requestID: newImageId, completion: { [weak self] (result) in
 			do {
-				let (id, image) = try result.get()
-				if self?.imageId == id {
+				let (requestId, image) = try result.get()
+				if self?.imageId == requestId {
 					DispatchQueue.main.async {
 						self?.spriteView.image = image
 					}
@@ -35,6 +35,5 @@ class PokeSpriteCollectionViewCell: UICollectionViewCell {
 				print("image fetch error: \(error)")
 			}
 		})
-		
 	}
 }

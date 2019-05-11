@@ -57,14 +57,12 @@ class PokemonSearchViewController: UIViewController {
 		throwPokeballButton.isHidden = hideButton
 	}
 
-
 	@IBAction func throwPokeballPressed(_ sender: UIButton) {
 		guard let pokemon = pokemon else { return }
 		pokemonController?.catchPokemon(pokemon)
 		navigationController?.popViewController(animated: true)
 	}
 }
-
 
 extension PokemonSearchViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -97,6 +95,4 @@ extension PokemonSearchViewController: UICollectionViewDelegate, UICollectionVie
 
 		return cell
 	}
-
-
 }

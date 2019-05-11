@@ -5,13 +5,13 @@
 //  Created by Michael Redig on 5/10/19.
 //  Copyright © 2019 Michael Redig. All rights reserved.
 //
+//swiftlint:disable line_length
 
 import UIKit
 
 class PokemonListTableViewController: UITableViewController {
 
 	let pokemonController = PokemonController()
-
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -32,7 +32,7 @@ class PokemonListTableViewController: UITableViewController {
 	}
 }
 
-//MARK:- table view delegate and data stuff
+// MARK: - table view delegate and data stuff
 extension PokemonListTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return pokemonController.pokemons.count

@@ -68,7 +68,6 @@ class NetworkHandler {
 
 	func transferMahCodableDatas<T: Decodable>(with request: URLRequest, session: URLSession = URLSession.shared, convertFromSnakeCase: Bool = true, completion: @escaping (Result<T, NetworkError>) -> Void) {
 
-
 		self.transferMahDatas(with: request) { (result) in
 			let decoder = JSONDecoder()
 			if convertFromSnakeCase {

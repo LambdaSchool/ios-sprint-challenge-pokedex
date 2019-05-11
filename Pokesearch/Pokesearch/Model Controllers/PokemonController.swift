@@ -5,6 +5,7 @@
 //  Created by Michael Redig on 5/10/19.
 //  Copyright © 2019 Michael Redig. All rights reserved.
 //
+//swiftlint:disable line_length
 
 import UIKit
 
@@ -14,7 +15,6 @@ class PokemonController {
 	init() {
 		loadPokemon()
 	}
-
 
 	func catchPokemon(_ pokemon: Pokemon) {
 		pokemons.append(pokemon)
@@ -27,9 +27,7 @@ class PokemonController {
 		savePokemon()
 	}
 
-
-	//MARK:- persistence
-
+	// MARK: - persistence
 	var pokemonSaveURL: URL? {
 		let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 		return documents?.appendingPathComponent("pokemon", isDirectory: false).appendingPathExtension("plist")
@@ -61,8 +59,7 @@ class PokemonController {
 		}
 	}
 
-	//MARK:- Netstuff
-
+	// MARK: - Netstuff
 	let baseURL = URL(string: "https://pokeapi.co/api/v2")!
 	let networkHandler = NetworkHandler()
 
@@ -70,7 +67,7 @@ class PokemonController {
 		fatalError()
 	}
 
-	func searchForPokemon(named: String, completion: @escaping (Result<Pokemon, NetworkError>)->Void) {
+	func searchForPokemon(named: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
 		var pokeSearchURL = baseURL.appendingPathComponent("pokemon")
 		pokeSearchURL = pokeSearchURL.appendingPathComponent(named.lowercased())
 
