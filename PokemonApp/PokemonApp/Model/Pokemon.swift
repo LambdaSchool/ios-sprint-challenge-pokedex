@@ -14,12 +14,12 @@ struct Pokemon: Codable, Equatable {
         return lhs.id == rhs.id && lhs.name == rhs.name
     }
 
-    var name: String
-    var id: Int
-    var abilities: [Ability]
-    var types: [Types]
+    let name: String
+    let id: Int
+    let abilities: [Ability]
+    let types: [Types]
     let sprites: Sprite
-    var imageData: Data?
+
 
 
 
