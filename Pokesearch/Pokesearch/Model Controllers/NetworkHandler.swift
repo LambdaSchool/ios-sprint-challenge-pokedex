@@ -19,7 +19,7 @@ enum HTTPMethods: String {
 enum NetworkError: Error {
 	case otherError(error: Error)
 	case badData
-	case dataDecodeError
+	case dataDecodeError(specifically: Error)
 	case imageDecodeError
 	case noResponse
 	case httpNon200StatusCode(code: Int)
@@ -87,7 +87,7 @@ class NetworkHandler {
 				let newType = try decoder.decode(T.self, from: data)
 				completion(.success(newType))
 			} catch {
-				completion(.failure(.dataDecodeError))
+				completion(.failure(.dataDecodeError(specifically: error)))
 			}
 		}
 	}
