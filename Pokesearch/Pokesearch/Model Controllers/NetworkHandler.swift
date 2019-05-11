@@ -31,26 +31,6 @@ class NetworkHandler {
 	var printErrorsToConsole = false
 	var strict200CodeResponse = true
 
-	func fetchMahDatas(with request: URLRequest, requestID: String? = nil, completion: @escaping (String?, Data?, Error?) -> Void) {
-		URLSession.shared.dataTask(with: request) { (data, response, error) in
-			if let response = response as? HTTPURLResponse, response.statusCode != 200 {
-				print("non 200 http response: \(response.statusCode)")
-				let myError = NetworkError.httpNon200StatusCode(code: response.statusCode)
-				completion(requestID, nil, myError)
-				return
-			}
-
-			if let error = error {
-				print("error getting url '\(request.url ?? URL(string: "")!)': \(error)")
-				completion(requestID, nil, error)
-				return
-			}
-
-			let dataError = data != nil ? nil : NetworkError.badData
-			completion(requestID, data, dataError)
-		}.resume()
-	}
-
 	func transferMahDatas(with request: URLRequest, session: URLSession = URLSession.shared, completion: @escaping (Result<Data, NetworkError>) -> Void) {
 		session.dataTask(with: request) { [weak self] (data, response, error) in
 			guard let self = self else { return }

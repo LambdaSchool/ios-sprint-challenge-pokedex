@@ -59,10 +59,7 @@ class PokemonController {
 		} catch {
 			print(error)
 		}
-
-
 	}
-
 
 	//MARK:- Netstuff
 
@@ -90,31 +87,21 @@ class PokemonController {
 		}
 	}
 
-	func getSprite(withURL url: URL, requestID: String, completion: @escaping (Result<(id: String, image: UIImage), Error>) -> Void) {
+	func getSprite(withURL url: URL, requestID: String, completion: @escaping (Result<(id: String, image: UIImage), NetworkError>) -> Void) {
 		var request = URLRequest(url: url)
 		request.httpMethod = HTTPMethods.get.rawValue
 
-		networkHandler.fetchMahDatas(with: request, requestID: requestID) { (requestID, data, error) in
-			if let error = error {
-				completion(.failure(error))
-				return
+		networkHandler.transferMahDatas(with: request) { (result) in
+			do {
+				let data = try result.get()
+				guard let image = UIImage(data: data) else {
+					completion(.failure(.noDecodeImage))
+					return
+				}
+				completion(.success((requestID, image)))
+			} catch {
+				completion(.failure(error as? NetworkError ?? NetworkError.otherError(error: error)))
 			}
-
-			guard let data = data else {
-				completion(.failure(NetworkError.badData))
-				return
-			}
-
-			guard let requestID = requestID else {
-				completion(.failure(NetworkError.noResponse)) // technically this is wrong, but its not the pattern im going forward with anyways so...
-				return
-			}
-
-			guard let image = UIImage(data: data) else {
-				completion(.failure(NetworkError.noDecodeImage))
-				return
-			}
-			completion(.success((requestID, image)))
 		}
 	}
 }
