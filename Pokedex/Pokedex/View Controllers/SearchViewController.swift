@@ -66,6 +66,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             
             if !characterController.characters.contains(character) {
                 characterController.characters.append(character)
+                characterController.characters = characterController.characters.sorted { $0.name < $1.name }
             }
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
