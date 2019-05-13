@@ -34,7 +34,7 @@ class CaracterTableViewController: UITableViewController {
         let sortedCharacters = characterController.characters.sorted { $0.name < $1.name }
         let character = sortedCharacters[indexPath.row]
         cell.textLabel?.text = character.name
-
+        
         return cell
     }
     
