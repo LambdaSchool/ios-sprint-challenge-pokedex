@@ -14,6 +14,9 @@ enum HTTPMethods: String {
 	case put = "PUT"
 	case delete = "DELETE"
 	case get = "GET"
+	case head = "HEAD"
+	case patch = "PATCH"
+	case options = "OPTIONS"
 }
 
 enum NetworkError: Error {
