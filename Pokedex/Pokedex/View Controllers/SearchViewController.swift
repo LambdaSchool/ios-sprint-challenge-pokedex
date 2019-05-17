@@ -8,12 +8,15 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    var pokemonController = PokemonController()
+    var pokemon: Pokemon?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        searchBar.delegate = self
     }
     
     
@@ -21,7 +24,15 @@ class SearchViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
     }
     
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        
+        pokemonController.performSearch(with: searchTerm) { _ in
+            DispatchQueue.main.async {
+                //update labels and image w/ pokemon
+            }
+        }
+    }
     
     @IBOutlet weak var searchBar: UISearchBar!
     
