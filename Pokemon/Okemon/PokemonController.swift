@@ -16,7 +16,7 @@ class PokemonController {
     static let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 
-    func addPokemon(name: String, id: Int, abilities: [Pokemon.Ability], types: [Pokemon.Types], sprites: Pokemon.Sprite) {
+    func addPokemon(name: String, id: Int, abilities: [Ability], types: [Types], sprites: [Sprite]) {
         let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
         
         pokemons.append(pokemon)

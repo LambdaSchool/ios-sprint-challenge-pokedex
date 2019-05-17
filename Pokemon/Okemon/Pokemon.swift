@@ -8,42 +8,22 @@
 
 import Foundation
 
-class Pokemon: Codable, Equatable {
+class Pokemon: Codable  {
 
     let name: String
     let id: Int
 
-    let abilities: [Pokemon.Ability]
-    let types: [Pokemon.Types]
+    let abilities: [Ability]
+    let types: [Types]
 
-    let sprites: Sprite
+    let sprites: [Sprite]
 
-    static func ==(lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.id == rhs.id && lhs.name == rhs.name
-    }
-
-    init(name: String, id: Int, abilities: [Pokemon.Ability], types: [Pokemon.Types], sprites: Sprite) {
+    init(name: String, id: Int, abilities: [Ability], types: [Types], sprites: [Sprite] ) {
         self.name = name
         self.id = id
         self.abilities = abilities
         self.types = types
         self.sprites = sprites
-    }
-
-    struct Ability:Equatable, Codable {
-        let ability: String
-    }
-    struct Types:Equatable, Codable {
-        let type: String
-    }
-    struct Sprite:Equatable, Codable {
-
-        enum CodingKeys: String, CodingKey {
-            case frontDefault = "front_default"
-        }
-
-
-        let frontDefault: String
     }
 
 
@@ -51,26 +31,39 @@ class Pokemon: Codable, Equatable {
 
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
-
         let name = try container.decode(String.self, forKey: .name)
         let id = try container.decode(Int.self, forKey: .id)
-        let abilityDictionary = try container.decodeIfPresent([String: Ability].self, forKey: .abilities)
-        let typesDictionary = try container.decodeIfPresent([String: Types].self, forKey: .types)
-        let sprites = try container.decode(Sprite.self, forKey: .sprites)
+        let sprites = try container.decode([Sprite].self, forKey: .sprites)
+        let abilitiesDictionaries = try container.decodeIfPresent([String: Ability].self, forKey: .abilities)
+        let typesDictionaries = try container.decodeIfPresent([String: Types].self, forKey: .types)
 
-
-
-        let abilities = abilityDictionary?.compactMap({ $0.value }) ?? []
-        let types = typesDictionary?.compactMap({ $0.value }) ?? []
-
-        // 4
+        let abilities = abilitiesDictionaries?.compactMap({ $0.value }) ?? []
+        let types = typesDictionaries?.compactMap({ $0.value }) ?? []
         self.name = name
         self.id = id
         self.abilities = abilities
         self.types = types
         self.sprites = sprites
 
-    }
 
+    }
 }
+struct Name: Codable {
+    let name: String
+}
+struct Ability: Codable {
+    let Ability: Name
+}
+struct Types: Codable {
+    let type: Name
+}
+struct Sprite: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+    
+    
+    let frontDefault: String
+}
+
