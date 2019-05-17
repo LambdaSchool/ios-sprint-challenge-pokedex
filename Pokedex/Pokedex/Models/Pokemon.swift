@@ -6,12 +6,13 @@
 //  Copyright © 2019 Bytes-Random L.L.C. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
     let abilities: String
     let types: String
-    let image: Data
+    let image: String
+    
 }
