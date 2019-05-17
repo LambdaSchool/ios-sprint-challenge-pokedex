@@ -11,6 +11,14 @@ import UIKit
 class PokemonsTableViewController: UITableViewController {
     var pokemonController = PokemonController()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,13 +29,14 @@ class PokemonsTableViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddPokemon" {
+        if segue.identifier == "SearchPokemon" {
             let destinationVC = segue.destination as! AddPokemonViewController
             destinationVC.pokemonController = pokemonController
         } else if segue.identifier == "ShowPokemon" {
             let destinationVC = segue.destination as! PokemonDetailViewController
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             destinationVC.pokemon = pokemonController.pokemons[indexPath.row]
+            destinationVC.pokemonController = pokemonController
         }
     }
 
@@ -42,13 +51,8 @@ class PokemonsTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-
-        let pokemon = pokemonController.pokemons[indexPath.row]
-
-        cell.textLabel?.text = pokemon.name
-
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as! pokemonTableViewCell
+        cell.pokemon = pokemonController.pokemons[indexPath.row]
         return cell
     }
 

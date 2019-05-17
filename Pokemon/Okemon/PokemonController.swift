@@ -6,7 +6,7 @@
 //  Copyright © 2019 Jonathan Ferrer. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PokemonController {
 
@@ -16,16 +16,40 @@ class PokemonController {
     static let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 
-    func addPokemon(name: String, id: Int, abilities: [Ability], types: [Types], sprites: [Sprite]) {
+    func addPokemon(name: String, id: Int, abilities: [Ability], types: [Types], sprites: Sprite) {
         let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
-        
+
         pokemons.append(pokemon)
 
     }
 
+    func getImage(image: String, completion: @escaping (UIImage?, Error?) -> Void) {
+
+        let imageURL = URL(string: image)!
+
+        var requestURL = URLRequest(url: imageURL)
+        requestURL.httpMethod = HTTPMethod.get.rawValue
+
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+
+            guard let data = data else {
+                completion(nil, NSError())
+                return
+            }
+
+            let image = UIImage(data: data)!
+            completion(image, nil)
+            }.resume()
+    }
+
 
     func searchPokemon(with searchTerm: String, completion: @escaping (Error?) -> Void) {
-        let requestURL = PokemonController.baseURL.appendingPathComponent("pokemon/\(searchTerm)")
+        let requestURL = PokemonController.baseURL.appendingPathComponent(searchTerm.lowercased())
 
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -54,7 +78,7 @@ class PokemonController {
                 NSLog("Error decoding pokemon: \(error)")
                 completion(error)
             }
-        }.resume()
+            }.resume()
 
 
 

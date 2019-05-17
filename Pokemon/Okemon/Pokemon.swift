@@ -16,9 +16,10 @@ class Pokemon: Codable  {
     let abilities: [Ability]
     let types: [Types]
 
-    let sprites: [Sprite]
+    let sprites: Sprite
+    var imageData: Data?
 
-    init(name: String, id: Int, abilities: [Ability], types: [Types], sprites: [Sprite] ) {
+    init(name: String, id: Int, abilities: [Ability], types: [Types], sprites: Sprite ) {
         self.name = name
         self.id = id
         self.abilities = abilities
@@ -37,12 +38,12 @@ struct Types: Codable {
     let type: Name
 }
 struct Sprite: Codable {
-    
+
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
     }
-    
-    
+
+
     let frontDefault: String
 }
 
