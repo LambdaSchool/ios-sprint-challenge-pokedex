@@ -13,7 +13,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let pokemon = pokemon else { return }
+        /*guard let pokemon = pokemon else { return }
 
         pokemonController?.fetchImages(pokemon: pokemon, completion: { (image, error) in
             if let error = error {
@@ -25,11 +25,13 @@ class DetailViewController: UIViewController {
                 self.pokemonImage.image = image
             }
         })
+ */
 
 
     }
 
     private func updateViews() {
+
         guard let pokemon = pokemon else { return }
 
         idLabel.text = "ID: \(pokemon.id)"
