@@ -26,33 +26,12 @@ class Pokemon: Codable  {
         self.sprites = sprites
     }
 
-
-    required init(from decoder: Decoder) throws {
-
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let name = try container.decode(String.self, forKey: .name)
-        let id = try container.decode(Int.self, forKey: .id)
-        let sprites = try container.decode([Sprite].self, forKey: .sprites)
-        let abilitiesDictionaries = try container.decodeIfPresent([String: Ability].self, forKey: .abilities)
-        let typesDictionaries = try container.decodeIfPresent([String: Types].self, forKey: .types)
-
-        let abilities = abilitiesDictionaries?.compactMap({ $0.value }) ?? []
-        let types = typesDictionaries?.compactMap({ $0.value }) ?? []
-        self.name = name
-        self.id = id
-        self.abilities = abilities
-        self.types = types
-        self.sprites = sprites
-
-
-    }
 }
 struct Name: Codable {
     let name: String
 }
 struct Ability: Codable {
-    let Ability: Name
+    let ability: Name
 }
 struct Types: Codable {
     let type: Name
