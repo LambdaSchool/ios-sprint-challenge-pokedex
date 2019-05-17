@@ -15,15 +15,25 @@ class DetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
+
+    private func updateViews() {
+        
+
+    }
+
+
+
 
     @IBOutlet weak var pokemonImage: UIImageView!
-    
     @IBOutlet weak var idLabel: UILabel!
-    
     @IBOutlet weak var typeLabel: UILabel!
-    
     @IBOutlet weak var abilityLabel: UILabel!
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
 
 }

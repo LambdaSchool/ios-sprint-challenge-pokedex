@@ -14,6 +14,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        idLabel.text = .isHidden
+        typeLabel.text = .isHidden
+        abilityLabel.text = .isHidden
+
 
     }
 
@@ -29,10 +33,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             if let pokemon = pokemon {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
-                    updateViews()
+                    self.updateViews()
                 }
 
-                pokemonController.fetchImages(pokemon: pokemon, completion: { (image, error) in
+                self.pokemonController.fetchImages(pokemon: pokemon, completion: { (image, error) in
                     if let error = error {
                         NSLog("Error searching Images: \(error)")
                         return
