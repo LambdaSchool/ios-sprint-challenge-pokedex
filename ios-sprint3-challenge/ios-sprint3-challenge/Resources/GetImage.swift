@@ -1,9 +1,6 @@
 import Foundation
 import UIKit
 
-import Foundation
-import UIKit
-
 extension UIImageView {
     func loadImageFrom(url: URL) {
         DispatchQueue.global().async { [weak self] in
