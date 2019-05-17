@@ -55,7 +55,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         guard let pokemon = pokemon else { return }
 
         pokemonController.create(pokemon: pokemon)
-        navigationController?.popToRootViewController(animated: true)
+
+        let alertController = UIAlertController(title: "Pokemon Saved!", message: "Your pokemon was successfully Saved!", preferredStyle: .alert)
+
+         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            self.navigationController?.popToRootViewController(animated: true) }))
+
+        present(alertController, animated: true, completion: nil)
     }
 
     private func updateViews() {
