@@ -17,6 +17,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        
+        nameLabel.text = ""
+        typeLabel.text = ""
+        idLabel.text = ""
+        abilitiesLabel.text = ""
+        saveButton.isHidden = true
+        
     }
     
     
@@ -29,12 +36,22 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         pokemonController.performSearch(with: searchTerm) { _ in
             DispatchQueue.main.async {
-                //update labels and image w/ pokemon
+                guard let pokemon = self.pokemonController.pokemonResults.last else { return }
+                self.nameLabel.text = pokemon.name
+                let types = pokemon.types.map({ $0.type.name })
+                self.typeLabel.text = types.joined(separator: ", ")
+                self.idLabel.text = String(pokemon.id)
+                let abilities = pokemon.abilities.map({ $0.ability.name })
+                self.abilitiesLabel.text = abilities.joined(separator: ", ")
+                self.saveButton.isHidden = false
+                self.imageView.image = UIImage(contentsOfFile: pokemon.sprites.frontDefault)
+                
             }
         }
     }
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
@@ -43,5 +60,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var idLabel: UILabel!
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
 }
