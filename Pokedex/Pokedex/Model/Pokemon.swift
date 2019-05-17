@@ -20,9 +20,6 @@ struct Pokemon: Codable {
 struct Ability: Codable {
 	let ability: Class
 	
-	enum CodingKeys: String, CodingKey {
-		case ability
-	}
 }
 
 

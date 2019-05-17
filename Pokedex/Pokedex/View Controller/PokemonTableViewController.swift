@@ -29,10 +29,28 @@ class PokemonTableViewController: UITableViewController {
     }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemoncell", for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 		let currentPokemon = pokemonController.pokemon[indexPath.row]
 		
 		cell.textLabel?.text = currentPokemon.name
+//		cell.imageView?.image = currentPokemon.sprites
+		pokemonController.getImage(at: currentPokemon.sprites.frontDefault) { (result) in
+			
+			let image: UIImage?
+			
+			do {
+				
+				image = try result.get()
+				DispatchQueue.main.async {
+					cell.imageView?.image = image
+				}
+			} catch {
+				
+				NSLog("Error here")
+			}
+		}
+		
+		
 
 		return cell
 		

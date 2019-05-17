@@ -46,7 +46,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
     }
 	
-	func searchBarClicked(_ searchBar: UISearchBar) {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let text = searchBar.text?.lowercased() else { return }
 		guard let pokeController = pokemonController else { return }
 		
@@ -88,6 +88,5 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 		
 		navigationController?.popViewController(animated: true)
 	}
-	
 
 }
