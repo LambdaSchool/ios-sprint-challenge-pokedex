@@ -9,9 +9,29 @@
 import Foundation
 
 
-struct Pokemon {
+struct Pokemon: Codable {
     
+    var id: Int
+    var name: String
+    var abilities: [Abilities]
+    var types: [PokeTypes]
+    var sprite: Sprite
+   
+}
+
+
+struct Abilities: Codable {
+    let ability: String
+}
+
+struct PokeTypes: Codable {
+    let type: String
+}
+
+struct Sprite: Codable {
+    var frontDefault: URL
     
-    
-    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
 }
