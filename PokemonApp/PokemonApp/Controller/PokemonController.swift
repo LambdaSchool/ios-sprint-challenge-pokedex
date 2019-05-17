@@ -32,7 +32,7 @@ class PokemonController {
 
     func fetchPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
 
-        let url = baseURL.appendingPathComponent(searchTerm)
+        let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         let request = URLRequest(url: url)
 
 
@@ -121,7 +121,7 @@ class PokemonController {
         let decoder = PropertyListDecoder()
 
         do {
-            let data = Data(contentsOf: url)
+            let data = try Data(contentsOf: url)
             let pokeDex = try decoder.decode([Pokemon].self, from: data)
             self.pokeDex = pokeDex
 
