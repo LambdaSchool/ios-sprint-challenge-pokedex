@@ -14,7 +14,18 @@ class PokemonDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let pokemon = pokemon else { return }
+        pokemonNameLabel.text = pokemon.name
+        pokemonIDLabel.text = String(pokemon.id)
+        let pokemonTypes: [String] = pokemon.types.map{$0.type.name}
+        pokemonTypeLabel.text = "\(pokemonTypes.joined(separator: ", "))"
+        let pokemonAbilities: [String] = pokemon.abilities.map{$0.ability.name}
+        pokemonAbilityLabel.text = "\(pokemonAbilities.joined(separator: ", "))"
+        guard let url = URL(string: pokemon.sprites.frontDefault), let image = try? Data(contentsOf: url) else { return }
+        pokemonImageView.image = UIImage(data: image)
     }
     
     @IBOutlet weak var pokemonNameLabel: UILabel!

@@ -35,24 +35,36 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     func updateViews(pokemon: Pokemon?) {
         guard let pokemon = pokemon else { return }
-        self.pokemonNameLabel.text = pokemon.name
+        pokemonNameLabel.text = pokemon.name
         pokemonIDLabel.text = String(pokemon.id)
-        // include abilities, types, and sprites
+        let pokemonTypes: [String] = pokemon.types.map{$0.type.name}
+        pokemonTypeLabel.text = "\(pokemonTypes.joined(separator: ", "))"
+        let pokemonAbilities: [String] = pokemon.abilities.map{$0.ability.name}
+        pokemonAbilityLabel.text = "\(pokemonAbilities.joined(separator: ", "))"
+        guard let url = URL(string: pokemon.sprites.frontDefault), let image = try? Data(contentsOf: url) else { return }
+        pokemonImageView.image = UIImage(data: image)
         saveButton.setTitleColor(.blue, for: .normal)
+        searchBar.isHidden = true
     } // end of update views
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchedPokemon = searchBar.text?.lowercased(), searchBar.text != "" else { return }
         pokemonController?.searchPokemon(with: searchedPokemon, completion: { (result) in
-            DispatchQueue.main.async {
-                self.updateViews(pokemon: self.pokemon)
-            }
+                do { let pokemon = try result.get()
+                    self.pokemon = pokemon
+                    DispatchQueue.main.async {
+                        self.updateViews(pokemon: pokemon)
+                    }
+                } catch {
+                    NSLog("Error searching for Pokemon: \(error)")
+                    return
+                }
         })
     } // end of search bar
     
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        guard let newPokemon = pokemon else { return }
-        pokemonController?.addNewPokemon(newPokemon: newPokemon)
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.pokemon.append(pokemon)
         navigationController?.popViewController(animated: true)
     } // end of save button
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class PokemonController {
     var pokemon: [Pokemon] = []
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     enum HTTPMethod: String {
         case get = "GET"
         case put = "PUT"
@@ -52,8 +52,4 @@ class PokemonController {
             }
         }.resume()
     } // end of search pokemon
-    
-    func addNewPokemon(newPokemon: Pokemon) {
-        pokemon.append(newPokemon)
-    } // end of new pokemon
 }

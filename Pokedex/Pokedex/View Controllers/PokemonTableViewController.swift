@@ -10,10 +10,15 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     var pokemonController = PokemonController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     } // end of view did load
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.tableView.reloadData()
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokemon.count
@@ -23,7 +28,8 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath)
         let pokemon = pokemonController.pokemon[indexPath.row]
         cell.textLabel?.text = pokemon.name
-        // implement pokemon sprite
+        guard let url = URL(string: pokemon.sprites.frontDefault), let image = try? Data(contentsOf: url) else { return cell }
+        cell.imageView?.image = UIImage(data: image)
         return cell
     } // end of cell for row at
 
@@ -42,10 +48,10 @@ class PokemonTableViewController: UITableViewController {
                 }
                 pokemonDVC.pokemonController = pokemonController
             }
-            else if segue.identifier == "SearchSegue" {
-                if let pokemonSVC = segue.destination as? PokemonSearchViewController {
-                    pokemonSVC.pokemonController = pokemonController
-                }
+        }
+        else if segue.identifier == "SearchSegue" {
+            if let pokemonSVC = segue.destination as? PokemonSearchViewController {
+                pokemonSVC.pokemonController = pokemonController
             }
         }
     } // end of prepare for segue
