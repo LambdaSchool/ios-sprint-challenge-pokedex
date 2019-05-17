@@ -22,26 +22,30 @@ class PokemonController {
         let url = baseURL.appendingPathComponent(searchTerm.lowercased())
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 NSLog("Error searching for Pokemon: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
             guard let data = data else {
                 NSLog("Error retrieving data")
-                completion(error)
+                completion(nil, error)
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 let searchPokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(searchPokemon, nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
-                completion(error)
+                completion(nil, error)
                 return
             }
         }.resume()
-    }
+    } // end of search pokemon
     
+    func addNewPokemon(newPokemon: Pokemon) {
+        let index = pokemon.index(of: newPokemon) else { return }
+    }
 }
