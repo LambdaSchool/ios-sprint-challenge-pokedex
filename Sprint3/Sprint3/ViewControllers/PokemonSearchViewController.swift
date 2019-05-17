@@ -8,42 +8,74 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var pokemonSearchBar: UISearchBar!
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
     
-    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonID: UILabel!
     @IBOutlet weak var pokemonTypes: UILabel!
     @IBOutlet weak var pokemonAbilities: UILabel!
     
-    func searchPokemon(_ searchBar: UISearchBar) {
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        pokemonName.text = pokemon.name.capitalized
+        let id = String(pokemon.id)
+        pokemonID.text = "ID: \(id)"
+        let type: [String] = pokemon.types.map { $0.type.name }
+        pokemonTypes.text = "Type(s): \n\(type.joined(separator: "\n"))"
+        let abilities: [String] = pokemon.abilities.map { $0.ability.name }
+        pokemonAbilities.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
         
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBar.delegate = self
+        updateViews()
+        
+    }
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        print("Search clicked")
+        
+        pokemonController?.searchPokemon(with: searchTerm, completion: { (result, error) in
+            if error != nil {
+                NSLog("Error searching for \(searchTerm): \(error)")
+            }
+            self.pokemon = result
+            DispatchQueue.main.async {
+                self.updateViews()
+                self.searchBar.text = ""
+            }
+        })
         
         
     }
     
     @IBAction func savePokemonClicked(_ sender: UIButton) {
         
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+        
+        
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

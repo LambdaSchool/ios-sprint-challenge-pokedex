@@ -10,10 +10,10 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        //Change title to pokemon Name
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
     }
     
     @IBOutlet weak var pokemonName: UILabel!
@@ -21,6 +21,35 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonTypes: UILabel!
     @IBOutlet weak var pokemonID: UILabel!
     @IBOutlet weak var pokemonSprite: UIImageView!
+    
+    
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        
+        pokemonName.text = pokemon.name.capitalized
+        pokemonID.text = String(pokemon.id)
+        
+        
+        let abilities: [String] = pokemon.abilities.map { $0.ability.name }
+        pokemonAbilities.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
+        
+        let type: [String] = pokemon.types.map { $0.type.name }
+        pokemonTypes.text = "Type(s): \n\(type.joined(separator: "\n"))"
+
+        guard let url = URL(string: pokemon.sprites.frontDefault),
+            let pokemonImageData = try? Data(contentsOf: url) else { return }
+        pokemonSprite.image = UIImage(data: pokemonImageData)
+        
+        
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+        navigationItem.title = pokemon?.name
+    }
+    
 
 
 }

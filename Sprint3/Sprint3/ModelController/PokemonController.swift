@@ -13,7 +13,7 @@ class PokemonController {
     
     var pokemons: [Pokemon] = []
     
-    let baseURL = URL(string: "http://poke-api.vapor.cloud/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     enum HTTPMethod: String {
         case get = "GET"
@@ -42,8 +42,9 @@ class PokemonController {
     
     
     
-    func searchPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func searchPokemon(with searchTerm: String, completion: @escaping (Pokemon?, NetworkError?) -> Void) {
         
+        print("Running search for: \(searchTerm)")
         let requestURL = baseURL
             .appendingPathComponent(searchTerm.lowercased())
         
@@ -54,24 +55,24 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             
             if let error = error {
-                NSLog("Error searching pokemon: \(error)")
-                completion(.failure(.apiError))
+                NSLog("Error1 searching pokemon: \(error)")
+                completion(nil, (.apiError))
                 return
             }
             
             guard let data = data else {
                 NSLog("No data returned from search")
-                completion(.failure(.noDataReturned))
+                completion(nil, (.noDataReturned))
                 return
             }
             
-            let decoder = JSONDecoder()
             do {
+                let decoder = JSONDecoder()
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                completion(.success(pokemon))
+                completion((pokemon), nil)
             } catch {
                 NSLog("Error decoding pokemon")
-                completion(.failure(.noDecode))
+                completion(nil, (.noDecode))
                 return
             }
         }.resume()

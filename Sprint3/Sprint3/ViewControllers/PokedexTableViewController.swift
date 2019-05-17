@@ -13,8 +13,14 @@ class PokedexTableViewController: UITableViewController {
     let pokemonController = PokemonController()
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -25,11 +31,10 @@ class PokedexTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell() }
         
         let pokemon = pokemonController.pokemons[indexPath.row]
-        cell.pokemonLabel?.text = pokemon.name
-        let spriteURL = pokemon.sprite.frontDefault
-        guard let spriteData = try? Data(contentsOf: spriteURL) else { return cell }
-        cell.pokemonSprite.image = UIImage(data: spriteData)
-
+        cell.pokemonLabel?.text = pokemon.name.capitalized
+        guard let url = URL(string: pokemon.sprites.frontDefault),
+            let pokemonImageData = try? Data(contentsOf: url) else { return UITableViewCell() }
+        cell.pokemonSprite.image = UIImage(data: pokemonImageData)
 
 
         return cell
@@ -47,8 +52,15 @@ class PokedexTableViewController: UITableViewController {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchSegue" {
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
+            destinationVC.pokemonController = pokemonController
+        } else if segue.identifier == "PokemonDetailSegue" {
+            guard let destinationVC = segue.destination as? PokemonDetailViewController,
+                let pokemonIndex = tableView.indexPathForSelectedRow else { return }
+            let pokemon = pokemonController.pokemons[pokemonIndex.row]
+            destinationVC.pokemon = pokemon
+        }
     }
 
 }
