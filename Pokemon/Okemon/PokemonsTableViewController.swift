@@ -28,7 +28,6 @@ class PokemonsTableViewController: UITableViewController {
             let destinationVC = segue.destination as! PokemonDetailViewController
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             destinationVC.pokemon = pokemonController.pokemons[indexPath.row]
-            
         }
     }
 

@@ -16,10 +16,17 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
 
+    func updateViews(){
+        guard let pokemon = pokemon else { return}
+        nameLabel.text = pokemon.name
+        idLabel.text = "\(pokemon.id)"
+        abilitiesLabel.text = "\(pokemon.abilities)"
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateViews()
         // Do any additional setup after loading the view.
     }
 
