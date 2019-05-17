@@ -13,13 +13,32 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        guard let pokemon = pokemon else { return }
+
+        pokemonController?.fetchImages(pokemon: pokemon, completion: { (image, error) in
+            if let error = error {
+                NSLog("Error getting images: \(error)")
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.pokemonImage.image = image
+            }
+        })
+
+
     }
 
     private func updateViews() {
-        
+        guard let pokemon = pokemon else { return }
+
+        idLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Type: \(pokemon.types.map{$0.type.name})"
+        abilityLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name})"
 
     }
+
+
 
 
 
