@@ -62,6 +62,7 @@ class PokemonController {
 				return
 			}
 		}.resume()
+	}
 		
 		func getImage(urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
 			let url = URL(string: urlString)!
@@ -69,8 +70,8 @@ class PokemonController {
 			var request = URLRequest(url: url)
 			request.httpMethod = HTTPMethod.get.rawValue
 			
-			URLSession.shared.dataTask(with: request) { (data, blank, error) in
-				if let blank = error {
+			URLSession.shared.dataTask(with: request) { (data, _, error) in
+				if let _ = error {
 					completion(.failure(.otherError))
 					return
 				}
@@ -82,6 +83,7 @@ class PokemonController {
 				
 				let image = UIImage(data: data)!
 				completion(.success(image))
+				
 			}.resume()
 		}
 		
@@ -94,4 +96,4 @@ class PokemonController {
 		}
 		
 	}
-}
+
