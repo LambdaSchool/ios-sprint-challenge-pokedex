@@ -76,14 +76,12 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        searchBar.resignFirstResponder()
-        
         guard let name = searchBar.text?.lowercased(),
             !name.isEmpty
             else { return }
         
         pokemonController?.fetchPokemon(named: name, completion: { (pokemon, error) in
-            
+      
             if let error = error {
                 NSLog("Error \(error)")
                 DispatchQueue.main.async {
