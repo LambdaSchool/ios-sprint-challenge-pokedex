@@ -29,12 +29,24 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-        // implement delete cell 
+            pokemonController.pokemon.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     } // end of delete cell
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "DetailSegue" {
+            if let pokemonDVC = segue.destination as? PokemonDetailViewController {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    pokemonDVC.pokemon = pokemonController.pokemon[indexPath.row]
+                }
+                pokemonDVC.pokemonController = pokemonController
+            }
+            else if segue.identifier == "SearchSegue" {
+                if let pokemonSVC = segue.destination as? PokemonSearchViewController {
+                    pokemonSVC.pokemonController = pokemonController
+                }
+            }
+        }
     } // end of prepare for segue
 }

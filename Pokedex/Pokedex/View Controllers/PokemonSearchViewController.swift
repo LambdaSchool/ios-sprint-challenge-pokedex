@@ -8,11 +8,13 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
-
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,7 +33,26 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var pokemonAbilityLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
+    func updateViews(pokemon: Pokemon?) {
+        guard let pokemon = pokemon else { return }
+        self.pokemonNameLabel.text = pokemon.name
+        pokemonIDLabel.text = String(pokemon.id)
+        // include abilities, types, and sprites
+        saveButton.setTitleColor(.blue, for: .normal)
+    } // end of update views
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchedPokemon = searchBar.text?.lowercased(), searchBar.text != "" else { return }
+        pokemonController?.searchPokemon(with: searchedPokemon, completion: { (result) in
+            DispatchQueue.main.async {
+                self.updateViews(pokemon: self.pokemon)
+            }
+        })
+    } // end of search bar
+    
     @IBAction func saveButtonPressed(_ sender: Any) {
-        
-    }
+        guard let newPokemon = pokemon else { return }
+        pokemonController?.addNewPokemon(newPokemon: newPokemon)
+        navigationController?.popViewController(animated: true)
+    } // end of save button
 }

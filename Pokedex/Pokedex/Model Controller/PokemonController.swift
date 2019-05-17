@@ -10,7 +10,7 @@ import Foundation
 
 class PokemonController {
     var pokemon: [Pokemon] = []
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     enum HTTPMethod: String {
         case get = "GET"
         case put = "PUT"
@@ -18,34 +18,42 @@ class PokemonController {
         case delete = "DELETE"
     }
     
-    func searchPokemon(with searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
-        let url = baseURL.appendingPathComponent(searchTerm.lowercased())
+    enum NetworkError: Error {
+        case noDataReturned
+        case noBearer
+        case badAuth
+        case apiError
+        case noDecode
+    }
+    
+    func searchPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let url = baseURL.appendingPathComponent(searchTerm)
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 NSLog("Error searching for Pokemon: \(error)")
-                completion(nil, error)
+                completion(.failure(.apiError))
                 return
             }
             guard let data = data else {
                 NSLog("Error retrieving data")
-                completion(nil, error)
+                completion(.failure(.noDataReturned))
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 let searchPokemon = try decoder.decode(Pokemon.self, from: data)
-                completion(searchPokemon, nil)
+                completion(.success(searchPokemon))
             } catch {
                 NSLog("Error decoding data: \(error)")
-                completion(nil, error)
+                completion(.failure(.noDecode))
                 return
             }
         }.resume()
     } // end of search pokemon
     
     func addNewPokemon(newPokemon: Pokemon) {
-        let index = pokemon.index(of: newPokemon) else { return }
-    }
+        pokemon.append(newPokemon)
+    } // end of new pokemon
 }
