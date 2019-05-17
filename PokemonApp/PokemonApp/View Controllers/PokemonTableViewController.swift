@@ -16,8 +16,8 @@ class PokemonTableViewController: UITableViewController {
         super.viewDidLoad()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         tableView.reloadData()
     }
@@ -55,9 +55,23 @@ class PokemonTableViewController: UITableViewController {
         }    
     }
 
+    /*/ Alternative Segue
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        if let DetailVC  = self.storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailViewController {
+            DetailVC.pokemon = pokemonController.pokeDex[indexPath.row]
+            navigationController?.pushViewController(DetailVC, animated: true)
+        }
+        // let detailVc = DetailViewController()
+
+        //navigationController?.present(detailVc, animated: true)
+    }
+
+ */
 
 
 
+    //Segue wasn't working correctly. Pokemon came back nil
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -77,6 +91,7 @@ class PokemonTableViewController: UITableViewController {
 
 
     }
+
 
 
 }

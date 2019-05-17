@@ -12,8 +12,9 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
 
-        /*guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon else { return }
 
         pokemonController?.fetchImages(pokemon: pokemon, completion: { (image, error) in
             if let error = error {
@@ -25,7 +26,7 @@ class DetailViewController: UIViewController {
                 self.pokemonImage.image = image
             }
         })
- */
+ 
 
 
     }
@@ -33,6 +34,8 @@ class DetailViewController: UIViewController {
     private func updateViews() {
 
         guard let pokemon = pokemon else { return }
+
+        self.title = pokemon.name
 
         idLabel.text = "ID: \(pokemon.id)"
         typeLabel.text = "Type: \(pokemon.types.map{$0.type.name})"
@@ -50,11 +53,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
     var pokemonController: PokemonController?
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
     
 
 }
