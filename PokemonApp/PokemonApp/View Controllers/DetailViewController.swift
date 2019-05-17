@@ -2,7 +2,7 @@
 //  DetailViewController.swift
 //  PokemonApp
 //
-//  Created by Diante Lewis-Jolley on 5/10/19.
+//  Created by Diante Lewis-Jolley on 5/17/19.
 //  Copyright © 2019 Diante Lewis-Jolley. All rights reserved.
 //
 
@@ -13,55 +13,17 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        saveButton.isHidden = true
-
-       updateViews()
+        // Do any additional setup after loading the view.
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        updateViews()
-    }
-
-
-
-    private func updateViews() {
-        guard let pokemon = pokemon else { return }
-
-        idLabel.text = "\(pokemon.id)"
-
-        let convertedTypeString = pokemon.types.map { $0.name}
-        typeLabel.text = "\(convertedTypeString)"
-
-        let convertedAbilityString = pokemon.abilities.map {$0.name}
-        abilityLabel.text = "\(convertedAbilityString)"
-
-        
-    }
-
     
 
-    
-
-
-
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
-
-    
-
-    @IBOutlet weak var saveButton: UIButton!
-    
     @IBOutlet weak var pokemonImage: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    
     @IBOutlet weak var idLabel: UILabel!
+    
     @IBOutlet weak var typeLabel: UILabel!
+    
     @IBOutlet weak var abilityLabel: UILabel!
-
-
+    
 
 }
