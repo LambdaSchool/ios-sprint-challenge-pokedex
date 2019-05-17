@@ -14,8 +14,12 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -28,7 +32,7 @@ class PokemonTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         let pokemon = pokemonController.pokeDex[indexPath.row]
 
         cell.textLabel?.text = pokemon.name
@@ -64,7 +68,7 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "DetailSegue" {
             guard let DetailVC = segue.destination as? DetailViewController,
             let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = pokemonController[indexPath.row]
+            let pokemon = pokemonController.pokeDex[indexPath.row]
             DetailVC.pokemonController = pokemonController
             DetailVC.pokemon = pokemon
             

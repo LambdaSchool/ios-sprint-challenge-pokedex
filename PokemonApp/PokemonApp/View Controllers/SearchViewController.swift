@@ -14,9 +14,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
-        idLabel.text = .isHidden
-        typeLabel.text = .isHidden
-        abilityLabel.text = .isHidden
+        idLabel.text = ""
+        typeLabel.text = ""
+        abilityLabel.text = ""
 
 
     }

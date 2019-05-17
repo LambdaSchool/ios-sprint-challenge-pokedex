@@ -21,7 +21,7 @@ struct Pokemon: Codable, Equatable {
 
     struct Ability: Codable, Equatable {
 
-        let isHidden: String
+        let isHidden: Bool
         let slot: Int
         let ability: Species
 
