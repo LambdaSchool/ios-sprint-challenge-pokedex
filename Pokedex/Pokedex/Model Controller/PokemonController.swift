@@ -41,13 +41,13 @@ class PokemonController {
 			}
 			
 			if let error = error {
-				NSLog("Error: \(error)")
+				print("Error: \(error)")
 				completion(.failure(.otherError))
 				return
 			}
 			
 			guard let data = data else {
-				NSLog("Data error")
+				print("Data error")
 				completion(.failure(.badData))
 				return
 			}
@@ -57,14 +57,14 @@ class PokemonController {
 				let search = try decoder.decode(Pokemon.self, from: data)
 				completion(.success(search))
 			} catch {
-				NSLog("Decoding error: \(error)")
+				print("Decoding error: \(error)")
 				completion(.failure(.noDecode))
 				return
 			}
 		}.resume()
 	}
 		
-		func getImage(urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+		func getImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
 			let url = URL(string: urlString)!
 			
 			var request = URLRequest(url: url)

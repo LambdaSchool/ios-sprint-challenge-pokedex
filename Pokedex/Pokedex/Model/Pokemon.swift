@@ -25,19 +25,19 @@ struct Ability: Codable {
 	}
 }
 
-struct Class: Codable {
-	let name: String
-}
 
 struct Sprites: Codable {
-	let sprite: String
+	let frontDefault: String
 	
 	enum CodingKeys: String, CodingKey {
-		case sprite = "front_default"
+		case frontDefault = "front_default"
 	}
 	
 }
 
+struct Class: Codable {
+	let name: String
+}
 
 struct Type: Codable {
 	let type: Class
