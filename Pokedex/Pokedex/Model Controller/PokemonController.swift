@@ -6,7 +6,7 @@
 //  Copyright © 2019 Taylor Lyles. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum HTTPMethod: String {
 	case get = "GET"
@@ -63,7 +63,35 @@ class PokemonController {
 			}
 		}.resume()
 		
+		func getImage(urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+			let url = URL(string: urlString)!
+			
+			var request = URLRequest(url: url)
+			request.httpMethod = HTTPMethod.get.rawValue
+			
+			URLSession.shared.dataTask(with: request) { (data, blank, error) in
+				if let blank = error {
+					completion(.failure(.otherError))
+					return
+				}
+				
+				guard let data = data else {
+					completion(.failure(.badData))
+					return
+				}
+				
+				let image = UIImage(data: data)!
+				completion(.success(image))
+			}.resume()
+		}
 		
+		func save(poke: Pokemon) {
+			pokemon.append(poke)
+		}
+		
+		func delete(indexOfPoke: IndexPath) {
+			pokemon.remove(at: indexOfPoke.row)
+		}
 		
 	}
 }
