@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokemonController {
 
@@ -27,7 +28,7 @@ class PokemonController {
 
         let url = baseURL.appendingPathComponent(searchTerm)
         let request = URLRequest(url: url)
-        request.httpMethod == "GET"
+
 
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
@@ -45,7 +46,7 @@ class PokemonController {
             let decoder = JSONDecoder()
 
             do {
-                let pokemon = decoder.decode(Pokemon.self, from: data)
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(pokemon, nil)
 
             } catch {
@@ -56,7 +57,30 @@ class PokemonController {
         }.resume()
     }
 
-    
+    func fetchImages(pokemon: Pokemon, completion: @escaping (UIImage?, Error?) -> Void) {
+
+        let url = URL(string: pokemon.sprites.frontDefault)!
+        let request = URLRequest(url: url)
+        
+
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching Sprites: \(error)")
+                completion(nil, error)
+                return
+            }
+
+            guard let data = data else {
+                NSLog("Bad data for images")
+                completion(nil, NSError())
+                return
+            }
+
+            let image = UIImage(data: data)
+            completion(image, nil)
+        }.resume()
+
+    }
 
 
 
