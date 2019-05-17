@@ -14,20 +14,11 @@ class PokemonController {
     
     func performSearch(with searchTerm: String, completion: @escaping (Error?) -> Void) {
         
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        let pokemonURL = baseURL.appendingPathComponent(searchTerm)
         
-        let searchQueryItem = URLQueryItem(name: "name", value: searchTerm)
-        
-        urlComponents?.queryItems = [searchQueryItem]
-        
-        guard let formattedURL = urlComponents?.url else {
-            completion(nil)
-            return
-        }
-        
-        var request = URLRequest(url: formattedURL)
-        
+        var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
+    
         
         let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
@@ -43,8 +34,8 @@ class PokemonController {
             
             do {
                 let decoder = JSONDecoder()
-                let searchingResults = try decoder.decode(Pokemon.self, from: data)
-                self.pokemonResults = [searchingResults]
+                let pokemonSearchResult = try decoder.decode([Pokemon].self, from: data)
+                self.pokemonResults = pokemonSearchResult
                 completion(nil)
             } catch {
                 NSLog("Error decoding Pokemon: \(error)")

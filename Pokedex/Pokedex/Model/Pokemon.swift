@@ -12,7 +12,29 @@ struct Pokemon: Codable {
     
     let name: String
     let id: Int
-    let type: String
-    let abilities: String
+    let types: [TypeElement]
+    let abilities: [Ability]
     
 }
+
+struct Ability: Codable {
+    let ability: Species
+    let isHidden: Bool
+    let slot: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case ability
+        case isHidden = "is_hidden"
+        case slot
+    }
+}
+struct Species: Codable {
+    let name: String
+    let url: String
+}
+struct TypeElement: Codable {
+    let slot: Int
+    let type: Species
+}
+
+
