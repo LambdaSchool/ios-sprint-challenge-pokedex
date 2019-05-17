@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokedexCell" rowHeight="82" id="4yM-gn-uvJ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokedexCell" rowHeight="82" id="4yM-gn-uvJ" customClass="PokedexTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4yM-gn-uvJ" id="ziD-Ve-YF2">
@@ -51,6 +51,10 @@
                                         <constraint firstAttribute="trailing" secondItem="OaZ-hw-JL5" secondAttribute="trailing" constant="8" id="ucI-P4-K5f"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="pokedexImageView" destination="qii-Jn-VPL" id="p2J-TZ-y3X"/>
+                                    <outlet property="pokedexLabel" destination="qPb-Ih-bgE" id="t4l-Uj-hQs"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -168,6 +172,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LWI-sm-gI4"/>
                     </view>
+                    <connections>
+                        <outlet property="IDLabel" destination="uNu-bM-vcZ" id="3zx-8d-x2H"/>
+                        <outlet property="abilityLabel" destination="mUj-Qo-PJf" id="GqW-f8-6NL"/>
+                        <outlet property="nameLabel" destination="Wz5-VL-x0M" id="zxI-UR-P2n"/>
+                        <outlet property="pokedexImageView" destination="b0r-F2-7ur" id="5Sg-Y7-369"/>
+                        <outlet property="pokedexSearchbar" destination="EBl-j2-DMx" id="A3A-yX-2N0"/>
+                        <outlet property="typesLabel" destination="19d-oE-OkS" id="nM4-DX-Lyb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DcZ-ZG-uwM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

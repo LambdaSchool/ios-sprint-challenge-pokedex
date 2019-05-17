@@ -26,5 +26,11 @@ class PokedexDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    @IBOutlet weak var pokedexSearchbar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var IDLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    
+    @IBOutlet weak var pokedexImageView: UIImageView!
 }
