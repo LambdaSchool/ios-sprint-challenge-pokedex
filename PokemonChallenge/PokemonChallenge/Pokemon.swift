@@ -8,22 +8,20 @@
 
 import Foundation
 
-import Foundation
-
 class Pokemon: Codable, Equatable {
     
     let name: String
     let id: Int
-    var image: Data?
-    let ability: [PokemonAbility]
-    let type: [PokemonType]
+    let abilities: [PokemonAbility]
+    let types: [PokemonType]
     let sprites: PokemonSprite
+    var imageData: Data?
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.id == rhs.id && lhs.name == rhs.name && lhs.image == rhs.image
+        return lhs.id == rhs.id && lhs.name == rhs.name && lhs.imageData == rhs.imageData
     }
     
-    struct PokeCodable: Codable {
+    struct PokeCodeable: Codable {
         let name: String
     }
     
@@ -32,10 +30,10 @@ class Pokemon: Codable, Equatable {
     }
     
     struct PokemonAbility: Codable {
-        let ability: PokeCodable
+        let ability: PokeCodeable
     }
     
     struct PokemonType: Codable {
-        let type: PokeCodable
+        let type: PokeCodeable
     }
 }

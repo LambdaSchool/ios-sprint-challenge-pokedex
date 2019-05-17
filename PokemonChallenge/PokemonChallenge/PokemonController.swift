@@ -12,12 +12,12 @@ import UIKit
 class PokemonController {
     
     var pokemonInPokedex = [Pokemon]()
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     // Fetch specific pokemon
     func fetchPokemon(named name: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
-        let url = baseURL.appendingPathComponent("pokemon/\(name.lowercased())/")
+        let url = baseURL.appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -84,5 +84,6 @@ class PokemonController {
     
     
 }
+
 
 
