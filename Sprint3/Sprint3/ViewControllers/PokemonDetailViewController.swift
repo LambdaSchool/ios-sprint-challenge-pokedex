@@ -12,7 +12,9 @@ class PokemonDetailViewController: UIViewController {
 
     var pokemon: Pokemon? {
         didSet {
-            updateViews()
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
         }
     }
     
@@ -34,7 +36,7 @@ class PokemonDetailViewController: UIViewController {
         pokemonAbilities.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
         
         let type: [String] = pokemon.types.map { $0.type.name }
-        pokemonTypes.text = "Type(s): \n\(type.joined(separator: "\n"))"
+        pokemonTypes.text = "Type(s): \(type.joined(separator: ", "))"
 
         guard let url = URL(string: pokemon.sprites.frontDefault),
             let pokemonImageData = try? Data(contentsOf: url) else { return }

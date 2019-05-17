@@ -31,7 +31,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         let id = String(pokemon.id)
         pokemonID.text = "ID: \(id)"
         let type: [String] = pokemon.types.map { $0.type.name }
-        pokemonTypes.text = "Type(s): \n\(type.joined(separator: "\n"))"
+        pokemonTypes.text = "Type(s): \(type.joined(separator: ", "))"
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
         pokemonAbilities.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
         
