@@ -37,9 +37,7 @@ class PokemonController {
                 let decoder = JSONDecoder()
                 let pokemonSearchResult = try decoder.decode(Pokemon.self, from: data)
                 self.pokemon = pokemonSearchResult
-                guard let newPokemon = self.pokemon else { return }
-                self.pokemonResults.append(newPokemon)
-                print("we got a \(self.pokemon)")
+//                print("we got a \(self.pokemon)")
                 completion(nil)
             } catch {
                 NSLog("Error decoding Pokemon: \(error)")
@@ -50,6 +48,9 @@ class PokemonController {
             dataTask.resume()
     }
     
+    func savePokemon(pokemon: Pokemon) {
+        pokemonResults.append(pokemon)
+    }
     
     
     

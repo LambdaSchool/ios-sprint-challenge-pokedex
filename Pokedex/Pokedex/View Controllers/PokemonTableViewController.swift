@@ -14,13 +14,18 @@ class PokemonTableViewController: UITableViewController {
         super.viewDidLoad()
 
     }
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     // MARK: - Table view data source
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokemonResults.count
+        return  pokemonController.pokemonResults.count
     }
 
     
@@ -36,5 +41,6 @@ class PokemonTableViewController: UITableViewController {
  
 
 
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
+    
 }

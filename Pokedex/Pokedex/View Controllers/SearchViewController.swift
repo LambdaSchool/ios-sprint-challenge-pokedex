@@ -29,22 +29,32 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemonController.pokemon else { return }
+       pokemonController.pokemonResults.append(pokemon)
+        print("\(pokemonController.pokemonResults)")
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController.performSearch(with: searchTerm) { _ in
+            guard let pokemon = self.pokemonController.pokemon else { return }
             DispatchQueue.main.async {
-                guard let pokemon = self.pokemonController.pokemonResults.last else { return }
+                
                 self.nameLabel.text = pokemon.name
                 let types = pokemon.types.map({ $0.type.name })
                 self.typeLabel.text = types.joined(separator: ", ")
-                self.idLabel.text = String(pokemon.id)
+                self.idLabel.text = "\(pokemon.id)"
                 let abilities = pokemon.abilities.map({ $0.ability.name })
                 self.abilitiesLabel.text = abilities.joined(separator: ", ")
                 self.saveButton.isHidden = false
-                self.imageView.image = UIImage(contentsOfFile: pokemon.sprites.frontDefault)
+//                self.imageView.image = UIImage(contentsOfFile: pokemon?.sprites.frontDefault)
+                //IMAGE is not working!!
                 
             }
         }
