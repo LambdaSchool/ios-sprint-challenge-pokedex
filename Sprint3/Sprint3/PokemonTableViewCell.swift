@@ -10,6 +10,14 @@ import UIKit
 
 class PokemonTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var pokemonLabel: UILabel!
+    
+    @IBOutlet weak var pokemonSprite: UIImageView!
+    
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
