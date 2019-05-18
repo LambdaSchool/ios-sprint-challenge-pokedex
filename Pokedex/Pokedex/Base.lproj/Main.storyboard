@@ -66,17 +66,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Pokemon Name" translatesAutoresizingMaskIntoConstraints="NO" id="M4g-Mv-xc4">
-                                <rect key="frame" x="0.0" y="104" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTP-11-nMu">
-                                <rect key="frame" x="8" y="168" width="398" height="29"/>
+                                <rect key="frame" x="8" y="124" width="398" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="nSD-nx-bpJ">
-                                <rect key="frame" x="8" y="213" width="398" height="87.5"/>
+                                <rect key="frame" x="8" y="169" width="398" height="87.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="71" translatesAutoresizingMaskIntoConstraints="NO" id="s7g-IR-mrN">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="20.5"/>
@@ -132,14 +132,15 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W91-eV-SBA">
-                                <rect key="frame" x="8" y="308.5" width="398" height="30"/>
+                                <rect key="frame" x="8" y="264.5" width="398" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="saveButtonTapped:" destination="UTi-ki-0fV" eventType="touchUpInside" id="U2b-Tm-Swl"/>
+                                    <segue destination="H4c-gg-imz" kind="show" identifier="TableViewSegue" id="FrX-0a-b52"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YmB-ia-i5g">
-                                <rect key="frame" x="0.0" y="378.5" width="414" height="517.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="YmB-ia-i5g">
+                                <rect key="frame" x="0.0" y="334.5" width="414" height="561.5"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -175,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z3f-K7-Ni1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976.8115942028987" y="245.75892857142856"/>
+            <point key="canvasLocation" x="2151" y="166"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9yk-Az-52m">
@@ -198,5 +199,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="09A-EN-BYj"/>
+        <segue reference="FrX-0a-b52"/>
     </inferredMetricsTieBreakers>
 </document>

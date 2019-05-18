@@ -25,7 +25,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         saveButton.isHidden = true
         
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        updateViews()
+    }
+
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as? PokemonTableViewController
+        destinationVC?.pokemonController = pokemonController
+    }
     
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -33,30 +41,39 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
        pokemonController.pokemonResults.append(pokemon)
         print("\(pokemonController.pokemonResults)")
         
-        DispatchQueue.main.async {
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        
+//        DispatchQueue.main.async {
+//            self.navigationController?.popToRootViewController(animated: true)
+//        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController.performSearch(with: searchTerm) { _ in
-            guard let pokemon = self.pokemonController.pokemon else { return }
-            DispatchQueue.main.async {
+//            guard let pokemon = self.pokemonController.pokemon else { return }
+            self.updateViews()
+        }
+    }
+    
+    func updateViews() {
+        guard let pokemon = pokemonController.pokemon else { return }
+        DispatchQueue.main.async {
                 
-                self.nameLabel.text = pokemon.name
-                let types = pokemon.types.map({ $0.type.name })
-                self.typeLabel.text = types.joined(separator: ", ")
-                self.idLabel.text = "\(pokemon.id)"
-                let abilities = pokemon.abilities.map({ $0.ability.name })
-                self.abilitiesLabel.text = abilities.joined(separator: ", ")
-                self.saveButton.isHidden = false
-//                self.imageView.image = UIImage(contentsOfFile: pokemon?.sprites.frontDefault)
-                //IMAGE is not working!!
+            self.nameLabel.text = pokemon.name
+            let types = pokemon.types.map({ $0.type.name })
+            self.typeLabel.text = types.joined(separator: ", ")
+            self.idLabel.text = "\(pokemon.id)"
+            let abilities = pokemon.abilities.map({ $0.ability.name })
+            self.abilitiesLabel.text = abilities.joined(separator: ", ")
+            self.saveButton.isHidden = false
+            let imageString = pokemon.sprites.frontDefault
+            let imageURL = URL(string: imageString)
+            let imageData = try! Data(contentsOf: imageURL!)
+            let image = UIImage(data: imageData)
+            self.imageView.image = image
+//          self.imageView.image = UIImage(contentsOfFile: pokemon?.sprites.frontDefault)
+//IMAGE is not working!!
                 
-            }
         }
     }
     

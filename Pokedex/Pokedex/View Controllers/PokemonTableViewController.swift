@@ -38,8 +38,15 @@ class PokemonTableViewController: UITableViewController {
         
         return cell
     }
- 
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchButtonSegue" {
+            print("Search Again")
+        } else if segue.identifier == "CellSegue" {
+            let descriptionVC = segue.destination as? SearchViewController
+            descriptionVC?.pokemonController = pokemonController
+        }
+        
+    }
 
     var pokemonController = PokemonController()
     
