@@ -53,13 +53,13 @@ class PokedexController {
                 for ability in pokemonSearch.abilities {
                     let name = ability.ability.name
                     self.abilitiesArray.append(name)
-                    self.abilitiesString = self.abilitiesArray.joined(separator: ",")
+                    self.abilitiesString = self.abilitiesArray.joined(separator: ", ")
                 }
                 
                 for type in pokemonSearch.types {
                     let name = type.type.name
                     self.typesArray.append(name)
-                    self.typesString = self.typesArray.joined(separator: ",")
+                    self.typesString = self.typesArray.joined(separator: ", ")
                 }
                 
                 let convertedPokemon = Pokemon(name: pokemonSearch.name, id: pokemonSearch.id, abilities: self.abilitiesString, types: self.typesString, image: pokemonSearch.sprites.front_default )
