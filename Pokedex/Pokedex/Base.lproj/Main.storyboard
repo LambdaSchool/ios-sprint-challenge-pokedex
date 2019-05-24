@@ -39,6 +39,7 @@
                     <navigationItem key="navigationItem" title="Pokédex" id="gC1-z2-w0J">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="UkG-0t-Hj3">
                             <connections>
+                                <action selector="search:" destination="cqe-om-VrZ" id="O6O-Yb-aHb"/>
                                 <segue destination="5GB-1T-P8N" kind="show" identifier="SearchSegue" id="X6n-0I-gkO"/>
                             </connections>
                         </barButtonItem>
@@ -79,6 +80,9 @@
                                 <rect key="frame" x="20" y="502" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Save Pokémon"/>
+                                <connections>
+                                    <action selector="save:" destination="5GB-1T-P8N" eventType="touchUpInside" id="2f8-R7-LhT"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DD4-3t-AHl">
                                 <rect key="frame" x="20" y="540" width="374" height="77.5"/>
@@ -129,6 +133,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XVa-Bo-8Ay"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="0JV-x9-J8h" id="0O9-qU-Jgw"/>
+                        <outlet property="idLabel" destination="qbK-ql-8Jz" id="4tR-sf-V37"/>
+                        <outlet property="imageView" destination="wVk-bX-kyZ" id="rpr-O8-s4K"/>
+                        <outlet property="nameLabel" destination="2T5-hp-KNR" id="TUH-54-n4P"/>
+                        <outlet property="saveButton" destination="GOc-wN-oWf" id="qBb-Vp-fUT"/>
+                        <outlet property="searchBar" destination="Kwd-Uw-0aQ" id="I6x-d9-dHU"/>
+                        <outlet property="typesLabel" destination="Vbk-Yw-TXj" id="alp-Zf-50F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3sK-hj-cRW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
