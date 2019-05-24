@@ -27,7 +27,7 @@ class PokemonTableViewCell: UITableViewCell {
     
     var pokemon: Pokemon? {
         didSet {
-            
+            updateViews()
         }
     }
 }

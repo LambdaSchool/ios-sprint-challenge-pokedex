@@ -109,15 +109,18 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="7Hq-jf-OiI">
+                            <searchBar contentMode="redraw" placeholder="Search with name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="7Hq-jf-OiI">
                                 <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EAq-AG-AXc">
                                 <rect key="frame" x="8" y="356.5" width="398" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="Mv8-WI-h4Z" eventType="touchUpInside" id="Wvr-8x-qaA"/>
+                                </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="brD-Eu-qLa">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="brD-Eu-qLa">
                                 <rect key="frame" x="0.0" y="402.5" width="414" height="459.5"/>
                             </imageView>
                         </subviews>
@@ -142,6 +145,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="20e-ji-0ft"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="uc6-uD-uhG" id="A9h-Jv-Jkw"/>
+                        <outlet property="idLabel" destination="VRs-T6-lIf" id="KXL-zY-yMV"/>
+                        <outlet property="nameLabel" destination="cdc-4u-hmP" id="dMg-Yq-29Y"/>
+                        <outlet property="pokemonImage" destination="brD-Eu-qLa" id="Lkv-z3-Xg1"/>
+                        <outlet property="saveButton" destination="EAq-AG-AXc" id="rV1-Oq-QFz"/>
+                        <outlet property="searchBar" destination="7Hq-jf-OiI" id="hUn-wE-yb1"/>
+                        <outlet property="typesLabel" destination="1EY-83-jQT" id="cBw-rA-vbP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="95n-OR-lNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
