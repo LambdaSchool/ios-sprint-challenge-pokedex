@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchDetailViewController.swift
 //  Pokedex
 //
 //  Created by Thomas Cacciatore on 5/24/19.
@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SearchDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
 
+        
+    }
+    
+
+   
 
 }
-
