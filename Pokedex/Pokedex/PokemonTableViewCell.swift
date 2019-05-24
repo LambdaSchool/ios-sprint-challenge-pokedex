@@ -13,7 +13,7 @@ class PokemonTableViewCell: UITableViewCell {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         DispatchQueue.main.async {
-            self.cellLabel.text = pokemon.name
+            self.cellLabel.text = pokemon.name.capitalizingFirstLetter()
             let imageString = pokemon.sprites.frontDefault
             let imageURL = URL(string: imageString)
             let imageData =  try! Data(contentsOf: imageURL!)
@@ -31,3 +31,4 @@ class PokemonTableViewCell: UITableViewCell {
         }
     }
 }
+

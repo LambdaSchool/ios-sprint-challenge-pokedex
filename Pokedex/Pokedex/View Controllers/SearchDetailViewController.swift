@@ -35,7 +35,7 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
         guard let pokemon = pokemon else { return }
         DispatchQueue.main.async {
             self.idLabel.text = "ID: \(String(pokemon.id))"
-            self.nameLabel.text = pokemon.name
+            self.nameLabel.text = pokemon.name.capitalizingFirstLetter()
             let types = pokemon.types.map( { $0.type.name })
             self.typesLabel.text = "Types: \(types.joined(separator: ", "))"
             let abilities = pokemon.abilities.map( { $0.ability.name } )
@@ -93,5 +93,14 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
         didSet {
             updateViews()
         }
+    }
+}
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
 }
