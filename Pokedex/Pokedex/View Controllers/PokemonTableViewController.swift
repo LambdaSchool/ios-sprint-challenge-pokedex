@@ -15,25 +15,30 @@ class PokemonTableViewController: UITableViewController {
 
     
     }
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     // MARK: - Table view data source
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.savedPokemon.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { fatalError("Unable to dequeue cell")}
 
-        // Configure the cell...
-
+        let pokemon = pokemonController.savedPokemon[indexPath.row]
+        cell.pokemon = pokemon
+        
         return cell
     }
  
-
-   
+   var pokemonController = PokemonController()
 
 }

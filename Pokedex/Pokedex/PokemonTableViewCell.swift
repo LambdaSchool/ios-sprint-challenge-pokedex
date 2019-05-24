@@ -10,15 +10,24 @@ import UIKit
 
 class PokemonTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        DispatchQueue.main.async {
+            self.cellLabel.text = pokemon.name
+            let imageString = pokemon.sprites.frontDefault
+            let imageURL = URL(string: imageString)
+            let imageData =  try! Data(contentsOf: imageURL!)
+            let pokemonImage = UIImage(data: imageData)
+            self.cellImage.image = pokemonImage
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    @IBOutlet weak var cellImage: UIImageView!
+    @IBOutlet weak var cellLabel: UILabel!
+    
+    var pokemon: Pokemon? {
+        didSet {
+            
+        }
     }
-
 }
