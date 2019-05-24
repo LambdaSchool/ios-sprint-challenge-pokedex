@@ -10,17 +10,20 @@ import UIKit
 
 class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         searchBar.delegate = self
         updateViews()
-
     }
     
     //MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.save(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
+    
     
     
     //MARK: - Functions
@@ -39,6 +42,10 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
         
         let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         abilitiesLabel.text = "Abilites: \((abilities).capitalized)"
+        
+        //I know I'm supposed to load my image in here, but I could not figure it out in time so that the image reloads from my tableview cell
+        
+    
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -70,6 +77,7 @@ class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
                 })
             }
         })
+        
     }
     
     

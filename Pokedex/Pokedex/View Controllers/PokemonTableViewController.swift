@@ -16,11 +16,13 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        searchPokemonViewController.updateViews() //I called this here im order to be able to retrieve my image when the save pkmn is clicked on
         tableView.reloadData()
     }
     
     @IBAction func search(_ sender: Any) {
     }
+    
     
     
     // MARK: - Table view data source
@@ -34,10 +36,11 @@ class PokemonTableViewController: UITableViewController {
         
         let pokemon = pokemonController.pokemons[indexPath.row]
         
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
         
-        //guard let url = url(pokemon.sprites.imageURL)
         //convert the string into a URL
+        //guard let url = url(pokemon.sprites.imageURL) else {}
+        
         //convert the url into data
         //convert the data into UIImage
         cell.imageView?.image = UIImage(named: pokemon.sprites.imageURL)
@@ -74,6 +77,7 @@ class PokemonTableViewController: UITableViewController {
     //MARK: - Properties
     
     let pokemonController = PokemonController()
+    let searchPokemonViewController = SearchPokemonViewController()
     
     
-}
+} 
