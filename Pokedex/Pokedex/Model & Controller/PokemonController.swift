@@ -30,7 +30,7 @@ class PokemonController {
     
     func fetchPokemon(with name: String, completion: @escaping(Pokemon?, Error?) -> Void) {
         
-        let url = baseURL.appendingPathComponent(name)
+        let url = baseURL.appendingPathComponent(name.lowercased())
         
         let request = URLRequest(url: url)
         
