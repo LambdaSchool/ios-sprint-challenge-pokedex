@@ -11,8 +11,8 @@ import Foundation
 struct Pokemon: Equatable, Codable {
     var id: Int
     var name: String
-    var abilities: [Ability]
-    var types: [Type]
+    var abilities: [Abilities]
+    var types: [Types]
     var sprites: Image
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -20,15 +20,19 @@ struct Pokemon: Equatable, Codable {
     }
 }
 
+struct Abilities: Codable {
+    var ability: Ability
+}
+
 struct Ability: Codable {
-    var name: Species
+    var name: String
+}
+
+struct Types: Codable {
+    var type: Type
 }
 
 struct Type: Codable {
-    var name: Species
-}
-
-struct Species: Codable {
     var name: String
 }
 
