@@ -18,27 +18,64 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet var pokemonIdLabel: UILabel!
     @IBOutlet var pokemonTypesLabel: UILabel!
     @IBOutlet var pokemonAbilitiesLabel: UILabel!
+    @IBOutlet var pokemonSaveButton: UIButton!
     
     var pokemonController: PokemonController?
+    var pokemon: Pokemon? {
+        didSet {
+            self.updateViews()
+        }
+    }
+    var detailView = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.pokemonSearchBar.delegate = self
-        self.pokemonView.isHidden = true
+        if !self.detailView {
+            self.pokemonView.isHidden = true
+        } else {
+            self.pokemonSearchBar.isHidden = true
+            self.pokemonSaveButton.isHidden = true
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if detailView {
+            self.updateViews()
+        }
     }
     
     // MARK: - IBActions and Methods
     @IBAction func savePokemon(_ sender: UIButton) {
+        guard let pokemon = self.pokemon, isViewLoaded else { return }
+        self.pokemonController?.savePokemon(with: pokemon)
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
-    func updateViews(with pokemon: Pokemon) {
-        self.title = pokemon.name
+    func updateViews() {
+        guard let pokemonController = self.pokemonController,
+            let pokemon = self.pokemon, isViewLoaded else { return }
+        
+        self.title = pokemon.name.capitalized
         self.pokemonNameLabel.text = pokemon.name.capitalized
-        self.pokemonImageView.image = UIImage(contentsOfFile: pokemon.sprites.front_default)
         self.pokemonIdLabel.text = String(pokemon.id)
-//        self.pokemonTypesLabel.text = pokemon.types
-//        self.pokemonAbilitiesLabel.text = pokemon.abilities
-        self.pokemonView.isHidden = false
+        self.pokemonTypesLabel.text = pokemon.types.map({ $0.type.name }).joined(separator: ", ")
+        self.pokemonAbilitiesLabel.text = pokemon.abilities.map({ $0.ability.name }).joined(separator: ", ")
+        
+        pokemonController.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImageView.image = image
+                }
+            }
+        })
+        
+        if !self.detailView {
+            self.pokemonView.isHidden = false
+        }
     }
 }
 
@@ -47,10 +84,14 @@ extension PokemonDetailViewController: UISearchBarDelegate {
         guard let pokemonController = self.pokemonController,
             let searchTerm = self.pokemonSearchBar.text else { return }
         
-        pokemonController.searchForPokemon(searchTerm: searchTerm, completion: { (result) in
-            if let pokemon = try? result.get() {
+        pokemonController.searchForPokemon(searchTerm: searchTerm, completion: { (pokemon, error) in
+            if let error = error {
+                NSLog("Error searching for Pokemon: \(error)")
+            }
+            
+            if let pokemon = pokemon {
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
+                    self.pokemon = pokemon
                 }
             }
         })
