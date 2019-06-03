@@ -10,6 +10,13 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    @IBOutlet weak var pokeNameLabel: UILabel!
+    @IBOutlet weak var pokeIDLabel: UILabel!
+    
+    @IBOutlet weak var pokeTypesLabel: UILabel!
+    
+    
+    @IBOutlet weak var abilitiesLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
