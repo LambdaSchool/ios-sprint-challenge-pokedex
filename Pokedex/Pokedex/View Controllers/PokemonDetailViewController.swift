@@ -17,10 +17,23 @@ class PokemonDetailViewController: UIViewController {
     
     
     @IBOutlet weak var abilitiesLabel: UILabel!
+    
+//    var pokemonController : PokemonController?
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    func updateViews(){
+        
     }
     
 

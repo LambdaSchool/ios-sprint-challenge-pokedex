@@ -56,26 +56,22 @@ class PokedexTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
       
     }
- 
-
-    
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+}
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchSegue" {
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else {return}
+            destinationVC.pokemonController = pokemonController
+        } else if segue.identifier == "ShowDetailSegue" {
+            guard let destinationVC = segue.destination as? PokemonDetailViewController,
+                let pokemonIndex = tableView.indexPathForSelectedRow else {return}
+             let pokemon = pokemonController.pokemonList[pokemonIndex.row]
+            destinationVC.pokemon = pokemon
+        }
+        
     }
-    */
-
 }
+
+
+

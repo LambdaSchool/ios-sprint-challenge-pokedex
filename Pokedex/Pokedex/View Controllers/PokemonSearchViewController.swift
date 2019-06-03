@@ -20,12 +20,24 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var pokeTypesLabel: UILabel!
     
     @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    var pokemonController : PokemonController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
+    func updateViews() {
+        
+    }
 
     @IBAction func saveButtonTapped(_ sender: Any) {
     }
