@@ -18,7 +18,8 @@ class PokemonDetailViewController: UIViewController {
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-//    var pokemonController : PokemonController?
+    @IBOutlet weak var spriteView: UIImageView!
+    //    var pokemonController : PokemonController?
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
@@ -29,11 +30,26 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        updateViews()
+        navigationItem.title = pokemon?.name
         // Do any additional setup after loading the view.
     }
     func updateViews(){
+        guard let pokemon = pokemon else { return }
         
+        pokeNameLabel.text = pokemon.name.capitalized
+        pokeIDLabel.text = String("ID: \(pokemon.id)")
+        
+        
+        let abilities: [String] = pokemon.abilities.map { $0.ability.name }
+        abilitiesLabel.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
+        
+        let type: [String] = pokemon.types.map { $0.type.name }
+        pokeTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
+        
+        guard let url = URL(string: pokemon.sprites.front_default),
+            let pokemonImageData = try? Data(contentsOf: url) else { return }
+        spriteView.image = UIImage(data: pokemonImageData)
     }
     
 
