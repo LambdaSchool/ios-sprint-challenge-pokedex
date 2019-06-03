@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum CodingKeys: String, Codable {
-    case frontDefault = "front_default"
-}
+//enum CodingKeys: String, Codable {
+//    case frontDefault = "front_default"
+//}
 
 struct Pokemon: Codable {
     let name: String
@@ -36,7 +36,7 @@ struct Pokemon: Codable {
     }
     
     struct Sprites: Codable {
-        let frontDefault: String
+        let front_default: String
         
       
     }

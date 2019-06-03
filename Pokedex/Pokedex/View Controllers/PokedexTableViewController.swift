@@ -38,7 +38,7 @@ class PokedexTableViewController: UITableViewController {
         
         cell.pokeNameLabel.text = pokemon.name.capitalized
         
-        guard let url = URL(string: pokemon.sprites.frontDefault),
+        guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonImageData = try? Data(contentsOf: url) else { return UITableViewCell() }
         cell.spriteView.image = UIImage(data: pokemonImageData)
         return cell

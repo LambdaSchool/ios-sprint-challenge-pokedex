@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -25,7 +25,8 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.delegate = self
+        updateViews()
         // Do any additional setup after loading the view.
     }
     var pokemon: Pokemon? {
@@ -36,19 +37,48 @@ class PokemonSearchViewController: UIViewController {
         }
     }
     func updateViews() {
+        guard let pokemon = pokemon else {return}
+        pokeNameLabel.text = pokemon.name.capitalized
+        let id = String(pokemon.id)
+        pokeIDLabel.text = "ID: \(id)"
+        let type: [String] = pokemon.types.map { $0.type.name }
+        pokeTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
+        let abilities: [String] = pokemon.abilities.map { $0.ability.name }
+        abilitiesLabel.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
+        guard let url = URL(string: pokemon.sprites.front_default),
+            let pokemonImageData = try? Data(contentsOf: url) else { return }
+        spriteView.image = UIImage(data: pokemonImageData)
+        
         
     }
 
-    @IBAction func saveButtonTapped(_ sender: Any) {
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+  
+    
+  
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        print("Search clicked")
+        
+        pokemonController?.fetchPokemon(for: searchTerm, completion: { (result, error) in
+            if error != nil {
+                NSLog("Error searching for: \(String(describing: error))")
+            }
+            self.pokemon = result
+            DispatchQueue.main.async {
+                self.updateViews()
+                self.searchBar.text = ""
+            }
+        })
+        
+        
     }
-    */
-
+    
+ 
 }
