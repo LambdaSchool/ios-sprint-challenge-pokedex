@@ -31,7 +31,7 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        navigationItem.title = pokemon?.name
+        navigationItem.title = pokemon?.name.capitalized
         // Do any additional setup after loading the view.
     }
     func updateViews(){
@@ -42,7 +42,7 @@ class PokemonDetailViewController: UIViewController {
         
         
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
-        abilitiesLabel.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: "\n"))"
         
         let type: [String] = pokemon.types.map { $0.type.name }
         pokeTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"

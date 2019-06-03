@@ -44,7 +44,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         let type: [String] = pokemon.types.map { $0.type.name }
         pokeTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
-        abilitiesLabel.text = "Abilities: \n\(abilities.joined(separator: "\n"))"
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: "\n"))"
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonImageData = try? Data(contentsOf: url) else { return }
         spriteView.image = UIImage(data: pokemonImageData)
