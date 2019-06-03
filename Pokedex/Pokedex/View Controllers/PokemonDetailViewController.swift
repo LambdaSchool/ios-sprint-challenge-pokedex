@@ -47,7 +47,7 @@ class PokemonDetailViewController: UIViewController {
         let type: [String] = pokemon.types.map { $0.type.name }
         pokeTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
         
-        guard let url = URL(string: pokemon.sprites.front_default),
+        guard let url = URL(string: pokemon.sprites.back_default),
             let pokemonImageData = try? Data(contentsOf: url) else { return }
         spriteView.image = UIImage(data: pokemonImageData)
     }
