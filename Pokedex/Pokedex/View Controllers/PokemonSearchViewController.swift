@@ -21,11 +21,14 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    @IBOutlet weak var saveButton: UIButton!
     var pokemonController : PokemonController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        pokeNameLabel.text = ""
+        saveButton.setTitle("", for: .normal)
         updateViews()
         // Do any additional setup after loading the view.
     }
@@ -48,6 +51,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonImageData = try? Data(contentsOf: url) else { return }
         spriteView.image = UIImage(data: pokemonImageData)
+        saveButton.setTitle("Save Pokemon", for: .normal)
         
         
     }
