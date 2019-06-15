@@ -1,5 +1,5 @@
 //
-//  PokemonSearchViewController.swift
+//  PokemonDetailViewController.swift
 //  Pokedex (Sprint)
 //
 //  Created by Nathan Hedgeman on 6/15/19.
@@ -8,7 +8,21 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonDetailViewController: UIViewController {
+    
+    
+    
+    //Properties
+    var pokemonControllerDVC: PokemonController?
+    
+    let segueID = "PokemonCellSegue"
+    
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,5 +1,5 @@
 //
-//  PokemonDetailViewController.swift
+//  PokemonSearchViewController.swift
 //  Pokedex (Sprint)
 //
 //  Created by Nathan Hedgeman on 6/15/19.
@@ -8,12 +8,29 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
-
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
+    
+    
+    
+    //Properties
+    var pokemonControllerSVC: PokemonController?
+    
+    let segueID = "PokemonSearchSegue"
+    
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.searchBar.delegate = self
 
         // Do any additional setup after loading the view.
+    }
+    @IBAction func saveButtonTapped(_ sender: Any) {
     }
     
 

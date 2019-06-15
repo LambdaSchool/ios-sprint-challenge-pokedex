@@ -9,6 +9,12 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
+    
+    //Properties
+    var pokemonControllerTVC = PokemonController()
+    
+    let segueIDSearch = "PokemonSearchSegue"
+    let segueIDCell = "PokemonCellSegue"
 
     override func viewDidLoad() {
         super.viewDidLoad()
