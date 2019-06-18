@@ -31,17 +31,31 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         // Do any additional setup after loading the view.
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
+        pokemonControllerSVC?.savePokemon()
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == segueID {
+            let tableVC = segue.destination as? PokedexTableViewController
+            tableVC!.pokemonControllerTVC = pokemonControllerSVC!
+        }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
+    
+    func updateVIews(pokemon: Pokemon, ability: ) {
+        pokemonNameLabel.text = pokemon.name
+        let pokeID = "\(pokemon.id)"
+        idLabel.text = pokeID
+        
+        typeLabel.text = pokemon.Abilities
+    }
+    
 
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -54,13 +54,43 @@ class PokemonController {
         print(pokemonSearchResult)
     }
     
-    func getPokemon() {
+    func savePokemon() {
+        
+        let currentPokemon = self.pokemonSearchResult[pokemonSearchResult.endIndex - 1]
+        pokemonList.append(currentPokemon)
         //MARK: Fetch pokemon data
     }
     
-    func getPokemonImage() {
+    func getPokemonImage(pokemon: Pokemon, completion: @escaping (Result<UIImage, Error>) -> Void) {
         //Fetch Image
+        let pokeID = "\(pokemon.id)"
+        
         let imageBaseURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon")
+        
+        var imageURL = imageBaseURL?.appendingPathComponent(pokeID)
+        imageURL?.appendPathExtension("png")
+        
+        print(imageURL as Any)
+        
+        guard let pokeImageURL = imageURL else {return}
+        
+        URLSession.shared.dataTask(with: pokeImageURL) { (data, _, error) in
+            if error != nil {
+                NSLog("Error reaching image URL: \(String(describing: error))")
+                completion(.failure(error!))
+                return
+        }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {return}
+            completion(.success(image))
+            
+        }.resume()
     }
     
 }
+
+
