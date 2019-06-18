@@ -8,26 +8,26 @@
 
 import Foundation
 
+struct Abilities: Codable {
+    let ability: AbilityNames
+}
+
+struct AbilityNames: Codable {
+    let name: String
+}
+
+struct Types: Codable {
+    let type: PokeTypeName
+}
+
+struct PokeTypeName: Codable {
+    let name: String
+}
+
 struct Pokemon: Codable {
     
     let name: String
     let id: Int
-    
-    struct Abilities {
-        let ability: AbilityNames
-    }
-    
-    struct AbilityNames {
-        let name: String
-    }
-    
-    struct Types {
-        let type: PokeTypeName
-    }
-    
-    struct PokeTypeName {
-        let name: String
-    }
-    
-
+    let abilities: Abilities
+    let type: Types
 }

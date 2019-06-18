@@ -31,7 +31,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         // Do any additional setup after loading the view.
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
-        pokemonControllerSVC?.savePokemon()
+        guard let pokemonControllerSVC = pokemonControllerSVC else {return}
+        pokemonControllerSVC.savePokemon()
     }
     
 
@@ -49,12 +50,19 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         // Pass the selected object to the new view controller.
     }
     
-    func updateVIews(pokemon: Pokemon, ability: ) {
+    func updateVIews(pokemon: Pokemon) {
         pokemonNameLabel.text = pokemon.name
         let pokeID = "\(pokemon.id)"
         idLabel.text = pokeID
+        abilitiesLabel.text = pokemon.abilities.ability.name
+        typeLabel.text = pokemon.type.type.name
         
-        typeLabel.text = pokemon.Abilities
+    }
+    
+    func getPokemon() {
+        
+        
+        
     }
     
 
