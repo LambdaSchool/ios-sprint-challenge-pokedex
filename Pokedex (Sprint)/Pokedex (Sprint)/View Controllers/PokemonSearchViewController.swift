@@ -27,6 +27,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.searchBar.delegate = self
+        
 
         // Do any additional setup after loading the view.
     }
@@ -50,20 +51,34 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         // Pass the selected object to the new view controller.
     }
     
-    func updateVIews(pokemon: Pokemon) {
+    func updateViews(pokemon: Pokemon) {
         pokemonNameLabel.text = pokemon.name
         let pokeID = "\(pokemon.id)"
         idLabel.text = pokeID
         abilitiesLabel.text = pokemon.abilities.ability.name
-        typeLabel.text = pokemon.type.type.name
+        typeLabel.text = pokemon.types.type.name
+        pokemonControllerSVC?.getPokemonImage(pokemon: pokemon, completion: { (result) in
+            if let pokeImageData = try? result.get() {
+            self.pokemonImage.image = pokeImageData
+            }
+        })
+        
         
     }
     
-    func getPokemon() {
-        
-        
-        
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchPokemon = searchBar.text else {return}
+        guard let pokemonControllerSVC = pokemonControllerSVC else {
+            NSLog("No SVC")
+            return
+        }
+        pokemonControllerSVC.getPokemon(pokemonName: searchPokemon, completion: { (result) in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.updateViews(pokemon: pokemon)
+                }
+        }
+            
+        })
     }
-    
-
 }

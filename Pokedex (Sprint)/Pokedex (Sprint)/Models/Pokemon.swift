@@ -9,7 +9,7 @@
 import Foundation
 
 struct Abilities: Codable {
-    let ability: AbilityNames
+    let ability: [AbilityNames]
 }
 
 struct AbilityNames: Codable {
@@ -17,7 +17,7 @@ struct AbilityNames: Codable {
 }
 
 struct Types: Codable {
-    let type: PokeTypeName
+    let type: [PokeTypeName]
 }
 
 struct PokeTypeName: Codable {
@@ -29,5 +29,5 @@ struct Pokemon: Codable {
     let name: String
     let id: Int
     let abilities: Abilities
-    let type: Types
+    let types: Types
 }

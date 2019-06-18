@@ -13,6 +13,10 @@ enum HTTPMethod: String {
     case get = "GET"
 }
 
+enum NetworkError: Error{
+    case noPokemon
+}
+
 class PokemonController {
     
     //Properties
@@ -22,7 +26,7 @@ class PokemonController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     
-    func searchPokemon(pokemonName: String, completion: @escaping (Error?) -> Void) {
+    func getPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let pokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemonName)")
         
         var request = URLRequest(url: pokemonURL)
@@ -31,12 +35,12 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 NSLog("Error reaching data from URL: \(error)")
-                completion(error)
+                completion(.failure(.noPokemon))
                 return
             }
             
             guard let data = data else {
-                completion(error)
+                completion(.failure(.noPokemon))
                 return
             }
             
@@ -46,8 +50,8 @@ class PokemonController {
                 let pokemonResult = try decoder.decode(Pokemon.self, from: data)
                 self.pokemonSearchResult.append(pokemonResult)
             }catch {
-                NSLog("Error decoding pokemon: \(error)")
-                completion(error)
+                NSLog("Error decoding pokemon: \(Error.self)")
+                completion(.failure(.noPokemon))
                 return
             }
         }
@@ -61,7 +65,7 @@ class PokemonController {
         //MARK: Fetch pokemon data
     }
     
-    func getPokemonImage(pokemon: Pokemon, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func getPokemonImage(pokemon: Pokemon, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         //Fetch Image
         let pokeID = "\(pokemon.id)"
         
@@ -77,11 +81,11 @@ class PokemonController {
         URLSession.shared.dataTask(with: pokeImageURL) { (data, _, error) in
             if error != nil {
                 NSLog("Error reaching image URL: \(String(describing: error))")
-                completion(.failure(error!))
+                completion(.failure(.noPokemon))
                 return
         }
             guard let data = data else {
-                completion(.failure(error!))
+                completion(.failure(.noPokemon))
                 return
             }
             
