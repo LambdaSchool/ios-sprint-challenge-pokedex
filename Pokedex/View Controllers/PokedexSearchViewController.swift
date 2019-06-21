@@ -20,14 +20,6 @@ class PokedexSearchViewController: UIViewController {
 
     var pokemonController = PokemonController()
     
-    var pokemon: Pokemon? {
-        didSet {
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -36,12 +28,23 @@ class PokedexSearchViewController: UIViewController {
         pokemonIDLabel.text = ""
         typeLabel.text = ""
         abilitiesLabel.text = ""
+        title = "Search for Pokémon"
+        updateViews()
 
         // Do any additional setup after loading the view.
     }
     
+    var pokemon: Pokemon? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
+    
     func updateViews() {
         guard let pokemon = pokemon else { return }
+        title = pokemon.name.capitalized
         pokemonNameLabel.text = pokemon.name.capitalized
         let id = String(pokemon.id)
         pokemonIDLabel.text = "ID: \(id)"
@@ -58,19 +61,11 @@ class PokedexSearchViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
         pokemonController.savePokemon(pokemon: pokemon)
+        print("Saving pokemon: \(pokemon.name)")
         navigationController?.popViewController(animated: true)
         
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -79,7 +74,7 @@ extension PokedexSearchViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text else { return }
         print("Searching")
         
-        pokemonController.fetchPokemon(for: searchTerm) { (result, error) in
+        pokemonController.fetchPokemon(for: searchTerm, completion: { (result, error) in
             if error != nil {
                 NSLog("Error searching for: \(String(describing: error))")
             }
@@ -88,6 +83,6 @@ extension PokedexSearchViewController: UISearchBarDelegate {
                 self.updateViews()
                 self.searchBar.text = ""
             }
-        }
+        })
     }
 }

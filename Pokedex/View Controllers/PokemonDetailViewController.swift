@@ -17,6 +17,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet var abilitiesLabel: UILabel!
     @IBOutlet var spriteDisplay: UIImageView!
     
+    
     var pokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
@@ -42,7 +43,7 @@ class PokemonDetailViewController: UIViewController {
         let type: [String] = pokemon.types.map { $0.type.name }
         pokemonTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
         
-        guard let url = URL(string: pokemon.sprites.back_default),
+        guard let url = URL(string: pokemon.sprites.front_default),
             let spriteData = try? Data(contentsOf: url) else { return }
         spriteDisplay.image = UIImage(data: spriteData)
         

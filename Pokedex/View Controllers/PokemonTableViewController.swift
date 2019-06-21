@@ -11,17 +11,19 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        tableView.reloadData()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillAppear(true)
         tableView.reloadData()
+        print(pokemonController.pokemonList)
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.reloadData()
+
+    }
+    
+    
 
     // MARK: - Table view data source
 
@@ -58,7 +60,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            pokemonController.deletePokemon(pokemonIndex: indexPath.row)
+            pokemonController.deletePokemon(index: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -79,6 +81,7 @@ class PokemonTableViewController: UITableViewController {
                 let index = tableView.indexPathForSelectedRow else { return }
             let pokemon = pokemonController.pokemonList[index.row]
             destinationVC.pokemon = pokemon
+
         }
     }
     

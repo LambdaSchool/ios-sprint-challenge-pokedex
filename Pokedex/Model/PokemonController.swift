@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -26,8 +27,8 @@ class PokemonController {
         pokemonList.append(pokemon)
     }
     
-    func deletePokemon(pokemonIndex: Int) {
-        pokemonList.remove(at: pokemonIndex)
+    func deletePokemon(index: Int) {
+        pokemonList.remove(at: index)
     }
     func fetchPokemon(for searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
