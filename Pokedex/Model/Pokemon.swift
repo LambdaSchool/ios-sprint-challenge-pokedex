@@ -28,7 +28,7 @@ struct Pokemon: Codable {
         let type: TypeDetail
     }
     
-    struct TypeDetail:Codable {
+    struct TypeDetail: Codable {
         let name: String
     }
     

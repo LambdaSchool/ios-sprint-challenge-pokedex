@@ -49,9 +49,9 @@ class PokedexSearchViewController: UIViewController {
         let id = String(pokemon.id)
         pokemonIDLabel.text = "ID: \(id)"
         let type: [String] = pokemon.types.map { $0.type.name }
-        typeLabel.text = "Type(s): \(type.joined(separator:", "))"
+        typeLabel.text = "Type(s): \(type.joined(separator:", ").capitalized)"
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
-        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", ").capitalized)"
         guard let url = URL(string: pokemon.sprites.front_default),
             let spriteData = try? Data(contentsOf: url) else { return }
         pokemonSprite.image = UIImage(data: spriteData)

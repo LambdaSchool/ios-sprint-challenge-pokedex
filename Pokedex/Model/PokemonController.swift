@@ -23,12 +23,18 @@ class PokemonController {
     
     private let baseURL = URL(string:"https://pokeapi.co/api/v2/pokemon")!
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
     func savePokemon(pokemon: Pokemon) {
         pokemonList.append(pokemon)
+        saveToPersistentStore()
     }
     
     func deletePokemon(index: Int) {
         pokemonList.remove(at: index)
+        saveToPersistentStore()
     }
     func fetchPokemon(for searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         
@@ -63,33 +69,42 @@ class PokemonController {
             }
             } .resume()
     }
+ 
+    var persistenceURL: URL? {
+        let fileManager = FileManager.default
+        guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        let fileName = documentDirectory.appendingPathComponent("pokemon.plist")
+        return fileName
+    }
     
-//    private var persistentFileURL: URL? {
-//        guard let filePath = Bundle.main.path(forResource: "pokemon", ofType: "json") else { return nil }
-//        return URL(fileURLWithPath: filePath)
-//    }
-//    
-//    func loadFromPersistentStore(completion: @escaping ([Pokemon]?, Error?) -> Void) {
-//        let bgQueue = DispatchQueue(label: "pokemonQueue", attributes: .concurrent)
-//        
-//        bgQueue.async {
-//            let fm = FileManager.default
-//            guard let url = self.persistentFileURL,
-//                fm.fileExists(atPath: url.path) else { return }
-//            
-//            do {
-//                let data = try Data(contentsOf: url)
-//                let decoder = JSONDecoder()
-//                let pokemon = try decoder.decode([Pokemon].self, from: data)
-//                completion(pokemon, nil)
-//            } catch {
-//                print("Error loading pokemon data: \(error)")
-//                completion(nil, error)
-//            }
-//            
-//        }
-//    }
-//    
-//    
+    func saveToPersistentStore(){
+        guard let url = persistenceURL else { return }
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(pokemonList)
+            try data.write(to: url)
+        } catch {
+            print("Error with plistencoder: \(error)")
+            return
+        }
+    }
+    
+    func loadFromPersistentStore(){
+        let fm = FileManager.default
+        guard let url = persistenceURL, fm.fileExists(atPath: url.path) else { return }
+        
+        let decoder = PropertyListDecoder()
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let loadedPokemon = try decoder.decode([Pokemon].self, from: data)
+            pokemonList = loadedPokemon
+        } catch  {
+            print("Error with plistencoder: \(error)")
+            return
+        }
+    }
     
 }
