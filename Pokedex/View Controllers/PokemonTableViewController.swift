@@ -10,7 +10,15 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+    @IBOutlet var sortingSegment: UISegmentedControl!
+    
     let pokemonController = PokemonController()
+    
+//    private var pokemon: [Pokemon] = [] {
+//        didSet {
+//            updateDataSource()
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -22,6 +30,27 @@ class PokemonTableViewController: UITableViewController {
         tableView.reloadData()
 
     }
+    
+//    
+//    @IBAction func sortPokemon(_ sender: UISegmentedControl) {
+//        updateDataSource()
+//    }
+    
+//    private func updateDataSource() {
+//
+//
+//        if sortingSegment.selectedSegmentIndex == 0 {
+//            pokemon = pokemonController.pokemonList.sorted { $0.name < $1.name }
+//        } else {
+//            pokemon = pokemonController.pokemonList.sorted { $0.id < $1.id }
+//        }
+//
+//        pokemon = pokemonController.pokemonList
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
+//
+//    }
     
     
 

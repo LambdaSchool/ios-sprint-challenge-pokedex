@@ -64,6 +64,32 @@ class PokemonController {
             } .resume()
     }
     
-    
+//    private var persistentFileURL: URL? {
+//        guard let filePath = Bundle.main.path(forResource: "pokemon", ofType: "json") else { return nil }
+//        return URL(fileURLWithPath: filePath)
+//    }
+//    
+//    func loadFromPersistentStore(completion: @escaping ([Pokemon]?, Error?) -> Void) {
+//        let bgQueue = DispatchQueue(label: "pokemonQueue", attributes: .concurrent)
+//        
+//        bgQueue.async {
+//            let fm = FileManager.default
+//            guard let url = self.persistentFileURL,
+//                fm.fileExists(atPath: url.path) else { return }
+//            
+//            do {
+//                let data = try Data(contentsOf: url)
+//                let decoder = JSONDecoder()
+//                let pokemon = try decoder.decode([Pokemon].self, from: data)
+//                completion(pokemon, nil)
+//            } catch {
+//                print("Error loading pokemon data: \(error)")
+//                completion(nil, error)
+//            }
+//            
+//        }
+//    }
+//    
+//    
     
 }
