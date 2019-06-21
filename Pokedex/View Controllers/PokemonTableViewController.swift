@@ -38,7 +38,7 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as! PokemonTableViewCell
 
         let pokemon = pokemonController.pokemonList[indexPath.row]
-        cell.pokemonNameLabel.text = pokemon.name
+        cell.pokemonNameLabel.text = pokemon.name.capitalized
         
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonSpriteData = try? Data(contentsOf: url) else { return UITableViewCell() }
