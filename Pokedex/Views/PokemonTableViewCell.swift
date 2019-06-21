@@ -12,24 +12,7 @@ class PokemonTableViewCell: UITableViewCell {
     
     @IBOutlet var pokemonNameLabel: UILabel!
     @IBOutlet var pokemonSprite: UIImageView!
+    @IBOutlet var pokemonIDLabel: UILabel!
 
-
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
-    
-    
-    private func updateViews() {
-        guard let pokemon = pokemon else { return }
-        DispatchQueue.main.async {
-            self.pokemonNameLabel.text = pokemon.name.capitalized
-            let imageName = pokemon.sprites.front_default
-            let imageURL = URL(string: imageName)
-            let imageData = try! Data(contentsOf: imageURL!)
-            self.pokemonSprite.image = UIImage(data: imageData)
-        }
-    }
 
 }

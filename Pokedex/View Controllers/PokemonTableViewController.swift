@@ -68,6 +68,7 @@ class PokemonTableViewController: UITableViewController {
 
         let pokemon = pokemonController.pokemonList[indexPath.row]
         cell.pokemonNameLabel.text = pokemon.name.capitalized
+        cell.pokemonIDLabel.text = "Pokédex ID: \(pokemon.id)"
         
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonSpriteData = try? Data(contentsOf: url) else { return UITableViewCell() }
