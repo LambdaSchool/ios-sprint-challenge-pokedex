@@ -39,11 +39,6 @@ class PokemonController {
         
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
-            //            if let response = response as? HTTPURLResponse,
-            //                response.statusCode == 401 {
-            //                completion(nil, NSError())
-            //                return
-            //            }
             if let error = error {
                 NSLog("Error getting pokemon \(error)")
                 completion(nil, error)

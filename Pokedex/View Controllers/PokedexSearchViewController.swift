@@ -33,6 +33,9 @@ class PokedexSearchViewController: UIViewController {
         searchBar.delegate = self
         pokemonNameLabel.text = ""
         saveButton.setTitle("", for: .normal)
+        pokemonIDLabel.text = ""
+        typeLabel.text = ""
+        abilitiesLabel.text = ""
 
         // Do any additional setup after loading the view.
     }
@@ -56,7 +59,7 @@ class PokedexSearchViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         pokemonController.savePokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
-        print("Saving pokemon to list")
+        
     }
 
     /*
