@@ -39,7 +39,7 @@ class PokemonDetailViewController: UIViewController {
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = String("ID: \(pokemon.id)")
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
-        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: "\n"))"
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
         let type: [String] = pokemon.types.map { $0.type.name }
         pokemonTypesLabel.text = "Type(s): \(type.joined(separator: ", "))"
         
