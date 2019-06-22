@@ -25,7 +25,6 @@ class PokemonTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tableView.reloadData()
-        print(pokemonController.pokemonList)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

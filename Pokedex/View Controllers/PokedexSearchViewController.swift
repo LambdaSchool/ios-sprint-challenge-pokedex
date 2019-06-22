@@ -61,7 +61,6 @@ class PokedexSearchViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
         pokemonController?.savePokemon(pokemon: pokemon)
-        print("Saving pokemon: \(pokemon.name)")
         navigationController?.popViewController(animated: true)
         
     }
@@ -72,8 +71,6 @@ class PokedexSearchViewController: UIViewController {
 extension PokedexSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        print("Searching")
-        
         pokemonController?.fetchPokemon(for: searchTerm, completion: { (result, error) in
             if error != nil {
                 NSLog("Error searching for: \(String(describing: error))")
