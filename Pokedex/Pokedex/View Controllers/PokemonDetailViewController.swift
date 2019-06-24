@@ -9,6 +9,7 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
 
     @IBOutlet weak var pokeNameLabel: UILabel!
     @IBOutlet weak var pokeIDLabel: UILabel!
@@ -19,6 +20,8 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     
     @IBOutlet weak var spriteView: UIImageView!
+    
+    
     //    var pokemonController : PokemonController?
     var pokemon: Pokemon? {
         didSet {

@@ -82,12 +82,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" largeTitleDisplayMode="always" id="ufc-fT-Toz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="5dl-LY-avt">
+                        <barButtonItem key="rightBarButtonItem" title=" " image="pokedex" landscapeImage="pokedex" largeContentSizeImage="pokedex" id="5dl-LY-avt">
                             <connections>
                                 <segue destination="TRk-3g-0uY" kind="show" identifier="SearchSegue" id="Ghq-MO-AiI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBarButton" destination="5dl-LY-avt" id="mVT-Ks-5ES"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GXl-h9-uCS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -112,7 +115,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" red="0.72549019607843135" green="0.0" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayw-3m-9RW">
                                 <rect key="frame" x="67" y="258" width="240" height="128"/>
@@ -254,4 +257,7 @@
             <point key="canvasLocation" x="-122.40000000000001" y="-81.409295352323838"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pokedex" width="287" height="119"/>
+    </resources>
 </document>

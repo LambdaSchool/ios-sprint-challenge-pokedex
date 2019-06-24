@@ -10,18 +10,27 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
-  
-    let pokemonController = PokemonController()
+    @IBOutlet weak var searchBarButton: UIBarButtonItem!
     
+    let pokemonController = PokemonController()
+//     let customButton = UIButton(type: .custom)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+      
         tableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+//        customButton.setImage(UIImage(named: "pokedex"), for: .normal)
+//        customButton.frame = CGRect(x: 100.0, y: 0.0, width: 20.0, height: 30.0)
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customButton)
          tableView.reloadData()
     }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        print(self.customButton.convert(self.customButton.frame, to: nil))
+//    }
 
     // MARK: - Table view data source
  
