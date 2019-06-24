@@ -21,6 +21,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    @IBOutlet weak var stackLabelFrame: UIView!
+    @IBOutlet weak var spriteFrameView: UIView!
     @IBOutlet weak var saveButton: UIButton!
     var pokemonController : PokemonController?
     
@@ -29,6 +31,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
         pokeNameLabel.text = ""
         saveButton.setTitle("", for: .normal)
+        setUpAppearances()
         updateViews()
         // Do any additional setup after loading the view.
     }
@@ -52,6 +55,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             let pokemonImageData = try? Data(contentsOf: url) else { return }
         spriteView.image = UIImage(data: pokemonImageData)
         saveButton.setTitle("Save Pokemon", for: .normal)
+        showResultAppearances()
         
         
     }
@@ -84,5 +88,38 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+    private func setUpAppearances() {
+        view.backgroundColor = .black
+        
+    }
+    private func showResultAppearances() {
+        spriteView.backgroundColor = .white
+        spriteView.layer.cornerRadius = 5.0
+        spriteFrameView.backgroundColor = .gray
+        spriteFrameView.layer.borderColor = UIColor.gray.cgColor
+        spriteFrameView.layer.borderWidth = 20.0
+        spriteFrameView.layer.cornerRadius = 10.0
+        
+        stackLabelFrame.backgroundColor = AppearanceHelper.pokeRed
+        stackLabelFrame.layer.cornerRadius = 10.0
+        
+        pokeNameLabel.backgroundColor = AppearanceHelper.pokeRed
+        pokeNameLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        
+        pokeIDLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        pokeIDLabel.backgroundColor = AppearanceHelper.pokeRed
+        pokeIDLabel.layer.cornerRadius = 10.0
+        
+        pokeTypesLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        pokeTypesLabel.backgroundColor = AppearanceHelper.pokeRed
+        pokeTypesLabel.layer.cornerRadius = 10.0
+        
+        abilitiesLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        abilitiesLabel.backgroundColor = AppearanceHelper.pokeRed
+
+        saveButton.backgroundColor = AppearanceHelper.pokeBlue
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.layer.cornerRadius = 30
+    }
  
 }
