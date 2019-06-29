@@ -27,5 +27,6 @@ enum AppearanceHelper {
         
         UINavigationBar.appearance().titleTextAttributes = textAttributes
         UINavigationBar.appearance().largeTitleTextAttributes = textAttributes
+        
     }
 }
