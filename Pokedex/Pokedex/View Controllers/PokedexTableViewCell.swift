@@ -13,6 +13,7 @@ class PokedexTableViewCell: UITableViewCell {
     
     @IBOutlet weak var pokeNameLabel: UILabel!
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var spriteView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()

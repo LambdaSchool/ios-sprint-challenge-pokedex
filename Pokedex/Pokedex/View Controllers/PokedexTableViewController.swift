@@ -17,7 +17,7 @@ class PokedexTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-      
+        setUpAppearances()
         tableView.reloadData()
     }
     override func viewDidLoad() {
@@ -50,6 +50,12 @@ class PokedexTableViewController: UITableViewController {
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonImageData = try? Data(contentsOf: url) else { return UITableViewCell() }
         cell.spriteView.image = UIImage(data: pokemonImageData)
+       
+        cell.pokeNameLabel.backgroundColor = .clear
+        cell.pokeNameLabel.textColor = .white
+        cell.containerView.backgroundColor = .black
+        cell.backgroundColor = .black
+        
         return cell
     }
    
@@ -78,6 +84,20 @@ class PokedexTableViewController: UITableViewController {
              let pokemon = pokemonController.pokemonList[pokemonIndex.row]
             destinationVC.pokemon = pokemon
         }
+        
+    }
+    
+//    private func style(cell: UITableViewCell) {
+//
+//
+//        cell.backgroundColor = .black
+//    }
+    
+    private func setUpAppearances() {
+        view.backgroundColor = .black
+        tableView.backgroundColor = .black
+//        UIView.navigationBar.tintColor = AppearanceHelper.pokeRed
+        //using this makes my picture color stand out. How to affect only cells?
         
     }
 }
