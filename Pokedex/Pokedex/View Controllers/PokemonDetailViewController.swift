@@ -27,6 +27,7 @@ class PokemonDetailViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.updateViews()
+                self.setUpAppearances()
             }
         }
     }
@@ -35,6 +36,7 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         navigationItem.title = pokemon?.name.capitalized
+        setUpAppearances()
         // Do any additional setup after loading the view.
     }
     func updateViews(){
@@ -55,7 +57,31 @@ class PokemonDetailViewController: UIViewController {
         spriteView.image = UIImage(data: pokemonImageData)
     }
     
-
+    private func setUpAppearances() {
+        view.backgroundColor = .black
+        spriteView.backgroundColor = .white
+//        spriteView.layer.cornerRadius = 5.0
+        
+ 
+        
+        pokeNameLabel.backgroundColor = AppearanceHelper.pokeRed
+        pokeNameLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        
+        pokeIDLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        pokeIDLabel.backgroundColor = AppearanceHelper.pokeRed
+//        pokeIDLabel.layer.cornerRadius = 10.0
+        
+        pokeTypesLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        pokeTypesLabel.backgroundColor = AppearanceHelper.pokeRed
+//        pokeTypesLabel.layer.cornerRadius = 10.0
+        
+        abilitiesLabel.textColor = #colorLiteral(red: 0.9372316741, green: 0.9406467823, blue: 0.9562381028, alpha: 1)
+        abilitiesLabel.backgroundColor = AppearanceHelper.pokeRed
+        
+       
+        
+    }
+ 
     /*
     // MARK: - Navigation
 
