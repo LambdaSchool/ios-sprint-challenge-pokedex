@@ -21,12 +21,30 @@ enum AppearanceHelper {
 //        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "pokecircle")
 //        Can I make the back arrow just in blue?
         
-        let textAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.white]
-//                               NSAttributedString.Key.shadow: UIColor.blue]
-//                               NSAttributedString.Key.strokeWidth: 3.0]
-        
+        let textAttributes = [ NSAttributedString.Key.strokeColor: UIColor.purple,
+                               NSAttributedString.Key.strokeWidth: -6.0,
+                               NSAttributedString.Key.foregroundColor: UIColor.white,
+//                               NSAttributedString.Key.kern: 5,
+                               NSAttributedString.Key.font: UIFont(name: "Chalkboard SE", size: 50)!] as [NSAttributedString.Key : Any]
+ 
+     
         UINavigationBar.appearance().titleTextAttributes = textAttributes
         UINavigationBar.appearance().largeTitleTextAttributes = textAttributes
         
     }
+    
+//    static func setUpTitle() {
+//        let attrString = NSAttributedString(string: "POKEDEX", attributes: [
+//            NSAttributedString.Key.strokeColor: UIColor.purple,
+//            NSAttributedString.Key.strokeWidth: -7.0,
+//            NSAttributedString.Key.foregroundColor: UIColor.white,
+//            NSAttributedString.Key.kern: 10,
+//            NSAttributedString.Key.font: UIFont(name: "Marker Felt", size: 30)!
+//            ])
+//
+//        let navLabel = UILabel()
+//        navLabel.attributedText = attrString
+//
+    
+    
 }

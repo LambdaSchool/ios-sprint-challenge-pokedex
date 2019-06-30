@@ -25,6 +25,18 @@ class PokedexTableViewController: UITableViewController {
 //        customButton.setImage(UIImage(named: "pokedex"), for: .normal)
 //        customButton.frame = CGRect(x: 100.0, y: 0.0, width: 20.0, height: 30.0)
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customButton)
+        
+//        let attrString = NSAttributedString(string: "POKEDEX", attributes: [
+//            NSAttributedString.Key.strokeColor: UIColor.purple,
+//            NSAttributedString.Key.strokeWidth: -7.0,
+//            NSAttributedString.Key.foregroundColor: UIColor.white,
+//            NSAttributedString.Key.kern: 10,
+//            NSAttributedString.Key.font: UIFont(name: "Marker Felt", size: 30)!
+//            ])
+//
+//        let navLabel = UILabel()
+//        navLabel.attributedText = attrString
+//         navigationItem.titleView = navLabel
          tableView.reloadData()
     }
 //    override func viewDidAppear(_ animated: Bool) {
