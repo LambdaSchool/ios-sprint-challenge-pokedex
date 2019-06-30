@@ -36,7 +36,6 @@ class PokedexTableViewController: UITableViewController {
  
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return pokemonController.pokemonList.count
     }
 
@@ -96,6 +95,9 @@ class PokedexTableViewController: UITableViewController {
     private func setUpAppearances() {
         view.backgroundColor = .black
         tableView.backgroundColor = .black
+//        navigationController?.navigationBar.largeTitleTextAttributes = pokeblue
+        
+//        navigationItem.titleView?.tintColor = .blue
 //        UIView.navigationBar.tintColor = AppearanceHelper.pokeRed
         //using this makes my picture color stand out. How to affect only cells?
         
