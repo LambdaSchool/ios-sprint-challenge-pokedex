@@ -17,6 +17,7 @@ class PokedexSearchViewController: UIViewController {
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var abilitiesLabel: UILabel!
     @IBOutlet var saveButton: UIButton!
+    @IBOutlet var redView: UIView!
     
     var pokemonController: PokemonController?
     
@@ -24,11 +25,14 @@ class PokedexSearchViewController: UIViewController {
         super.viewDidLoad()
         searchBar.delegate = self
         pokemonNameLabel.text = ""
-        saveButton.setTitle("", for: .normal)
+        saveButton.isHidden = true
         pokemonIDLabel.text = ""
         typeLabel.text = ""
         abilitiesLabel.text = ""
         title = "Search for Pokémon"
+        redView.isHidden = true
+        saveButton.layer.cornerRadius = 10
+        
         updateViews()
         
         
@@ -53,7 +57,7 @@ class PokedexSearchViewController: UIViewController {
         title = pokemon.name.capitalized
         pokemonNameLabel.text = pokemon.name.capitalized
         let id = String(pokemon.id)
-        pokemonIDLabel.text = "ID: \(id)"
+        pokemonIDLabel.text = "National Dex ID: \(id)"
         let type: [String] = pokemon.types.map { $0.type.name }
         typeLabel.text = "Type(s): \(type.joined(separator:", ").capitalized)"
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
@@ -61,7 +65,12 @@ class PokedexSearchViewController: UIViewController {
         guard let url = URL(string: pokemon.sprites.front_default),
             let spriteData = try? Data(contentsOf: url) else { return }
         pokemonSprite.image = UIImage(data: spriteData)
-        saveButton.setTitle("Save Pokemon", for: .normal)
+        saveButton.isHidden = false
+        redView.isHidden = false
+        redView.layer.cornerRadius = 10
+        redView.layer.shadowOpacity = 1
+        redView.layer.shadowOffset = .zero
+        redView.layer.shadowRadius = 3
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {

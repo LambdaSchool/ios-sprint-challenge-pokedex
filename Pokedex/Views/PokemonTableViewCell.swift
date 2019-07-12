@@ -13,6 +13,9 @@ class PokemonTableViewCell: UITableViewCell {
     @IBOutlet var pokemonNameLabel: UILabel!
     @IBOutlet var pokemonSprite: UIImageView!
     @IBOutlet var pokemonIDLabel: UILabel!
+    @IBOutlet var redCellView: UIView!
+    
+    
 
 
 }

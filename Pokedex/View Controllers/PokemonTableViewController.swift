@@ -29,8 +29,9 @@ class PokemonTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+        self.tableView.rowHeight = 144
         
-        navigationController?.navigationBar.tintColor = .white
+        
         
         
     }
@@ -74,6 +75,11 @@ class PokemonTableViewController: UITableViewController {
         let pokemon = pokemonController.pokemonList[indexPath.row]
         cell.pokemonNameLabel.text = pokemon.name.capitalized
         cell.pokemonIDLabel.text = "Pokédex ID: \(pokemon.id)"
+        
+        cell.redCellView.layer.cornerRadius = 10
+        cell.redCellView.layer.shadowOpacity = 1
+        cell.redCellView.layer.shadowOffset = .zero
+        cell.redCellView.layer.shadowRadius = 3
         
         guard let url = URL(string: pokemon.sprites.front_default),
             let pokemonSpriteData = try? Data(contentsOf: url) else { return UITableViewCell() }

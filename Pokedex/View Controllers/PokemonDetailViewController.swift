@@ -15,6 +15,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet var pokemonTypesLabel: UILabel!
     @IBOutlet var abilitiesLabel: UILabel!
     @IBOutlet var spriteDisplay: UIImageView!
+    @IBOutlet var redView: UIView!
     
     
     var pokemon: Pokemon? {
@@ -29,6 +30,10 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         title = pokemon?.name.capitalized
+        redView.layer.cornerRadius = 10
+        redView.layer.shadowOpacity = 1
+        redView.layer.shadowOffset = .zero
+        redView.layer.shadowRadius = 3
         // Do any additional setup after loading the view.
     }
     
@@ -36,7 +41,7 @@ class PokemonDetailViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         
         pokemonNameLabel.text = pokemon.name.capitalized
-        pokemonIDLabel.text = String("ID: \(pokemon.id)")
+        pokemonIDLabel.text = String("National Dex ID: \(pokemon.id)")
         let abilities: [String] = pokemon.abilities.map { $0.ability.name }
         abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", ").capitalized)"
         let type: [String] = pokemon.types.map { $0.type.name }
