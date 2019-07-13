@@ -28,6 +28,10 @@ class PokemonDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let pokemon = pokemon else { return }
+        
+        updateViews(with: pokemon)
 
         // Do any additional setup after loading the view.
     }
@@ -43,4 +47,30 @@ class PokemonDetailViewController: UIViewController {
     }
     */
 
+    
+    
+    func updateViews(with pokemon: Pokemon) {
+        
+        
+        title = pokemon.name
+        
+        self.idLabel.text = "ID:"
+        self.idDetailsLabel.text = "\(pokemon.id)"
+        
+        self.typesLabel.text = "Type:"
+        self.typeDetailsLabel.text = pokemon.types.first?.type.name
+        
+        
+        self.abilityLabel.text = "Abilities:"
+        self.abilityDetailsLabel.text = pokemon.abilities.first?.ability.name
+        
+        pokemonController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { (imageResult) in
+            if let image = try? imageResult.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImage.image = image
+                }
+                
+            }
+        })
+    }
 }

@@ -11,23 +11,33 @@ import Foundation
 struct Pokemon: Codable {
     let name: String
     let id: Int
-    let abilities: [Ability]
-    let types: [Type]
+    let abilities: [AbilityDictionary]
+    let types: [TypeDictionary]
     let sprites: Sprites
-}
-
-struct Ability: Codable {
-    let ability: String
-}
-
-struct Type: Codable {
-    let name: String
-}
-
-struct Sprites: Codable {
-    let frontDefault: String
     
-    enum CodingKeys: String, CodingKey {
-        case frontDefault = "front_Default"
+    
+    struct AbilityDictionary: Codable {
+        let ability: AbilitySubDictionary
+        
+    }
+    
+    struct AbilitySubDictionary: Codable {
+        let name: String
+    }
+    
+    struct TypeDictionary: Codable {
+        let type: TypeSubDictionary
+    }
+    
+    struct TypeSubDictionary: Codable {
+        let name: String
+    }
+    
+    struct Sprites: Codable {
+        let frontDefault: String
+        
+        enum CodingKeys: String, CodingKey {
+            case frontDefault = "front_default"
+        }
     }
 }

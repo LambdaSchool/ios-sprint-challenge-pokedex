@@ -12,17 +12,16 @@ class PokemonTableViewController: UITableViewController {
     
     //Properties
     let pokemonController = PokemonController()
+    
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
     }
 
+    
+    
     // MARK: - Table view data source
 
 
@@ -33,7 +32,7 @@ class PokemonTableViewController: UITableViewController {
 
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
         // Configure the cell...
         cell.textLabel?.text = pokemonController.pokemonList[indexPath.row].name

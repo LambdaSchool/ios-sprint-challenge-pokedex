@@ -39,7 +39,9 @@ class PokemonController {
     
     
     func searchForPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemonName)")
+        
+        let pokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemonName.lowercased())")
+        
         
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -64,7 +66,7 @@ class PokemonController {
                 completion(.success(pokemonResult))
                 
             }catch {
-                NSLog("Error decoding pokemon: \(Error.self)")
+                NSLog("Error decoding pokemon: \(error)")
                 completion(.failure(.noData))
                 return
             }
