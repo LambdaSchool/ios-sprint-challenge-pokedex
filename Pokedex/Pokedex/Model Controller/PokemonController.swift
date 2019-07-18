@@ -37,6 +37,7 @@ class PokemonController {
                     return
                 }
             }
+            
         }
         dataTask.resume()
     }
@@ -47,7 +48,7 @@ class PokemonController {
     }
     
     func deletePokemon(pokemon: Pokemon) {
-        guard let index = pokedex.index(of: pokemon) else { return }
+        guard let index = pokedex.firstIndex(of: pokemon) else { return }
         pokedex.remove(at: index)
     }
     
