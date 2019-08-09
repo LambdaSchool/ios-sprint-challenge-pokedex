@@ -6,8 +6,7 @@
 //  Copyright © 2019 Taylor Lyles. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
 
 class PokemonController {
 	
@@ -49,6 +48,28 @@ class PokemonController {
 				completion(.failure(.noDecode))
 				return
 			}
+		}.resume()
+	}
+	
+	func getImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+		let imageURL = URL(string: urlString)!
+		
+		var request = URLRequest(url: imageURL)
+		request.httpMethod = HTTPMethod.get.rawValue
+		
+		URLSession.shared.dataTask(with: request) { (data, _, error) in
+			if let _ = error {
+				completion(.failure(.otherError))
+				return
+			}
+			
+			guard let data = data else {
+				completion(.failure(.badData))
+				return
+			}
+			
+			let image = UIImage(data: data)!
+			completion(.success(image))
 		}.resume()
 	}
 }
