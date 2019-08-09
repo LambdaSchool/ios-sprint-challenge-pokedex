@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokemonController {
     
@@ -69,13 +70,43 @@ extension PokemonController {
                 completion(.failure(.noData))
                 return
             }
-        }.resume()
+            }.resume()
     }
     
     func savePokemon() {
-        
         guard let pokemon = pokemon else { return }
-        
         pokemonList.append(pokemon)
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        guard let imageURL = URL(string: urlString) else {
+            completion(.failure(.badAuth))
+            return
+        }
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error reaching image data:  \(error)")
+                completion(.failure(.badURL))
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            completion(.success(image))
+            
+        }.resume()
     }
 }
