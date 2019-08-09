@@ -27,15 +27,22 @@ class PokemonTableViewController: UITableViewController {
         return apiController.pokemons.count
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        cell.textLabel?.text = apiController.pokemons[indexPath.row].name
+        return cell
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailVC = segue.destination as? PokemonDetailViewController else { return }
         if segue.identifier == "SearchShowSegue" {
             detailVC.apiController = apiController
         }
         if segue.identifier == "DetailShowSegue" {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
             detailVC.apiController = apiController
-            detailVC.searchBar.isHidden = true
-            detailVC.saveButton.isHidden = true
+            detailVC.fromCell = true
+            detailVC.pokemon = apiController.pokemons[indexPath.row]
         }
     }
 

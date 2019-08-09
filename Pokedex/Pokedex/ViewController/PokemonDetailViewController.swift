@@ -22,9 +22,17 @@ class PokemonDetailViewController: UIViewController {
     
     var pokemon: Pokemon?
     
+    var fromCell = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        if fromCell {
+            searchBar.isHidden = true
+            saveButton.isHidden = true
+            guard let pokemon = pokemon else { return }
+            updateViews(with: pokemon)
+        }
         // Do any additional setup after loading the view.
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -51,6 +59,9 @@ class PokemonDetailViewController: UIViewController {
             abilityList.append("\(ability.ability["name"] ?? ""), " )
         }
         abilityLabel.text = "Abilities: \(abilityList)"
+        
+        guard let imageData = pokemon.imageData else { return }
+        self.pokemonImageView.image = UIImage(data: imageData)
     }
     
 
@@ -65,9 +76,10 @@ extension PokemonDetailViewController: UISearchBarDelegate {
             self.apiController.fetchImage(imageURL: pokemon.sprites["front_default"]!, completion: { (dataResult) in
                 guard let data = try? dataResult.get() else { return }
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
-                    self.pokemon = pokemon
-                    self.pokemonImageView.image = UIImage(data: data)
+                    var changePokemon = pokemon
+                    changePokemon.imageData = data
+                    self.pokemon = changePokemon
+                    self.updateViews(with: changePokemon)
                 }
             })
         }
