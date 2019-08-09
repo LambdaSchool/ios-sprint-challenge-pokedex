@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
 	let id: Int
 	let name: String
 	let abilities: [Ability]
@@ -16,20 +16,19 @@ struct Pokemon: Codable {
 	let sprites: Sprite
 }
 
-struct Ability: Codable {
+struct Ability: Codable, Equatable {
 	let ability: KeyString
 }
 
-struct Type: Codable {
+struct Type: Codable, Equatable {
 	let type: KeyString
 }
 
-struct Sprite: Codable {
+struct Sprite: Codable, Equatable {
 	let frontDefault: URL
 	let backDefault: URL
 }
 
-struct KeyString: Codable {
+struct KeyString: Codable, Equatable {
 	let name: String
-	let url: URL
 }

@@ -22,7 +22,7 @@ class PokemonSearchVC: UIViewController {
 	//MARK: - Properties
 	
 	var pokeController: PokeController!
-	var pokemonToSearch: String?
+	var pokemonToDisplay: Pokemon?
 	
 	//MARK: - Life Cycle
 	
@@ -33,18 +33,18 @@ class PokemonSearchVC: UIViewController {
 		hideViews(true)
 		saveBtn.isHidden = true
 		
-		if let searchTerm = pokemonToSearch {
-			title = searchTerm
+		if let pokemon = pokemonToDisplay {
+			title = pokemon.name
 			searchBar.isHidden = true
-			performSearch(for: searchTerm)
+			updateViews()
 		}
 	}
 	
 	//MARK: - IBActions
 	
 	@IBAction func saveBtnTapped(_ sender: Any) {
-		guard let name = title else { return }
-		pokeController.add(pokemon: name)
+		guard let pokemon = pokemonToDisplay else { return }
+		pokeController.add(pokemon: pokemon)
 		saveBtn.isEnabled = false
 	}
 	
@@ -57,7 +57,9 @@ class PokemonSearchVC: UIViewController {
 		abilitiesLbl.isHidden = verdict
 	}
 	
-	private func updateViews(with pokemon: Pokemon) {
+	private func updateViews() {
+		guard let pokemon = pokemonToDisplay else { return }
+		
 		title = pokemon.name.capitalized
 		idLbl.text = "ID: \(pokemon.id)"
 		typesLbl.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
@@ -65,15 +67,16 @@ class PokemonSearchVC: UIViewController {
 		spriteImgView.load(url: pokemon.sprites.frontDefault)
 		
 		hideViews(false)
-		saveBtn.isHidden = pokemonToSearch == nil ? false : true
 	}
 	
 	private func performSearch(for searchTerm: String) {
 		pokeController.getPokemon(by: searchTerm) { (result) in
 			guard let result = try? result.get() else { return }
 			DispatchQueue.main.async {
-				self.updateViews(with: result)
+				self.pokemonToDisplay = result
+				self.updateViews()
 				self.saveBtn.isEnabled = true
+				self.saveBtn.isHidden = false
 			}
 		}
 	}

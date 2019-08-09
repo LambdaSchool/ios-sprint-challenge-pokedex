@@ -11,16 +11,26 @@ import Foundation
 class PokeController {
 	
 	private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
-	private(set) var myPokemon = [String]()
+	private(set) var myPokemon = [Pokemon]()
 	
-	func add(pokemon: String) {
+	func add(pokemon: Pokemon) {
 		if !myPokemon.contains(pokemon) {
 			myPokemon.append(pokemon)
+			print("\(pokemon.name) added to list")
 		}
 	}
 	
 	func removePokemon(at index: Int) {
 		myPokemon.remove(at: index)
+	}
+	
+	func sortPokemon(by sorting: SortBy) {
+		switch sorting {
+		case .id:
+			myPokemon.sort(by: {$0.id < $1.id})
+		case .name:
+			myPokemon.sort(by: {$0.name < $1.name})
+		}
 	}
 	
 	func getPokemon(by searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {

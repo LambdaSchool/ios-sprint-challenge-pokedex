@@ -23,3 +23,8 @@ enum NetworkError: Error {
 	case notEncoding
 	case other(Error)
 }
+
+enum SortBy {
+	case id
+	case name
+}

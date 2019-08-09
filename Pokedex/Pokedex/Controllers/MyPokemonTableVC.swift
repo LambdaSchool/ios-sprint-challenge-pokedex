@@ -12,10 +12,14 @@ class MyPokemonTableVC: UITableViewController {
 	
 	//MARK: - IBOutlets
 	
+	@IBOutlet weak var sortingSegControl: UISegmentedControl!
 	
 	//MARK: - Properties
 	
 	var pokeController: PokeController!
+	var sortingType: SortBy {
+		return sortingSegControl.selectedSegmentIndex == 0 ? .id : .name
+	}
 	
 	//MARK: - Life Cycle
 	
@@ -28,6 +32,7 @@ class MyPokemonTableVC: UITableViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
+		pokeController.sortPokemon(by: sortingType)
 		tableView.reloadData()
 	}
 	
@@ -36,13 +41,17 @@ class MyPokemonTableVC: UITableViewController {
 			pokeSearchVC.pokeController = pokeController
 			
 			if segue.identifier == "ShowPokemonSegue", let indexPath = tableView.indexPathForSelectedRow {
-				pokeSearchVC.pokemonToSearch = pokeController.myPokemon[indexPath.row]
+				pokeSearchVC.pokemonToDisplay = pokeController.myPokemon[indexPath.row]
 			}
 		}
 	}
 	
 	//MARK: - IBActions
 	
+	@IBAction func sortByChanged(_ sender: UISegmentedControl) {
+		pokeController.sortPokemon(by: sortingType)
+		tableView.reloadData()
+	}
 	
 	//MARK: - Helpers
 	
@@ -58,7 +67,7 @@ class MyPokemonTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
-        cell.textLabel?.text = pokeController.myPokemon[indexPath.row]
+        cell.textLabel?.text = pokeController.myPokemon[indexPath.row].name.capitalized
 
         return cell
     }
