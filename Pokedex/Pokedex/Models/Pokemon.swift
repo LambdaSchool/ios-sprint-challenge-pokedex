@@ -26,7 +26,7 @@ struct Type: Codable, Equatable {
 
 struct Sprite: Codable, Equatable {
 	let frontDefault: URL
-	let backDefault: URL
+	let frontShiny: URL
 }
 
 struct KeyString: Codable, Equatable {

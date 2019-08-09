@@ -28,3 +28,8 @@ enum SortBy {
 	case id
 	case name
 }
+
+enum SpriteView {
+	case regular
+	case shiny
+}

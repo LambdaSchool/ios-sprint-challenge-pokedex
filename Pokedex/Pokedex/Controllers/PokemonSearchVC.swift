@@ -14,6 +14,7 @@ class PokemonSearchVC: UIViewController {
 	
 	@IBOutlet weak var searchBar: UISearchBar!
 	@IBOutlet weak var spriteImgView: UIImageView!
+	@IBOutlet weak var toggleLbl: UILabel!
 	@IBOutlet weak var idLbl: UILabel!
 	@IBOutlet weak var typesLbl: UILabel!
 	@IBOutlet weak var abilitiesLbl: UILabel!
@@ -23,6 +24,7 @@ class PokemonSearchVC: UIViewController {
 	
 	var pokeController: PokeController!
 	var pokemonToDisplay: Pokemon?
+	private var spriteView = SpriteView.regular
 	
 	//MARK: - Life Cycle
 	
@@ -48,10 +50,23 @@ class PokemonSearchVC: UIViewController {
 		saveBtn.isEnabled = false
 	}
 	
+	@IBAction func spriteTapGesture(_ sender: Any) {
+		guard let sprites = pokemonToDisplay?.sprites else { return }
+		
+		switch spriteView {
+		case .regular:
+			spriteImgView.load(url: sprites.frontShiny)
+			spriteView = .shiny
+		case .shiny:
+			spriteImgView.load(url: sprites.frontDefault)
+			spriteView = .regular
+		}
+	}
 	//MARK: - Helpers
 	
 	private func hideViews(_ verdict: Bool) {
 		spriteImgView.isHidden = verdict
+		toggleLbl.isHidden = verdict
 		idLbl.isHidden = verdict
 		typesLbl.isHidden = verdict
 		abilitiesLbl.isHidden = verdict
@@ -67,6 +82,7 @@ class PokemonSearchVC: UIViewController {
 		spriteImgView.load(url: pokemon.sprites.frontDefault)
 		
 		hideViews(false)
+		spriteView = .regular
 	}
 	
 	private func performSearch(for searchTerm: String) {
