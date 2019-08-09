@@ -13,7 +13,7 @@
         <!--Pokedex-->
         <scene sceneID="2Wg-Xn-0nn">
             <objects>
-                <tableViewController id="cfb-Od-Qmx" sceneMemberID="viewController">
+                <tableViewController id="cfb-Od-Qmx" customClass="MyPokemonTableVC" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="UZZ-Mz-LbS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,7 +46,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" id="jcQ-Zw-7Yc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="RVc-X2-U9U"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="RVc-X2-U9U">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" id="vaI-tb-Mfs"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8q-N1-LnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -61,18 +65,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yxf-59-vtw">
-                                <rect key="frame" x="0.0" y="140" width="414" height="14.5"/>
+                            <searchBar contentMode="redraw" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="yxf-59-vtw">
+                                <rect key="frame" x="0.0" y="140" width="414" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="k5c-qy-JPB"/>
+                                </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4ac-lO-cXK">
-                                <rect key="frame" x="20" y="154.5" width="374" height="707.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4ac-lO-cXK">
+                                <rect key="frame" x="20" y="192" width="374" height="670"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXq-ep-ulk">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="566"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="536"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TGW-vk-FId">
-                                                <rect key="frame" x="45.5" y="141.5" width="283" height="283"/>
+                                                <rect key="frame" x="53" y="134" width="268" height="268"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="TGW-vk-FId" secondAttribute="height" multiplier="1:1" id="G42-Wz-0P0"/>
                                                 </constraints>
@@ -86,29 +93,32 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="qmy-d3-aUR">
-                                        <rect key="frame" x="0.0" y="566" width="374" height="141.5"/>
+                                        <rect key="frame" x="0.0" y="536" width="374" height="134"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID: 25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dM7-Vb-g90">
-                                                <rect key="frame" x="18.5" y="0.0" width="337" height="25.5"/>
+                                                <rect key="frame" x="18.5" y="0.0" width="337" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types: Normal" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sl3-pe-Vgd">
-                                                <rect key="frame" x="18.5" y="40.5" width="337" height="20.5"/>
+                                                <rect key="frame" x="18.5" y="39" width="337" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities: 1, 2, 3" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPu-74-0Rn">
-                                                <rect key="frame" x="18.5" y="76" width="337" height="20.5"/>
+                                                <rect key="frame" x="18.5" y="73.5" width="337" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8al-NM-NAu">
-                                                <rect key="frame" x="112" y="111.5" width="150" height="30"/>
+                                                <rect key="frame" x="112" y="108" width="150" height="26"/>
                                                 <state key="normal" title="Save Pokemon"/>
+                                                <connections>
+                                                    <action selector="saveBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HoR-al-Gaq"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -137,6 +147,14 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="VL3-IR-Pyd"/>
+                    <connections>
+                        <outlet property="abilitiesLbl" destination="NPu-74-0Rn" id="B94-rv-UBp"/>
+                        <outlet property="idLbl" destination="dM7-Vb-g90" id="O6o-3J-6Nn"/>
+                        <outlet property="saveBtn" destination="8al-NM-NAu" id="1fV-LS-eW7"/>
+                        <outlet property="searchBar" destination="yxf-59-vtw" id="DPp-2S-tlw"/>
+                        <outlet property="spriteImgView" destination="TGW-vk-FId" id="3Yg-fK-Jlv"/>
+                        <outlet property="typesLbl" destination="sl3-pe-Vgd" id="4pH-40-gGI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -161,4 +179,7 @@
             <point key="canvasLocation" x="-814.49275362318849" y="138.61607142857142"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="B04-RA-vuM"/>
+    </inferredMetricsTieBreakers>
 </document>
