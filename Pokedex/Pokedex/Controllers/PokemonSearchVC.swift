@@ -73,6 +73,7 @@ class PokemonSearchVC: UIViewController {
 			guard let result = try? result.get() else { return }
 			DispatchQueue.main.async {
 				self.updateViews(with: result)
+				self.saveBtn.isEnabled = true
 			}
 		}
 	}
