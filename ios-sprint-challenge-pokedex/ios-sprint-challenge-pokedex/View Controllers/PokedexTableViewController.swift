@@ -21,19 +21,23 @@ class PokedexTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemonList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        
+        cell.textLabel?.text = pokemonController.pokemonList[indexPath.row].name
 
         return cell
     }
@@ -46,6 +50,12 @@ class PokedexTableViewController: UITableViewController {
         if segue.identifier == "SearchPokemonSegue" {
             guard let detailVC = segue.destination as? SearchPokemonDetailViewController else { return }
             detailVC.pokemonController = self.pokemonController
+        } else if segue.identifier == "ViewPokemonSegue" {
+            guard let indexPath = self.tableView.indexPathForSelectedRow else { return }
+            guard let detailVC = segue.destination as? SearchPokemonDetailViewController else { return }
+//            guard let searchBar = detailVC.searchBar else { return }
+//            searchBar.isHidden = true
+            detailVC.pokemon = self.pokemonController.pokemonList[indexPath.row]
         }
     }
     

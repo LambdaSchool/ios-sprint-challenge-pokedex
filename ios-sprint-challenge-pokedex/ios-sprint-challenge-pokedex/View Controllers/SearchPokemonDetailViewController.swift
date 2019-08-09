@@ -25,16 +25,19 @@ class SearchPokemonDetailViewController: UIViewController {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        updateViews()
     }
+
     
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
         guard let pokemonController = pokemonController else { return }
         pokemonController.pokemonList.append(pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
-    func updateViews(with pokemon: Pokemon) {
-        guard let pokemonController = pokemonController else { return }
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
         pokemonName.text = pokemon.name
         idLabel.text = pokemon.id.description
         var typesList = ""
@@ -85,9 +88,9 @@ extension SearchPokemonDetailViewController: UISearchBarDelegate {
         guard let pokemonController = self.pokemonController else { return }
         pokemonController.searchPokemon(with: searchingFor) { (result) in
             if let pokemonResult = try? result.get() {
-                self.pokemon = pokemonResult
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemonResult)
+                    self.pokemon = pokemonResult
+                    self.updateViews()
                 }
                 
                 pokemonController.fetchImage(at: pokemonResult.sprites.frontDefault) { (result) in
