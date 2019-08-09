@@ -28,7 +28,9 @@ class PokemonDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func saveButtonTapped(_ sender: Any) {
-        
+        guard let pokemon = pokemon else { return }
+        apiController.pokemons.append(pokemon)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func updateViews(with pokemon: Pokemon) {
@@ -37,14 +39,18 @@ class PokemonDetailViewController: UIViewController {
         var typeList = ""
         for type in pokemon.types {
             //if type == pokemon.types[pokemon.types.count - 1] {
-            typeList.append("\(String(describing: type.type["name"])), " )
+            typeList.append("\(type.type["name"] ?? ""), " )
             //} else {
                 //typeList.append("\(type.type["name"])" ?? "")
            // }
             
         }
         typeLabel.text = "Type: \(typeList)"
-        
+        var abilityList = ""
+        for ability in pokemon.abilities {
+            abilityList.append("\(ability.ability["name"] ?? ""), " )
+        }
+        abilityLabel.text = "Abilities: \(abilityList)"
     }
     
 
@@ -52,14 +58,16 @@ class PokemonDetailViewController: UIViewController {
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
+        guard let text = searchBar.text else { return }
+        let searchTerm = text.lowercased()
         apiController.searchPokemon(with: searchTerm) { (result) in
             guard let pokemon = try? result.get() else { return }
             self.apiController.fetchImage(imageURL: pokemon.sprites["front_default"]!, completion: { (dataResult) in
                 guard let data = try? dataResult.get() else { return }
                 DispatchQueue.main.async {
-                    self.updateViews(with: animal)
-                    self.animalImageView.image = UIImage(data: data)
+                    self.updateViews(with: pokemon)
+                    self.pokemon = pokemon
+                    self.pokemonImageView.image = UIImage(data: data)
                 }
             })
         }
