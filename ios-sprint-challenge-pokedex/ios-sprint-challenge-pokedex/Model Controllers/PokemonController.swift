@@ -28,7 +28,8 @@ enum NetworkError: Error {
 
 class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
-//    var pokemon: Pokemon?
+    var pokemon: Pokemon?
+    var pokemonImage: UIImage?
     var pokemonList: [Pokemon] = []
     
     func searchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
@@ -50,8 +51,9 @@ class PokemonController {
             }
             
             do {
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-                completion(.success(pokemon))
+                let newPokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                self.pokemon = newPokemon
+                completion(.success(newPokemon))
             } catch {
                 completion(.failure(.noDecode))
                 return
