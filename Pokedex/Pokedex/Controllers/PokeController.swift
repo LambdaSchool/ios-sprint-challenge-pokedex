@@ -20,7 +20,7 @@ class PokeController {
 	}
 	
 	func getPokemon(by searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-		let pokeURL = baseURL.appendingPathComponent("pokemon/\(searchTerm)")
+		let pokeURL = baseURL.appendingPathComponent("pokemon/\(searchTerm.lowercased())")
 		let request = URLRequest(url: pokeURL)
 		
 		URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -37,9 +37,13 @@ class PokeController {
 			}
 			
 			do {
-				let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+				let decoder = JSONDecoder()
+				decoder.keyDecodingStrategy = .convertFromSnakeCase
+				
+				let pokemon = try decoder.decode(Pokemon.self, from: data)
 				completion(.success(pokemon))
 			} catch {
+				NSLog("Trouble Decoding")
 				completion(.failure(.notDecoding))
 			}
 		}.resume()
