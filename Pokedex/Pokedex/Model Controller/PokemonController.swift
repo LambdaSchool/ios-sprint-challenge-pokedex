@@ -15,7 +15,7 @@ class PokemonController {
 	private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	
 	func searchPokemon(for pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void ) {
-		let searchURL = baseURL.appendingPathComponent("poke")
+		let searchURL = baseURL.appendingPathComponent(pokemon)
 		
 		var request = URLRequest(url: searchURL)
 		request.httpMethod = HTTPMethod.get.rawValue

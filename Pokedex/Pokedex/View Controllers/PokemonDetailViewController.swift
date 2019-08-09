@@ -42,32 +42,31 @@ class PokemonDetailViewController: UIViewController {
 			}
 		}
 	}
-	func searchClicked(_ searchBar: UISearchBar) {
-		guard let text = pokemonSearchBar.text?.lowercased() else { return }
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let text = searchBar.text?.lowercased() else { return }
 		guard let pokeController = pokemonController else { return }
 		
-		pokemonController?.searchPokemon(for: text) { (result) in
-			
+		pokeController.searchPokemon(for: text) { (result) in
 			do {
 				let thisPokemon = try result.get()
 				DispatchQueue.main.async {
 					self.updateView(with: thisPokemon)
 				}
-				
-				pokeController.getImage(at: thisPokemon.sprites.fontDefault) { (result) in
-					
+				pokeController.getImage(at: thisPokemon.sprites.fontDefault, completion: { result in
 					do {
 						let image = try result.get()
 						DispatchQueue.main.async {
 							self.pokemonImageView.image = image
 						}
 					} catch {
-						NSLog("Could not load image")
+						print("Could not load")
 					}
-				}
+				})
 				self.pokemon = thisPokemon
-			} catch {
-				NSLog("Error: \(error)")
+			}
+			catch {
+				print("error")
 			}
 		}
 	}
@@ -80,6 +79,9 @@ class PokemonDetailViewController: UIViewController {
 	}
 	
 	@IBAction func savePokemonButton(_ sender: UIButton) {
+		guard let pokemonSaved = pokemon else { return }
+		guard let pokeController = pokemonController else { return }
+		pokeController.save(poke: pokemonSaved)
 	}
 }
 

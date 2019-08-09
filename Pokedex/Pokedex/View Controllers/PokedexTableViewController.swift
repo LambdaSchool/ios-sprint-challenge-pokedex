@@ -49,7 +49,27 @@ class PokedexTableViewController: UITableViewController {
 		}
 		return cell
 	}
-
-   
-
+	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			pokemonController.delete(indexOfPokemon: indexPath)
+			tableView.deleteRows(at: [indexPath], with: .fade)
+		}
+	}
+	
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "PokemonSearchShowSegue" {
+			let searchVC = segue.destination as? PokemonDetailViewController
+			searchVC?.pokemonController = pokemonController
+		}
+		else if segue.identifier == "PokemonDetailShowSegue" {
+			if let indexPath = self.tableView.indexPathForSelectedRow {
+				let detailVC = segue.destination as? PokemonDetailViewController
+				detailVC?.pokemonController = pokemonController
+				detailVC?.pokemon = pokemonController.pokemon[indexPath.row]
+			}
+		}
+	}
+	
 }
