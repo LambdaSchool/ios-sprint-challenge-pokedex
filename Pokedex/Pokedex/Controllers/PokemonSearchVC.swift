@@ -57,6 +57,7 @@ class PokemonSearchVC: UIViewController {
 		idLbl.text = "ID: \(pokemon.id)"
 		typesLbl.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
 		abilitiesLbl.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
+		spriteImgView.load(url: pokemon.sprites.frontDefault)
 		
 		hideViews(false)
 		saveBtn.isHidden = pokemonToSearch == nil ? false : true
@@ -83,5 +84,19 @@ extension UISearchBar {
 	var optionalText: String? {
 		let trimmedText = self.text?.trimmingCharacters(in: .whitespacesAndNewlines)
 		return (trimmedText ?? "").isEmpty ? nil : trimmedText
+	}
+}
+
+extension UIImageView {
+	func load(url: URL) {
+		DispatchQueue.global().async { [weak self] in
+			if let data = try? Data(contentsOf: url) {
+				if let image = UIImage(data: data) {
+					DispatchQueue.main.async {
+						self?.image = image
+					}
+				}
+			}
+		}
 	}
 }
