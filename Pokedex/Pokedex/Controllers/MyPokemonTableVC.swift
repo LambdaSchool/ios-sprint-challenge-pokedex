@@ -25,6 +25,12 @@ class MyPokemonTableVC: UITableViewController {
 		pokeController = PokeController()
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		tableView.reloadData()
+	}
+	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let pokeSearchVC = segue.destination as? PokemonSearchVC {
 			pokeSearchVC.pokeController = pokeController
@@ -46,7 +52,7 @@ class MyPokemonTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
         cell.textLabel?.text = pokeController.myPokemon[indexPath.row]
 

@@ -31,6 +31,7 @@ class PokemonSearchVC: UIViewController {
 		
 		searchBar.delegate = self
 		hideViews(true)
+		saveBtn.isHidden = true
 		
 		if let searchTerm = pokemonToSearch {
 			title = searchTerm
@@ -41,6 +42,9 @@ class PokemonSearchVC: UIViewController {
 	//MARK: - IBActions
 	
 	@IBAction func saveBtnTapped(_ sender: Any) {
+		guard let name = title else { return }
+		pokeController.add(pokemon: name)
+		saveBtn.isEnabled = false
 	}
 	
 	//MARK: - Helpers
