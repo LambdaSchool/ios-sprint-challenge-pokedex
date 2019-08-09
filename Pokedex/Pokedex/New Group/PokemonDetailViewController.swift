@@ -9,6 +9,9 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
