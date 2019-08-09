@@ -29,7 +29,10 @@ class PokemonTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        <#code#>
+        guard let detailVC = segue.destination as? PokemonDetailViewController else { return }
+        if segue.identifier == "SearchShowSegue" {
+            detailVC.apiController = apiController
+        }
     }
 
 }

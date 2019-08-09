@@ -49,6 +49,29 @@ class APIController {
             
         }.resume()
     }
+    
+    func fetchImage(imageURL: URL, completion: @escaping (Result<Data, NetworkError>)->Void) {
+        let request = URLRequest(url: imageURL)
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error{
+                NSLog("Error fetching image of \(imageURL): \(error)")
+                completion(.failure(.otherError(error)))
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("no data returned while fetching \(imageURL)")
+                completion(.failure(.noData))
+                return
+            }
+            
+            completion(.success(data))
+            
+            }.resume()
+        
+        
+    }
+
 }
 enum NetworkError: Error {
     case noToken
