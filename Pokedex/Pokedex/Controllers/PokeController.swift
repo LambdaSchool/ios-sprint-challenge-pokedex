@@ -19,6 +19,10 @@ class PokeController {
 		}
 	}
 	
+	func removePokemon(at index: Int) {
+		myPokemon.remove(at: index)
+	}
+	
 	func getPokemon(by searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
 		let pokeURL = baseURL.appendingPathComponent("pokemon/\(searchTerm.lowercased())")
 		let request = URLRequest(url: pokeURL)

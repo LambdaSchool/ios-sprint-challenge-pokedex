@@ -62,4 +62,14 @@ class MyPokemonTableVC: UITableViewController {
 
         return cell
     }
+	
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+			self.pokeController.removePokemon(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+			handler(true)
+		}
+		
+		return UISwipeActionsConfiguration(actions: [delete])
+	}
 }
