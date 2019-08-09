@@ -35,6 +35,7 @@ class PokemonSearchVC: UIViewController {
 		
 		if let searchTerm = pokemonToSearch {
 			title = searchTerm
+			searchBar.isHidden = true
 			performSearch(for: searchTerm)
 		}
 	}

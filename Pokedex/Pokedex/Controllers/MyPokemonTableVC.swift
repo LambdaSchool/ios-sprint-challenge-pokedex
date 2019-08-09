@@ -34,6 +34,10 @@ class MyPokemonTableVC: UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let pokeSearchVC = segue.destination as? PokemonSearchVC {
 			pokeSearchVC.pokeController = pokeController
+			
+			if segue.identifier == "ShowPokemonSegue", let indexPath = tableView.indexPathForSelectedRow {
+				pokeSearchVC.pokemonToSearch = pokeController.myPokemon[indexPath.row]
+			}
 		}
 	}
 	
