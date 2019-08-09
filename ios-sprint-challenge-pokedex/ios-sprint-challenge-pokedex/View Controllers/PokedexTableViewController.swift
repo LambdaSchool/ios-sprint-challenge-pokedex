@@ -53,9 +53,8 @@ class PokedexTableViewController: UITableViewController {
         } else if segue.identifier == "ViewPokemonSegue" {
             guard let indexPath = self.tableView.indexPathForSelectedRow else { return }
             guard let detailVC = segue.destination as? SearchPokemonDetailViewController else { return }
-//            guard let searchBar = detailVC.searchBar else { return }
-//            searchBar.isHidden = true
             detailVC.pokemon = self.pokemonController.pokemonList[indexPath.row]
+            detailVC.image = self.pokemonController.pokemonImages[indexPath.row]
         }
     }
     

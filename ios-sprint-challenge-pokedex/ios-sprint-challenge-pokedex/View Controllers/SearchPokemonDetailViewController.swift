@@ -19,6 +19,7 @@ class SearchPokemonDetailViewController: UIViewController {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var image: UIImage?
 //    var pokemonImage: UIImage?
 
     override func viewDidLoad() {
@@ -26,17 +27,26 @@ class SearchPokemonDetailViewController: UIViewController {
 
         searchBar.delegate = self
         updateViews()
+        updateImageViews()
     }
 
     
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
+        guard let image = image else { return }
         guard let pokemonController = pokemonController else { return }
         pokemonController.pokemonList.append(pokemon)
+        pokemonController.pokemonImages.append(image)
+        
         navigationController?.popViewController(animated: true)
     }
     
     func updateViews() {
+        if pokemon != nil {
+            searchBar.isHidden = true
+        } else {
+            searchBar.isHidden = false
+        }
         guard let pokemon = pokemon else { return }
         pokemonName.text = pokemon.name
         idLabel.text = pokemon.id.description
@@ -66,7 +76,8 @@ class SearchPokemonDetailViewController: UIViewController {
 //        self.pokemon = pokemon
     }
     
-    func updateImageViews(with image: UIImage) {
+    func updateImageViews() {
+        guard let image = self.image else { return }
         pokemonImage.image = image
     }
     
@@ -96,7 +107,8 @@ extension SearchPokemonDetailViewController: UISearchBarDelegate {
                 pokemonController.fetchImage(at: pokemonResult.sprites.frontDefault) { (result) in
                     if let imageResult = try? result.get() {
                         DispatchQueue.main.async {
-                            self.updateImageViews(with: imageResult)
+                            self.image = imageResult
+                            self.updateImageViews()
                         }
                     }
                 }

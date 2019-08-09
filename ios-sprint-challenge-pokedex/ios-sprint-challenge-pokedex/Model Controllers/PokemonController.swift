@@ -31,6 +31,7 @@ class PokemonController {
     var pokemon: Pokemon?
     var pokemonImage: UIImage?
     var pokemonList: [Pokemon] = []
+    var pokemonImages: [UIImage] = []
     
     func searchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let searchURL = baseURL.appendingPathComponent("pokemon/\(name.lowercased())")
