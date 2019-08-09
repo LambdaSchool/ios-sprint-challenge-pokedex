@@ -72,6 +72,15 @@ class PokemonController {
 			completion(.success(image))
 		}.resume()
 	}
+	
+	func save(poke: Pokemon) {
+		pokemon.append(poke)
+	}
+	
+	func delete(indexOfPokemon: IndexPath) {
+		pokemon.remove(at: indexOfPokemon.row)
+	}
+	
 }
 
 enum HTTPMethod: String {

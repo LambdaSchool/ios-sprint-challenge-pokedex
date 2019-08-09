@@ -9,23 +9,46 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
+	
+	var pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.reloadData()
+	}
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemon.count
     }
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+		let currentPokemon = pokemonController.pokemon[indexPath.row]
+		
+		cell.textLabel?.text = currentPokemon.name
+		pokemonController.getImage(at: currentPokemon.sprites.fontDefault) { (result) in
+			
+			let image: UIImage?
+			
+			do {
+				image = try result.get()
+				DispatchQueue.main.async {
+					cell.imageView?.image = image
+				}
+			} catch {
+				NSLog("Error here: \(error)")
+			}
+		}
+		return cell
+	}
 
    
 
