@@ -65,9 +65,9 @@ class MyPokemonTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath) as? PokeCell else { return UITableViewCell() }
 
-        cell.textLabel?.text = pokeController.myPokemon[indexPath.row].name.capitalized
+        cell.pokemon = pokeController.myPokemon[indexPath.row]
 
         return cell
     }

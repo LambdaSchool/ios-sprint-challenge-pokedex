@@ -16,7 +16,6 @@ class PokeController {
 	func add(pokemon: Pokemon) {
 		if !myPokemon.contains(pokemon) {
 			myPokemon.append(pokemon)
-			print("\(pokemon.name) added to list")
 		}
 	}
 	
