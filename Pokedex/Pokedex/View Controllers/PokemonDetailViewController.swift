@@ -22,8 +22,26 @@ class PokemonDetailViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-	
+		
+		pokemonSearchBar.delegate = self
+		
+		if let selectedPoke = pokemon {
+			guard let pokeController = pokemonController else { return }
+			
+			updateView(with: selectedPoke)
+			
+			pokeController.getImage(at: selectedPoke.sprites.fontDefault) { (result) in
+				do {
+					let image = try result.get()
+					DispatchQueue.main.async {
+						self.pokemonImageView.image = image
+					}
+				} catch {
+					NSLog("Could not load image")
+				}
+			}
+		}
+	}
 	func searchClicked(_ searchBar: UISearchBar) {
 		guard let text = pokemonSearchBar.text?.lowercased() else { return }
 		guard let pokeController = pokemonController else { return }
@@ -63,7 +81,8 @@ class PokemonDetailViewController: UIViewController {
 	
 	@IBAction func savePokemonButton(_ sender: UIButton) {
 	}
-	
-	
+}
+
+extension PokemonDetailViewController: UISearchBarDelegate {
 	
 }
