@@ -71,7 +71,6 @@ class APIController {
         
         
     }
-
 }
 enum NetworkError: Error {
     case noToken
