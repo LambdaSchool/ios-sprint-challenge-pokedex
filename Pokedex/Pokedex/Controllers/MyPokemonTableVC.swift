@@ -29,8 +29,8 @@ class MyPokemonTableVC: UITableViewController {
 		pokeController = PokeController()
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
 		pokeController.sortPokemon(by: sortingType)
 		tableView.reloadData()
