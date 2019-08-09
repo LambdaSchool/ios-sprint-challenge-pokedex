@@ -27,9 +27,10 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        title = "New Pokemon"
+        saveButton.isHidden = true
         if fromCell {
             searchBar.isHidden = true
-            saveButton.isHidden = true
             guard let pokemon = pokemon else { return }
             updateViews(with: pokemon)
         }
@@ -42,6 +43,7 @@ class PokemonDetailViewController: UIViewController {
     }
     
     func updateViews(with pokemon: Pokemon) {
+        title = pokemon.name
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
         var typeList = ""
@@ -80,6 +82,7 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                     changePokemon.imageData = data
                     self.pokemon = changePokemon
                     self.updateViews(with: changePokemon)
+                    self.saveButton.isHidden = false
                 }
             })
         }
