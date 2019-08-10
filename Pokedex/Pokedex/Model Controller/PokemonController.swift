@@ -9,13 +9,13 @@
 import UIKit
 
 class PokemonController {
-	
+
 	var pokemon: [Pokemon] = []
 	
 	private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 	
-	func searchPokemon(for pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void ) {
-		let searchURL = baseURL.appendingPathComponent(pokemon)
+	func searchPokemon(for poke: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+		let searchURL = baseURL.appendingPathComponent(poke)
 		
 		var request = URLRequest(url: searchURL)
 		request.httpMethod = HTTPMethod.get.rawValue
@@ -40,8 +40,9 @@ class PokemonController {
 				return
 			}
 			
+			let decoder = JSONDecoder()
 			do {
-				let search = try JSONDecoder().decode(Pokemon.self, from: data)
+				let search = try decoder.decode(Pokemon.self, from: data)
 				completion(.success(search))
 			} catch {
 				NSLog("Decoding error: \(error)")

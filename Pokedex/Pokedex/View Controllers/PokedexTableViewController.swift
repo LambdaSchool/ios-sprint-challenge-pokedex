@@ -34,7 +34,7 @@ class PokedexTableViewController: UITableViewController {
 		let currentPokemon = pokemonController.pokemon[indexPath.row]
 		
 		cell.textLabel?.text = currentPokemon.name
-		pokemonController.getImage(at: currentPokemon.sprites.fontDefault) { (result) in
+		pokemonController.getImage(at: currentPokemon.sprites.frontDefault) { (result) in
 			
 			let image: UIImage?
 			

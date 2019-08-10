@@ -30,7 +30,7 @@ class PokemonDetailViewController: UIViewController {
 			
 			updateView(with: selectedPoke)
 			
-			pokeController.getImage(at: selectedPoke.sprites.fontDefault) { (result) in
+			pokeController.getImage(at: selectedPoke.sprites.frontDefault) { (result) in
 				do {
 					let image = try result.get()
 					DispatchQueue.main.async {
@@ -53,7 +53,7 @@ class PokemonDetailViewController: UIViewController {
 				DispatchQueue.main.async {
 					self.updateView(with: thisPokemon)
 				}
-				pokeController.getImage(at: thisPokemon.sprites.fontDefault, completion: { result in
+				pokeController.getImage(at: thisPokemon.sprites.frontDefault, completion: { result in
 					do {
 						let image = try result.get()
 						DispatchQueue.main.async {
@@ -73,15 +73,16 @@ class PokemonDetailViewController: UIViewController {
 	
 	func updateView(with searchedPokemon: Pokemon) {
 		nameLabel.text = searchedPokemon.name
-		pokemonIdLabel.text = String(searchedPokemon.Id)
-		pokemonTypeLabel.text = searchedPokemon.type[0].type
-		pokemonAbilitiesLabel.text = searchedPokemon.abilities[0].abilities
+		pokemonIdLabel.text = String(searchedPokemon.id)
+		pokemonTypeLabel.text = searchedPokemon.types[0].type.name
+		pokemonAbilitiesLabel.text = searchedPokemon.abilities[0].ability.name
 	}
 	
 	@IBAction func savePokemonButton(_ sender: UIButton) {
 		guard let pokemonSaved = pokemon else { return }
 		guard let pokeController = pokemonController else { return }
 		pokeController.save(poke: pokemonSaved)
+		navigationController?.popViewController(animated: true)
 	}
 }
 
