@@ -35,10 +35,11 @@ class PokemonDetailViewController: UIViewController {
     
     func setUI() {
         navigationController?.navigationBar.barTintColor = UIColor(red:0.91, green:0.05, blue:0.07, alpha:1.00)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)]
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)]
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)]
         
         pokemonSearchBar.barTintColor = UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)
+        pokemonSearchBar.setTextFieldColor(color: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00))
         
         view.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)
     }
