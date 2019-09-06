@@ -31,6 +31,8 @@ class PokedexController {
     
     var pokemon: Pokemon?
     
+    var pokemons: [Pokemon] = []
+    
     static var pokedexController = PokedexController()
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
@@ -78,7 +80,55 @@ class PokedexController {
         
     }
     
+    func createPokemon(name: String, sprites: Sprites, types: [TypeElement], abilities: [Ability], id: Int) {
+        let pokemon = Pokemon(name: name, sprites: sprites, types: types, abilities: abilities, id: id)
+        pokemons.append(pokemon)
+        saveToPersistentStore()
+    }
     
+//    func deleteBook(name: String, sprites: Sprites, types: [TypeElement], abilities: [Ability], id: Int) {
+//        if let index = pokemons.firstIndex(of: po) {
+//            books.remove(at: index)
+//            saveToPersistentStore()
+//        }
+//    }
     
+    func loadFromPersistentStore() {
+        let fm = FileManager.default
+        guard let url = pokemonURL else {return}
+        fm.fileExists(atPath: url.path)
+        
+        do {
+            let decoder = PropertyListDecoder()
+            let data = try Data(contentsOf: url)
+            pokemons = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            print("Error loading book data: \(error)")
+        }
+    }
     
+    func saveToPersistentStore() {
+        guard let url = pokemonURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemons)
+            try data.write(to: url)
+        } catch {
+            print("Error loading book data: \(error)")
+        }
+    }
+    
+    private var pokemonURL: URL? {
+        let fm = FileManager.default
+        guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {return nil}
+        return dir.appendingPathComponent("pokemons.plist")
+        
+    }
 }
+
+    
+    
+    
+    
+

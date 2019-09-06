@@ -12,6 +12,8 @@ class DetailViewController: UIViewController {
     
     let pokedexController = PokedexController()
     
+    var pokemon: Pokemon?
+    
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -28,6 +30,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        
         
         nameLabel.isHidden = true
         idLabel.isHidden = true
@@ -90,8 +93,13 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonButton(_ sender: Any) {
+      
+        guard let pokemon = pokedexController.pokemon else {return}
+
+        pokedexController.createPokemon(name: pokemon.name, sprites: pokemon.sprites, types: pokemon.types, abilities: pokemon.abilities, id: pokemon.id)
         
-    }
+        
+        }
     
 }
 
