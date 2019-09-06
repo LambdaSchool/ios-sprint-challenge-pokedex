@@ -12,13 +12,11 @@ class PokeSearchViewController: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
     
-    var pokemon: Pokemon? {
-        didSet{
-            updateViews()
-        }
-    }
+    let apiController = APIController()
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,4 +42,16 @@ class PokeSearchViewController: UIViewController {
     }
     */
 
+}
+
+extension PokeSearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else{return}
+        
+        apiController.searchForPokemon(with: searchTerm) {_ in
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
 }

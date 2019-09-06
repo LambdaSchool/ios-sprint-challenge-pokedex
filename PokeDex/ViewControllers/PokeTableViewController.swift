@@ -12,7 +12,7 @@ class PokeTableViewController: UITableViewController {
 
     
     @IBOutlet weak var searchBar: UISearchBar!
-    let apiController = APIControler()
+    let apiController = APIController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

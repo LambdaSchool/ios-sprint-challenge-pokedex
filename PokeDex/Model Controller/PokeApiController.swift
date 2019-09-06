@@ -8,7 +8,7 @@
 
 import Foundation
 
-class APIControler {
+class APIController {
     
     var pokemon: [Pokemon] = []
     
