@@ -81,12 +81,19 @@ class PokemonDetailViewController: UIViewController {
     
     func getTypesString() -> String {
         guard let pokemon = pokemon else { return "" }
+        
+        if pokemon.types.count <= 1 {
+            typesLabel.text = "Type:"
+        } else {
+            typesLabel.text = "Types:"
+        }
+        
         var types = ""
         for type in 0...pokemon.types.count - 1 {
             if type == pokemon.abilities.count - 1 {
                 types += "\(pokemon.types[type].type.name)"
             } else {
-                types += "\(pokemon.types[type].type.name), "
+                types += "\(pokemon.types[type].type.name)"
             }
         }
         return types
@@ -94,6 +101,13 @@ class PokemonDetailViewController: UIViewController {
     
     func getAbilitiesString() -> String {
         guard let pokemon = pokemon else { return "" }
+        
+        if pokemon.abilities.count <= 1 {
+            abilitiesLabel.text = "Ability:"
+        } else {
+            abilitiesLabel.text = "Abilities:"
+        }
+        
         var abilities = ""
         for ability in 0...pokemon.abilities.count - 1 {
             if ability == pokemon.abilities.count - 1 {
@@ -121,15 +135,19 @@ class PokemonDetailViewController: UIViewController {
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let apiController = apiController,
-            let searchTerm = pokemonSearchBar.text?.lowercased() else { return }
+            let searchTerm = pokemonSearchBar.text else { return }
         
-        apiController.getPokemon(with: searchTerm, completion: { (result) in
+        apiController.getPokemon(with: searchTerm.lowercased(), completion: { (result) in
             DispatchQueue.main.async {
                 do {
                     self.pokemon = try result.get()
                     self.updateViews()
                 } catch {
                     NSLog("Error fetching pokemon info: \(error)")
+                    
+                    let alert = UIAlertController(title: "No Results", message: "Unable to find pokemon: \(searchTerm). Please try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
                 }
             }
         })
