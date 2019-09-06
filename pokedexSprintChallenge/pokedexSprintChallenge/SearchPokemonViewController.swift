@@ -44,7 +44,7 @@ extension SearchPokemonViewController: UISearchDisplayDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         
-        
+        pokemonController.
         
     }
 }

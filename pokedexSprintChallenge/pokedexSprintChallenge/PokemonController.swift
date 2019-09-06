@@ -33,7 +33,12 @@ class PokemonController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     typealias CompletionHandler = (Error?) -> Void
     
-    
+    func performSearch(with searchTerm: String, completion: @escaping (Error?) -> Void) {
+        
+        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        
+        let searchItem = URLQueryItem(name: "", value: searchTerm)
+    }
     
     
     
