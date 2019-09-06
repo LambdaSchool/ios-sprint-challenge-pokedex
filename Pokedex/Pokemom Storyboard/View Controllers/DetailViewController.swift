@@ -21,12 +21,29 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var savePokemonButton: UIButton!
+    @IBOutlet weak var id: UILabel!
+    @IBOutlet weak var types: UILabel!
+    @IBOutlet weak var abilities: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         
+        nameLabel.isHidden = true
+        idLabel.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
+        savePokemonButton.isHidden = true
+        id.isHidden = true
+        types.isHidden = true
+        abilities.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setViews()
     }
     
     func setViews() {

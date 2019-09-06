@@ -33,9 +33,10 @@ class PokedexController {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         
         let searchItem = URLQueryItem(name: "name", value: searchTerm)
+        let idSearch = URLQueryItem(name: "id", value: searchTerm)
        
         
-        components?.queryItems = [searchItem]
+        components?.queryItems = [searchItem, idSearch]
         
         guard let requestURL = components?.url else {
             NSLog("Error unwrapping request URL")

@@ -9,23 +9,31 @@
 import Foundation
 
 
-struct Pokemon: Codable {
-    
-    let name: String
+struct Pokemon: Equatable, Encodable, Decodable {
     let id: Int
-    let abilities: [String]
-   
-    
+    let name: String
+    let sprites: Sprites
+    let types: [TypeElement]
+    let abilities: [Ability]
     
 }
 
-struct Types: Codable {
-    
-    let name: String
-    
+struct Ability: Equatable, Encodable, Decodable {
+    let ability: Species
 }
 
-struct Abilities: Codable {
-
+struct Species: Equatable, Encodable, Decodable {
     let name: String
+}
+
+struct Sprites: Equatable, Encodable, Decodable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey, Decodable {
+        case frontDefault = "front_default"
+    }
+}
+
+struct TypeElement: Equatable, Encodable, Decodable {
+    let type: Species
 }
