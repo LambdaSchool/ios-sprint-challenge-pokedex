@@ -11,6 +11,7 @@ import UIKit
 class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()

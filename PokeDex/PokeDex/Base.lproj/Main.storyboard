@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="lIx-xe-m3Y" style="IBUITableViewCellStyleDefault" id="JpT-LE-JYE">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Pokemon Cell" textLabel="lIx-xe-m3Y" style="IBUITableViewCellStyleDefault" id="JpT-LE-JYE">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JpT-LE-JYE" id="whe-cd-9cx">
@@ -134,27 +134,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIu-Xc-2mp">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIu-Xc-2mp">
                                 <rect key="frame" x="157" y="832" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
                                     <action selector="savePokemonClicked:" destination="GEe-Wt-mp9" eventType="touchUpInside" id="4Pm-9O-ePr"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JOk-Dg-Nd8">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="xgP-qk-tWX"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Hgv-V9-dFW" firstAttribute="top" secondItem="ERQ-co-PAP" secondAttribute="bottom" constant="55" id="0ug-Y3-l7a"/>
+                            <constraint firstItem="zIu-Xc-2mp" firstAttribute="bottom" secondItem="yOG-fg-z71" secondAttribute="bottom" id="7V0-h6-5g1"/>
+                            <constraint firstItem="zIu-Xc-2mp" firstAttribute="leading" secondItem="yOG-fg-z71" secondAttribute="leading" constant="157" id="BJF-2k-bzC"/>
+                            <constraint firstItem="JOk-Dg-Nd8" firstAttribute="leading" secondItem="yOG-fg-z71" secondAttribute="leading" constant="87" id="DFj-1s-kBY"/>
+                            <constraint firstItem="JOk-Dg-Nd8" firstAttribute="centerX" secondItem="zIu-Xc-2mp" secondAttribute="centerX" id="EYR-j2-mhE"/>
+                            <constraint firstItem="yOG-fg-z71" firstAttribute="trailing" secondItem="JOk-Dg-Nd8" secondAttribute="trailing" constant="87" id="Vn7-AL-mhd"/>
                             <constraint firstItem="ERQ-co-PAP" firstAttribute="centerX" secondItem="Hgv-V9-dFW" secondAttribute="centerX" id="bMP-rH-7Cw"/>
                             <constraint firstItem="ERQ-co-PAP" firstAttribute="leading" secondItem="LmQ-V8-N4f" secondAttribute="leading" id="hs5-BX-kTv"/>
                             <constraint firstItem="Hgv-V9-dFW" firstAttribute="leading" secondItem="yOG-fg-z71" secondAttribute="leading" constant="150" id="mR7-k4-qks"/>
                             <constraint firstItem="ERQ-co-PAP" firstAttribute="top" secondItem="yOG-fg-z71" secondAttribute="top" id="o9c-zX-Bri"/>
                             <constraint firstItem="yOG-fg-z71" firstAttribute="trailing" secondItem="Hgv-V9-dFW" secondAttribute="trailing" constant="150" id="pnp-6o-Qx1"/>
+                            <constraint firstItem="JOk-Dg-Nd8" firstAttribute="centerY" secondItem="LmQ-V8-N4f" secondAttribute="centerY" id="yMl-26-fEJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yOG-fg-z71"/>
                     </view>
                     <connections>
+                        <outlet property="imageView" destination="JOk-Dg-Nd8" id="KOF-uK-2bC"/>
                         <outlet property="pokemonNameLabel" destination="Hgv-V9-dFW" id="L9p-w7-mfl"/>
                         <outlet property="searchBar" destination="ERQ-co-PAP" id="iqB-nI-QMa"/>
                     </connections>

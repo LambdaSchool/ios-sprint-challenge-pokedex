@@ -9,7 +9,7 @@
 import Foundation
 
 struct UserResults: Decodable{
-    let results: [User]
+    var results: [User]
 }
 
 
