@@ -10,6 +10,9 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
     
+    var apiController: APIController?
+    var pokemon: Pokemon?
+    
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var pokemonImageView: UIImageView!
@@ -22,8 +25,66 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        pokemonSearchBar.delegate = self
+        updateViews()
         // Do any additional setup after loading the view.
+    }
+    
+    func updateViews() {
+        if let pokemon = pokemon {
+            unhide()
+            
+            nameLabel.text = pokemon.name
+            idNumberLabel.text = "\(pokemon.id)"
+            typesListLabel.text = getTypesString()
+            abilitiesListLabel.text = getAbilitiesString()
+            
+        } else {
+            nameLabel.isHidden = true
+            idLabel.isHidden = true
+            idNumberLabel.isHidden = true
+            typesLabel.isHidden = true
+            typesListLabel.isHidden = true
+            abilitiesLabel.isHidden = true
+            abilitiesListLabel.isHidden = true
+        }
+    }
+    
+    func unhide() {
+        nameLabel.isHidden = false
+        idLabel.isHidden = false
+        idNumberLabel.isHidden = false
+        typesLabel.isHidden = false
+        typesListLabel.isHidden = false
+        abilitiesLabel.isHidden = false
+        abilitiesListLabel.isHidden = false
+    }
+    
+    func getTypesString() -> String {
+        guard let pokemon = pokemon else { return "" }
+        var types = ""
+        for type in 0...pokemon.types.count - 1 {
+            if type == pokemon.abilities.count - 1 {
+                types += "\(pokemon.types[type])"
+            } else {
+                types += "\(pokemon.types[type]), "
+            }
+        }
+        return types
+    }
+    
+    func getAbilitiesString() -> String {
+        guard let pokemon = pokemon else { return "" }
+        var abilities = ""
+        for ability in 0...pokemon.abilities.count - 1 {
+            if ability == pokemon.abilities.count - 1 {
+                abilities += "\(pokemon.abilities[ability])"
+            } else {
+                abilities += "\(pokemon.abilities[ability]), "
+            }
+        }
+        return abilities
     }
     
 
@@ -37,4 +98,22 @@ class PokemonDetailViewController: UIViewController {
     }
     */
 
+}
+
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let apiController = apiController,
+            let searchTerm = pokemonSearchBar.text else { return }
+        
+        apiController.getPokemon(with: searchTerm, completion: { networkError in
+            if let error = networkError {
+                NSLog("Error fetching pokemon info: \(error)")
+            } else {
+                DispatchQueue.main.async {
+                    self.pokemon = apiController.pokemon[apiController.pokemon.count - 1]
+                    self.updateViews()
+                }
+            }
+        })
+    }
 }

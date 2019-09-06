@@ -16,9 +16,18 @@ struct Pokemon: Codable {
 }
 
 struct Ability: Codable {
+    var ability: AbilityDetail
+}
+
+
+struct AbilityDetail: Codable {
     var name: String
 }
 
 struct Type: Codable {
+    var type: TypeDetail
+}
+
+struct TypeDetail: Codable {
     var name: String
 }
