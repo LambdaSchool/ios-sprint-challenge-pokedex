@@ -34,14 +34,14 @@ class PokemonDetailViewController: UIViewController {
     }
     
     func setUI() {
-        navigationController?.navigationBar.barTintColor = UIColor(red:0.91, green:0.05, blue:0.07, alpha:1.00)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)]
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)]
+        navigationController?.navigationBar.barTintColor = .top
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.bot]
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.bot]
         
-        pokemonSearchBar.barTintColor = UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)
-        pokemonSearchBar.setTextFieldColor(color: UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00))
+        pokemonSearchBar.barTintColor = .mid
+        pokemonSearchBar.setTextFieldColor(color: .bot)
         
-        view.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)
+        view.backgroundColor = .bot
     }
     
     func updateViews() {
@@ -123,13 +123,13 @@ extension PokemonDetailViewController: UISearchBarDelegate {
         guard let apiController = apiController,
             let searchTerm = pokemonSearchBar.text?.lowercased() else { return }
         
-        apiController.getPokemon(with: searchTerm, completion: { networkError in
-            if let error = networkError {
-                NSLog("Error fetching pokemon info: \(error)")
-            } else {
-                DispatchQueue.main.async {
-                    self.pokemon = apiController.pokemon[apiController.pokemon.count - 1]
+        apiController.getPokemon(with: searchTerm, completion: { (result) in
+            DispatchQueue.main.async {
+                do {
+                    self.pokemon = try result.get()
                     self.updateViews()
+                } catch {
+                    NSLog("Error fetching pokemon info: \(error)")
                 }
             }
         })

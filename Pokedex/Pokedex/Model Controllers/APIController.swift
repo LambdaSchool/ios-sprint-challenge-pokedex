@@ -29,7 +29,7 @@ class APIController {
     
     var pokemon: [Pokemon] = []
     
-    func getPokemon(with searchTerm: String, completion: @escaping (NetworkError?) -> Void) {
+    func getPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let searchURL = baseURL
             .appendingPathComponent("pokemon")
             .appendingPathComponent(searchTerm)
@@ -41,13 +41,13 @@ class APIController {
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 NSLog("Error searching for pokemon on line \(#line) in \(#file): \(error)")
-                completion(.otherError(error))
+                completion(.failure(.otherError(error)))
                 return
             }
             
             guard let data = data else {
                 NSLog("No data returned from searching for pokemon")
-                completion(nil)
+                completion(.failure(.noData))
                 return
             }
             
@@ -57,11 +57,12 @@ class APIController {
                 var newPokemon = try decoder.decode(Pokemon.self, from: data)
                 newPokemon.name = newPokemon.name.capitalized
                 self.pokemon.append(newPokemon)
-                completion(nil)
+                self.pokemon.sort { $0.id < $1.id }
+                completion(.success(newPokemon))
                 return
             } catch {
                 NSLog("Error decoding pokemon on line \(#line): \(error)")
-                completion(.badDecode)
+                completion(.failure(.badDecode))
                 return
             }
         }.resume()
