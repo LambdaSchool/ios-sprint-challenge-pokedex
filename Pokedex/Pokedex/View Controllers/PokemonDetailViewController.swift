@@ -142,9 +142,10 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                 do {
                     self.pokemon = try result.get()
                     self.updateViews()
+                    self.pokemonSearchBar.endEditing(true)
                 } catch {
                     NSLog("Error fetching pokemon info: \(error)")
-                    
+                    self.pokemonSearchBar.endEditing(true)
                     let alert = UIAlertController(title: "No Results", message: "Unable to find pokemon: \(searchTerm). Please try again", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
