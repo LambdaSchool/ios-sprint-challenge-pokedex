@@ -10,6 +10,16 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
 
+    @IBOutlet weak var heroNameLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var pokemonIdLabel: UILabel!
+    @IBOutlet weak var pokemonTypeLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    @IBOutlet weak var pokemonSearch: UISearchBar!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,6 +27,11 @@ class PokemonSearchViewController: UIViewController {
     }
     
 
+    
+    
+    @IBAction func saveTapped(_ sender: Any) {
+    }
+    
     /*
     // MARK: - Navigation
 
