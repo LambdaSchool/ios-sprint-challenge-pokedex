@@ -10,17 +10,28 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
     
+    @IBOutlet var pokeballTextView: UITableView!
+    
     let apiController = APIController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         tableView.reloadData()
-        print(apiController.pokemon.count)
+    }
+    
+    func setUI() {
+        navigationController?.navigationBar.barTintColor = UIColor(red:0.91, green:0.05, blue:0.07, alpha:1.00)
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)]
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor(red:0.25, green:0.30, blue:0.29, alpha:1.00)]
+        
+        view.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)
     }
 
     // MARK: - Table view data source
@@ -38,6 +49,13 @@ class PokedexTableViewController: UITableViewController {
 
         let tempPokemon = apiController.pokemon[indexPath.row]
         cell.textLabel?.text = tempPokemon.name
+        
+        cell.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.00)
+        
+        guard let url = URL(string: apiController.pokemon[indexPath.row].sprites.frontImage),
+            let imageData = try? Data(contentsOf: url) else { fatalError() }
+        cell.imageView?.image = UIImage(data: imageData)
+        
 
         return cell
     }
