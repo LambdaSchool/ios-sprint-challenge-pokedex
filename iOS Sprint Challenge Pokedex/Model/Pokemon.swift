@@ -8,12 +8,6 @@
 
 import Foundation
 
-
-struct PokemonResult: Codable {
-    let abilities : [Pokemon]
-    let types: [Pokemon]
-}
-
 struct Pokemon: Codable {
     
     enum PokemonCodingKeys: String, CodingKey {
@@ -22,14 +16,23 @@ struct Pokemon: Codable {
     
     var name: String
     var id: String
-    var types: Type
-    var ability: Ability
+    var abilities: [Abilities]
+    var types: [Types]
+
+}
+
+struct Abilities: Codable {
+    let ability: Ability
 }
 
 struct Ability: Codable {
-    var name: String
+    let name: String
+}
+
+struct Types: Codable {
+    let type: Type
 }
 
 struct Type: Codable {
-    var name: String
+    let name: String
 }
