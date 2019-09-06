@@ -12,7 +12,6 @@ class DetailViewController: UIViewController {
     
     let pokedexController = PokedexController()
     
-    var pokemon: Pokemon?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -40,18 +39,44 @@ class DetailViewController: UIViewController {
         abilities.isHidden = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        setViews()
-    }
+
     
     func setViews() {
         
-        guard let pokemon = pokemon else {return}
+        nameLabel.isHidden = false
+        idLabel.isHidden = false
+        typesLabel.isHidden = false
+        abilitiesLabel.isHidden = false
+        savePokemonButton.isHidden = false
+        id.isHidden = false
+        types.isHidden = false
+        abilities.isHidden = false
+        
+        savePokemonButton.backgroundColor = #colorLiteral(red: 1, green: 0.01453149226, blue: 0, alpha: 1)
+        savePokemonButton.setTitle("SAVE POKEMON", for: .normal)
+        savePokemonButton.setTitleColor(.white, for: .normal)
+        
+        guard let pokemon = pokedexController.pokemon else {return}
         
         idLabel.text = String(pokemon.id)
         nameLabel.text = pokemon.name
+        
+        var types = ""
+        let typeArray = pokemon.types
+        
+        for type in typeArray {
+            types.append("\(type)")
+            types.append(", ")
+        }
+        
+        typesLabel.text = types
+        abilitiesLabel.text = "\(pokemon.abilities)"
+        
+        let url = URL(string: pokemon.sprites.frontDefault)!
+        if let image = try? Data(contentsOf: url) {
+             imageView.image = UIImage(data: image)
+        }
+       
         
     }
     

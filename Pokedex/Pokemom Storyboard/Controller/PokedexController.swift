@@ -16,6 +16,16 @@ enum HTTPMethod: String {
     case delete = "DELETE" // delete data
     
 }
+enum NetworkError: Error {
+    
+    case encodingErr
+    case responseErr
+    case otherErr(Error)
+    case noData
+    case notDecoded
+    case noToken
+    
+}
 
 class PokedexController {
     
@@ -23,26 +33,12 @@ class PokedexController {
     
     static var pokedexController = PokedexController()
     
-    let baseURL = URL(string: "https://pokeapi.co")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
-    
-    func preformSearch(with searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func preformSearch(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        let url = baseURL.appendingPathComponent("api").appendingPathComponent("v2").appendingPathComponent("pokemon")
+       let requestURL = baseURL.appendingPathComponent(searchTerm)
         
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        
-        let searchItem = URLQueryItem(name: "name", value: searchTerm)
-        let idSearch = URLQueryItem(name: "id", value: searchTerm)
-       
-        
-        components?.queryItems = [searchItem, idSearch]
-        
-        guard let requestURL = components?.url else {
-            NSLog("Error unwrapping request URL")
-            return
-            
-        }
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -58,25 +54,25 @@ class PokedexController {
             //check to see if we recieved the results from the search
             guard let data = data else {
                 NSLog("No data returned from search.")
-                completion(nil)
+                completion(.failure(.noData))
                 return
             }
             
             // decode the data
-            let decoder = JSONDecoder()
+            
             
             do {
-                
+                let decoder = JSONDecoder()
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                
                 self.pokemon = pokemon
-                completion(nil)
+                completion(.success(pokemon))
                 
             } catch {
                 NSLog("Error retriving the results to your search: \(error)")
-                completion(error)
+                completion(.failure(.notDecoded))
+                return
             }
-            completion(nil)
+            
             
             }.resume()
         
