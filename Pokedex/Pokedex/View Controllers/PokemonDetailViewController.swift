@@ -90,10 +90,10 @@ class PokemonDetailViewController: UIViewController {
         
         var types = ""
         for type in 0...pokemon.types.count - 1 {
-            if type == pokemon.abilities.count - 1 {
+            if type == pokemon.types.count - 1 {
                 types += "\(pokemon.types[type].type.name)"
             } else {
-                types += "\(pokemon.types[type].type.name)"
+                types += "\(pokemon.types[type].type.name), "
             }
         }
         return types
