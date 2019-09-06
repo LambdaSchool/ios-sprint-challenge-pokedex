@@ -1,5 +1,5 @@
 //
-//  PokemonViewController.swift
+//  PokemonDetailViewController.swift
 //  PokeDex
 //
 //  Created by William Chen on 9/6/19.
@@ -8,16 +8,14 @@
 
 import UIKit
 
-class PokemonViewController: UIViewController {
-    @IBOutlet weak var pokemonNameLabel: UILabel!
-    @IBOutlet weak var searchBar: UISearchBar!
+class PokemonDetailViewController: UIViewController {
+    @IBOutlet weak var pokemonLabel: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-    @IBAction func savePokemonClicked(_ sender: UIButton) {
     }
     
 
