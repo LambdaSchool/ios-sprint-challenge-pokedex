@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct userResults: Decodable{
+struct UserResults: Decodable{
     let results: [User]
 }
 
