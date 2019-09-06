@@ -10,6 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    var delegate: pokemonDelegate?
     var pokemonController: PokemonController?
     var pokemon : Pokemon?{
         didSet{
@@ -30,7 +31,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if searching { searchBar.isHidden = false}
+        searchBar.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -54,7 +56,9 @@ class DetailViewController: UIViewController {
         let pokemon = pokemon else { return }
         
         pokemonController.savedPokemon.append(pokemon)
-        dismiss(animated: true, completion: nil)
+        saveButton.isEnabled = false
+        //self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -65,10 +69,10 @@ extension DetailViewController: UISearchBarDelegate {
             if let error = error {
                 NSLog("Search failed: \(error)")
             } else {
-                self.pokemon = self.pokemonController?.foundPokemon
                 DispatchQueue.main.async {
+                    self.pokemon =  self.pokemonController?.foundPokemon
+                    
                     self.saveButton.isHidden = false
-                    self.updateViews()
                 }
             }
         })

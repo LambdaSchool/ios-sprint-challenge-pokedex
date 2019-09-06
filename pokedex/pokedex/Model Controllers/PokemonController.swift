@@ -24,6 +24,10 @@ enum NetworkError: Error {
     case noToken
 }
 
+protocol pokemonDelegate{
+    func pokemonWasSaved()
+}
+
 class PokemonController {
     var savedPokemon: [Pokemon] = []
     var foundPokemon: Pokemon?
@@ -38,7 +42,7 @@ class PokemonController {
     func findPokemon(with name: String, completion : @escaping Closure) {
         let requestURL = baseURL
             .appendingPathComponent("pokemon")
-            .appendingPathComponent(name)
+            .appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -47,6 +51,7 @@ class PokemonController {
             
             if let response = response as? HTTPURLResponse,
                 response.statusCode != 200 {
+                NSLog ("Request status: \(response.statusCode)")
                 completion(.responseError)
                 return
             }
