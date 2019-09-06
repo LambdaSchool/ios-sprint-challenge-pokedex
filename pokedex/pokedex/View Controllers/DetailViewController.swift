@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         if searching { searchBar.isHidden = false}
         searchBar.delegate = self
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
     func updateViews() {
