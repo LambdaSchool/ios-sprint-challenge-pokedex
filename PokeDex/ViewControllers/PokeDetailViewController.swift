@@ -1,6 +1,6 @@
 //
-//  PokemonSearchViewController.swift
-//  PokeDeck
+//  PokeDetailViewController.swift
+//  PokeDeckCheat
 //
 //  Created by Austin Potts on 9/6/19.
 //  Copyright © 2019 Lambda School. All rights reserved.
@@ -8,18 +8,8 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokeDetailViewController: UIViewController {
 
-    @IBOutlet weak var heroNameLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var pokemonIdLabel: UILabel!
-    @IBOutlet weak var pokemonTypeLabel: UILabel!
-    @IBOutlet weak var abilitiesLabel: UILabel!
-    
-    @IBOutlet weak var pokemonSearch: UISearchBar!
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,11 +17,6 @@ class PokemonSearchViewController: UIViewController {
     }
     
 
-    
-    
-    @IBAction func saveTapped(_ sender: Any) {
-    }
-    
     /*
     // MARK: - Navigation
 

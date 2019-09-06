@@ -1,6 +1,6 @@
 //
-//  PokeDexTableViewController.swift
-//  PokeDeck
+//  PokeTableViewController.swift
+//  PokeDeckCheat
 //
 //  Created by Austin Potts on 9/6/19.
 //  Copyright © 2019 Lambda School. All rights reserved.
@@ -8,39 +8,43 @@
 
 import UIKit
 
-class PokeDexTableViewController: UITableViewController {
+class PokeTableViewController: UITableViewController {
 
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    let apiController = APIControler()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        apiController.getPokemon { (error) in
+            if let error = error{
+                NSLog("Error Performing Data Task: \(error)")
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return apiController.pokemon.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
-        // Configure the cell...
+      let pokemon = apiController.pokemon[indexPath.row]
+        cell.textLabel?.text = pokemon.name
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -77,14 +81,32 @@ class PokeDexTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowPokeSegue" {
+            guard let pokeDetailVC = segue.destination as? PokeSearchViewController else {return}
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            let pokemon = apiController.pokemon[indexPath.row]
+            pokeDetailVC.pokemon = pokemon
+        }
+        
+        
     }
-    */
+    
 
+}
+
+extension PokeTableViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else{return}
+        
+        apiController.searchForPokemon(with: searchTerm) {_ in 
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
