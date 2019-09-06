@@ -9,7 +9,7 @@
 import UIKit
 
 class PokemonViewController: UIViewController, UISearchBarDelegate {
-    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
     let apiController = APIController()
@@ -19,6 +19,14 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameLabel.isHidden = true
+        idLabel.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
+        savePokemonButton.isHidden = true
+        id.isHidden = true
+        types.isHidden = true
+        abilities.isHidden = true
         searchBar.delegate = self
         updateViews()
         
@@ -38,25 +46,24 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     }
     func updateViews(){
         guard let user = user else {return}
-        pokemonNameLabel.text = user.name
+        nameLabel.text = user.name
         guard let imageData = try? Data(contentsOf: user.image) else { fatalError() }
         imageView.image = UIImage(data: imageData)
         
     }
     @IBAction func savePokemonClicked(_ sender: UIButton) {
-        func updateViews(){
         guard isViewLoaded,
             let user = user else {return}
         guard let pokemonName = searchBar.text else {return}
         guard let imageData = try? Data(contentsOf: user.image) else { fatalError() }
         imageView.image = UIImage(data: imageData)
+        
         let newPokemon = User(name: pokemonName, image: user.image)
         userResults?.results.append(newPokemon)
         navigationController?.popViewController(animated: true)
-        }
         
     }
-    
+
 
     /*
     // MARK: - Navigation

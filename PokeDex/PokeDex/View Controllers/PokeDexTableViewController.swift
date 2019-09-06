@@ -11,6 +11,7 @@ import UIKit
 class PokeDexTableViewController: UITableViewController {
   
     var apiController = APIController()
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class PokeDexTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemon Cell", for: indexPath)
         let user = apiController.users[indexPath.row]
         cell.textLabel?.text = user.name.capitalized
-        guard let imageData = try? Data(contentsOf: user.image) else { fatalError() }
+        guard let imageData = try? Data(contentsOf: URL(user.sprites)) else { fatalError() }
         cell.imageView?.image = UIImage(data: imageData)
         return cell
 

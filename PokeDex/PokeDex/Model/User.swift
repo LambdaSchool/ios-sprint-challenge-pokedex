@@ -8,12 +8,28 @@
 
 import Foundation
 
-struct UserResults: Decodable{
-    var results: [User]
+struct User: Equatable, Codable {
+    let name: String
+    let id: Int
+    let abilities: [Ability]
+    let types: [Type]
+    let sprites: Sprite
 }
 
-
-struct User: Decodable {
-    var name: String
-    var image: URL
+struct Ability: Equatable , Codable {
+    let ability: Name
 }
+
+struct Type: Equatable , Codable {
+    let type: Name
+}
+
+struct Name: Equatable , Codable {
+    let name: String
+}
+
+struct Sprite: Equatable , Codable {
+    let front_default: String
+    
+    }
+

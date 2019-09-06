@@ -5,6 +5,12 @@
 //  Created by William Chen on 9/6/19.
 //  Copyright © 2019 William Chen. All rights reserved.
 //
+enum HTTPMethod: String {
+    case get = "GET"
+    case put = "PUT"
+    case post = "POST"
+    case delete = "DELETE"
+}
 
 import Foundation
 
@@ -18,6 +24,11 @@ class APIController {
         
         let pokemonURL = baseURL.appendingPathComponent(searchTerm)
         
+        /*
+        var request = URLRequest(url: pokemonURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        */
+        
         URLSession.shared.dataTask(with: pokemonURL){ (data, _, error) in
             if let error = error {
                 NSLog("Error getting users: \(error)")
@@ -28,7 +39,7 @@ class APIController {
                 return
             }
             do {
-                let newUsers = try JSONDecoder().decode(UserResults.self, from: data)
+                let newUsers = try JSONDecoder().decode(User.self, from: data)
                 print(newUsers)
                 self.users = newUsers.results
             } catch {
