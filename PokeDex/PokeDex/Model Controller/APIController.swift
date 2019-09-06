@@ -15,7 +15,10 @@ enum HTTPMethod: String {
 import Foundation
 
 class APIController {
-    var users: [User] = []
+    var users: User?
+    
+    static var apiController = APIController()
+    
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     typealias CompletionHandler = (Error?) -> Void
@@ -24,10 +27,10 @@ class APIController {
         
         let pokemonURL = baseURL.appendingPathComponent(searchTerm)
         
-        /*
+        
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
-        */
+        
         
         URLSession.shared.dataTask(with: pokemonURL){ (data, _, error) in
             if let error = error {
@@ -41,10 +44,11 @@ class APIController {
             do {
                 let newUsers = try JSONDecoder().decode(User.self, from: data)
                 print(newUsers)
-                self.users = newUsers.results
+                self.users = newUsers
             } catch {
                 NSLog("Error decoding users: \(error)")
                 completion(error)
+                return
             }
             completion(nil)
             }.resume()

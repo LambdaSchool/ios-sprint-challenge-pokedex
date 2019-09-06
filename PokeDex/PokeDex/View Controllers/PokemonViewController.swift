@@ -12,9 +12,19 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    @IBOutlet weak var savePokemonButton: UIButton!
+    @IBOutlet weak var id: UILabel!
+    
+    @IBOutlet weak var types: UILabel!
+    
+    @IBOutlet weak var abilities: UILabel!
+    
     let apiController = APIController()
-    var userResults: UserResults?
-    var user: User?
        
     
     override func viewDidLoad() {
@@ -28,9 +38,49 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         types.isHidden = true
         abilities.isHidden = true
         searchBar.delegate = self
-        updateViews()
-        
+ 
         // Do any additional setup after loading the view.
+    }
+    
+    func updateViews(){
+        nameLabel.isHidden = false
+        idLabel.isHidden = false
+        typesLabel.isHidden = false
+        abilitiesLabel.isHidden = false
+        savePokemonButton.isHidden = false
+        id.isHidden = false
+        types.isHidden = false
+        abilities.isHidden = false
+        
+        guard let pokemon = apiController.users else {return}
+        
+        idLabel.text = String(pokemon.id)
+        nameLabel.text = pokemon.name
+        
+        var types = ""
+        let typeArray = pokemon.types
+        
+        for type in typeArray {
+            types.append("\(type.type.name)")
+            types.append("\n")
+        }
+        
+        typesLabel.text = types
+        
+        var abilities = ""
+        let abilityArray = pokemon.abilities
+        
+        for ability in abilityArray {
+            abilities.append("\(ability.ability.name)")
+            abilities.append("\n")
+        }
+        abilitiesLabel.text = abilities
+        
+        if let image = try? Data(contentsOf: pokemon.sprites.front_default) {
+            imageView.image = UIImage(data: image)
+        }
+        
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -44,23 +94,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             
         }
     }
-    func updateViews(){
-        guard let user = user else {return}
-        nameLabel.text = user.name
-        guard let imageData = try? Data(contentsOf: user.image) else { fatalError() }
-        imageView.image = UIImage(data: imageData)
-        
-    }
-    @IBAction func savePokemonClicked(_ sender: UIButton) {
-        guard isViewLoaded,
-            let user = user else {return}
-        guard let pokemonName = searchBar.text else {return}
-        guard let imageData = try? Data(contentsOf: user.image) else { fatalError() }
-        imageView.image = UIImage(data: imageData)
-        
-        let newPokemon = User(name: pokemonName, image: user.image)
-        userResults?.results.append(newPokemon)
-        navigationController?.popViewController(animated: true)
+    
         
     }
 
@@ -75,4 +109,4 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     }
     */
 
-}
+

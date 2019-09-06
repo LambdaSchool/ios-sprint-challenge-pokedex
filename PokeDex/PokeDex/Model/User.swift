@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct Results: Codable {
+    let results: [User]
+}
+
 struct User: Equatable, Codable {
     let name: String
     let id: Int
@@ -17,19 +21,20 @@ struct User: Equatable, Codable {
 }
 
 struct Ability: Equatable , Codable {
-    let ability: Name
+    let ability: Species
 }
 
 struct Type: Equatable , Codable {
-    let type: Name
+    let type: Species
 }
 
-struct Name: Equatable , Codable {
+
+struct Species: Equatable , Codable {
     let name: String
 }
 
 struct Sprite: Equatable , Codable {
-    let front_default: String
+    let front_default: URL
     
     }
 
