@@ -15,12 +15,12 @@ struct PokemonResults: Decodable {
 struct Pokemon: Decodable {
 
 	let name: String
-	let url: [PokemonAbilities]
+	let abilities: PokemonAbilities
 }
 
 struct PokemonAbilities: Decodable {
 	let ability: PokemonAbility
-	let baseExperience: Int
+	let id: Int
 }
 
 struct PokemonAbility: Decodable {

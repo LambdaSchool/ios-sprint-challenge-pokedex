@@ -9,22 +9,31 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+	
+	//MARK: - outlets
+	@IBOutlet weak var pokemonNameLabel: UILabel!
+	@IBOutlet weak var pokemonImage: UIImageView!
+	@IBOutlet weak var pokimonIDLabel: UILabel!
+	@IBOutlet weak var pokemonTypeLabel: UILabel!
+	@IBOutlet weak var pokemonAbilityLabel: UILabel!
+	
+	//MARK: - properties
+	var pokemon: Pokemon? {
+		didSet {
+			updateViews()
+		}
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+	//MARK: - methods
+	func updateViews() {
+		guard let pokemon = pokemon else {return}
+		pokemonNameLabel.text = pokemon.name
+		pokimonIDLabel.text = String(pokemon.abilities.id)
+		pokemonAbilityLabel.text = pokemon.abilities.ability.name
+	}
+	
 }
