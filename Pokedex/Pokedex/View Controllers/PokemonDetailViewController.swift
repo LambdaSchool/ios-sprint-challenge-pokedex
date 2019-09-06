@@ -40,6 +40,11 @@ class PokemonDetailViewController: UIViewController {
             typesListLabel.text = getTypesString()
             abilitiesListLabel.text = getAbilitiesString()
             
+            
+            guard let url = URL(string: pokemon.sprites.frontImage),
+                let imageData = try? Data(contentsOf: url) else { fatalError() }
+            pokemonImageView.image = UIImage(data: imageData)
+            
         } else {
             nameLabel.isHidden = true
             idLabel.isHidden = true
@@ -66,9 +71,9 @@ class PokemonDetailViewController: UIViewController {
         var types = ""
         for type in 0...pokemon.types.count - 1 {
             if type == pokemon.abilities.count - 1 {
-                types += "\(pokemon.types[type])"
+                types += "\(pokemon.types[type].type.name)"
             } else {
-                types += "\(pokemon.types[type]), "
+                types += "\(pokemon.types[type].type.name), "
             }
         }
         return types
@@ -79,9 +84,9 @@ class PokemonDetailViewController: UIViewController {
         var abilities = ""
         for ability in 0...pokemon.abilities.count - 1 {
             if ability == pokemon.abilities.count - 1 {
-                abilities += "\(pokemon.abilities[ability])"
+                abilities += "\(pokemon.abilities[ability].ability.name)"
             } else {
-                abilities += "\(pokemon.abilities[ability]), "
+                abilities += "\(pokemon.abilities[ability].ability.name), "
             }
         }
         return abilities
@@ -103,7 +108,7 @@ class PokemonDetailViewController: UIViewController {
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let apiController = apiController,
-            let searchTerm = pokemonSearchBar.text else { return }
+            let searchTerm = pokemonSearchBar.text?.lowercased() else { return }
         
         apiController.getPokemon(with: searchTerm, completion: { networkError in
             if let error = networkError {
@@ -112,6 +117,7 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.pokemon = apiController.pokemon[apiController.pokemon.count - 1]
                     self.updateViews()
+                    print(apiController.pokemon.count)
                 }
             }
         })

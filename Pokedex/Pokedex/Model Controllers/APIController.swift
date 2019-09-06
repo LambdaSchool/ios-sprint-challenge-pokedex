@@ -54,7 +54,8 @@ class APIController {
             do {
                 let decoder = JSONDecoder()
                 
-                let newPokemon = try decoder.decode(Pokemon.self, from: data)
+                var newPokemon = try decoder.decode(Pokemon.self, from: data)
+                newPokemon.name = newPokemon.name.capitalized
                 self.pokemon.append(newPokemon)
                 completion(nil)
                 return

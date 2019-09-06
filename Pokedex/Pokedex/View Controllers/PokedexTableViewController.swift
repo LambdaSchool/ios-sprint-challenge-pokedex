@@ -14,8 +14,13 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
         tableView.reloadData()
+        print(apiController.pokemon.count)
     }
 
     // MARK: - Table view data source

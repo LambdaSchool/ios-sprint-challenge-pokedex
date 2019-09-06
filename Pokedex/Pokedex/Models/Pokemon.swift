@@ -13,6 +13,7 @@ struct Pokemon: Codable {
     var id: Int
     var abilities: [Ability]
     var types: [Type]
+    var sprites: Sprites
 }
 
 struct Ability: Codable {
@@ -30,4 +31,12 @@ struct Type: Codable {
 
 struct TypeDetail: Codable {
     var name: String
+}
+
+struct Sprites: Codable {
+    enum CodingKeys: String, CodingKey {
+        case frontImage = "front_default"
+    }
+    
+    var frontImage: String
 }
