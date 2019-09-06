@@ -29,6 +29,16 @@ class APIController {
     
     var pokemon: [Pokemon] = []
     
+    private var readingListURL: URL? {
+        let fileManager = FileManager.default
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documents.appendingPathComponent("pokemon.plist")
+    }
+    
+    init() {
+        loadFromPersistentStore()
+    }
+    
     func getPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let searchURL = baseURL
             .appendingPathComponent("pokemon")
@@ -56,8 +66,12 @@ class APIController {
                 
                 var newPokemon = try decoder.decode(Pokemon.self, from: data)
                 newPokemon.name = newPokemon.name.capitalized
+                
                 self.pokemon.append(newPokemon)
                 self.pokemon.sort { $0.id < $1.id }
+                
+                self.saveToPersistentStore()
+                
                 completion(.success(newPokemon))
                 return
             } catch {
@@ -66,6 +80,36 @@ class APIController {
                 return
             }
         }.resume()
+    }
+    
+    func deletePokemon(index: Int) {
+        pokemon.remove(at: index)
+        saveToPersistentStore()
+    }
+    
+    func saveToPersistentStore() {
+        guard let url = readingListURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemon)
+            try data.write(to: url)
+        } catch {
+            print("Error saving pokemon data: \(error)")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        let fileManager = FileManager.default
+        guard let url = readingListURL, fileManager.fileExists(atPath: url.path) else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            pokemon = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            print("Error loading pokemon data: \(error)")
+        }
     }
     
 }
