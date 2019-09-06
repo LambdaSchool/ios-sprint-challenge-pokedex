@@ -18,17 +18,28 @@ class PokemonDetailViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
-            
+            updateViews()
         }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
+    func updateViews() {
+        guard isViewLoaded,
+            let pokemon = pokemon else { return }
+        title = pokemon.name
+        nameLabel.text = pokemon.name
+        idLabel.text = "\(pokemon.id)"
+        typeLabel.text = pokemon.type.types
+        abilitiesLabel.text = pokemon.abilities.abilities
+        guard let imageData = try? Data(contentsOf: pokemon.image.sprites) else { fatalError() }
+        pokemonImageView.image = UIImage(data: imageData)
+        
+    }
 
     /*
     // MARK: - Navigation
