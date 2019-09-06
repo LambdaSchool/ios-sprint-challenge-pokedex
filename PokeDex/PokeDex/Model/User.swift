@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct Results: Codable {
-    let results: [User]
-}
-
 struct User: Equatable, Codable {
     let name: String
     let id: Int

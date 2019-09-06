@@ -12,7 +12,7 @@ class PokeDexTableViewController: UITableViewController {
   
     var apiController = APIController()
     var user: User?
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +26,13 @@ class PokeDexTableViewController: UITableViewController {
     // MARK: - Table view data source
 
 
+
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
+    }
 
 
     
