@@ -17,12 +17,15 @@ class SearchPokemonViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    let pokemonController = PokemonController()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        //pokedexSearchBar.delegate = self
+        
     }
+    
     
 
     /*
@@ -35,4 +38,13 @@ class SearchPokemonViewController: UIViewController {
     }
     */
 
+}
+extension SearchPokemonViewController: UISearchDisplayDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        
+        
+        
+    }
 }

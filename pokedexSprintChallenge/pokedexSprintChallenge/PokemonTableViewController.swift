@@ -45,7 +45,7 @@ class PokemonTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let pokemon = pokemonController.pokemon[indexPath.row]
             pokemonDetailVC.pokemon = pokemon
-        }
+        } 
     }
  
 
