@@ -10,21 +10,62 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
     
-    var apiController = APIController()
-
-    @IBOutlet weak var pokeSearch: UISearchBar!
+    var pokemonController: PokemonController!
     
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-    var searchResults: [PokeResult] = []
+    var pokemon: Pokemon?
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    @IBAction func savePokemonButton(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController.pokemons.append(pokemon)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        nameLabel.text = pokemon.name
+        // ⚠️ FIX THIS LATER - image ⚠️
+        idLabel.text = "\(pokemon.id)"
+        var typesString = ""
+        for type in pokemon.types {
+            typesString += type.type.name
+        }
+        typesLabel.text = typesString
+        var abilitiesString = ""
+        for ability in pokemon.abilities {
+            abilitiesString += ability.ability.name
+        }
+        abilitiesLabel.text = abilitiesString
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokeSearch.delegate = self
+        searchBar.delegate = self
     }
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        guard let searchText = searchBar.text else { return }
+        pokemonController.getPokemon(name: searchText) { (result) in
+            do {
+                let pokemon = try result.get()
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+                
+            } catch {
+                NSLog("Error getting Pokemon: \(error)")
+            }
+            
+        }
     }
 }
