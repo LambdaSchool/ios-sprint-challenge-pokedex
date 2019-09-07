@@ -55,5 +55,9 @@ class APIController {
 		}.resume()
 		}
 
+	func removePokemon(at index: Int) {
+		pokemons.remove(at: index)
+	}
+
 
 }

@@ -49,6 +49,17 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
 
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let deletePokemon = UIContextualAction(style: .destructive, title: "Delete") { (actionn, view, handler) in
+			self.apiController.removePokemon(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+			handler(true)
+		}
+
+		return UISwipeActionsConfiguration(actions: [deletePokemon])
+	}
+	
+
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let pokeSearchVC = segue.destination as? SearchViewController {
 			pokeSearchVC.apiController = apiController
