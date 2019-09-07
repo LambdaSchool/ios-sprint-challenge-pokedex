@@ -15,15 +15,14 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		tableView.reloadData()
 
     }
-
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.reloadData()
+	}
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -47,8 +46,9 @@ class PokemonTableViewController: UITableViewController {
 		if segue.identifier == "AddPokemon" {
 			guard let addPokemonVC = segue.destination as? AddPokemonViewController
 				else {return}
-			addPokemonVC.delegate = self
-		} else if segue.identifier == "PokemonDetail" {
+		addPokemonVC.pokemonController = pokemonController
+		
+		} else if segue.identifier == "ShowPokemonDetail" {
 			guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController,
 			let indexpath = tableView.indexPathForSelectedRow else {return}
 			pokemonDetailVC.pokemon = pokemonController.pokemons[indexpath.row]
@@ -56,10 +56,4 @@ class PokemonTableViewController: UITableViewController {
 		}
     }
 }
-extension PokemonTableViewController: AddPokemonDelegate {
-	func addPokemon() {
-		
-	}
-	
-	
-}
+

@@ -27,44 +27,47 @@ class PokemonAPIController {
 	
 	//MARK: - properties
 	var pokemons: [Pokemon] = []
-	var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-	typealias completionHandler = (NetworkError) -> Void
+	var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+	typealias completionHandler = (NetworkError?) -> Void
 	
 	//MARK: - methods
-	func getPokemon(with name:String, completion: @escaping completionHandler) {
-		let pokemonURL = baseURL
-			pokemonURL.appendingPathComponent(name)
+	func searchForPokemon(with name: String, completion: @escaping (Result<Pokemon,Error>) -> Void) {
+		let requestURL = baseURL.appendingPathComponent(name)
 		
-		var request = URLRequest(url: pokemonURL)
-		request.httpMethod = HTTPMethod.get.rawValue
-		
-		URLSession.shared.dataTask(with: baseURL){ ( data, response, error) in
+		URLSession.shared.dataTask(with: requestURL) { (data, _ ,error) in
 			if let error = error {
-				NSLog("error getting Pokemon: \(error)")
-				completion(.otherError)
-				return
-			}
-			if let response = response as? HTTPURLResponse,
-				response.statusCode != 200 {
-				completion(.responseError)
+				NSLog("Error getting Pokemon: \(error)")
+				completion(.failure(error))
 				return
 			}
 			guard let data = data else {
-				completion(.noData)
+				NSLog("Error retreiving DataTask")
+				completion(.failure(NSError()))
 				return
 			}
-			let decoder = JSONDecoder()
 			
 			do {
-				let pokemon = try decoder.decode(PokemonResults.self, from: data)
-				self.pokemons = pokemon.results
+				let decoder = JSONDecoder()
+				decoder.keyDecodingStrategy = .convertFromSnakeCase
+				let pokemonData = try decoder.decode(Pokemon.self, from: data)
+				print(pokemonData)
+				completion(.success(pokemonData))
 			} catch {
-				NSLog("error decoding pokemon: \(error)")
-				completion(.noDecode)
+				NSLog("error Decoding Pokemon: \(error)")
+				completion(.failure(error))
 				return
 			}
 		}.resume()
+		
+		
+	}
+
+	func savePokemon(with pokemon: Pokemon) {
+		pokemons.append(pokemon)
 	}
 	
+	func deletePokemon(with pokemon: Pokemon) {
+		
+	}
 	
 }

@@ -18,22 +18,22 @@ class PokemonDetailViewController: UIViewController {
 	@IBOutlet weak var pokemonAbilityLabel: UILabel!
 	
 	//MARK: - properties
-	var pokemon: Pokemon? {
-		didSet {
-			updateViews()
-		}
-	}
+	var pokemon: Pokemon? 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		updateViews()
     }
     
 	//MARK: - methods
 	func updateViews() {
+		guard isViewLoaded else {return}
 		guard let pokemon = pokemon else {return}
+		guard let imageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {return}
 		pokemonNameLabel.text = pokemon.name
-		pokimonIDLabel.text = String(pokemon.abilities.id)
-		pokemonAbilityLabel.text = pokemon.abilities.ability.name
+		pokemonImage.image = UIImage(data: imageData)
+		pokimonIDLabel.text = String(pokemon.id)
+		
 	}
 	
 }
