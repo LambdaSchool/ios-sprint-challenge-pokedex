@@ -15,16 +15,17 @@ class SearchViewController: UIViewController {
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var idLabel: UILabel!
 	@IBOutlet weak var typeLabel: UILabel!
-	@IBOutlet weak var abilitiesLabel: UILabel!
+	@IBOutlet weak var abilitiyLabel: UILabel!
 	@IBOutlet weak var saveButton: UIButton!
 
 
+	
 	var apiController: APIController?
 	var searchPokemon: String?
 	
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		searchBar.delegate = self
 		hideViews(true)
@@ -35,16 +36,17 @@ class SearchViewController: UIViewController {
 			searchBar.isHidden = true
 			performSearch(for: searchedPokemon)
 		}
-    }
-    
+	}
+
 	private func updateViews(with pokemon: Pokemon) {
 		title = pokemon.name.capitalized
+		nameLabel.text = "\(pokemon.name.capitalized)"
 		idLabel.text = "ID: \(pokemon.id)"
 		typeLabel.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
-		abilitiesLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
+		abilitiyLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
 		imageView.load(url: pokemon.sprites.frontDefault)
 
-		hideViews(true)
+		hideViews(false)
 		saveButton.isHidden = searchPokemon == nil ? false : true
 	}
 
@@ -63,7 +65,7 @@ class SearchViewController: UIViewController {
 		imageView.isHidden = verdict
 		idLabel.isHidden = verdict
 		typeLabel.isHidden = verdict
-		abilitiesLabel.isHidden = verdict
+		abilitiyLabel.isHidden = verdict
 	}
 
 
