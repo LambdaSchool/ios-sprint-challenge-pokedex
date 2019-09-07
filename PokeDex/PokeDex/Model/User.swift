@@ -30,7 +30,10 @@ struct Species: Equatable , Codable {
 }
 
 struct Sprite: Equatable , Codable {
-    let front_default: URL
+    let frontDefault: URL
     
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
     }
 
+}

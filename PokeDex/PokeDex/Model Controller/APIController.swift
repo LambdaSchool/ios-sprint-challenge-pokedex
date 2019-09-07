@@ -16,6 +16,7 @@ import Foundation
 
 class APIController {
     var users: User?
+    var pokemon: [User] = []
     
     static var apiController = APIController()
     
@@ -25,7 +26,7 @@ class APIController {
     
     func searchForPokemon (with searchTerm: String, completion: @escaping CompletionHandler = { _ in }) {
         
-        let pokemonURL = baseURL.appendingPathComponent(searchTerm)
+        let pokemonURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         
         
         var request = URLRequest(url: pokemonURL)
@@ -53,6 +54,12 @@ class APIController {
             completion(nil)
             }.resume()
         }
-    }
     
+    func savePokemon(){
+        guard let pokemon = users else {return}
+        APIController.apiController.pokemon.append(pokemon)
+    }
+}
+    
+
 

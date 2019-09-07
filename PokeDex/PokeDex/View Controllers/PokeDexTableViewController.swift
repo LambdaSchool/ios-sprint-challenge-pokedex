@@ -11,8 +11,8 @@ import UIKit
 class PokeDexTableViewController: UITableViewController {
   
     var apiController = APIController()
-    var user: User?
- 
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,9 +31,17 @@ class PokeDexTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return apiController.pokemon.count
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemon Cell", for: indexPath)
+        let pokemon = apiController.pokemon[indexPath.row]
+        cell.detailTextLabel?.text = pokemon.name.capitalized
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {fatalError()}
+        cell.imageView?.image = UIImage(data: imageData)
+        return cell
+    }
 
     
 
@@ -41,6 +49,11 @@ class PokeDexTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "searchSegue" {
+            guard let detailVC = segue.destination as? PokemonViewController else {return}
+            detailVC.apiController = apiController
+        }
+    }
 
 }

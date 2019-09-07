@@ -24,8 +24,11 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var abilities: UILabel!
     
-    let apiController = APIController()
-       
+    var apiController: APIController?
+    
+    var pokemon: User?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +54,9 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         id.isHidden = false
         types.isHidden = false
         abilities.isHidden = false
+        savePokemonButton.setTitle("Save Pokemon", for: .normal)
         
-        guard let pokemon = apiController.users else {return}
+        guard let pokemon = apiController?.users else {return}
         
         idLabel.text = String(pokemon.id)
         nameLabel.text = pokemon.name
@@ -74,20 +78,28 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             abilities.append("\(ability.ability.name)")
             abilities.append("\n")
         }
+        print(abilities)
         abilitiesLabel.text = abilities
         
-        if let image = try? Data(contentsOf: pokemon.sprites.front_default) {
+        if let image = try? Data(contentsOf: pokemon.sprites.frontDefault) {
             imageView.image = UIImage(data: image)
         }
         
-        
     }
+    
+    @IBAction func savePokemon(_ sender: UIButton) {
+        apiController?.savePokemon()
+    }
+    
+    
+
+        
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else {return}
         
         
-        apiController.searchForPokemon(with: searchTerm) {_ in
+        apiController?.searchForPokemon(with: searchTerm) {_ in
             DispatchQueue.main.async {
                 self.updateViews()
             }
@@ -108,5 +120,6 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+
 
 
