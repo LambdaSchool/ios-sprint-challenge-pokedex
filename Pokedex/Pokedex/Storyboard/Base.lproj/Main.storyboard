@@ -35,6 +35,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="d0c-Mi-99N" kind="show" identifier="ShowPokemonSegue" id="bWR-wT-Lnb"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -45,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="lxE-1R-Mi9">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="uGp-eG-NCB">
                             <connections>
-                                <segue destination="Prk-CJ-cAE" kind="show" id="5sW-gs-wCX"/>
+                                <segue destination="Prk-CJ-cAE" kind="show" identifier="SearchSegue" id="5sW-gs-wCX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -204,13 +207,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yu9-kq-jfe">
-                                <rect key="frame" x="30" y="94" width="354" height="37.5"/>
+                                <rect key="frame" x="30" y="190" width="354" height="37.5"/>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tuz-g3-6l4">
-                                <rect key="frame" x="82" y="161.5" width="250" height="250"/>
+                                <rect key="frame" x="82" y="257.5" width="250" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="6Lj-Nc-ujr"/>
                                     <constraint firstAttribute="width" constant="250" id="A7q-Mc-SDd"/>
@@ -218,7 +221,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="HXx-V4-BXp">
-                                <rect key="frame" x="30" y="511.5" width="187" height="119.5"/>
+                                <rect key="frame" x="30" y="607.5" width="187" height="119.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="vWM-kC-tLL">
                                         <rect key="frame" x="0.0" y="0.0" width="143" height="20.5"/>

@@ -18,8 +18,7 @@ struct Pokemon: Decodable {
 }
 
 struct Ability: Decodable {
-	var name: String
-	let url: URL
+	let ability: KeyString
 }
 
 struct Type: Codable {

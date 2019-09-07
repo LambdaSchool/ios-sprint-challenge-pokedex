@@ -19,18 +19,21 @@ class SearchViewController: UIViewController {
 	@IBOutlet weak var saveButton: UIButton!
 
 
-	var apiController: APIController!
+	var apiController: APIController?
 	var searchPokemon: String?
+	
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
 		searchBar.delegate = self
 		hideViews(true)
+		saveButton.isHidden = true
 
 		if let searchedPokemon = searchPokemon {
 			title = searchedPokemon
-
+			searchBar.isHidden = true
+			performSearch(for: searchedPokemon)
 		}
     }
     
@@ -38,15 +41,18 @@ class SearchViewController: UIViewController {
 		title = pokemon.name.capitalized
 		idLabel.text = "ID: \(pokemon.id)"
 		typeLabel.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
+		abilitiesLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
+		imageView.load(url: pokemon.sprites.frontDefault)
 
-		hideViews(false)
+		hideViews(true)
 		saveButton.isHidden = searchPokemon == nil ? false : true
 	}
 
 
-	private func performSearch(for searchTerm: String) {
-		apiController.getPokemons(by: searchTerm) { ( result ) in
+	private func performSearch(for searchedPokemon: String) {
+		apiController?.getPokemons(by: searchedPokemon) { ( result ) in
 			guard let result = try? result.get() else { return }
+			print(result)
 			DispatchQueue.main.async {
 				self.updateViews(with: result)
 			}
@@ -61,8 +67,13 @@ class SearchViewController: UIViewController {
 	}
 
 
+	// MARK: - IBActions
 
 	@IBAction func saveButtonTapped(_ sender: Any) {
+		guard let name = title else { return }
+		apiController?.addPokemon(pokemon: name)
+		saveButton.isEnabled = false
+		self.navigationController?.popViewController(animated: true)
 	}
 
 
@@ -82,4 +93,16 @@ extension UISearchBar {
 	}
 }
 
-
+extension UIImageView {
+	func load(url: URL) {
+		DispatchQueue.global().async { [weak self] in
+			if let data = try? Data(contentsOf: url) {
+				if let image = UIImage(data: data) {
+					DispatchQueue.main.async {
+						self?.image = image
+					}
+				}
+			}
+		}
+	}
+}
