@@ -45,6 +45,7 @@ class APIController {
             do {
                 let newUsers = try JSONDecoder().decode(User.self, from: data)
                 print(newUsers)
+                self.pokemon.append(newUsers)
                 self.users = newUsers
             } catch {
                 NSLog("Error decoding users: \(error)")
@@ -55,10 +56,7 @@ class APIController {
             }.resume()
         }
     
-    func savePokemon(){
-        guard let pokemon = users else {return}
-        APIController.apiController.pokemon.append(pokemon)
-    }
+ 
 }
     
 

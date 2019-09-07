@@ -15,12 +15,17 @@ class PokeDexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+        
     }
 
     // MARK: - Table view data source
@@ -40,6 +45,7 @@ class PokeDexTableViewController: UITableViewController {
         cell.detailTextLabel?.text = pokemon.name.capitalized
         guard let imageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {fatalError()}
         cell.imageView?.image = UIImage(data: imageData)
+        title = pokemon.name
         return cell
     }
 
@@ -51,8 +57,15 @@ class PokeDexTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "searchSegue" {
-            guard let detailVC = segue.destination as? PokemonViewController else {return}
+            guard let searchVC = segue.destination as? PokemonViewController else {return}
+            searchVC.apiController = apiController
+        }else if segue.identifier == "showPokemon" {
+            guard let detailVC = segue.destination as? PokemonViewController,
+            let indexPath = tableView.indexPathForSelectedRow else {return}
+            detailVC.pokemon = apiController.pokemon[indexPath.row]
             detailVC.apiController = apiController
+            
+            
         }
     }
 

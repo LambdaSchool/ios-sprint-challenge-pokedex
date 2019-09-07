@@ -26,38 +26,35 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     var apiController: APIController?
     
-    var pokemon: User?
+    var pokemon: User?{
+        didSet{
+            updateViews()
+        }
+    }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameLabel.isHidden = true
-        idLabel.isHidden = true
-        typesLabel.isHidden = true
-        abilitiesLabel.isHidden = true
-        savePokemonButton.isHidden = true
-        id.isHidden = true
-        types.isHidden = true
-        abilities.isHidden = true
         searchBar.delegate = self
- 
+        SetViews()
+        updateViews()
         // Do any additional setup after loading the view.
     }
     
+    func SetViews(){
+        savePokemonButton.isHidden = true
+        guard pokemon != nil else {return}
+        searchBar.isHidden = true
+    }
+    
     func updateViews(){
-        nameLabel.isHidden = false
-        idLabel.isHidden = false
-        typesLabel.isHidden = false
-        abilitiesLabel.isHidden = false
-        savePokemonButton.isHidden = false
-        id.isHidden = false
-        types.isHidden = false
-        abilities.isHidden = false
-        savePokemonButton.setTitle("Save Pokemon", for: .normal)
+       
         
         guard let pokemon = apiController?.users else {return}
         
+        idLabel.text = ""
+        nameLabel.text = ""
         idLabel.text = String(pokemon.id)
         nameLabel.text = pokemon.name
         
@@ -88,10 +85,13 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func savePokemon(_ sender: UIButton) {
-        apiController?.savePokemon()
+        savePokemon()
     }
     
-    
+    func savePokemon(){
+        guard let pokemon = pokemon else {return}
+        APIController.apiController.pokemon.append(pokemon)
+    }
 
         
     
