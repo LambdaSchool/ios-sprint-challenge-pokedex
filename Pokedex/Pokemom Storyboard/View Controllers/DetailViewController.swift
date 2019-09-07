@@ -53,49 +53,58 @@ class DetailViewController: UIViewController {
         ui.viewConfiguration(view)
         ui.searchBarConfiguration(searchBar)
         
-        nameLabel.isHidden = false
-        idLabel.isHidden = false
-        typesLabel.isHidden = false
-        abilitiesLabel.isHidden = false
-        savePokemonButton.isHidden = false
-        id.isHidden = false
-        types.isHidden = false
-        abilities.isHidden = false
+        if let pokemon = pokedexController.pokemon {
         
-        savePokemonButton.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
-        savePokemonButton.layer.cornerRadius = 6
-        savePokemonButton.setTitle("SAVE POKEMON", for: .normal)
-        savePokemonButton.setTitleColor(.white, for: .normal)
-        
-        guard let pokemon = pokedexController.pokemon else {return}
-        
-        idLabel.text = String(pokemon.id)
-        nameLabel.text = pokemon.name
-        
-        var types = ""
-        let typeArray = pokemon.types
-        
-        for type in typeArray {
-            types.append("\(type.type.name)")
-            types.append("\n")
+            nameLabel.isHidden = false
+            idLabel.isHidden = false
+            typesLabel.isHidden = false
+            abilitiesLabel.isHidden = false
+            savePokemonButton.isHidden = false
+            id.isHidden = false
+            types.isHidden = false
+            abilities.isHidden = false
+            
+            savePokemonButton.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
+            savePokemonButton.layer.cornerRadius = 6
+            savePokemonButton.setTitle("SAVE POKEMON", for: .normal)
+            savePokemonButton.setTitleColor(.white, for: .normal)
+            
+            idLabel.text = String(pokemon.id)
+            nameLabel.text = pokemon.name
+            
+            var types = ""
+            let typeArray = pokemon.types
+            
+            for type in typeArray {
+                types.append("\(type.type.name)")
+                types.append("\n")
+            }
+            
+            typesLabel.text = types
+            
+            var abilities = ""
+            let abilityArray = pokemon.abilities
+            
+            for ability in abilityArray {
+                abilities.append("\(ability.ability.name)")
+                abilities.append("\n")
+            }
+            abilitiesLabel.text = abilities
+            
+            let url = URL(string: pokemon.sprites.frontDefault)!
+            if let image = try? Data(contentsOf: url) {
+                imageView.image = UIImage(data: image)
+            }
+        } else  {
+
+            let alert = UIAlertController(title: "Oops! We could not find that pokemon!", message: "Please try again.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+
+            alert.addAction(action)
+
+            self.present(alert, animated: true)
         }
-        
-        typesLabel.text = types
-        
-        var abilities = ""
-        let abilityArray = pokemon.abilities
-        
-        for ability in abilityArray {
-            abilities.append("\(ability.ability.name)")
-            abilities.append("\n")
-        }
-        abilitiesLabel.text = abilities
-        
-        let url = URL(string: pokemon.sprites.frontDefault)!
-        if let image = try? Data(contentsOf: url) {
-             imageView.image = UIImage(data: image)
-        }
-       
+//
         
     }
     

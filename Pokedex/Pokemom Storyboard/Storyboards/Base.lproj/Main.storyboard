@@ -76,21 +76,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="oZE-7u-GWf">
-                                <rect key="frame" x="41.5" y="88" width="331" height="60"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pok-mon-go-logo-png-30" translatesAutoresizingMaskIntoConstraints="NO" id="lIX-LW-3C4">
+                                <rect key="frame" x="145" y="88" width="124" height="124"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="lIX-LW-3C4" secondAttribute="height" multiplier="1:1" id="vXi-b7-b7E"/>
+                                </constraints>
+                            </imageView>
+                            <searchBar contentMode="redraw" placeholder="Name or ID" translatesAutoresizingMaskIntoConstraints="NO" id="oZE-7u-GWf">
+                                <rect key="frame" x="41.5" y="220" width="331" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="OXQ-K7-yDh"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ulT-de-mLX">
-                                <rect key="frame" x="83" y="222" width="248" height="248.5"/>
+                                <rect key="frame" x="83" y="354" width="248" height="248.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ulT-de-mLX" secondAttribute="height" multiplier="1:1" id="qOZ-Kw-Bmz"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="crQ-7w-rKK">
-                                <rect key="frame" x="30" y="485.5" width="354" height="126"/>
+                                <rect key="frame" x="30" y="617.5" width="354" height="126"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nn0-fG-fyK">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="17"/>
@@ -154,7 +160,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fk4-Xo-ntO">
-                                <rect key="frame" x="20" y="631.5" width="374" height="50"/>
+                                <rect key="frame" x="20" y="763.5" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="H3R-yA-cvE"/>
                                 </constraints>
@@ -164,7 +170,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uW7-ny-8r4">
-                                <rect key="frame" x="20" y="166" width="374" height="30"/>
+                                <rect key="frame" x="20" y="298" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -172,9 +178,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oZE-7u-GWf" firstAttribute="top" secondItem="lIX-LW-3C4" secondAttribute="bottom" constant="8" id="4OF-zv-9Gb"/>
                             <constraint firstItem="ulT-de-mLX" firstAttribute="top" secondItem="uW7-ny-8r4" secondAttribute="bottom" constant="26" id="9Xg-vF-kns"/>
                             <constraint firstItem="FYN-hj-9d6" firstAttribute="trailing" secondItem="uW7-ny-8r4" secondAttribute="trailing" constant="20" id="BAt-b0-eKD"/>
-                            <constraint firstItem="oZE-7u-GWf" firstAttribute="top" secondItem="FYN-hj-9d6" secondAttribute="top" id="Bc0-BK-7Zk"/>
                             <constraint firstItem="FYN-hj-9d6" firstAttribute="trailing" secondItem="crQ-7w-rKK" secondAttribute="trailing" constant="30" id="Bei-hB-gxk"/>
                             <constraint firstItem="oZE-7u-GWf" firstAttribute="width" secondItem="DPl-uU-gRy" secondAttribute="width" multiplier="0.8" id="Fda-17-sry"/>
                             <constraint firstItem="FYN-hj-9d6" firstAttribute="trailing" secondItem="fk4-Xo-ntO" secondAttribute="trailing" constant="20" id="GR3-XU-a81"/>
@@ -185,7 +191,10 @@
                             <constraint firstItem="ulT-de-mLX" firstAttribute="width" secondItem="DPl-uU-gRy" secondAttribute="width" multiplier="0.6" id="Yjf-dS-kBJ"/>
                             <constraint firstItem="ulT-de-mLX" firstAttribute="centerX" secondItem="DPl-uU-gRy" secondAttribute="centerX" id="ZCC-3G-WbV"/>
                             <constraint firstItem="crQ-7w-rKK" firstAttribute="leading" secondItem="FYN-hj-9d6" secondAttribute="leading" constant="30" id="c7Q-Gn-oyS"/>
+                            <constraint firstItem="lIX-LW-3C4" firstAttribute="top" secondItem="FYN-hj-9d6" secondAttribute="top" id="egp-N1-1QY"/>
+                            <constraint firstItem="lIX-LW-3C4" firstAttribute="centerX" secondItem="DPl-uU-gRy" secondAttribute="centerX" id="iKw-8K-UdN"/>
                             <constraint firstItem="uW7-ny-8r4" firstAttribute="leading" secondItem="FYN-hj-9d6" secondAttribute="leading" constant="20" id="jhq-Y0-Bpm"/>
+                            <constraint firstItem="lIX-LW-3C4" firstAttribute="width" secondItem="DPl-uU-gRy" secondAttribute="width" multiplier="0.3" id="n4E-7R-pUj"/>
                             <constraint firstItem="fk4-Xo-ntO" firstAttribute="top" secondItem="crQ-7w-rKK" secondAttribute="bottom" constant="20" id="ycF-qi-9eh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FYN-hj-9d6"/>
@@ -337,6 +346,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pok-mon-go-logo-png-30" width="256" height="256"/>
         <image name="pokemon-logo-png-pokemon-logo-png-2000" width="2000" height="736"/>
     </resources>
 </document>

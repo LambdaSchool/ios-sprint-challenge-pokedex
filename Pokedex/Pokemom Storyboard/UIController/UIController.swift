@@ -72,6 +72,8 @@ class UIController {
     
     func navigationControllerConfiguration(_ navController: UINavigationController) {
         
+       
+        
         // changing the navigation bars background color
         navController.navigationBar.barTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
