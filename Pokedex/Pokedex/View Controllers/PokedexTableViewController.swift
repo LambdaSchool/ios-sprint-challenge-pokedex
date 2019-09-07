@@ -16,13 +16,11 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         tableView.reloadData()
     }
     
@@ -52,9 +50,8 @@ class PokedexTableViewController: UITableViewController {
         
         cell.backgroundColor = .bot
         
-        guard let url = URL(string: apiController.pokemon[indexPath.row].sprites.frontImage),
-            let imageData = try? Data(contentsOf: url) else { fatalError() }
-        cell.imageView?.image = UIImage(data: imageData)
+        cell.imageView?.image = UIImage(data: tempPokemon.image)
+        
         
         return cell
     }

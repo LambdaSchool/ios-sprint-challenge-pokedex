@@ -11,17 +11,17 @@ import UIKit
 class PokemonDetailViewController: UIViewController {
     
     var apiController: APIController?
-    var pokemon: Pokemon?
+    var pokemon: Poke?
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var pokemonImageView: UIImageView!
+    @IBOutlet weak var pokemonBackgroundImageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var idNumberLabel: UILabel!
-    @IBOutlet weak var typesLabel: UILabel!
-    @IBOutlet weak var typesListLabel: UILabel!
-    @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var abilitiesListLabel: UILabel!
+    @IBOutlet weak var type1ImageView: UIImageView!
+    @IBOutlet weak var type2ImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,11 @@ class PokemonDetailViewController: UIViewController {
         pokemonSearchBar.barTintColor = .mid
         pokemonSearchBar.setTextFieldColor(color: .bot)
         
-        view.backgroundColor = .bot
+        if let backColor = typeColor() {
+            view.backgroundColor = backColor
+        } else {
+            view.backgroundColor = .bot
+        }
     }
     
     func updateViews() {
@@ -50,21 +54,16 @@ class PokemonDetailViewController: UIViewController {
             
             nameLabel.text = pokemon.name
             idNumberLabel.text = "\(pokemon.id)"
-            typesListLabel.text = getTypesString()
+            showTypes(types: pokemon.types)
             abilitiesListLabel.text = getAbilitiesString()
             
-            
-            guard let url = URL(string: pokemon.sprites.frontImage),
-                let imageData = try? Data(contentsOf: url) else { fatalError() }
-            pokemonImageView.image = UIImage(data: imageData)
+            pokemonImageView.image = UIImage(data: pokemon.image)
+            pokemonBackgroundImageView.image = UIImage(named: "Background")
             
         } else {
             nameLabel.isHidden = true
             idLabel.isHidden = true
             idNumberLabel.isHidden = true
-            typesLabel.isHidden = true
-            typesListLabel.isHidden = true
-            abilitiesLabel.isHidden = true
             abilitiesListLabel.isHidden = true
         }
     }
@@ -73,63 +72,77 @@ class PokemonDetailViewController: UIViewController {
         nameLabel.isHidden = false
         idLabel.isHidden = false
         idNumberLabel.isHidden = false
-        typesLabel.isHidden = false
-        typesListLabel.isHidden = false
-        abilitiesLabel.isHidden = false
         abilitiesListLabel.isHidden = false
-    }
-    
-    func getTypesString() -> String {
-        guard let pokemon = pokemon else { return "" }
-        
-        if pokemon.types.count <= 1 {
-            typesLabel.text = "Type:"
-        } else {
-            typesLabel.text = "Types:"
-        }
-        
-        var types = ""
-        for type in 0...pokemon.types.count - 1 {
-            if type == pokemon.types.count - 1 {
-                types += "\(pokemon.types[type].type.name)"
-            } else {
-                types += "\(pokemon.types[type].type.name), "
-            }
-        }
-        return types
     }
     
     func getAbilitiesString() -> String {
         guard let pokemon = pokemon else { return "" }
         
-        if pokemon.abilities.count <= 1 {
-            abilitiesLabel.text = "Ability:"
-        } else {
-            abilitiesLabel.text = "Abilities:"
-        }
-        
         var abilities = ""
         for ability in 0...pokemon.abilities.count - 1 {
             if ability == pokemon.abilities.count - 1 {
-                abilities += "\(pokemon.abilities[ability].ability.name)"
+                abilities += "\(pokemon.abilities[ability].ability.name.capitalized)"
             } else {
-                abilities += "\(pokemon.abilities[ability].ability.name), "
+                abilities += "\(pokemon.abilities[ability].ability.name.capitalized)\n\n"
             }
         }
         return abilities
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func showTypes(types: [Type]) {
+        if types.count == 1 {
+            type2ImageView.image = UIImage(named: types[0].type.name.capitalized)
+        } else {
+            type1ImageView.image = UIImage(named: types[0].type.name.capitalized)
+            type2ImageView.image = UIImage(named: types[1].type.name.capitalized)
+        }
     }
-    */
-
+    
+    func typeColor() -> UIColor? {
+        if let pokemon = pokemon {
+            if pokemon.types[0].type.name == "bug" {
+                return UIColor(red:0.63, green:0.92, blue:0.00, alpha:1.00)
+            } else if pokemon.types[0].type.name == "dark" {
+                return UIColor(red:0.11, green:0.13, blue:0.12, alpha:1.00)
+            } else if pokemon.types[0].type.name == "dragon" {
+                return UIColor(red:0.41, green:0.39, blue:0.20, alpha:1.00)
+            } else if pokemon.types[0].type.name == "electric" {
+                return UIColor(red:1.00, green:0.89, blue:0.00, alpha:1.00)
+            } else if pokemon.types[0].type.name == "fairy" {
+                return UIColor(red:1.00, green:0.22, blue:0.64, alpha:1.00)
+            } else if pokemon.types[0].type.name == "fighting" {
+                return UIColor(red:0.87, green:0.47, blue:0.07, alpha:1.00)
+            } else if pokemon.types[0].type.name == "fire" {
+                return UIColor(red:1.00, green:0.23, blue:0.00, alpha:1.00)
+            } else if pokemon.types[0].type.name == "flying" {
+                return UIColor(red:0.91, green:0.78, blue:0.87, alpha:1.00)
+            } else if pokemon.types[0].type.name == "ghost" {
+                return UIColor(red:0.60, green:0.19, blue:0.60, alpha:1.00)
+            } else if pokemon.types[0].type.name == "grass" {
+                return UIColor(red:0.61, green:0.87, blue:0.49, alpha:1.00)
+            } else if pokemon.types[0].type.name == "ground" {
+                return UIColor(red:0.95, green:0.58, blue:0.19, alpha:1.00)
+            } else if pokemon.types[0].type.name == "ice" {
+                return UIColor(red:0.46, green:0.61, blue:0.91, alpha:1.00)
+            } else if pokemon.types[0].type.name == "normal" {
+                return UIColor(red:0.92, green:0.91, blue:0.91, alpha:1.00)
+            } else if pokemon.types[0].type.name == "poison" {
+                return UIColor(red:0.54, green:0.31, blue:0.47, alpha:1.00)
+            } else if pokemon.types[0].type.name == "psychic" {
+                return UIColor(red:0.72, green:0.54, blue:0.80, alpha:1.00)
+            } else if pokemon.types[0].type.name == "rock" {
+                return UIColor(red:0.86, green:0.55, blue:0.09, alpha:1.00)
+            } else if pokemon.types[0].type.name == "steel" {
+                return UIColor(red:0.90, green:0.87, blue:0.85, alpha:1.00)
+            } else if pokemon.types[0].type.name == "water" {
+                return UIColor(red:0.00, green:0.61, blue:0.87, alpha:1.00)
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
 }
 
 extension PokemonDetailViewController: UISearchBarDelegate {

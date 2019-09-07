@@ -6,7 +6,7 @@
 //  Copyright © 2019 Mazjap Co Technologies. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Pokemon: Codable {
     var name: String
@@ -39,4 +39,12 @@ struct Sprites: Codable {
     }
     
     var frontImage: String
+}
+
+struct Poke: Codable {
+    var name: String
+    var id: Int
+    var abilities: [Ability]
+    var types: [Type]
+    var image: Data
 }

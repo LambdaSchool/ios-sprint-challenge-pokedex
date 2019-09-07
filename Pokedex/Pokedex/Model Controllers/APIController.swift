@@ -27,7 +27,7 @@ enum NetworkError: Error {
 class APIController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    var pokemon: [Pokemon] = []
+    var pokemon: [Poke] = []
     
     private var readingListURL: URL? {
         let fileManager = FileManager.default
@@ -39,7 +39,7 @@ class APIController {
         loadFromPersistentStore()
     }
     
-    func getPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func getPokemon(with searchTerm: String, completion: @escaping (Result<Poke, NetworkError>) -> Void) {
         let searchURL = baseURL
             .appendingPathComponent("pokemon")
             .appendingPathComponent(searchTerm)
@@ -66,13 +66,13 @@ class APIController {
                 
                 var newPokemon = try decoder.decode(Pokemon.self, from: data)
                 newPokemon.name = newPokemon.name.capitalized
-                
-                self.pokemon.append(newPokemon)
+                let poke = self.convertToPoke(pokemon: newPokemon)
+                self.pokemon.append(poke)
                 self.pokemon.sort { $0.id < $1.id }
                 
                 self.saveToPersistentStore()
                 
-                completion(.success(newPokemon))
+                completion(.success(poke))
                 return
             } catch {
                 NSLog("Error decoding pokemon on line \(#line): \(error)")
@@ -85,6 +85,13 @@ class APIController {
     func deletePokemon(index: Int) {
         pokemon.remove(at: index)
         saveToPersistentStore()
+    }
+    
+    func convertToPoke(pokemon: Pokemon) -> Poke {
+        guard let url = URL(string: pokemon.sprites.frontImage),
+            let imageData = try? Data(contentsOf: url) else { fatalError() }
+        let tempPoke = Poke(name: pokemon.name, id: pokemon.id, abilities: pokemon.abilities, types: pokemon.types, image: imageData)
+        return tempPoke
     }
     
     func saveToPersistentStore() {
@@ -106,7 +113,7 @@ class APIController {
         do {
             let data = try Data(contentsOf: url)
             let decoder = PropertyListDecoder()
-            pokemon = try decoder.decode([Pokemon].self, from: data)
+            pokemon = try decoder.decode([Poke].self, from: data)
         } catch {
             print("Error loading pokemon data: \(error)")
         }
