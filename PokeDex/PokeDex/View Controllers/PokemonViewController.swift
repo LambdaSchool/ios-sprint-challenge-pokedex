@@ -48,8 +48,9 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         searchBar.isHidden = true
     }
     
+
     func updateViews(){
-       
+        
         
         guard let pokemon = apiController?.users else {return}
         
@@ -77,6 +78,8 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         }
         print(abilities)
         abilitiesLabel.text = abilities
+        
+        title = pokemon.name.capitalized
         
         if let image = try? Data(contentsOf: pokemon.sprites.frontDefault) {
             imageView.image = UIImage(data: image)
