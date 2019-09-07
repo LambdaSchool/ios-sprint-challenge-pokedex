@@ -56,7 +56,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         idLabel.text = ""
         nameLabel.text = ""
         idLabel.text = String(pokemon.id)
-        nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name.capitalized
         
         var types = ""
         let typeArray = pokemon.types
