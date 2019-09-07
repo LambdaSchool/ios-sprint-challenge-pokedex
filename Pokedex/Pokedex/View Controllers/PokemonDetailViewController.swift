@@ -51,6 +51,7 @@ class PokemonDetailViewController: UIViewController {
     func updateViews() {
         if let pokemon = pokemon {
             unhide()
+            setUI()
             
             nameLabel.text = pokemon.name
             idNumberLabel.text = "\(pokemon.id)"
@@ -93,55 +94,56 @@ class PokemonDetailViewController: UIViewController {
         if types.count == 1 {
             type2ImageView.image = UIImage(named: types[0].type.name.capitalized)
         } else {
-            type1ImageView.image = UIImage(named: types[0].type.name.capitalized)
-            type2ImageView.image = UIImage(named: types[1].type.name.capitalized)
+            type1ImageView.image = UIImage(named: types[1].type.name.capitalized)
+            type2ImageView.image = UIImage(named: types[0].type.name.capitalized)
         }
     }
     
     func typeColor() -> UIColor? {
         if let pokemon = pokemon {
-            if pokemon.types[0].type.name == "bug" {
+            var index: Int = 0
+            if pokemon.types.count == 2 { index = 1 }
+            if pokemon.types[index].type.name == "bug" {
                 return UIColor(red:0.63, green:0.92, blue:0.00, alpha:1.00)
-            } else if pokemon.types[0].type.name == "dark" {
+            } else if pokemon.types[index].type.name == "dark" {
                 return UIColor(red:0.11, green:0.13, blue:0.12, alpha:1.00)
-            } else if pokemon.types[0].type.name == "dragon" {
+            } else if pokemon.types[index].type.name == "dragon" {
                 return UIColor(red:0.41, green:0.39, blue:0.20, alpha:1.00)
-            } else if pokemon.types[0].type.name == "electric" {
+            } else if pokemon.types[index].type.name == "electric" {
                 return UIColor(red:1.00, green:0.89, blue:0.00, alpha:1.00)
-            } else if pokemon.types[0].type.name == "fairy" {
+            } else if pokemon.types[index].type.name == "fairy" {
                 return UIColor(red:1.00, green:0.22, blue:0.64, alpha:1.00)
-            } else if pokemon.types[0].type.name == "fighting" {
+            } else if pokemon.types[index].type.name == "fighting" {
                 return UIColor(red:0.87, green:0.47, blue:0.07, alpha:1.00)
-            } else if pokemon.types[0].type.name == "fire" {
+            } else if pokemon.types[index].type.name == "fire" {
                 return UIColor(red:1.00, green:0.23, blue:0.00, alpha:1.00)
-            } else if pokemon.types[0].type.name == "flying" {
+            } else if pokemon.types[index].type.name == "flying" {
                 return UIColor(red:0.91, green:0.78, blue:0.87, alpha:1.00)
-            } else if pokemon.types[0].type.name == "ghost" {
+            } else if pokemon.types[index].type.name == "ghost" {
                 return UIColor(red:0.60, green:0.19, blue:0.60, alpha:1.00)
-            } else if pokemon.types[0].type.name == "grass" {
+            } else if pokemon.types[index].type.name == "grass" {
                 return UIColor(red:0.61, green:0.87, blue:0.49, alpha:1.00)
-            } else if pokemon.types[0].type.name == "ground" {
+            } else if pokemon.types[index].type.name == "ground" {
                 return UIColor(red:0.95, green:0.58, blue:0.19, alpha:1.00)
-            } else if pokemon.types[0].type.name == "ice" {
+            } else if pokemon.types[index].type.name == "ice" {
                 return UIColor(red:0.46, green:0.61, blue:0.91, alpha:1.00)
-            } else if pokemon.types[0].type.name == "normal" {
+            } else if pokemon.types[index].type.name == "normal" {
                 return UIColor(red:0.92, green:0.91, blue:0.91, alpha:1.00)
-            } else if pokemon.types[0].type.name == "poison" {
+            } else if pokemon.types[index].type.name == "poison" {
                 return UIColor(red:0.54, green:0.31, blue:0.47, alpha:1.00)
-            } else if pokemon.types[0].type.name == "psychic" {
+            } else if pokemon.types[index].type.name == "psychic" {
                 return UIColor(red:0.72, green:0.54, blue:0.80, alpha:1.00)
-            } else if pokemon.types[0].type.name == "rock" {
+            } else if pokemon.types[index].type.name == "rock" {
                 return UIColor(red:0.86, green:0.55, blue:0.09, alpha:1.00)
-            } else if pokemon.types[0].type.name == "steel" {
+            } else if pokemon.types[index].type.name == "steel" {
                 return UIColor(red:0.90, green:0.87, blue:0.85, alpha:1.00)
-            } else if pokemon.types[0].type.name == "water" {
+            } else if pokemon.types[index].type.name == "water" {
                 return UIColor(red:0.00, green:0.61, blue:0.87, alpha:1.00)
             } else {
                 return nil
             }
-        } else {
-            return nil
         }
+        return nil
     }
 }
 
@@ -159,7 +161,7 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                 } catch {
                     NSLog("Error fetching pokemon info: \(error)")
                     self.pokemonSearchBar.endEditing(true)
-                    let alert = UIAlertController(title: "No Results", message: "Unable to find pokemon: \(searchTerm). Please try again", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "No Results", message: "Unable to find pokemon with name or ID: \"\(searchTerm)\". Please try again", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
                 }
