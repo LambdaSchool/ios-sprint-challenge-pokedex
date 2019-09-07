@@ -10,7 +10,9 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    let pokedexController = PokedexController()
+    var pokedexController = PokedexController()
+    
+    let ui = UIController()
     
     var pokemon: Pokemon?
     
@@ -31,6 +33,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         searchBar.delegate = self
         
+        ui.viewConfiguration(view)
+        ui.searchBarConfiguration(searchBar)
         
         nameLabel.isHidden = true
         idLabel.isHidden = true
@@ -45,6 +49,9 @@ class DetailViewController: UIViewController {
 
     
     func setViews() {
+        
+        ui.viewConfiguration(view)
+        ui.searchBarConfiguration(searchBar)
         
         nameLabel.isHidden = false
         idLabel.isHidden = false
@@ -97,8 +104,8 @@ class DetailViewController: UIViewController {
         guard let pokemon = pokedexController.pokemon else {return}
 
         pokedexController.createPokemon(name: pokemon.name, sprites: pokemon.sprites, types: pokemon.types, abilities: pokemon.abilities, id: pokemon.id)
-        
-        
+        pokedexController.saveToPersistentStore()
+        navigationController?.popViewController(animated: true)
         }
     
 }
