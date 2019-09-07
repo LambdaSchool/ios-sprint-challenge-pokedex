@@ -10,34 +10,48 @@ import Foundation
 
 class APIController {
 
-	var pokemons: [Pokemon] = []
+	private(set) var pokemons = [String]()
 
-	let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+	private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
 	typealias CompletionHandler = (Error?) -> Void
 
-	func getPokemons(completion: @escaping CompletionHandler = { _ in}) {
-		URLSession.shared.dataTask(with: baseURL) { (data, response, error ) in
+	func addPokemon(pokemon: String) {
+		if !pokemons.contains(pokemon) {
+			pokemons.append(pokemon)
+		}
+	}
+
+	func getPokemons(by searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+
+		let pokemonURL = baseURL.appendingPathComponent("pokemon/\(searchTerm.lowercased())")
+		let request = URLRequest(url: pokemonURL)
+
+		URLSession.shared.dataTask(with: request) { (data, response, error ) in
 
 			if let error = error {
-				NSLog("Error getting pokemons: \(error)")
+				NSLog(error.localizedDescription)
+				//NSLog("Error getting pokemons: \(error)")
+				completion(.failure(.otherError))
+				return
 			}
 
 			guard let data = data else {
 				NSLog("No data returned from dataTask.")
-				completion(nil)
+				completion(.failure(.noData))
 				return
 			}
 
 			do {
-				let newPoke = try JSONDecoder().decode(PokemonResults.self, from: data)
+				let decoder = JSONDecoder()
+				decoder.keyDecodingStrategy = .convertFromSnakeCase
+				let newPoke = try decoder.decode(Pokemon.self, from: data)
 				print(newPoke)
-				self.pokemons = newPoke.results
+				completion(.success(newPoke))
 
 			} catch {
-				NSLog("Error decoding pokemons: \(error)")
-				completion(error)
+				NSLog("Can't decode")
+				completion(.failure(.noDecode))
 			}
-			completion(nil)
 		}.resume()
 		}
 

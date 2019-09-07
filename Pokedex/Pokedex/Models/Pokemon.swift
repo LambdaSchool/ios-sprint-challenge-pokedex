@@ -8,22 +8,30 @@
 
 import Foundation
 
-struct PokemonResults: Decodable {
-
-	let results: [Pokemon]
-
-}
 
 struct Pokemon: Decodable {
-	var name: String
-	var url: String
-	var abilities: Abilities
-	var id: Int
+	let name: String
+	let abilities: [Ability]
+	let types: [Type]
+	let id: Int
+	let sprites: Sprite
 }
 
-struct Abilities: Decodable {
+struct Ability: Decodable {
 	var name: String
-
+	let url: URL
 }
 
+struct Type: Codable {
+	let type: KeyString
+}
 
+struct Sprite: Codable {
+	let frontDefault: URL
+	let backDefault: URL
+}
+
+struct KeyString: Codable {
+	let name: String
+	let url: URL
+}
