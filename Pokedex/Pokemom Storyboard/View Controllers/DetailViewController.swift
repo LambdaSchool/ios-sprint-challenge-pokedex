@@ -64,8 +64,6 @@ class DetailViewController: UIViewController {
             types.isHidden = false
             abilities.isHidden = false
             
-            savePokemonButton.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
-            savePokemonButton.layer.cornerRadius = 6
             savePokemonButton.setTitle("SAVE POKEMON", for: .normal)
             savePokemonButton.setTitleColor(.white, for: .normal)
             
@@ -116,6 +114,7 @@ class DetailViewController: UIViewController {
         pokedexController.saveToPersistentStore()
         navigationController?.popViewController(animated: true)
         }
+    
     
 }
 

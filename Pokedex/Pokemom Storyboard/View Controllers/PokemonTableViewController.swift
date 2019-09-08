@@ -42,15 +42,9 @@ class PokemonTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else {return UITableViewCell()}
         
-        let pokemon = pokedexController.pokemons[indexPath.row]
-        cell.textLabel?.text = pokemon.name
-        cell.textLabel?.font = UIFont(name: "System Bold", size: 15)
-        cell.detailTextLabel?.text = String(pokemon.id)
-        cell.detailTextLabel?.textColor = .red
-        cell.detailTextLabel?.font = UIFont(name: "System Medium", size: 14)
-        cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        cell.pokemon = pokedexController.pokemons[indexPath.row]
         
         
         return cell

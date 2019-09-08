@@ -17,6 +17,9 @@
 		3871849C2322AF85002A4746 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871849B2322AF85002A4746 /* Pokemon.swift */; };
 		387184A323241C1E002A4746 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387184A223241C1E002A4746 /* ViewController.swift */; };
 		387184A52324229A002A4746 /* UIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387184A42324229A002A4746 /* UIController.swift */; };
+		387184A9232446B0002A4746 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387184A8232446B0002A4746 /* PokemonTableViewCell.swift */; };
+		387184AD2324A33A002A4746 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387184AC2324A33A002A4746 /* Button.swift */; };
+		387184AF2324A38C002A4746 /* ButtonFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387184AE2324A38C002A4746 /* ButtonFunc.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		3871849B2322AF85002A4746 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
 		387184A223241C1E002A4746 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		387184A42324229A002A4746 /* UIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIController.swift; sourceTree = "<group>"; };
+		387184A8232446B0002A4746 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
+		387184AC2324A33A002A4746 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		387184AE2324A38C002A4746 /* ButtonFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFunc.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				3871847A2321F9B1002A4746 /* Pokemom Storyboard */,
+				3871848D2322AD49002A4746 /* Resources */,
 				387184792321F9B1002A4746 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,10 +71,10 @@
 		3871847A2321F9B1002A4746 /* Pokemom Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				387184A72324418B002A4746 /* Custom Views */,
 				387184972322AE0F002A4746 /* View Controllers */,
-				3871848D2322AD49002A4746 /* Resources */,
 				3871848E2322AD57002A4746 /* Storyboards */,
-				3871849A2322AF73002A4746 /* Controller */,
+				3871849A2322AF73002A4746 /* Model Controller */,
 				3871849D2322AF93002A4746 /* Model */,
 				387184A62324229E002A4746 /* UIController */,
 			);
@@ -103,12 +110,12 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		3871849A2322AF73002A4746 /* Controller */ = {
+		3871849A2322AF73002A4746 /* Model Controller */ = {
 			isa = PBXGroup;
 			children = (
 				387184982322AF68002A4746 /* PokedexController.swift */,
 			);
-			path = Controller;
+			path = "Model Controller";
 			sourceTree = "<group>";
 		};
 		3871849D2322AF93002A4746 /* Model */ = {
@@ -123,8 +130,18 @@
 			isa = PBXGroup;
 			children = (
 				387184A42324229A002A4746 /* UIController.swift */,
+				387184AC2324A33A002A4746 /* Button.swift */,
+				387184AE2324A38C002A4746 /* ButtonFunc.swift */,
 			);
 			path = UIController;
+			sourceTree = "<group>";
+		};
+		387184A72324418B002A4746 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				387184A8232446B0002A4746 /* PokemonTableViewCell.swift */,
+			);
+			name = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,11 +216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				387184A52324229A002A4746 /* UIController.swift in Sources */,
+				387184A9232446B0002A4746 /* PokemonTableViewCell.swift in Sources */,
 				387184A323241C1E002A4746 /* ViewController.swift in Sources */,
 				387184992322AF68002A4746 /* PokedexController.swift in Sources */,
 				3871847C2321F9B1002A4746 /* AppDelegate.swift in Sources */,
+				387184AF2324A38C002A4746 /* ButtonFunc.swift in Sources */,
 				387184962322AE09002A4746 /* PokemonTableViewController.swift in Sources */,
 				387184942322ADEE002A4746 /* DetailViewController.swift in Sources */,
+				387184AD2324A33A002A4746 /* Button.swift in Sources */,
 				3871849C2322AF85002A4746 /* Pokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,7 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
-				INFOPLIST_FILE = "$(SRCROOT)/Pokemom Storyboard/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,7 +390,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
-				INFOPLIST_FILE = "$(SRCROOT)/Pokemom Storyboard/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

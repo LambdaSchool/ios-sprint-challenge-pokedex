@@ -51,6 +51,7 @@ class UIController {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .white
         tableView.separatorInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        tableView.rowHeight = 70
         
     }
     
