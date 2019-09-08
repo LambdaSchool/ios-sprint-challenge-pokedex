@@ -17,6 +17,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var pokemonTypes: UILabel!
+    @IBOutlet weak var pokemonAbilities: UILabel!
     
     var pokemon: Pokemon? {
         didSet {
@@ -54,6 +56,23 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         imageView.image = UIImage(data: pokemonImageData)
         nameLabel.isHidden = false
         nameLabel.text = pokemon.name.capitalized
+        
+        
+        // Types
+        var newPokemonTypesArray : [String] = []
+        for element in pokemon.types {
+            newPokemonTypesArray.append(element.type.name)
+        }
+        pokemonTypes.text = newPokemonTypesArray.joined(separator: ", ")
+        // print(newPokemonTypesArray)
+        
+        // Abilities
+        
+        var newPokemonAbilitiesArray : [String] = []
+        for element in pokemon.abilities {
+            newPokemonAbilitiesArray.append(element.ability.name)
+        }
+        pokemonAbilities.text = newPokemonAbilitiesArray.joined(separator: ", ")
         
         
     }
