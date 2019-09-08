@@ -30,9 +30,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        //hideViews()
-        updateViews()
-        
+        updateViewsSegue()
+        hideViews()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -51,9 +50,39 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         nameLabel.isHidden = true
     }
     
+    func updateViewsSegue() {
+        guard let pokemon = pokemonController?.pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        title = pokemon.name.capitalized + " " + "ID: \(pokemon.id)"
+        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else { return }
+        imageView.image = UIImage(data: pokemonImageData)
+        nameLabel.isHidden = false
+        nameLabel.text = pokemon.name.capitalized
+        
+        
+        // Types
+        var newPokemonTypesArray : [String] = []
+        for element in pokemon.types {
+            newPokemonTypesArray.append(element.type.name)
+        }
+        pokemonTypes.text = "Type: \(newPokemonTypesArray.joined(separator: ", "))"
+
+        
+        // Abilities
+        
+        var newPokemonAbilitiesArray : [String] = []
+        for element in pokemon.abilities {
+            newPokemonAbilitiesArray.append(element.ability.name)
+        }
+        pokemonAbilities.text = "Abilities: \(newPokemonAbilitiesArray.joined(separator: ", "))"
+    }
+    
     func updateViews() {
         guard isViewLoaded else { return }
+        print("Afer isViewLoaded")
         guard let pokemon = pokemon else { return }
+        print("After guard let pokemon")
         saveButton.isEnabled = true
         title = pokemon.name.capitalized + " " + "ID: \(pokemon.id)"
         guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else { return }
@@ -67,7 +96,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         for element in pokemon.types {
             newPokemonTypesArray.append(element.type.name)
         }
-        pokemonTypes.text = newPokemonTypesArray.joined(separator: ", ")
+        pokemonTypes.text = "Type: \(newPokemonTypesArray.joined(separator: ", "))"
         
         
         // Abilities
@@ -76,9 +105,10 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         for element in pokemon.abilities {
             newPokemonAbilitiesArray.append(element.ability.name)
         }
-        pokemonAbilities.text = newPokemonAbilitiesArray.joined(separator: ", ")
+        pokemonAbilities.text = "Abilities: \(newPokemonAbilitiesArray.joined(separator: ", "))"
         
-        
+        print("Inside Update Views.")
+        print(pokemonAbilities.text)
         
     }
     

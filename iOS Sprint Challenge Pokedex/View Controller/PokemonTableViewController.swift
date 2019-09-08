@@ -53,7 +53,7 @@ class PokemonTableViewController: UITableViewController {
             
             pokemonController.pokemon = pokemonController.pokemonTeam[indexPath.row]
             searchVC.pokemonController = pokemonController
-            print(searchVC.pokemonController?.pokemon?.name)
+            // print(searchVC.pokemonController?.pokemon?.name)
         }
     }
 }
