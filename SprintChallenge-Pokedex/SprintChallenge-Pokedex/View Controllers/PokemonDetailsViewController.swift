@@ -1,5 +1,5 @@
 //
-//  PokemonDetailViewController.swift
+//  PokemonDetailsViewController.swift
 //  SprintChallenge-Pokedex
 //
 //  Created by Ciara Beitel on 9/6/19.
@@ -8,14 +8,9 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailsViewController: UIViewController {
+    var pokemon: Pokemon?
     
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
-
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
@@ -24,24 +19,25 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
     
     func updateViews() {
         guard let pokemon = pokemon else { return }
         
-        nameLabel.text = pokemon.name
-        // ⚠️ FIX THIS LATER - image ⚠️
+        nameLabel.text = pokemon.name.capitalized
+        guard let url = URL(string: pokemon.sprites.front_shiny) else { return }
+        image.load(url: url)
         idLabel.text = "\(pokemon.id)"
         var typesString = ""
         for type in pokemon.types {
-            typesString += type.type.name
+            typesString += type.type.name + ", "
         }
         typesLabel.text = typesString
         var abilitiesString = ""
         for ability in pokemon.abilities {
-            abilitiesString += ability.ability.name
+            abilitiesString += ability.ability.name + ", "
         }
         abilitiesLabel.text = abilitiesString
     }
 }
-

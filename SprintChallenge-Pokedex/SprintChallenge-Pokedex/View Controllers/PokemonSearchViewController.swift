@@ -29,17 +29,18 @@ class PokemonSearchViewController: UIViewController {
     
     func updateViews() {
         guard let pokemon = pokemon else { return }
-        nameLabel.text = pokemon.name
-        // ⚠️ FIX THIS LATER - image ⚠️
+        nameLabel.text = pokemon.name.capitalized
+        guard let url = URL(string: pokemon.sprites.front_shiny) else { return }
+        image.load(url: url)
         idLabel.text = "\(pokemon.id)"
         var typesString = ""
         for type in pokemon.types {
-            typesString += type.type.name
+            typesString += type.type.name + ", "
         }
         typesLabel.text = typesString
         var abilitiesString = ""
         for ability in pokemon.abilities {
-            abilitiesString += ability.ability.name
+            abilitiesString += ability.ability.name + ", "
         }
         abilitiesLabel.text = abilitiesString
     }
@@ -53,7 +54,7 @@ class PokemonSearchViewController: UIViewController {
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
+        guard let searchText = searchBar.text?.lowercased() else { return }
         pokemonController.getPokemon(name: searchText) { (result) in
             do {
                 let pokemon = try result.get()

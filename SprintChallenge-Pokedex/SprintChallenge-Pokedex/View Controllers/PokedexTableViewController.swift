@@ -12,8 +12,6 @@ class PokedexTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
     
-   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -31,7 +29,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pokeCell", for: indexPath)
 
-        cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name
+        cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name.capitalized
         
         return cell
     }
@@ -44,10 +42,8 @@ class PokedexTableViewController: UITableViewController {
                 searchVC.pokemonController = pokemonController
             }
         } else if segue.identifier == "PokemonDetailShowSegue" {
-            
-            if let detailVC = segue.destination as? PokemonDetailViewController,
+            if let detailVC = segue.destination as? PokemonDetailsViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
-                
                 detailVC.pokemon = pokemonController.pokemons[indexPath.row]
             }
         }
