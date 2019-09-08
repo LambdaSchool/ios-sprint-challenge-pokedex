@@ -18,7 +18,7 @@ class PokemonDetailViewController: UIViewController {
 	@IBOutlet weak var pokemonAbilityLabel: UILabel!
 	
 	//MARK: - properties
-	var pokemon: Pokemon? 
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,13 @@ class PokemonDetailViewController: UIViewController {
 		guard let imageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {return}
 		pokemonNameLabel.text = pokemon.name
 		pokemonImage.image = UIImage(data: imageData)
-		pokimonIDLabel.text = String(pokemon.id)
+        pokimonIDLabel.text = "ID: \(pokemon.id)"
+        for type in pokemon.types {
+            pokemonTypeLabel.text = "Type: \(type.type.name)"
+        }
+        for ability in pokemon.abilities {
+            pokemonAbilityLabel.text = "Ability: \(ability.ability.name)"
+        }
 		
 	}
 	

@@ -12,11 +12,25 @@ struct Pokemon: Decodable {
 	let name: String
 	let id:Int
 	let sprites: Sprite
-	//let abilites: PokemonAbility
+	let abilities: [Ability]
+    let types: [Type]
 }
 
-struct PokemonAbility: Decodable {
-	
+struct Abilities: Decodable {
+    let abilities: Ability
+}
+
+struct Ability: Decodable {
+    let ability: abilityName
+}
+struct Type: Decodable {
+    let type: TypeName
+}
+struct TypeName: Decodable {
+    let name: String 
+}
+struct abilityName: Decodable {
+    let name:String
 }
 
 struct Sprite: Decodable {

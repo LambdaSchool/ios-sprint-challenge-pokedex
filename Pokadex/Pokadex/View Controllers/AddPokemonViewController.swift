@@ -27,18 +27,22 @@ class AddPokemonViewController: UIViewController {
 	@IBOutlet weak var abilitiesLabel: UILabel!
 	@IBOutlet weak var typesLabel: UILabel!
 	@IBOutlet weak var searchBar: UISearchBar!
-	
+    @IBOutlet weak var saveButton: UIButton!
+    
 	//MARK: - Methods
-	
-	
 	func updateViews() {
 		guard isViewLoaded else {return}
 		guard let pokemen = pokemon else { return }
 		guard let pokemonImageData = try? Data(contentsOf: pokemen.sprites.frontDefault) else {return}
 		pokemonImage.image = UIImage(data: pokemonImageData)
 		pokemonNameLabel.text = pokemen.name
-		idLabel.text = String(pokemen.id)
-	
+        idLabel.text = "ID: \(pokemen.id)"
+        for type in pokemen.types {
+            typesLabel.text = "Type: \(type.type.name)"
+        }
+        for ability in pokemen.abilities {
+            abilitiesLabel.text = "Ability: \(ability.ability.name)"
+        }
 	}
 	
 	
@@ -56,6 +60,12 @@ extension AddPokemonViewController: UISearchBarDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		searchBar.delegate = self
+        pokemonNameLabel.text = ""
+        idLabel.text = ""
+        typesLabel.text = ""
+        abilitiesLabel.text = ""
+        saveButton.isHidden = true
+        
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -64,6 +74,7 @@ extension AddPokemonViewController: UISearchBarDelegate {
 			guard let seearchedPokemon = try? pokemon.get() else {return}
 			DispatchQueue.main.async {
 				self.pokemon = seearchedPokemon
+                self.saveButton.isHidden = false
 			}
 		}
 	
