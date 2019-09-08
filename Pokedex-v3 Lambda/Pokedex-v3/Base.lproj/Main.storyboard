@@ -69,18 +69,49 @@
                                 <rect key="frame" x="57" y="115" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pokemon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SH5-pz-Etz">
+                                <rect key="frame" x="89" y="475" width="248" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="fTk-qN-FaH">
+                                <rect key="frame" x="57" y="661" width="58.5" height="92"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yha-c4-tPS">
+                                        <rect key="frame" x="0.0" y="0.0" width="58.5" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZh-E1-Qzd">
+                                        <rect key="frame" x="0.0" y="62" width="30" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h56-lO-7Dz" firstAttribute="bottom" secondItem="fTk-qN-FaH" secondAttribute="bottom" constant="109" id="hO8-NA-kVA"/>
+                            <constraint firstItem="fTk-qN-FaH" firstAttribute="leading" secondItem="h56-lO-7Dz" secondAttribute="leading" constant="57" id="ygE-ni-NAH"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="h56-lO-7Dz"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon" id="q6Y-Jm-PVw"/>
                     <connections>
+                        <outlet property="idLabel" destination="QZh-E1-Qzd" id="GJb-Go-Da0"/>
                         <outlet property="imageView" destination="FH3-FW-qn6" id="prW-ey-rtu"/>
+                        <outlet property="pokemonName" destination="SH5-pz-Etz" id="TsQ-AP-NRK"/>
+                        <outlet property="typeLabel" destination="Yha-c4-tPS" id="wbh-cJ-W8p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oR1-Lw-bbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1800" y="425"/>
+            <point key="canvasLocation" x="1800.0000000000002" y="424.55357142857139"/>
         </scene>
         <!--Search for Pokemon-->
         <scene sceneID="3TY-Yr-C6k">
