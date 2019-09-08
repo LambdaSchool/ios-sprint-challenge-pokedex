@@ -30,7 +30,7 @@ class PokemonController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-    func getPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+    func getPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
         
         let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
     

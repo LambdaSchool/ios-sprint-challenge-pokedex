@@ -38,6 +38,13 @@ class PokemonTableViewController: UITableViewController {
         cell.textLabel?.text = pokemon.name.capitalized
         return cell
     }
- 
-
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchPokemon" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController else { return }
+            searchVC.pokemonController = pokemonController
+        }
+    }
 }
