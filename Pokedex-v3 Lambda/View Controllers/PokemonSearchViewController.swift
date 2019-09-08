@@ -70,7 +70,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         let typeArray = pokemon.types
         
         for type in typeArray {
-            types.append("\(type.type.name)")
+            types.append("Type: \(type.type.name.capitalized)")
             
         }
         
