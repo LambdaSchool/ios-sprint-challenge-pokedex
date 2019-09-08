@@ -27,6 +27,7 @@ enum HTTPMethod: String {
 class PokemonController {
     
     var pokemonTeam: [Pokemon] = []
+    var pokemon: Pokemon?
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     

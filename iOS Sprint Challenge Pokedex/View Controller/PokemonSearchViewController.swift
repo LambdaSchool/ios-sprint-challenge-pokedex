@@ -24,12 +24,15 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         didSet {
             updateViews()
         }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        hideViews()
+        //hideViews()
+        updateViews()
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -38,6 +41,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             guard let searchedPokemon = try? pokemon.get() else { return }
             DispatchQueue.main.async {
                 self.pokemon = searchedPokemon
+                
             }
         }
     }
@@ -64,7 +68,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             newPokemonTypesArray.append(element.type.name)
         }
         pokemonTypes.text = newPokemonTypesArray.joined(separator: ", ")
-        // print(newPokemonTypesArray)
+        
         
         // Abilities
         
@@ -73,6 +77,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             newPokemonAbilitiesArray.append(element.ability.name)
         }
         pokemonAbilities.text = newPokemonAbilitiesArray.joined(separator: ", ")
+        
         
         
     }

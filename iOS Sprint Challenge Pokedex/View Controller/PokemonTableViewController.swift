@@ -46,5 +46,14 @@ class PokemonTableViewController: UITableViewController {
             guard let searchVC = segue.destination as? PokemonSearchViewController else { return }
             searchVC.pokemonController = pokemonController
         }
+        else if segue.identifier == "ShowDetailPokemon" {
+            
+            guard let searchVC = segue.destination as? PokemonSearchViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            
+            pokemonController.pokemon = pokemonController.pokemonTeam[indexPath.row]
+            searchVC.pokemonController = pokemonController
+            print(searchVC.pokemonController?.pokemon?.name)
+        }
     }
 }
