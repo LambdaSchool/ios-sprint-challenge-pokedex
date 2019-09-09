@@ -11,6 +11,7 @@ import UIKit
 class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var pokemonName: UILabel!
@@ -32,7 +33,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
         hideViews()
         
-    }
+    } 
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else {return}
