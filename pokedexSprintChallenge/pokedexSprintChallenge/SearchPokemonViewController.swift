@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchPokemonViewController: UIViewController {
+class SearchPokemonViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var pokedexSearchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
@@ -17,13 +17,58 @@ class SearchPokemonViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
+    
+    var pokemon: Pokemon?
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //pokedexSearchBar.delegate = self
+        pokedexSearchBar.delegate = self
         
+    }
+    
+    func SearchBarSerachButtonClicked(_ searchBar: UISearchBar) {
+        
+        guard let searchPokemon = searchBar.text?.lowercased(), searchBar.text != "" else { return }
+        
+        pokemonController.performSearch(with: searchPokemon, completion: { (result) in
+            do {
+                
+                let pokemon = try result.get()
+                self.pokemon = pokemon
+                
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+                
+            } catch {
+                
+                NSLog("Error searching for pokemon: \(error)")
+                return
+                
+            }
+        })
+    }
+        
+        func updateViews(with pokemon: Pokemon?) {
+            guard let pokemon = pokemon else { return }
+            nameLabel.text = pokemon.name
+            idLabel.text = String(pokemon.id)
+            let pokemonTypes: [String] = pokemon.types.map{ $0.type.name}
+            typeLabel.text = "\(pokemonTypes.joined(separator: ", "))"
+            let pokemonAbilities: [String] = pokemon.abilities.map { $0.ability.name}
+            abilitiesLabel.text = "\(pokemonAbilities.joined(separator: ", "))"
+            guard let url = URL(string: pokemon.image.frontDefault),
+                let images = try? Data(contentsOf: url) else { return }
+            pokemonImageView.image = UIImage(data: images)
+        }
+        
+        func savePokemonButtonPressed(_ sender: Any) {
+            guard let pokemon = pokemon else { return }
+            pokemonController.pokemon.append(pokemon)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     
@@ -38,13 +83,4 @@ class SearchPokemonViewController: UIViewController {
     }
     */
 
-}
-extension SearchPokemonViewController: UISearchDisplayDelegate {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
-        
-        pokemonController.
-        
-    }
-}
+

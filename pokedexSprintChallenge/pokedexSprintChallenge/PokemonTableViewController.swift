@@ -10,16 +10,15 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    let pokemonController = PokemonController()
+    var pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,23 +29,40 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        
         let pokemon = pokemonController.pokemon[indexPath.row]
+        
         cell.textLabel?.text = pokemon.name
-        guard let imageData = try? Data(contentsOf: pokemon.image.sprites) else { fatalError() }
-        cell.imageView?.image = UIImage(data: imageData)
+        
+        guard let url = URL(string: pokemon.image.frontDefault),
+            let images = try? Data(contentsOf: url) else { return cell }
+        cell.imageView?.image = UIImage(data: images)
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.pokemon.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "pokedexDetailViewSegue" {
-            guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
-            guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = pokemonController.pokemon[indexPath.row]
-            pokemonDetailVC.pokemon = pokemon
-        } 
+            if let pokemonVC = segue.destination as? PokemonDetailViewController {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                pokemonVC.pokemon = pokemonController.pokemon[indexPath.row]
+            }
+            
+        } else if segue.identifier == "" {
+            if let pokemonVC = segue.destination as? SearchPokemonViewController {
+                pokemonVC.pokemonController = pokemonController
+            }
+        }
     }
- 
+    
+}
 
 }

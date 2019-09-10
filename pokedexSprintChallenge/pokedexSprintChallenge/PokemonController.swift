@@ -25,8 +25,7 @@ enum NetworkError: Error {
 }
 
 class PokemonController {
-    
-    var bearer: Bearer?
+
     
     var pokemon: [Pokemon] = []
     
@@ -35,11 +34,36 @@ class PokemonController {
     
     func performSearch(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        let requestURL = baseURL.appendingPathComponent(searchTerm)
         
-        let searchItem = URLQueryItem(name: "", value: searchTerm)
-    }
+        var request = URLRequest(url: requestURL)
+        
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+        
+        if let error = error {
+            NSLog("error searching for pokemon: \(error)")
+            completion(.failure(.otherError))
+            return
+        }
+            guard let data = data else {
+                NSLog("Error getting data")
+                completion(.failure(.noDecode))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let searchPokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(.success(searchPokemon))
+            } catch {
+                NSLog("Error decoding data: \(error)")
+                completion(.failure(.noDecode))
+                return
+            }
+    }.resume()
     
-    
+  }
     
 }

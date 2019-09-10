@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Equatable, Codable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.id == rhs.id && lhs.name == rhs.name
+    }
+    
     let name: String
     var image: Image
     var id: Int
@@ -23,6 +27,10 @@ struct Image: Codable {
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
     }
+}
+
+struct PokemonSearch: Codable {
+    let results: [Pokemon]
 }
 
 struct Types: Codable {
