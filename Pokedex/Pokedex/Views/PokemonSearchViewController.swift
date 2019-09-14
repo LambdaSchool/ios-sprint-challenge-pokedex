@@ -73,7 +73,6 @@ class PokemonSearchViewController: UIViewController {
     private func updateViews(with pokemon: Pokemon) {
         self.pokemon = pokemon
         pokemonName.isHidden = false
-        pokemonImage.isHidden = false
         pokemonIdLabel.isHidden = false
         pokemonTypeLabel.isHidden = false
         pokemonAbilitiesLabel.isHidden = false
@@ -97,25 +96,46 @@ class PokemonSearchViewController: UIViewController {
         }
         pokemonTypeLabel.text = "Types: \(types)"
         
+//        pokemonImage.isHidden = false
+//        pokemonImage.image = image
+        
     }
 
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        var pokemonObject: Pokemon?
+//        var pokemonSprite: UIImage?
         guard let searchTerm = searchBar.text else { return }
         let pokemonName = searchTerm.lowercased()
         
         pokemonSearchController.searchForPokemon(with: pokemonName) { (result) in
             do {
-                let pokemon = try result.get()
+                let pokemonObject = try result.get()
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
+                    self.updateViews(with: pokemonObject)
                 }
             } catch {
                 print("Error setting pokemon object: \(error)")
             }
         }
+        
+//        guard let id = pokemon?.id else { return }
+//
+//        pokemonSearchController.getImage(for: id) { (result) in
+//            do {
+//                pokemonSprite = try result.get()
+//            } catch {
+//                print("Error setting pokemon image: \(error)")
+//            }
+//        }
+//
+//        guard let pokemon = pokemonObject, let sprite = pokemonSprite else { return }
+//
+//        DispatchQueue.main.async {
+//            self.updateViews(with: pokemon, and: sprite)
+//        }
     }
 }
 
