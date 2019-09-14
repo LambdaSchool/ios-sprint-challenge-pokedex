@@ -14,6 +14,7 @@ let contentType = "Content-Type"
 
 enum PokeError: Error {
     case noData
+    case notFound
 }
 
 
@@ -21,9 +22,9 @@ class PokeController {
     var baseUrl = URL(string: "https://pokeapi.co/api/v2/")
     var encounteredPokemon: [Pokemon] = []
     
-    func catchEmAll() {
-        // Get the full list ok Pokémon
-    }
+//    func catchEmAll() {
+//        // Get the full list ok Pokémon (part of strech goal)
+//    }
     
     func fetchPokemon(name: String? = nil, id: Int? = nil, completion: @escaping (Result<Pokemon, Error>) -> Void) {
         guard let baseUrl = baseUrl else { fatalError() }
@@ -49,8 +50,14 @@ class PokeController {
             }
             
             if let res = res as? HTTPURLResponse, res.statusCode != 200 {
-                completion(.failure(NSError(domain: "fetchPokemon(name:)", code: res.statusCode, userInfo: nil)))
-                return
+                switch res.statusCode {
+                case 404:
+                    completion(.failure(PokeError.notFound))
+                    return
+                default:
+                    completion(.failure(NSError(domain: "fetchPokemon(name:)", code: res.statusCode, userInfo: nil)))
+                    return
+                }
             }
             
             guard let data = data else {
@@ -72,4 +79,7 @@ class PokeController {
         }.resume()
     }
     
+    func addToEncountered(_ pokemon: Pokemon) {
+        encounteredPokemon.append(pokemon)
+    }
 }
