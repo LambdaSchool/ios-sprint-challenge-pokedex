@@ -16,6 +16,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var pokemonIdLabel: UILabel!
     @IBOutlet weak var pokemonTypeLabel: UILabel!
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    @IBOutlet weak var savePokemonButton: UIButton!
     
     
     var pokemon: Pokemon?
@@ -23,6 +24,13 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         pokemonSearchBar.delegate = self
+        pokemonName.isHidden = true
+        pokemonImage.isHidden = true
+        pokemonIdLabel.isHidden = true
+        pokemonTypeLabel.isHidden = true
+        pokemonAbilitiesLabel.isHidden = true
+        savePokemonButton.isHidden = true
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -46,6 +54,12 @@ class PokemonSearchViewController: UIViewController {
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
+        pokemonName.isHidden = false
+        pokemonImage.isHidden = false
+        pokemonIdLabel.isHidden = false
+        pokemonTypeLabel.isHidden = false
+        pokemonAbilitiesLabel.isHidden = false
+        savePokemonButton.isHidden = false
         pokemonName.text = pokemon.name
 //        pokemonIdLabel.text = "\(pokemon.id)"
 //        pokemonTypeLabel.text = pokemon.types
