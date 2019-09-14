@@ -29,26 +29,18 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    private func getPokemon() {
-        guard let pokemonController = pokemonController, let pokemon = pokemon else {
-            return
-        }
-        
-        pokemonController.searchForPokemon(with: pokemon) { (result) in
-            do {
-                // call updateviews
-                // call fetch image
-                
-            } catch {
-                // switch the networkerror
-            }
-        }
     
-        
-    }
     
     
     //updateViews
+    private func updateViews(with pokemon: Pokemon) {
+        title = pokemon.name
+        titleLabel.text = pokemon.name
+        idLabel.text = "\(pokemon.id)"
+        typesLabel.text = pokemon.types
+        abilitiesLabel.text = pokemon.abilities
+        
+    }
 
     
 }
