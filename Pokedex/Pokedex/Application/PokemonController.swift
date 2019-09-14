@@ -13,7 +13,7 @@ class PokemonController {
     
     var pokemon: Pokemon?
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2")
+    private let baseURL = URL(string: "https://poke-api.vapor.cloud")
     
     func searchForPokemon(with name: String, completion: @escaping (Error?) -> Void) {
         guard let baseURL = baseURL else {

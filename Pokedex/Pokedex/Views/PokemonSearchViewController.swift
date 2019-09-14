@@ -56,8 +56,9 @@ class PokemonSearchViewController: UIViewController {
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
+        let pokemonName = searchTerm.lowercased()
         
-        pokemonSearchController.searchForPokemon(with: searchTerm) { (_) in
+        pokemonSearchController.searchForPokemon(with: pokemonName) { (_) in
             self.pokemon = self.pokemonSearchController.pokemon
             DispatchQueue.main.async {
                 self.updateViews()
