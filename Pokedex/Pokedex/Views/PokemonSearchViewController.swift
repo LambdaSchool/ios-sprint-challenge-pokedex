@@ -9,8 +9,20 @@
 import UIKit
 
 class PokemonSearchViewController: UIViewController {
-
+    
+    @IBOutlet weak var pokemonSearchBar: UISearchBar!
+    @IBOutlet weak var pokemonName: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var pokemonIdLabel: UILabel!
+    @IBOutlet weak var pokemonTypeLabel: UILabel!
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    
+    
+    var pokemon: Pokemon?
+    let pokemonSearchController = PokemonController()
+    
     override func viewDidLoad() {
+        pokemonSearchBar.delegate = self
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -26,5 +38,30 @@ class PokemonSearchViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    @IBAction func savePokemonTapped(_ sender: Any) {
+    }
+    
+    
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        pokemonName.text = pokemon.name
+//        pokemonIdLabel.text = "\(pokemon.id)"
+//        pokemonTypeLabel.text = pokemon.types
+    }
 
+}
+
+extension PokemonSearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        
+        pokemonSearchController.searchForPokemon(with: searchTerm) { (_) in
+            self.pokemon = self.pokemonSearchController.pokemon
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
 }
