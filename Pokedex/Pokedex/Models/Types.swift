@@ -8,16 +8,13 @@
 
 import Foundation
 
-struct Type: Codable {
+struct TypeClass: Codable {
     let name: String
     let url: String
 }
 
-struct TypeContainer: Codable {
+struct TypeElement: Codable {
     let slot: Int
-    let type: Type
+    let type: TypeClass
 }
 
-struct Types: Codable {
-    let typesInContainers: [TypeContainer]
-}

@@ -8,13 +8,19 @@
 
 import Foundation
 
-struct Ability: Codable {
-    let name: String
-    let url: String
+struct AbilityElement: Codable {
+    let ability: AbilityClass
+    let isHidden: Bool
+    let slot: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case ability
+        case isHidden = "is_hidden"
+        case slot
+    }
 }
 
-struct Abilities: Codable {
-    let abilities: [Ability]
-    let is_hidden: Bool
-    let slot: Int
+struct AbilityClass: Codable {
+    let name: String
+    let url: String
 }
