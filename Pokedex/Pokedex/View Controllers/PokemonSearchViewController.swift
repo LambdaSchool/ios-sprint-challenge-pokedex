@@ -38,6 +38,8 @@ class PokemonSearchViewController: UIViewController {
         
         title = "Pokemon Search"
         searchBar.delegate = self
+        
+        setSearchBarDisplayState()
         updateViews()
         
     }
@@ -47,6 +49,11 @@ class PokemonSearchViewController: UIViewController {
             self.delegate?.save(pokemon: pokemon)
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func setSearchBarDisplayState() {
+        guard pokemon != nil else { return }
+        searchBar.isHidden = true
     }
     
     func updateViews() {
