@@ -60,6 +60,9 @@ class PokemonController {
     }
     
     
+    // function to fetch image
+    
+    
     
     
 }
