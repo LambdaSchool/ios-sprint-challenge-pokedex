@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol UpdatePokedex {
+    func saveToPokedex(with pokemon: Pokemon)
+}
+
 class PokemonSearchViewController: UIViewController {
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
@@ -19,8 +23,9 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var savePokemonButton: UIButton!
     
     
-    var pokemon: Pokemon?
     let pokemonSearchController = PokemonController()
+    var delegate: UpdatePokedex?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         pokemonSearchBar.delegate = self
@@ -49,19 +54,22 @@ class PokemonSearchViewController: UIViewController {
     
     
     @IBAction func savePokemonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        delegate?.saveToPokedex(with: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     
-    private func updateViews() {
-        guard let pokemon = pokemon else { return }
+    private func updateViews(with pokemon: Pokemon) {
+        self.pokemon = pokemon
         pokemonName.isHidden = false
         pokemonImage.isHidden = false
         pokemonIdLabel.isHidden = false
         pokemonTypeLabel.isHidden = false
         pokemonAbilitiesLabel.isHidden = false
         savePokemonButton.isHidden = false
-        pokemonName.text = pokemon.name
-//        pokemonIdLabel.text = "\(pokemon.id)"
+        pokemonName.text = pokemon.name.uppercased()
+        pokemonIdLabel.text = "ID: \(pokemon.id)"
 //        pokemonTypeLabel.text = pokemon.types
     }
 
@@ -72,11 +80,16 @@ extension PokemonSearchViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text else { return }
         let pokemonName = searchTerm.lowercased()
         
-        pokemonSearchController.searchForPokemon(with: pokemonName) { (_) in
-            self.pokemon = self.pokemonSearchController.pokemon
-            DispatchQueue.main.async {
-                self.updateViews()
+        pokemonSearchController.searchForPokemon(with: pokemonName) { (result) in
+            do {
+                let pokemon = try result.get()
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+            } catch {
+                print("Error setting pokemon object: \(error)")
             }
         }
     }
 }
+

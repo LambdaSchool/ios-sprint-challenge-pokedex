@@ -9,15 +9,21 @@
 import Foundation
 
 
+enum NetworkError: Error {
+    case otherError
+    case badData // data doesn't code correctly
+    case noDecode
+}
+
 class PokemonController {
     
     var pokemon: Pokemon?
     
-    private let baseURL = URL(string: "https://poke-api.vapor.cloud")
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")
     
-    func searchForPokemon(with name: String, completion: @escaping (Error?) -> Void) {
+    func searchForPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         guard let baseURL = baseURL else {
-            completion(NSError())
+            completion(.failure(.otherError))
             return
         }
         
@@ -30,23 +36,23 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 print("Error fetching pokemon details: \(error)")
-                completion(error)
+                completion(.failure(.otherError))
                 return
             }
             
             guard let data = data else {
                 print("No data returned from data task.")
-                completion(NSError())
+                completion(.failure(.badData))
                 return
             }
             
             let jsonDecoder = JSONDecoder()
             do {
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemon = pokemon
+                completion(.success(pokemon))
             } catch {
                 print("Unable to decode data into search object: \(error)")
-                completion(NSError())
+                completion(.failure(.noDecode))
                 return
             }
         }.resume()
