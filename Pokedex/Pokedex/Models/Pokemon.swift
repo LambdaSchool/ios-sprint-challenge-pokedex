@@ -12,26 +12,30 @@ import Foundation
 struct Pokemon: Codable {
     let id: Int
     let name: String
-//    let type: [Type]
-//    let ability: [Ability]
+    let types: [Types]
+    let abilities: [Abilities]
     
     enum CodingKeys: String, CodingKey {
-        case name, id
+        case name
+        case id
+        case types
+        case abilities
     }
     
 }
 
+struct Types: Codable {
+    let type: Type
+}
+
+struct Abilities: Codable {
+    let ability: Ability
+}
+
 struct Type: Codable {
-    let slot: Int
-    let details: Details
+    let name: String
 }
 
 struct Ability: Codable {
-    let slot: Int
-    let details: Details
-}
-
-struct Details: Codable {
     let name: String
-    let url: String
 }

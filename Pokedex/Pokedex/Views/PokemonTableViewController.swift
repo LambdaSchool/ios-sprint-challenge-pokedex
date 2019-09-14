@@ -34,7 +34,7 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         let pokemon = pokemonInPokedex[indexPath.row]
         if let title = cell.textLabel {
-            title.text = pokemon.name
+            title.text = pokemon.name.capitalized
         }
         // Configure the cell...
 
@@ -87,6 +87,12 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchPokemonShowSegue" {
             guard let searchPokemonVC = segue.destination as? PokemonSearchViewController else { return }
             searchPokemonVC.delegate = self
+        } else if segue.identifier == "ShowPokemonDetailSegue" {
+            guard let pokemonDetailVC = segue.destination as? PokemonSearchViewController else { return }
+            if let indexPath = tableView.indexPathForSelectedRow {
+                pokemonDetailVC.pokemon = pokemonInPokedex[indexPath.row]
+            }
+            
         }
     }
     

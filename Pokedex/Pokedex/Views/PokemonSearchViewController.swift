@@ -29,12 +29,22 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         pokemonSearchBar.delegate = self
+        
+        if pokemon == nil {
         pokemonName.isHidden = true
         pokemonImage.isHidden = true
         pokemonIdLabel.isHidden = true
         pokemonTypeLabel.isHidden = true
         pokemonAbilitiesLabel.isHidden = true
         savePokemonButton.isHidden = true
+        } else {
+            if let pokemon = pokemon {
+                self.title = pokemon.name.capitalized
+                updateViews(with: pokemon)
+                savePokemonButton.isHidden = true
+                pokemonSearchBar.isHidden = true
+            }
+        }
         
         super.viewDidLoad()
 
@@ -68,9 +78,25 @@ class PokemonSearchViewController: UIViewController {
         pokemonTypeLabel.isHidden = false
         pokemonAbilitiesLabel.isHidden = false
         savePokemonButton.isHidden = false
-        pokemonName.text = pokemon.name.uppercased()
+        pokemonName.text = pokemon.name.capitalized
         pokemonIdLabel.text = "ID: \(pokemon.id)"
-//        pokemonTypeLabel.text = pokemon.types
+        
+        var abilityCount = 0
+        var abilities = ""
+        for _ in pokemon.abilities {
+            abilities += "\(pokemon.abilities[abilityCount].ability.name.capitalized). "
+            abilityCount += 1
+        }
+        pokemonAbilitiesLabel.text = "Abilities: \(abilities)"
+        
+        var typeCount = 0
+        var types = ""
+        for _ in pokemon.types {
+            types += "\(pokemon.types[typeCount].type.name.capitalized). "
+            typeCount += 1
+        }
+        pokemonTypeLabel.text = "Types: \(types)"
+        
     }
 
 }
