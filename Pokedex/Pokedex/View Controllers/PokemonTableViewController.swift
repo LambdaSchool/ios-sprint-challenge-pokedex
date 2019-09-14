@@ -10,7 +10,8 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    var pokemons = [Pokemon]()
+//    var pokemons = [Pokemon]()
+    var pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +20,13 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemons.count
+        return pokemonController.pokemons.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        let pokemon = pokemons[indexPath.row]
+        let pokemon = pokemonController.pokemons[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
 
         return cell
@@ -36,15 +37,14 @@ class PokemonTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
-            let destinationVC = segue.destination as? PokemonSearchViewController
-            destinationVC?.viewType = .search
-            destinationVC?.delegate = self
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
+            destinationVC.pokemonController = pokemonController
+            destinationVC.delegate = self
         } else if segue.identifier == "ShowDetailSegue" {
-            let destinationVC = segue.destination as? PokemonSearchViewController
-            destinationVC?.viewType = .detail
-            
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            destinationVC?.pokemon = pokemons[indexPath.row]
+            destinationVC.pokemon = pokemonController.pokemons[indexPath.row]
+            destinationVC.pokemonController = pokemonController
         }
     }
     
@@ -53,7 +53,7 @@ class PokemonTableViewController: UITableViewController {
 
 extension PokemonTableViewController: SearchPokemonDetailsDelegate {
     func save(pokemon: Pokemon) {
-        pokemons.append(pokemon)
+        pokemonController.pokemons.append(pokemon)
         tableView.reloadData()
     }
 }

@@ -12,11 +12,6 @@ protocol SearchPokemonDetailsDelegate {
     func save(pokemon: Pokemon)
 }
 
-enum ViewType {
-    case search
-    case detail
-}
-
 class PokemonSearchViewController: UIViewController {
     
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -27,23 +22,13 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var savePokemonButton: UIButton!
     
-    private let pokemonController = PokemonController()
-    var viewType: ViewType?
+    var pokemonController: PokemonController?
     var delegate: SearchPokemonDetailsDelegate?
     
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        switch viewType {
-        case .search?:
-            self.searchBar.isHidden = false
-        case .detail?:
-            self.searchBar.isHidden = true
-        case .none:
-            break
-        }
         
         savePokemonButton.isHidden = true
         pokemonNameLabel.isHidden = true
@@ -52,8 +37,7 @@ class PokemonSearchViewController: UIViewController {
         abilitiesLabel.isHidden = true
         title = "Pokemon Search"
         searchBar.delegate = self
-//        updateViews()
-        
+        updateViews()
         
     }
     
@@ -66,35 +50,35 @@ class PokemonSearchViewController: UIViewController {
     
     func updateViews() {
         
+        guard let pokemon = pokemon else { return }
+        
         pokemonNameLabel.isHidden = false
         idLabel.isHidden = false
         typesLabel.isHidden = false
         abilitiesLabel.isHidden = false
         
-        title = pokemon?.name.capitalized
-        idLabel.text = "ID: \(pokemon!.id)"
-        pokemonNameLabel.text = pokemon?.name.capitalized
+        title = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        pokemonNameLabel.text = pokemon.name.capitalized
         
-        if let image = try? Data(contentsOf: pokemon!.sprites.frontDefault) {
+        if let image = try? Data(contentsOf: pokemon.sprites.frontDefault) {
             pokemonImageView.image = UIImage(data: image)
         }
         
-        var types = "Types: "
-        let typeArray = pokemon!.types
+        var types = "Types:\n"
+        let typeArray = pokemon.types
         
         for type in typeArray {
-            types.append("\(type.type.name.capitalized)")
-            types.append("\n")
+            types.append("\(type.type.name.capitalized)\n")
         }
         
         typesLabel.text = types
         
-        var abilities = "Abilities: "
-        let abilityArray = pokemon!.abilities
+        var abilities = "Abilities:\n"
+        let abilityArray = pokemon.abilities
         
         for ability in abilityArray {
-            abilities.append("\(ability.ability.name.capitalized)")
-            abilities.append("\n")
+            abilities.append("\(ability.ability.name.capitalized)\n")
         }
         print(abilities)
         abilitiesLabel.text = abilities
@@ -105,9 +89,9 @@ class PokemonSearchViewController: UIViewController {
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
+        guard let searchTerm = searchBar.text, pokemonController != nil else { return }
         
-        pokemonController.searchForPokemon(with: searchTerm) { (result) in
+        pokemonController?.searchForPokemon(with: searchTerm) { (result) in
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {

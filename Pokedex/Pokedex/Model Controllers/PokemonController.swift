@@ -22,8 +22,10 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private let baseURL = URL(string: "http://poke-api.vapor.cloud/")
     var pokemon: Pokemon?
+    var pokemons = [Pokemon]()
+    
+    private let baseURL = URL(string: "http://poke-api.vapor.cloud/")
     
     func searchForPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
@@ -57,33 +59,33 @@ class PokemonController {
     }
     
     // create function to fetch pokemon details
-    func fetchPokemonDetails(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        guard let pokemonUrl = baseURL?.appendingPathComponent("api/v2/pokemon/\(name)") else { return }
-        
-        var request = URLRequest(url: pokemonUrl)
-        request.httpMethod = HTTPMethod.get.rawValue
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            if let _ = error {
-                completion(.failure(.otherError))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.badData))
-                return
-            }
-            
-            let jsonDecoder = JSONDecoder()
-            do {
-                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                completion(.success(pokemon))
-            } catch {
-                print("Error decoding Pokemon: \(error.localizedDescription)")
-                return
-            }
-        }.resume()
-    }
+//    func fetchPokemonDetails(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+//        guard let pokemonUrl = baseURL?.appendingPathComponent("api/v2/pokemon/\(name)") else { return }
+//
+//        var request = URLRequest(url: pokemonUrl)
+//        request.httpMethod = HTTPMethod.get.rawValue
+//
+//        URLSession.shared.dataTask(with: request) { (data, _, error) in
+//            if let _ = error {
+//                completion(.failure(.otherError))
+//                return
+//            }
+//
+//            guard let data = data else {
+//                completion(.failure(.badData))
+//                return
+//            }
+//
+//            let jsonDecoder = JSONDecoder()
+//            do {
+//                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+//                completion(.success(pokemon))
+//            } catch {
+//                print("Error decoding Pokemon: \(error.localizedDescription)")
+//                return
+//            }
+//        }.resume()
+//    }
     
 }
 
