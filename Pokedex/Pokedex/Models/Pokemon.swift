@@ -19,3 +19,7 @@ struct PokemonType: Decodable {
     let name: String
     let url: String
 }
+
+struct PokemonSearch: Decodable {
+    let results: [Pokemon]
+}
