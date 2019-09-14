@@ -25,9 +25,17 @@ class PokeController {
         // Get the full list ok Pokémon
     }
     
-    func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+    func fetchPokemon(name: String? = nil, id: Int? = nil, completion: @escaping (Result<Pokemon, Error>) -> Void) {
         guard let baseUrl = baseUrl else { fatalError() }
-        let pokeUrl = baseUrl.appendingPathComponent("pokemon/\(name.lowercased())")
+
+        var nameOrId = ""
+        if let name = name, !name.isEmpty {
+            nameOrId = name.lowercased()
+        } else if let id = id {
+            nameOrId = "\(id)"
+        }
+        
+        let pokeUrl = baseUrl.appendingPathComponent("pokemon/\(nameOrId)")
         var request = URLRequest(url: pokeUrl)
         
         request.httpMethod = GET
@@ -36,7 +44,7 @@ class PokeController {
         URLSession.shared.dataTask(with: request) { (data, res, err) in
             let pokemon: Pokemon
             if let err = err {
-                print("Error getting \(name): \(err)")
+                print("Error getting \(nameOrId): \(err)")
                 completion(.failure(err))
             }
             
@@ -55,7 +63,7 @@ class PokeController {
                 pokemon = try decoder.decode(Pokemon.self, from: data)
                 self.encounteredPokemon.append(pokemon)
             } catch {
-                print("Error decoding \(name): \(error)")
+                print("Error decoding \(nameOrId): \(error)")
                 completion(.failure(error))
                 return
             }
@@ -64,7 +72,5 @@ class PokeController {
         }.resume()
     }
     
-    func fetchPokemon(id: Int) {
-        
-    }
+
 }
