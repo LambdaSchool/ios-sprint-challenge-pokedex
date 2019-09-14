@@ -35,6 +35,7 @@ class PokemonSearchViewController: UIViewController {
         idLabel.isHidden = true
         typesLabel.isHidden = true
         abilitiesLabel.isHidden = true
+        
         title = "Pokemon Search"
         searchBar.delegate = self
         updateViews()
@@ -80,7 +81,7 @@ class PokemonSearchViewController: UIViewController {
         for ability in abilityArray {
             abilities.append("\(ability.ability.name.capitalized)\n")
         }
-        print(abilities)
+        
         abilitiesLabel.text = abilities
         
     }
