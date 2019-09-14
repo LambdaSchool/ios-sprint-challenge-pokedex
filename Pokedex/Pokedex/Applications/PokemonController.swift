@@ -10,7 +10,6 @@ import Foundation
 
 enum HTTPMethod: String {
     case get = "GET"
-    case post = "POST"
 }
 
 enum NetworkError: Error {
@@ -20,11 +19,10 @@ enum NetworkError: Error {
 }
 
 class PokemonController {
-    var pokemons: [Pokemon] = []
     
     private let baseUrl = URL(string: "http://poke-api.vapor.cloud/")
     
-    func searchPokemon(with pokemonName: Pokemon, completion: @escaping (Result<[Pokemon], NetworkError>) -> ()) {
+    func searchPokemon(with pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> ()) {
         guard let allPokemonUrl = baseUrl?.appendingPathComponent("api/v2/pokemon/\(pokemonName)") else { return }
         
         var request = URLRequest(url: allPokemonUrl)
@@ -43,9 +41,8 @@ class PokemonController {
             
             let decoder = JSONDecoder()
             do {
-                let pokemons = try decoder.decode(([Pokemon].self), from: data)
-                self.pokemons = pokemons
-                completion(.success(pokemons))
+                let pokemon = try decoder.decode((Pokemon.self), from: data)
+                completion(.success(pokemon))
             } catch {
                 print("Error decoding Pokemons: \(error)")
                 completion(.failure(.noDecode))

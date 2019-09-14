@@ -9,35 +9,30 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
-
-    let pokemonController = PokemonController()
+    
+    var pokemons: [Pokemon] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokemons.count
+        return pokemons.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        // Configure the cell...
+        let pokemon = pokemons[indexPath.row]
+        cell.textLabel?.text = pokemon.name.capitalized
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -74,14 +69,31 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchSegue" {
+            let searchVC = segue.destination as? SearchDetailViewController
+            searchVC?.viewType = .search
+            searchVC?.delegate = self
+        }
+        
+        if segue.identifier == "DetailSegue" {
+            let detailVC = segue.destination as? SearchDetailViewController
+            detailVC?.viewType = .detail
+            
+            guard let indexPath = self.tableView.indexPathForSelectedRow else { return }
+            detailVC?.pokemon = pokemons[indexPath.row]
+        }
+        
     }
-    */
 
+}
+
+extension PokemonTableViewController: SearchDetailDelegate {
+    func didSave(pokemon: Pokemon) {
+        pokemons.append(pokemon)
+        tableView.reloadData()
+    }
 }
