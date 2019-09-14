@@ -13,6 +13,7 @@ struct Pokemon: Decodable {
     let name: String
     let abilities: [String]
     let types: [PokemonType]
+    let sprites: PokemonSprite
 }
 
 struct PokemonType: Decodable {
@@ -20,6 +21,14 @@ struct PokemonType: Decodable {
     let url: String
 }
 
+struct PokemonSprite: Decodable {
+    let frontDefault: String
+    
+    enum codingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}
+
 struct PokemonSearch: Decodable {
-    let results: [Pokemon]
+    let result: Pokemon
 }

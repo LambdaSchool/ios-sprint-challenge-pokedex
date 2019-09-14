@@ -6,35 +6,35 @@
 //  Copyright © 2019 John Kouris. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
 }
 
+enum NetworkError: Error {
+    case noAuth
+    case badAuth
+    case otherError
+    case badData
+    case noDecode
+}
+
 class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
-    var pokemon = [Pokemon]()
+    var pokemon: Pokemon?
     
-    func searchForPokemon(with searchTerm: String, completion: @escaping () -> Void) {
+    func searchForPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
         guard let baseURL = baseURL else {
-            completion()
+            completion(.failure(.otherError))
             return
         }
         
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "", value: searchTerm)
-        urlComponents?.queryItems = [searchTermQueryItem]
+        let pokemonUrl = baseURL.appendingPathComponent("\(searchTerm)")
         
-        guard let requestUrl = urlComponents?.url else {
-            print("Request URL is nil")
-            completion()
-            return
-        }
-        
-        var request = URLRequest(url: requestUrl)
+        var request = URLRequest(url: pokemonUrl)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
@@ -50,13 +50,37 @@ class PokemonController {
             
             let jsonDecoder = JSONDecoder()
             do {
-                let pokemonSearch = try jsonDecoder.decode(PokemonSearch.self, from: data)
-                self.pokemon = pokemonSearch.results
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemon))
             } catch {
                 print("Unable to decode data into PersonSearch object: \(error.localizedDescription)")
+                completion(.failure(.noDecode))
+                return
             }
-            completion()
             
+        }.resume()
+    }
+    
+    // create function to fetch sprite
+    func fetchSprite(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageUrl = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let _ = error {
+                completion(.failure(.otherError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
         }.resume()
     }
     
