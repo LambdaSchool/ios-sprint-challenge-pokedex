@@ -53,6 +53,11 @@ class SearchDetailViewController: UIViewController {
         self.nameLabel.text = pokemon?.name.capitalized
         self.idLabel.text = pokemon.map { "ID: \($0.id)" }
         
+        if let url = pokemon?.sprites.frontDefault,
+            let pokemonImageData = try? Data(contentsOf: url) {
+            self.imageView.image = UIImage(data: pokemonImageData)
+        }
+        
         let types = pokemon?.types.map { type in type.name }.joined(separator: ", ")
         self.typesLabel.text = types.map { "Types: \($0.capitalized)" }
         
@@ -96,6 +101,7 @@ extension SearchDetailViewController: UISearchBarDelegate {
             switch result {
             case .success(let pokemon):
                 DispatchQueue.main.async {
+                    self.saveButton.isHidden = false
                     self.pokemon = pokemon
                     self.updateView()
                 }
@@ -106,6 +112,5 @@ extension SearchDetailViewController: UISearchBarDelegate {
         }
         
         searchBar.endEditing(true)
-        self.saveButton.isHidden = false
     }
 }
