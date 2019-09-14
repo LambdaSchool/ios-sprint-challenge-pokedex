@@ -46,13 +46,13 @@ class PokedexViewController: UIViewController {
         lblPokemonName.text = pokemon.name
         // TODO: set pokemon image here
         
-        var monsterTypes: String
+        var monsterTypes = ""
         for t in pokemon.types {
             monsterTypes += t.type.name + ", "
         }
         lblTypes.text = monsterTypes
         
-        var abilities: String
+        var abilities = ""
         for a in pokemon.abilities {
             abilities += a.ability.name + ", "
         }
@@ -66,8 +66,13 @@ extension PokedexViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell") as? PokeCellTableViewCell else { return UITableViewCell() }
+        
+        cell.pokemon = pokeController.encounteredPokemon[indexPath.row]
+        return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedPokemon = pokeController.encounteredPokemon[indexPath.row]
+    }
 }
