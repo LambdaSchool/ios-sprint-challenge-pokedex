@@ -11,24 +11,29 @@ import Foundation
 struct Pokemon: Decodable {
     let id: Int
     let name: String
-    let abilities: [String]
     let types: [PokemonType]
-    let sprites: PokemonSprite
+    let abilities: [PokemonAbility]
+    let sprites: Sprite
+}
+
+struct PokemonAbility: Decodable {
+    let ability: Species
 }
 
 struct PokemonType: Decodable {
-    let name: String
-    let url: String
+    let type: Species
 }
 
-struct PokemonSprite: Decodable {
-    let frontDefault: String
+struct Species: Decodable {
+    let name: String
+}
+
+struct Sprite: Codable {
+    let frontDefault: URL
     
-    enum codingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
     }
 }
 
-struct PokemonSearch: Decodable {
-    let result: Pokemon
-}
+

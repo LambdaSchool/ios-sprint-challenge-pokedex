@@ -8,6 +8,15 @@
 
 import UIKit
 
+protocol SearchPokemonDetailsDelegate {
+    func save(pokemon: Pokemon)
+}
+
+enum ViewType {
+    case search
+    case detail
+}
+
 class PokemonSearchViewController: UIViewController {
     
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -19,39 +28,76 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var savePokemonButton: UIButton!
     
     private let pokemonController = PokemonController()
+    var viewType: ViewType?
+    var delegate: SearchPokemonDetailsDelegate?
+    
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        switch viewType {
+        case .search?:
+            self.searchBar.isHidden = false
+        case .detail?:
+            self.searchBar.isHidden = true
+        case .none:
+            break
+        }
+        
+        savePokemonButton.isHidden = true
         pokemonNameLabel.isHidden = true
-        pokemonImageView.isHidden = true
         idLabel.isHidden = true
         typesLabel.isHidden = true
         abilitiesLabel.isHidden = true
-        savePokemonButton.isHidden = true
+        title = "Pokemon Search"
+        searchBar.delegate = self
+//        updateViews()
         
         
     }
     
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
-        
+        if let pokemon = self.pokemon {
+            self.delegate?.save(pokemon: pokemon)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
-    func updateViews(with pokemon: Pokemon) {
+    func updateViews() {
         
-        title = pokemon.name
+        pokemonNameLabel.isHidden = false
+        idLabel.isHidden = false
+        typesLabel.isHidden = false
+        abilitiesLabel.isHidden = false
         
-        self.pokemonNameLabel.isHidden = false
-        self.pokemonImageView.isHidden = false
-        self.idLabel.isHidden = false
-        self.typesLabel.isHidden = false
-        self.abilitiesLabel.isHidden = false
-        self.savePokemonButton.isHidden = false
+        title = pokemon?.name.capitalized
+        idLabel.text = "ID: \(pokemon!.id)"
+        pokemonNameLabel.text = pokemon?.name.capitalized
         
-        pokemonNameLabel.text = pokemon.name
-        typesLabel.text = "\(pokemon.types[0])"
-        abilitiesLabel.text = "\(pokemon.abilities)"
-        idLabel.text = "\(pokemon.id)"
+        if let image = try? Data(contentsOf: pokemon!.sprites.frontDefault) {
+            pokemonImageView.image = UIImage(data: image)
+        }
+        
+        var types = "Types: "
+        let typeArray = pokemon!.types
+        
+        for type in typeArray {
+            types.append("\(type.type.name.capitalized)")
+            types.append("\n")
+        }
+        
+        typesLabel.text = types
+        
+        var abilities = "Abilities: "
+        let abilityArray = pokemon!.abilities
+        
+        for ability in abilityArray {
+            abilities.append("\(ability.ability.name.capitalized)")
+            abilities.append("\n")
+        }
+        print(abilities)
+        abilitiesLabel.text = abilities
         
     }
     
@@ -65,16 +111,11 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
+                    self.savePokemonButton.isHidden = false
+                    self.pokemon = pokemon
+                    self.updateViews()
                 }
                 
-                self.pokemonController.fetchSprite(at: pokemon.sprites.frontDefault, completion: { (result) in
-                    if let image = try? result.get() {
-                        DispatchQueue.main.async {
-                            self.pokemonImageView.image = image
-                        }
-                    }
-                })
             } catch {
                 print("Error fetching results")
                 return
