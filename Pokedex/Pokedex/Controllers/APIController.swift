@@ -10,42 +10,35 @@ import Foundation
 
 class APIController {
     
-    let pokemon: [Pokemon] = []
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
+    var pokemon: [Pokemon] = []
+    var myPokemon: Pokemon?
     
-    func fetchDetails(completion: @escaping (Result<Gig, NetworkError>) -> Void) {
-        guard let baseURL = baseURL, let bearer = bearer else {
-            completion(.failure(.noAuth))
-            return
-        }
-        let gigsURL = baseURL.appendingPathComponent("gigs")
-        var request = URLRequest(url: gigsURL)
+    func performSearch(searchTerm: String, _: (Error?) -> Void) {
+        guard let baseUrl = baseURL else {return}
+        let pokeURL = baseUrl.appendingPathComponent("\(searchTerm)")
+        print(pokeURL)
+        var request = URLRequest(url: pokeURL)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let response = response as? HTTPURLResponse, response.statusCode == 401 {
-                completion(.failure(.badAuth))
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error Parsing Data: \(error)")
                 return
             }
-            if let _ = error {
-                completion(.failure(.otherError))
-            }
             guard let data = data else {
-                completion(.failure(.badData))
+                print("No Data returned from data task.")
                 return
             }
             let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .secondsSince1970
             do {
-                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                completion(.success(pokemon))
-                return
+                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
+                print(searchResults)
+                self.myPokemon = searchResults
             } catch {
-                print("Error decoding data. \(error)")
-                completion(.failure(.noDecode))
-                return
+                print("Hey Dude. Unable to decode into person search object: \(error)")
             }
-            }.resume()
+        }.resume()
     }
     
 }
