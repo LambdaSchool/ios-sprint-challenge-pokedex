@@ -21,6 +21,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var savePokemonButton: UIButton!
+    @IBOutlet var statsLabel: UILabel!
     
     var pokemonController: PokemonController?
     var delegate: SearchPokemonDetailsDelegate?
@@ -35,6 +36,7 @@ class PokemonSearchViewController: UIViewController {
         idLabel.isHidden = true
         typesLabel.isHidden = true
         abilitiesLabel.isHidden = true
+        statsLabel.isHidden = true
         
         title = "Pokemon Search"
         searchBar.delegate = self
@@ -64,6 +66,7 @@ class PokemonSearchViewController: UIViewController {
         idLabel.isHidden = false
         typesLabel.isHidden = false
         abilitiesLabel.isHidden = false
+        statsLabel.isHidden = false
         
         title = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
@@ -90,6 +93,15 @@ class PokemonSearchViewController: UIViewController {
         }
         
         abilitiesLabel.text = abilities
+        
+        var stats = "Stats:\n"
+        let statsArray = pokemon.stats
+        
+        for stat in statsArray {
+            stats.append("\(stat.stat.name.capitalized)\n")
+        }
+        
+        statsLabel.text = stats
         
     }
     

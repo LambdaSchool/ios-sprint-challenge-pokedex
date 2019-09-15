@@ -13,6 +13,7 @@ struct Pokemon: Decodable {
     let name: String
     let types: [PokemonType]
     let abilities: [PokemonAbility]
+    let stats: [PokemonStats]
     let sprites: Sprite
 }
 
@@ -22,6 +23,10 @@ struct PokemonAbility: Decodable {
 
 struct PokemonType: Decodable {
     let type: Species
+}
+
+struct PokemonStats: Decodable {
+    let stat: Species
 }
 
 struct Species: Decodable {
