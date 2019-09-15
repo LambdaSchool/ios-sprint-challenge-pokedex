@@ -20,37 +20,33 @@ class PokedexViewController: UIViewController {
     
     let pokeController = PokeController()
     
+    // MARK: - Views
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
-
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueSearch" {
-            if let vc = segue.destination as? PokemonSearchViewController {
-                vc.pokeController = pokeController
-            }
-        }
-    }
-
     
-    // MARK: - Views
-
+    
     func updateSelectedPokemonViews() {
         guard let pokemon = selectedPokemon else { return }
         
         lblPokemonName.text = pokemon.name
-        // TODO: set pokemon image here
+
+        pokeController.getImage(for: pokemon) { (data) in
+            
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self.imgPokemon.image = UIImage(data: data)
+            }
+        }
         
         var monsterTypes = ""
         for t in pokemon.types {
@@ -63,6 +59,16 @@ class PokedexViewController: UIViewController {
             abilities += a.ability.name + ", "
         }
         txtvAbilities.text = abilities
+    }
+
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueSearch" {
+            if let vc = segue.destination as? PokemonSearchViewController {
+                vc.pokeController = pokeController
+            }
+        }
     }
 }
 

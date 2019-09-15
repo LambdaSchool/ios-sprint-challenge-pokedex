@@ -32,8 +32,13 @@ class PokemonSearchViewController: UIViewController {
         // if there's a pokemon, uses it. if not, clears and displays a 'not found' message instead
         
         if let pokemon = pokemon {
-            // imgPokemon =
             lblPokemonName.text = "#\(pokemon.id): \(pokemon.name)"
+            pokeController?.getImage(for: pokemon) { (data) in
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    self.imgPokemon.image = UIImage(data: data)
+                }
+            }
             
             var monsterTypes = ""
             for t in pokemon.types {
@@ -80,6 +85,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             do {
                 let pokemon = try res.get()
                 DispatchQueue.main.async {
+                    self.selectedPokemon = pokemon
                     self.updateSelectedPokemonViews(with: pokemon)
                 }
             } catch let error as PokeError {

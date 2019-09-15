@@ -40,7 +40,7 @@ class PokeController {
         var request = URLRequest(url: pokeUrl)
         
         request.httpMethod = GET
-        request.setValue(appJSON, forHTTPHeaderField: contentType)
+//        request.setValue(appJSON, forHTTPHeaderField: contentType)
         
         URLSession.shared.dataTask(with: request) { (data, res, err) in
             let pokemon: Pokemon
@@ -68,7 +68,6 @@ class PokeController {
             let decoder = JSONDecoder()
             do {
                 pokemon = try decoder.decode(Pokemon.self, from: data)
-                self.encounteredPokemon.append(pokemon)
             } catch {
                 print("Error decoding \(nameOrId): \(error)")
                 completion(.failure(error))
@@ -81,5 +80,28 @@ class PokeController {
     
     func addToEncountered(_ pokemon: Pokemon) {
         encounteredPokemon.append(pokemon)
+    }
+    
+    func getImage(for pokemon: Pokemon, completion: @escaping (Data?) -> Void) {
+        guard let imgUrl = URL(string: pokemon.sprites.frontDefault) else { return }
+        var request = URLRequest(url: imgUrl)
+        
+        request.httpMethod = GET
+        URLSession.shared.dataTask(with: request) { (data, res, err) in
+            if let err = err {
+                print("Error fetching \(pokemon.name)'s image: \(err)")
+                completion(nil)
+                return
+            }
+            
+            if let res = res as? HTTPURLResponse, res.statusCode != 200 {
+                print("Code \(res.statusCode) when fetching \(pokemon.name)'s image")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else { return }
+            completion(data)
+        }.resume()
     }
 }
