@@ -36,29 +36,33 @@ class PokedexViewController: UIViewController {
     
     
     func updateSelectedPokemonViews() {
-        guard let pokemon = selectedPokemon else { return }
-        
-        lblPokemonName.text = pokemon.name
+        if let pokemon = selectedPokemon {
+            lblPokemonName.text = pokemon.name
 
-        pokeController.getImage(for: pokemon) { (data) in
-            
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                self.imgPokemon.image = UIImage(data: data)
+            pokeController.getImage(for: pokemon) { (data) in
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    self.imgPokemon.image = UIImage(data: data)
+                }
             }
+
+            var monsterTypes = ""
+            for t in pokemon.types {
+                monsterTypes += t.type.name + ", "
+            }
+            lblTypes.text = monsterTypes.trimmingCharacters(in: .init(charactersIn: ", "))
+            
+            var abilities = ""
+            for a in pokemon.abilities {
+                abilities += a.ability.name + ", "
+            }
+            txtvAbilities.text = abilities.trimmingCharacters(in: .init(charactersIn: ", "))
+        } else {
+            lblPokemonName.text = "No Pokémon Selected"
+            imgPokemon.image = UIImage(named: "nopokemon")
+            lblTypes.text = ""
+            txtvAbilities.text = ""
         }
-        
-        var monsterTypes = ""
-        for t in pokemon.types {
-            monsterTypes += t.type.name + ", "
-        }
-        lblTypes.text = monsterTypes
-        
-        var abilities = ""
-        for a in pokemon.abilities {
-            abilities += a.ability.name + ", "
-        }
-        txtvAbilities.text = abilities
     }
 
     // MARK: - Navigation
@@ -86,5 +90,13 @@ extension PokedexViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedPokemon = pokeController.encounteredPokemon[indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            pokeController.encounteredPokemon.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            selectedPokemon = nil
+        }
     }
 }

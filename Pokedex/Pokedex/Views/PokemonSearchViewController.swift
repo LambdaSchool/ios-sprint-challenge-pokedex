@@ -44,13 +44,13 @@ class PokemonSearchViewController: UIViewController {
             for t in pokemon.types {
                 monsterTypes += t.type.name + ", "
             }
-            lblTypes.text = monsterTypes
+            lblTypes.text = monsterTypes.trimmingCharacters(in: .init(charactersIn: ", "))
             
             var abilities = ""
             for a in pokemon.abilities {
                 abilities += a.ability.name + ", "
             }
-            txtvAbilities.text = abilities
+            txtvAbilities.text = abilities.trimmingCharacters(in: .init(charactersIn: ", "))
             
             btnSave.isEnabled = true
         } else {
