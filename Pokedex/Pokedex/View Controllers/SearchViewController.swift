@@ -18,14 +18,14 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     
     var pokemonController: PokemonController?
-    var pokemon: String?
+    var pokemon: Pokemon?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        getPokemon()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -41,46 +41,55 @@ class SearchViewController: UIViewController {
     }
     */
     
-    private func getPokemon() {
-        guard let pokemonController = pokemonController, let pokemon = pokemon else {
+//    private func getPokemon() {
+//        guard let pokemonController = pokemonController, let pokemon = pokemon else {
+//            return
+//        }
+//
+//        pokemonController.searchForPokemon(with: pokemon) { (result) in
+//            do {
+//                let pokemon = try result.get()
+//                DispatchQueue.main.async {
+//                    self.updateViews(with: pokemon)
+//                }
+//
+//                pokemonController.fetchImage(at: pokemon.sprites, completion: { (result) in
+//                    if let image = try? result.get() {
+//                        DispatchQueue.main.async {
+//                            self.pokemonImageView.image = image
+//                        }
+//                    }
+//                })
+//
+//            } catch let error as NetworkError {
+//                switch error {
+//                case .badData:
+//                    print("Bad Data")
+//                default:
+//                    print("error")
+//                }
+//            } catch {
+//                print(error)
+//            }
+//        }
+//
+//
+//    }
+    
+    private func updateViews() {
+        
+        guard let pokemon = pokemon else {
+            title = "Pokemon Search"
+            pokemonTitleLabel.text = nil
+            typesLabel.text = nil
+            abilitiesLabel.text = nil
             return
         }
         
-        pokemonController.searchForPokemon(with: pokemon) { (result) in
-            do {
-                let pokemon = try result.get()
-                DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
-                }
-                
-                pokemonController.fetchImage(at: pokemon.sprites, completion: { (result) in
-                    if let image = try? result.get() {
-                        DispatchQueue.main.async {
-                            self.pokemonImageView.image = image
-                        }
-                    }
-                })
-                
-            } catch let error as NetworkError {
-                switch error {
-                case .badData:
-                    print("Bad Data")
-                default:
-                    print("error")
-                }
-            } catch {
-                print(error)
-            }
-        }
-        
-        
-    }
-    
-    private func updateViews(with pokemon: Pokemon) {
         title = pokemon.name
         pokemonTitleLabel.text = pokemon.name
         idLabel.text = "\(pokemon.id)"
-        typesLabel.text = pokemon.types
+        typesLabel.text = "\(pokemon.types)"
         abilitiesLabel.text = pokemon.abilities
         
     }
@@ -95,14 +104,10 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let pokemonController = pokemonController, let name = pokemonTitleLabel.text, let id = Double("\(idLabel.text)"), let types = typesLabel.text, let abilities = abilitiesLabel.text, let sprite = pokemonImageView.image, let searchTerm = searchBar.text else { return }
         
-        guard let searchTerm = searchBar.text else { return }
+        let pokemon = Pokemon(name: name, id: Int(id), types: types, abilities: abilities, sprites: sprite)
         
         
-        pokemonController?.searchForPokemon(with: searchTerm){_ in
-            DispatchQueue.main.async {
-                self.reloadInputViews()
-            }
-        }
     }
 }

@@ -11,6 +11,8 @@ import Foundation
 struct Pokemon: Codable {
     let name: String
     let id: Int
+    
+    // Need to make these dictionaries.
     let types: String
     let abilities: String
     let sprites: String
