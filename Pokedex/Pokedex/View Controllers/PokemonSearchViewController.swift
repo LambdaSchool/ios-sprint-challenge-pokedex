@@ -43,7 +43,6 @@ class PokemonSearchViewController: UIViewController {
         
         setSearchBarDisplayState()
         updateViews()
-        
     }
     
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
@@ -102,9 +101,7 @@ class PokemonSearchViewController: UIViewController {
         }
         
         statsLabel.text = stats
-        
     }
-    
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {

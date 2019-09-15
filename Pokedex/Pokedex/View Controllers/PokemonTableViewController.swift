@@ -10,7 +10,6 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-//    var pokemons = [Pokemon]()
     var pokemonController = PokemonController()
 
     override func viewDidLoad() {
@@ -33,8 +32,7 @@ class PokemonTableViewController: UITableViewController {
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
             guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
@@ -48,7 +46,6 @@ class PokemonTableViewController: UITableViewController {
         }
     }
     
-
 }
 
 extension PokemonTableViewController: SearchPokemonDetailsDelegate {
