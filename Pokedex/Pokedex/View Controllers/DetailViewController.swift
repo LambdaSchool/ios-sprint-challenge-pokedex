@@ -37,8 +37,8 @@ class DetailViewController: UIViewController {
         title = pokemon.name
         titleLabel.text = pokemon.name
         idLabel.text = "\(pokemon.id)"
-       // typesLabel.text = "\(pokemon.types)"
-        //abilitiesLabel.text = pokemon.abilities
+        typesLabel.text = "\(pokemon.types)"
+        abilitiesLabel.text = pokemon.abilities
         
     }
 

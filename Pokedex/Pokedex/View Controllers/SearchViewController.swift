@@ -18,11 +18,13 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     
     var pokemonController: PokemonController?
+    var pokemonTableViewController = PokemonTableViewController()
     var pokemon: Pokemon?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
         
         searchBar.delegate = self
         
@@ -83,6 +85,8 @@ class SearchViewController: UIViewController {
             pokemonTitleLabel.text = nil
             typesLabel.text = nil
             abilitiesLabel.text = nil
+            idLabel.text = nil
+            
             return
         }
         
@@ -97,6 +101,9 @@ class SearchViewController: UIViewController {
     
     
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
+        // Need to get the pokemon information from the pokemon that was searched for.
+        
+       // pokemonTableViewController.pokemon.append(insert pokemon from above)
     }
     
 }
@@ -104,10 +111,13 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let pokemonController = pokemonController, let name = pokemonTitleLabel.text, let id = Double("\(idLabel.text)"), let types = typesLabel.text, let abilities = abilitiesLabel.text, let sprite = pokemonImageView.image, let searchTerm = searchBar.text else { return }
+        guard let pokemonController = pokemonController, let searchTerm = searchBar.text else { return }
         
-        let pokemon = Pokemon(name: name, id: Int(id), types: types, abilities: abilities, sprites: sprite)
-        
+        pokemonController.searchForPokemon(with: searchTerm) { (result) in
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
         
     }
 }

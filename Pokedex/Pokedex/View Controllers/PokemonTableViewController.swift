@@ -11,7 +11,7 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     
-    private var pokemon: [String] = []
+    var pokemon: [String] = []
     
     let pokemonController = PokemonController()
     
