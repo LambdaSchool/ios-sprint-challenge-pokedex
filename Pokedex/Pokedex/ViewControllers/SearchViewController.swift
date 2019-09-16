@@ -27,7 +27,6 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         searchBar.delegate = self
         hideViews()
         
@@ -45,7 +44,7 @@ class SearchViewController: UIViewController {
         pokemonNameLabel.text = "\(pokemon.name.capitalized)"
         pokemonHeightLabel.text = "Height: \(pokemon.height) dm"
         pokemonWeightLabel.text = "Weight: \(pokemon.weight) hg"
-//        pokemonLocationsLabel.text = "Locations: \(pokemon.locationAreaEncounters)"
+        pokemonLocationsLabel.text = "Stats: \(pokemon.stats.map{$0.stat.name.capitalized}.joined(separator: ", "))"
         
         pokemonAbilitiesLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
         pokemonTypesLabel.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
@@ -73,7 +72,7 @@ class SearchViewController: UIViewController {
         pokemonWeightLabel.isHidden = true
         pokemonAbilitiesLabel.isHidden = true
         pokemonLocationsLabel.isHidden = true
-        saveButton.isEnabled = false
+        saveButton.isHidden = true
     }
     
     private func showViews() {
@@ -84,7 +83,7 @@ class SearchViewController: UIViewController {
         pokemonWeightLabel.isHidden = false
         pokemonLocationsLabel.isHidden = false
         pokemonAbilitiesLabel.isHidden = false
-        saveButton.isEnabled = true
+        saveButton.isHidden = false
     }
     
     // MARK: - IBActions
@@ -107,7 +106,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension UIImageView {
     func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
