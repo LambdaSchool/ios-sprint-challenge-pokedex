@@ -14,7 +14,7 @@ class APIController {
     var pokemon: [Pokemon] = []
     var myPokemon: Pokemon?
     
-    func performSearch(searchTerm: String, _: (Error?) -> Void) {
+    func performSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
         guard let baseUrl = baseURL else {return}
         let pokeURL = baseUrl.appendingPathComponent("\(searchTerm)")
         print(pokeURL)
@@ -24,6 +24,7 @@ class APIController {
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 print("Error Parsing Data: \(error)")
+                
                 return
             }
             guard let data = data else {
@@ -38,6 +39,7 @@ class APIController {
             } catch {
                 print("Hey Dude. Unable to decode into person search object: \(error)")
             }
+            completion(error)
         }.resume()
     }
     

@@ -19,11 +19,7 @@ class SearchViewController: UIViewController {
     
     
     var delegate: [Pokemon]?
-    var newPokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var newPokemon: Pokemon?
     var apiController = APIController()
 
     override func viewDidLoad() {
@@ -37,7 +33,7 @@ class SearchViewController: UIViewController {
         if let newPokemon = apiController.myPokemon {
             delegate?.append(newPokemon)
         }
-        dismiss(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func clearView() {
@@ -47,10 +43,17 @@ class SearchViewController: UIViewController {
     }
     
     func updateViews() {
-        if let newPokemon = newPokemon {
+        
+        if let newPokemon = apiController.myPokemon {
             let id = String(newPokemon.id)
+            guard let ability = newPokemon.abilities[0].ability?.name else { return }
+            guard let type = newPokemon.types?[0].type?.name else { return }
+            print(type)
             self.idLabel.text = "ID: \(id)"
             self.nameLabel.text = newPokemon.name
+            self.typesLabel.text = "Type: \(type)"
+            self.abilitiesLabel.text = "Abilites: \(ability)"
+
         }
     }
 }
@@ -65,9 +68,11 @@ extension SearchViewController: UISearchBarDelegate {
                 print("There was an error: \(error)")
                 return
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.newPokemon = self.apiController.myPokemon
+            DispatchQueue.main.async {
+                self.updateViews()
             }
         }
+       
     }
+    
 }
