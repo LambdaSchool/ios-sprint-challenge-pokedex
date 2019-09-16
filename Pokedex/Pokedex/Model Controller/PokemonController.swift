@@ -55,15 +55,15 @@ class PokemonController {
     }
     
     func fetchImageFor(pokemon: Pokemon, completion: @escaping (Error?, Pokemon?) -> Void ){
-        guard let requestURL = URL(string: pokemon.sprites.sprite) else {
-            NSLog("Was unable to make URL from sprite string")
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault) else {
+            NSLog("Error creating URL")
             completion(NSError(), nil)
             return
         }
         
         URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
             if let error = error {
-                NSLog("Error fetching image: \(error)")
+                NSLog("Error fetching Pokemon Image: \(error)")
                 completion(error, nil)
                 return
             }

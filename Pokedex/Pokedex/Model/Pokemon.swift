@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
 
-class Pokemon: Codable {
+class Pokemon: Codable, Equatable {
     let id: Int
     let name: String
     let abilities: [Abilities]
@@ -18,6 +17,15 @@ class Pokemon: Codable {
     let sprites: Sprites
     var imageData: Data?
     
+    var allAbilities: String {
+        let abilitiesList = abilities.map { $0.ability.abilityName }
+        return abilitiesList.joined(separator: ", ")
+    }
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     
 }
 
@@ -25,22 +33,22 @@ struct SearchResults: Codable {
     let results: [Pokemon]
 }
 
-struct Ability: Codable {
+struct Ability: Codable, Equatable {
     let abilityName: String
 }
 
-struct Abilities: Codable {
+struct Abilities: Codable, Equatable {
     let ability: Ability
 }
 
-struct Type: Codable {
+struct Type: Codable, Equatable{
     let typeName: String
 }
 
-struct Types: Codable {
+struct Types: Codable, Equatable {
     let type: Type
 }
 
-struct Sprites: Codable {
-    let sprite: String
+struct Sprites: Codable, Equatable {
+    let frontDefault: String
 }

@@ -31,7 +31,7 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         
     }
     
-    func searchBar(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let enteredSearch = pokeSearchBar.text,
             !enteredSearch.isEmpty else { return }
         pokeSearchBar.text = ""
@@ -51,7 +51,10 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func savePokemon(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
         
+        pokemonController?.savePokemon(pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     

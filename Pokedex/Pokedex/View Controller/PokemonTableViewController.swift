@@ -11,13 +11,12 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     // MARK: Properties
-    private var pokemonNames: [String] = []
     let pokemonController = PokemonController()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
