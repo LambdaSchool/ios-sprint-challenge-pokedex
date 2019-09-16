@@ -8,32 +8,77 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
+    
+    // MARK: Properties
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
     
     // MARK: Outlets
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokeSearchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var savePokemonButton: UIButton!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        pokeSearchBar.delegate = self
+        updateViews()
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func searchBar(_ searchBar: UISearchBar) {
+        guard let enteredSearch = pokeSearchBar.text,
+            !enteredSearch.isEmpty else { return }
+        pokeSearchBar.text = ""
+        
+        pokemonController?.fetchPokemon(search: enteredSearch.lowercased(), completion: { (_, pokemon) in
+            guard let pokemon = pokemon else { return }
+            self.pokemon = pokemon
+            self.pokemonController?.fetchImageFor(pokemon: pokemon, completion: { (_, pokemon) in
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+            })
+        })
+            
+        
     }
-    */
+    
+    @IBAction func savePokemon(_ sender: UIButton) {
+        
+    }
+    
+    
+
+    func updateViews() {
+        guard isViewLoaded,
+            let pokemon = pokemon else {
+                title = "Search for Pokemon"
+                pokemonNameLabel.text = ""
+                idLabel.text = ""
+                typesLabel.text = ""
+                abilitiesLabel.text = ""
+                savePokemonButton.isEnabled = false
+                return
+        }
+        
+        title = pokemon.name
+        pokemonNameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
+        typesLabel.text = "Types: \(pokemon.types)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        savePokemonButton.isEnabled = true
+        if let imageData = pokemon.imageData {
+            pokemonImage.image = UIImage(data: imageData)
+        } else {
+            pokemonImage.isHidden = true
+        }
+    }
 
 }
