@@ -18,7 +18,7 @@ class Pokemon: Codable, Equatable {
     var imageData: Data?
     
     var allAbilities: String {
-        let abilitiesList = abilities.map { $0.ability.abilityName }
+        let abilitiesList = abilities.map { $0.ability.name }
         return abilitiesList.joined(separator: ", ")
     }
     
@@ -34,7 +34,7 @@ struct SearchResults: Codable {
 }
 
 struct Ability: Codable, Equatable {
-    let abilityName: String
+    let name: String
 }
 
 struct Abilities: Codable, Equatable {
@@ -42,7 +42,7 @@ struct Abilities: Codable, Equatable {
 }
 
 struct Type: Codable, Equatable{
-    let typeName: String
+    let name: String
 }
 
 struct Types: Codable, Equatable {
