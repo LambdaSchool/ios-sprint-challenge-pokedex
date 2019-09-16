@@ -14,12 +14,14 @@ struct Pokemon: Codable {
     let name: String
     let types: [Types]
     let abilities: [Abilities]
+    let sprites: Sprites
     
     enum CodingKeys: String, CodingKey {
         case name
         case id
         case types
         case abilities
+        case sprites
     }
     
 }
@@ -38,4 +40,8 @@ struct Type: Codable {
 
 struct Ability: Codable {
     let name: String
+}
+
+struct Sprites: Codable {
+    let front_default: String
 }

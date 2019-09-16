@@ -21,7 +21,7 @@ class PokemonController {
     var pokemon: Pokemon?
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")
-    private let baseImageURL = URL(string: "http://pokeapi.co/media/sprites/pokemon")
+    private let baseImageURL = URL(string: "https://pokeapi.co/media/sprites/pokemon")
     
     func searchForPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         guard let baseURL = baseURL else {
@@ -60,33 +60,43 @@ class PokemonController {
         }.resume()
         
     }
+
     
-    
-    func getImage(for pokemon: Int, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-        guard let baseURL = baseImageURL else {
-            completion(.failure(.otherError))
-            return
-        }
-        
-        let pokemonImageURL = baseURL.appendingPathComponent("\(pokemon).png")
-        
-        var request = URLRequest(url: pokemonImageURL)
+    func fetchImage(with url: URL, completion: @escaping (Data?, Error?) -> Void) {
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
+        print(url)
         URLSession.shared.dataTask(with: request) { (data, _, error) in
-            if let _ = error {
-                completion(.failure(.otherError))
-                return
-            }
+            completion(data, error)
             
-            guard let data = data else {
-                completion(.failure(.badData))
-                return
-            }
-            
-            let image = UIImage(data: data)!
-            completion(.success(image))
         }.resume()
     }
+    
+    
+    
+    
+    //    func getImage(for pokemonID: Int, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+    //        guard let baseURL = baseImageURL else {
+    //            completion(.failure(.otherError))
+    //            return
+    //        }
+    //
+    //        let pokemonImageURL = baseURL.appendingPathComponent("\(pokemonID)")
+    //        print(pokemonImageURL)
+    //        let newUrl = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png")!
+    //        var request = URLRequest(url: newUrl)
+    //        request.httpMethod = "GET"
+    //
+    //        URLSession.shared.dataTask(with: request) { (data, _, error) in
+    //            if let _ = error {
+    //                completion(.failure(.otherError))
+    //                return
+    //            }
+    //
+    //            guard let data = data else { return }
+    //
+    //            completion(.success(data))
+    //        }.resume()
+    //    }
     
 }
