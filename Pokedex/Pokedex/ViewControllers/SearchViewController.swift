@@ -19,8 +19,8 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var pokemonWeightLabel: UILabel!
-
     @IBOutlet weak var pokemonHeightLabel: UILabel!
+    @IBOutlet weak var pokemonLocationsLabel: UILabel!
     
     var apiController: APIController?
     var searchPokemon: String?
@@ -42,8 +42,10 @@ class SearchViewController: UIViewController {
         title = pokemon.name.capitalized
         pokemonIdLabel.text = "ID: \(pokemon.id)"
         pokemonNameLabel.text = "\(pokemon.name.capitalized)"
-        pokemonHeightLabel.text = "Height: \(pokemon.height) cm"
-        pokemonWeightLabel.text = "Weight: \(pokemon.weight) kg"
+        pokemonHeightLabel.text = "Height: \(pokemon.height) dm"
+        pokemonWeightLabel.text = "Weight: \(pokemon.weight) hg"
+        pokemonLocationsLabel.text = pokemon.locationAreaEncounters
+        
         pokemonAbilitiesLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
         pokemonTypesLabel.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
         pokemonImage.load(url: pokemon.sprites.frontShiny)
@@ -69,6 +71,7 @@ class SearchViewController: UIViewController {
         pokemonHeightLabel.isHidden = true
         pokemonWeightLabel.isHidden = true
         pokemonAbilitiesLabel.isHidden = true
+        pokemonLocationsLabel.isHidden = true
         saveButton.isEnabled = false
     }
     
@@ -78,10 +81,10 @@ class SearchViewController: UIViewController {
         pokemonTypesLabel.isHidden = false
         pokemonHeightLabel.isHidden = false
         pokemonWeightLabel.isHidden = false
+        pokemonLocationsLabel.isHidden = false
         pokemonAbilitiesLabel.isHidden = false
         saveButton.isEnabled = true
     }
-    
     
     // MARK: - IBActions
     
