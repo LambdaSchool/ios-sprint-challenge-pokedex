@@ -34,6 +34,7 @@ class SearchViewController: UIViewController {
         if let searchedPokemon = searchPokemon {
             title = searchedPokemon
             searchBar.isHidden = true
+            saveButton.isHidden = true
             performSearch(for: searchedPokemon)
         }
     }
@@ -44,12 +45,12 @@ class SearchViewController: UIViewController {
         pokemonNameLabel.text = "\(pokemon.name.capitalized)"
         pokemonHeightLabel.text = "Height: \(pokemon.height) dm"
         pokemonWeightLabel.text = "Weight: \(pokemon.weight) hg"
-        pokemonLocationsLabel.text = pokemon.locationAreaEncounters
+//        pokemonLocationsLabel.text = "Locations: \(pokemon.locationAreaEncounters)"
         
         pokemonAbilitiesLabel.text = "Abilities: \(pokemon.abilities.map{$0.ability.name.capitalized}.joined(separator: ", "))"
         pokemonTypesLabel.text = "Types: \(pokemon.types.map{$0.type.name.capitalized}.joined(separator: ", "))"
-        pokemonImage.load(url: pokemon.sprites.frontShiny)
         
+        pokemonImage.load(url: pokemon.sprites.frontShiny)
         showViews()
     }
     
