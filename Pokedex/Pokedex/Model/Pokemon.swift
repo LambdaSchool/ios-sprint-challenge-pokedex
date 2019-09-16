@@ -22,6 +22,11 @@ class Pokemon: Codable, Equatable {
         return abilitiesList.joined(separator: ", ")
     }
     
+    var allTypes: String {
+        let typesList = types.map {$0.type.name}
+        return typesList.joined(separator: ", ")
+    }
+    
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id
     }

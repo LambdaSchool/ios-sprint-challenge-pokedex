@@ -74,8 +74,8 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         title = pokemon.name
         pokemonNameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = "Types: \(pokemon.types)"
-        abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        typesLabel.text = "Types: \(pokemon.allTypes)"
+        abilitiesLabel.text = "Abilities: \(pokemon.allAbilities)"
         savePokemonButton.isEnabled = true
         if let imageData = pokemon.imageData {
             pokemonImage.image = UIImage(data: imageData)
