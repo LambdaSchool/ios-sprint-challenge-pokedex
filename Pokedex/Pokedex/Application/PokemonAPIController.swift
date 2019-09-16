@@ -6,7 +6,7 @@
 //  Copyright © 2019 Eoin Lavery. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -26,9 +26,35 @@ class PokemonAPIController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2")
     
     var searchResult: Pokemon?
+    var savedPokemon: [Pokemon] = []
+    
+    init() {
+        loadFromPersistentStore()
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        guard let imageURL = URL(string: urlString) else { return }
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let _ = error {
+                completion(.failure(.otherError))
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else { return }
+            completion(.success(image))
+        }.resume()
+    }
     
     func getPokemon(for pokemon: String, completion: @escaping (Error?) -> Void) {
-        guard let searchURL = baseURL?.appendingPathComponent("/pokemon/\(pokemon)") else { return }
+        guard let searchURL = baseURL?.appendingPathComponent("/pokemon/\(pokemon.lowercased())") else { return }
         
         print("Method Started")
         
@@ -66,4 +92,40 @@ class PokemonAPIController {
         }.resume()
         
     }
+    
+    var pokemonListURL: URL? {
+        let fileManager = FileManager()
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documents.appendingPathComponent("PokemonList.plist")
+    }
+    
+    func saveToPersistentStore() {
+        guard let url = pokemonListURL else { return }
+        let encoder = PropertyListEncoder()
+        do {
+            let pokemonData = try encoder.encode(savedPokemon)
+            try pokemonData.write(to: url)
+        } catch {
+            print("Error saving Pokemon to file: \(error)")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        let fileManager = FileManager.default
+        guard let url = pokemonListURL, fileManager.fileExists(atPath: url.path) else { return }
+        let decoder = PropertyListDecoder()
+        do {
+            let data = try Data.init(contentsOf: url)
+            let decodedPokemon = try decoder.decode([Pokemon].self, from: data)
+            savedPokemon = decodedPokemon
+        } catch {
+            print("Error retrieving pokemon from file: \(error)")
+        }
+    }
+    
+    func savePokemon(for pokemon: Pokemon) {
+        savedPokemon.append(pokemon)
+        saveToPersistentStore()
+    }
+    
 }
