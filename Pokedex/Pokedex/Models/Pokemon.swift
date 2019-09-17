@@ -11,23 +11,57 @@ import Foundation
 struct Pokemon: Decodable {
     let id: Int
     let name: String
-    let abilities: [Ability]
-    let types: [Types]
-    let sprites: [String]
+    let abilities: [AbilityObject]
+    let types: [TypeObject]
+    let sprites: Sprites
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case abilities
+        case types
+        case sprites
+    }
 }
 
-struct Types: Decodable {
+struct TypeObject: Decodable {
+    let slot: Int
     let type: Type
+    
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case slot
+    }
 }
 
 struct Type: Decodable {
     let name: String
+//    let url: String
+    private enum CodingKeys: String, CodingKey {
+        case name
+    }
 }
 
-struct Abilities: Decodable {
+struct AbilityObject: Decodable {
     let ability: Ability
+//    let is_hidden: Bool
+    private enum CodingKeys: String, CodingKey {
+        case ability
+    }
 }
 
 struct Ability: Decodable {
     let name: String
+//    let url: String
+    private enum CodingKeys: String, CodingKey {
+        case name
+    }
+}
+
+struct Sprites: Decodable {
+    let front_default: String
+    
+//    private enum CodingKeys: String, CodingKey {
+//        case defaultImage = "front_default"
+//    }
 }

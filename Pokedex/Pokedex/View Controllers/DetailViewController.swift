@@ -10,6 +10,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    var pokemon: Pokemon?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

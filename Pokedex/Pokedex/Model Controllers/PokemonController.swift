@@ -11,24 +11,22 @@ import UIKit
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2")
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     var pokemon: Pokemon?
+//    var pokemonList: [Pokemon] = []
     
     func searchForPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        guard let baseURL = baseURL else {
-            completion(.failure(.otherError))
-            return
-        }
+//        guard let baseURL = baseURL else {
+//            completion(.failure(.otherError))
+//            return
+//        }
         
-        let pokemonUrl = baseURL.appendingPathComponent("pokemon/\(searchTerm)")
-        
+        let pokemonUrl = baseURL.appendingPathComponent("/pokemon/\(searchTerm)/")
+        print(pokemonUrl)
         var request = URLRequest(url: pokemonUrl)
-        request.httpMethod = HTTPMethod.get.rawValue
+        request.httpMethod = HTTPMethods.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
-                completion(.failure(.otherError))
-            }
+        URLSession.shared.dataTask(with: request) { data, _, error in
             
             if let error = error {
                 print("Error fetching data: \(error)")
@@ -45,7 +43,6 @@ class PokemonController {
             let decoder = JSONDecoder()
             do {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                //self.pokemon = pokemonSearch.result
                 completion(.success(pokemon))
             } catch {
                 print("Unable to decode data into a Pokemon object: \(error)")
@@ -55,10 +52,10 @@ class PokemonController {
     }
     
     func fetchImage(from urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-        let imageUrl = URL(string:urlString)!
+        let imageUrl = URL(string: urlString)!
         
         var request = URLRequest(url: imageUrl)
-        request.httpMethod = HTTPMethod.get.rawValue
+        request.httpMethod = HTTPMethods.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let _ = error {

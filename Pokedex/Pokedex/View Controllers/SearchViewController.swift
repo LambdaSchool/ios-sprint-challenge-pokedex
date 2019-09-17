@@ -20,6 +20,7 @@ class SearchViewController: UIViewController {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var delegate: UpdatePokedex?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +36,14 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text, let pokemonController = pokemonController else { return }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text?.lowercased() else { return }
         
-        pokemonController.searchForPokemon(with: searchTerm) { result in
+        pokemonController?.searchForPokemon(with: searchTerm) { result in
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
+                    self.pokemon = pokemon
                     self.updateViews(with: pokemon)
                 }
             } catch {
@@ -50,25 +52,8 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
     
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        guard let searchTerm = searchBar.text, let pokemonController = pokemonController else { return }
-//        
-//        pokemonController.searchForPokemon(with: searchTerm) { result in
-//            do {
-//                let pokemon = try result.get()
-//                DispatchQueue.main.async {
-//                    self.updateViews(with: pokemon)
-//                }
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
-    
     func updateViews(with pokemon: Pokemon) {
-        
-        guard let pokemonController = pokemonController else { return }
-        pokemonController.fetchImage(from: "\(pokemon.sprites[0])") { result in
+        pokemonController?.fetchImage(from: "\(pokemon.sprites.front_default)") { result in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
                     self.imageView.image = image
@@ -78,7 +63,8 @@ extension SearchViewController: UISearchBarDelegate {
         
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(String(describing: pokemon.types[1]))"
+        typeLabel.text = "Types: \(String(describing: pokemon.types))"
         abilitiesLabel.text = "Abilities: \(String(describing: pokemon.abilities))"
+        
     }
 }
