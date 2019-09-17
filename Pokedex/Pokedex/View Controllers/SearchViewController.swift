@@ -26,6 +26,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         searchBar.delegate = self
     }
+    
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         if let pokemon = pokemon {
             delegate?.savePokemonToPokedex(pokemon: pokemon)
