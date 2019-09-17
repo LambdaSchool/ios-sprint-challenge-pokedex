@@ -25,13 +25,13 @@ struct Pokemon: Decodable {
 }
 
 struct TypeObject: Decodable {
-    let slot: Int
+//    let slot: Int
     let type: Type
     
-    private enum CodingKeys: String, CodingKey {
-        case type
-        case slot
-    }
+//    private enum CodingKeys: String, CodingKey {
+//        case type
+//        case slot
+//    }
 }
 
 struct Type: Decodable {

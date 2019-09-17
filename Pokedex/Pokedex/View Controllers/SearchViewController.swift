@@ -27,10 +27,9 @@ class SearchViewController: UIViewController {
         searchBar.delegate = self
     }
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-//        DispatchQueue.main.async {
-//
-//            self.dismiss(animated: true, completion: nil)
-//        }
+        if let pokemon = pokemon {
+            delegate?.savePokemonToPokedex(pokemon: pokemon)
+        }
     }
 }
 
@@ -63,8 +62,18 @@ extension SearchViewController: UISearchBarDelegate {
         
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(String(describing: pokemon.types))"
-        abilitiesLabel.text = "Abilities: \(String(describing: pokemon.abilities))"
+        
+        var types: String = ""
+        for typeObject in pokemon.types {
+            types += "\(typeObject.type.name), "
+        }
+        typeLabel.text = "Types: \(types)"
+        
+        var abilities: String = ""
+        for abilityObject in pokemon.abilities {
+            abilities += "\(abilityObject.ability.name), "
+        }
+        abilitiesLabel.text = "Abilities: \(abilities)"
         
     }
 }
