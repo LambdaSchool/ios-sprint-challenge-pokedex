@@ -21,10 +21,7 @@ class PokemonTableViewCell: UITableViewCell {
 
     func updateValues() {
         guard let  pokemon = pokemon else {return}
-        DispatchQueue.main.async {
-            self.pokemonNameLabel.text = pokemon.name
-            
-        }
+        self.pokemonNameLabel.text = pokemon.name
         
         
     }

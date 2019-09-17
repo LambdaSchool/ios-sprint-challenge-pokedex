@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PokemonCell" id="cwC-Dc-Pvk" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="PokemonCell" id="cwC-Dc-Pvk" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cwC-Dc-Pvk" id="6b9-Fe-slx">
@@ -50,11 +50,12 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="pokemonNameLabel" destination="lWy-uO-eaV" id="kVj-tO-5X2"/>
+                                            <segue destination="l9B-aJ-K08" kind="show" identifier="DetailView" id="pvU-kd-wue"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="0TQ-f7-UCU"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Tus-li-DUs"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -132,7 +133,7 @@
                             </label>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="BGM-G6-4Wg">
                                 <rect key="frame" x="0.0" y="140" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="l9B-aJ-K08" id="AL0-1Z-oQU"/>
                                 </connections>
@@ -197,4 +198,7 @@
             <point key="canvasLocation" x="209" y="118"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="pvU-kd-wue"/>
+    </inferredMetricsTieBreakers>
 </document>

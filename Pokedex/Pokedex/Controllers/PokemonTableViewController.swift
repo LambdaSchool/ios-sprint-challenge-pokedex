@@ -13,9 +13,18 @@ class PokemonTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var apiController = APIController()
+    var pokemon: [Pokemon] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+
     }
     
     // MARK: - Navigation
@@ -23,11 +32,17 @@ class PokemonTableViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToSearch" {
+           if let searchVC = segue.destination as? SearchViewController  {
+                searchVC.protocolDelegate = self
+            }
+        } else if segue.identifier == "DetailView" {
             if let searchVC = segue.destination as? SearchViewController {
-                searchVC.delegate = apiController.pokemon
-                searchVC.newPokemon = apiController.myPokemon
+                if let indexPath = tableView.indexPathForSelectedRow {
+                searchVC.newPokemon = pokemon[indexPath.row]
+                }
             }
         }
+
     }
 }
     
@@ -38,13 +53,13 @@ class PokemonTableViewController: UIViewController {
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             // #warning Incomplete implementation, return the number of rows
-            return apiController.pokemon.count
+            return pokemon.count
         }
         
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath) as?  PokemonTableViewCell else { return PokemonTableViewCell()}
-            let pokemonResults = apiController.pokemon[indexPath.row]
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as?  PokemonTableViewCell else { return PokemonTableViewCell()}
+            let pokemonResults = pokemon[indexPath.row]
             cell.pokemon = pokemonResults
             return cell
         }
@@ -52,5 +67,10 @@ class PokemonTableViewController: UIViewController {
     }
 
 
- 
+extension PokemonTableViewController: AddPokemonDelegate {
+    func pokemonWasAdded(_ newPokemon: Pokemon) {
+        pokemon.append(newPokemon)
+    }
+    
+}
 
