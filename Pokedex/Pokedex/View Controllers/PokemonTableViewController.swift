@@ -27,6 +27,10 @@ class PokemonTableViewController: UITableViewController {
 
         let pokemon = pokemonController.pokemons[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
+        
+        if let image = try? Data(contentsOf: pokemon.sprites.frontDefault) {
+            cell.imageView?.image = UIImage(data: image)
+        }
 
         return cell
     }
