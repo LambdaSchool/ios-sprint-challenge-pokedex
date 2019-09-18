@@ -13,7 +13,7 @@ struct Pokemon: Codable {
     let id: Int
     
     // Need to make these dictionaries.
-    let types: String
-    let abilities: String
+    let types: [String:String]
+    let abilities: [String:String]
     let sprites: String
 }
