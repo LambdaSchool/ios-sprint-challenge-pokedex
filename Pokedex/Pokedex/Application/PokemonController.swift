@@ -22,6 +22,9 @@ enum NetworkError: Error {
 
 class PokemonController {
     
+    var pokemonList: [Pokemon] = []
+    
+    
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     
@@ -50,6 +53,8 @@ class PokemonController {
             do {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
+                
+                
                 
             } catch {
                 print("Error decoding pokemon object: \(error)")
@@ -83,6 +88,14 @@ class PokemonController {
             let image = UIImage(data: data)!
             completion(.success(image))
         }.resume()
+    }
+    
+    
+    
+    func savePokemon(with pokemon: Pokemon) {
+        
+        self.pokemonList.append(pokemon)
+        
     }
     
     

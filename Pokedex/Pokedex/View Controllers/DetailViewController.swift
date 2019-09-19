@@ -21,24 +21,54 @@ class DetailViewController: UIViewController {
     //MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemon: String?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
+        
+        
     }
     
     
     
     
     //updateViews
-    private func updateViews(with pokemon: Pokemon) {
-        title = pokemon.name
-        titleLabel.text = pokemon.name
+    private func updateViews() {
+        
+        guard let pokemon = pokemon else {
+            title = nil
+            titleLabel.text = nil
+            typesLabel.text = nil
+            abilitiesLabel.text = nil
+            idLabel.text = nil
+            
+            return
+        }
+        
+        title = pokemon.name.capitalized
+        titleLabel.text = pokemon.name.capitalized
         idLabel.text = "\(pokemon.id)"
-        typesLabel.text = "\(pokemon.types)"
-        abilitiesLabel.text = "\(pokemon.abilities)"
+        let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        typesLabel.text = "\(types)"
+        let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        abilitiesLabel.text = "\(abilities)"
+        pokemonController?.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+            
+            do {
+                let result = try result.get()
+                DispatchQueue.main.async {
+                    self.imageView.image = result
+                }
+                
+            } catch {
+                print("Error getting image: \(error)")
+            }
+            
+        })
+        
+        
+        
         
     }
 

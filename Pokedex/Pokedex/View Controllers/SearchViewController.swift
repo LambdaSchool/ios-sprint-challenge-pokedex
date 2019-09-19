@@ -43,40 +43,7 @@ class SearchViewController: UIViewController {
     }
     */
     
-//    private func getPokemon() {
-//        guard let pokemonController = pokemonController, let pokemon = pokemon else {
-//            return
-//        }
-//
-//        pokemonController.searchForPokemon(with: pokemon) { (result) in
-//            do {
-//                let pokemon = try result.get()
-//                DispatchQueue.main.async {
-//                    self.updateViews(with: pokemon)
-//                }
-//
-//                pokemonController.fetchImage(at: pokemon.sprites, completion: { (result) in
-//                    if let image = try? result.get() {
-//                        DispatchQueue.main.async {
-//                            self.pokemonImageView.image = image
-//                        }
-//                    }
-//                })
-//
-//            } catch let error as NetworkError {
-//                switch error {
-//                case .badData:
-//                    print("Bad Data")
-//                default:
-//                    print("error")
-//                }
-//            } catch {
-//                print(error)
-//            }
-//        }
-//
-//
-//    }
+   
     
     private func updateViews() {
         
@@ -90,20 +57,39 @@ class SearchViewController: UIViewController {
             return
         }
         
-        title = pokemon.name
-        pokemonTitleLabel.text = pokemon.name
+        title = pokemon.name.capitalized
+        pokemonTitleLabel.text = pokemon.name.capitalized
         idLabel.text = "\(pokemon.id)"
-        typesLabel.text = "\(pokemon.types)"
-        abilitiesLabel.text = "\(pokemon.abilities)"
+        let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        typesLabel.text = "\(types)"
+        let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        abilitiesLabel.text = "\(abilities)"
+        pokemonController?.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+           
+            do {
+                let result = try result.get()
+                DispatchQueue.main.async {
+                    self.pokemonImageView.image = result
+                }
+                
+            } catch {
+                print("Error getting image: \(error)")
+            }
+            
+        })
+        
+        
+        
         
     }
 
     
     
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
-        // Need to get the pokemon information from the pokemon that was searched for.
+        guard let pokemon = pokemon, let pokemonController = pokemonController else { return }
         
-       // pokemonTableViewController.pokemon.append(insert pokemon from above)
+        pokemonController.savePokemon(with: pokemon)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }
@@ -113,9 +99,16 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let pokemonController = pokemonController, let searchTerm = searchBar.text else { return }
         
-        pokemonController.searchForPokemon(with: searchTerm) { (result) in
+        pokemonController.searchForPokemon(with: searchTerm.lowercased()) { (result) in
             DispatchQueue.main.async {
-                self.updateViews()
+                do {
+                    let result = try result.get()
+                    self.pokemon = result
+                    self.updateViews()
+                    
+                } catch {
+                    print("Error getting result: \(error)")
+                }
             }
         }
         

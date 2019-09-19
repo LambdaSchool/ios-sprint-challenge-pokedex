@@ -13,7 +13,31 @@ struct Pokemon: Codable {
     let id: Int
     
     // Need to make these dictionaries.
-    let types: [String:String]
-    let abilities: [String:String]
-    let sprites: String
+    let types: [Types]
+    let abilities: [Abilities]
+    let sprites: Sprite
+    
 }
+
+struct Types: Codable {
+    let type: Type
+    
+}
+
+struct Type: Codable {
+    let name: String
+}
+
+struct Abilities: Codable {
+    let ability: Ability
+}
+
+struct Ability: Codable {
+    let name: String
+}
+
+struct Sprite: Codable {
+    let front_default: String
+}
+
+
