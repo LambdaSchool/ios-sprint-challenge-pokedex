@@ -10,24 +10,33 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Pokedex-->
         <scene sceneID="cnO-gJ-4fn">
             <objects>
-                <tableViewController id="w1T-MO-M0B" sceneMemberID="viewController">
+                <tableViewController id="w1T-MO-M0B" customClass="PokemonTableViewController" customModule="FlexPokemonSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tNt-iF-Bqq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="fgd-4x-Sq1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="hEv-9t-whA" style="IBUITableViewCellStyleDefault" id="fgd-4x-Sq1">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fgd-4x-Sq1" id="UQb-eP-aki">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hEv-9t-whA">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="wUl-ul-d2d" kind="show" id="jJd-1e-mdn"/>
+                                    <segue destination="wUl-ul-d2d" kind="show" identifier="DetailViewSegue" id="jJd-1e-mdn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -36,10 +45,10 @@
                             <outlet property="delegate" destination="w1T-MO-M0B" id="6Bs-OT-PIN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="NYx-v7-K43">
+                    <navigationItem key="navigationItem" title="Pokedex" id="NYx-v7-K43">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="i28-l2-53m">
                             <connections>
-                                <segue destination="qme-n0-kqZ" kind="show" id="nta-sw-HrR"/>
+                                <segue destination="qme-n0-kqZ" kind="show" identifier="SearchSegue" id="nta-sw-HrR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -48,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="994.20289855072474" y="58.928571428571423"/>
         </scene>
-        <!--View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="FUa-YH-Nhj">
             <objects>
-                <viewController id="qme-n0-kqZ" sceneMemberID="viewController">
+                <viewController id="qme-n0-kqZ" customClass="SearchViewController" customModule="FlexPokemonSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XUJ-SQ-dgi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,6 +135,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVV-Vh-ufI">
                                 <rect key="frame" x="190" y="748" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButton:" destination="qme-n0-kqZ" eventType="touchUpInside" id="EX7-zc-sfb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -150,15 +162,23 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iSb-PA-dgB"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="eZ2-5E-Wb0" id="FT2-Xy-tkG"/>
+                        <outlet property="iDLabel" destination="EDr-kW-OrL" id="1He-EI-P7D"/>
+                        <outlet property="imageView" destination="G4O-kv-fkT" id="xDB-CU-cMw"/>
+                        <outlet property="nameLabel" destination="iNb-oe-J4Z" id="Wgb-04-ZOe"/>
+                        <outlet property="searchBar" destination="SVI-oo-Jce" id="N88-NI-vqJ"/>
+                        <outlet property="typesLabel" destination="AKp-jc-YDC" id="0Pj-AQ-pBO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5fy-9u-vGX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2035" y="-174"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="4RM-WG-oFL">
             <objects>
-                <viewController id="wUl-ul-d2d" sceneMemberID="viewController">
+                <viewController id="wUl-ul-d2d" customClass="DetailViewController" customModule="FlexPokemonSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wnG-0X-R1k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -169,6 +189,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ilm-NO-q0y">
+                                <rect key="frame" x="72" y="220" width="270" height="270"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ilm-NO-q0y" secondAttribute="height" multiplier="1:1" id="3Xs-IM-0MA"/>
+                                </constraints>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="HGr-dU-toJ">
                                 <rect key="frame" x="20" y="530" width="91" height="24"/>
                                 <subviews>
@@ -223,12 +249,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ilm-NO-q0y">
-                                <rect key="frame" x="72" y="220" width="270" height="270"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ilm-NO-q0y" secondAttribute="height" multiplier="1:1" id="3Xs-IM-0MA"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -248,6 +268,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HYl-WE-IXK"/>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="q7R-oS-0UG" id="Ndt-2U-Ff4"/>
+                        <outlet property="iDLabel" destination="6Sj-mG-rCs" id="RNn-gk-5Bo"/>
+                        <outlet property="imageView" destination="ilm-NO-q0y" id="72K-3k-3ng"/>
+                        <outlet property="nameLabel" destination="ra4-fh-baV" id="bX8-me-xMe"/>
+                        <outlet property="typesLabel" destination="snx-RV-NaA" id="DnU-Lz-jSm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ufd-Fw-Xjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
