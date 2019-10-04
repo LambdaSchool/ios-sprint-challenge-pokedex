@@ -34,9 +34,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             iDLabel.isHidden = false
             typesLabel.isHidden = false
             abilitiesLabel.isHidden = false
-//            id.isHidden = false
-//            types.isHidden = false
-//            abilities.isHidden = false
+
             
 
             
