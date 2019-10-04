@@ -24,9 +24,24 @@ enum NetworkingError: Error {
 }
 
 class PokemonController {
+    
+    //MARK: Properties
+    
     let baseURL = URL(string: "https://pokeapi.co")!
     
     var pokemonList: [Pokemon] = []
+    
+    //MARK: Actions
+    
+    func add(pokemon: Pokemon) {
+        pokemonList.append(pokemon)
+    }
+    
+    func remove(at index: Int) {
+        pokemonList.remove(at: index)
+    }
+    
+    //MARK: PokeAPI
     
     func getPokemon(from name: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
         if name.isEmpty {

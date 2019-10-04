@@ -92,7 +92,7 @@ class PokemonDetailViewController: UIViewController {
     
     @IBAction func saveTapped(_ sender: UIButton) {
         if let pokemon = pokemon {
-            pokemonController?.pokemonList.append(pokemon)
+            pokemonController?.add(pokemon: pokemon)
             navigationController?.popViewController(animated: true)
         }
     }
