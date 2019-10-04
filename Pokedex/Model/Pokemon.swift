@@ -8,13 +8,25 @@
 
 import Foundation
 
-
-// Pokemon's name, ID, ability, and types.
 struct Pokemon:Codable {
-    
     let name: String
     let ID: String
-    let ability: String
-    let types: String
-    
+    let ablities: Abilities
+    let types: Types
+}
+
+struct Abilities: Codable {
+    let ability: Ability
+}
+
+struct Ability: Codable {
+    let name: String
+}
+
+struct Types: Codable {
+    let type: Type
+}
+
+struct Type: Codable {
+    let name: String
 }

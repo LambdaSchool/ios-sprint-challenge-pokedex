@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Pokemon Table View Controller-->
         <scene sceneID="sKf-MD-P4a">
             <objects>
-                <tableViewController id="GzP-Zz-eRs" sceneMemberID="viewController">
+                <tableViewController id="GzP-Zz-eRs" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="c7q-8e-2WQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,6 +23,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="EhZ-Zi-vAm" kind="show" identifier="ShowPokemon" id="jje-Di-p65"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,7 +36,7 @@
                     <navigationItem key="navigationItem" id="cI0-kb-oQR">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="xI7-3k-Dtl">
                             <connections>
-                                <segue destination="EhZ-Zi-vAm" kind="show" id="Pxt-to-jqH"/>
+                                <segue destination="EhZ-Zi-vAm" kind="show" identifier="SearchPokemon" id="Pxt-to-jqH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -42,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="905.79710144927549" y="71.651785714285708"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="aki-Gm-Sen">
             <objects>
-                <viewController id="EhZ-Zi-vAm" sceneMemberID="viewController">
+                <viewController id="EhZ-Zi-vAm" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U78-rh-fIj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,4 +124,7 @@
             <point key="canvasLocation" x="-4.3478260869565224" y="71.651785714285708"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jje-Di-p65"/>
+    </inferredMetricsTieBreakers>
 </document>
