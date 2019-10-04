@@ -23,7 +23,6 @@ class APIController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    
     func fetchPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
         
         // Setting up URL
@@ -59,6 +58,33 @@ class APIController {
                 NSLog("Error decoding animal names: \(error)")
                 completion(.failure(.badDecode))
             }
+        }.resume()
+    }
+    
+    func fetchPokemonImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data returned from image fetch data task")
+                completion(nil)
+                return
+            }
+            
+            let image = UIImage(data: data)
+            
+            completion(image)
         }.resume()
     }
 }
