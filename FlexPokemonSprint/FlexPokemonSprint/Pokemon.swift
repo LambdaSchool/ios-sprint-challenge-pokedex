@@ -7,3 +7,38 @@
 //
 
 import Foundation
+
+struct Results: Codable {
+    let results: [Pokemon]
+}
+
+struct Pokemon: Codable {
+    
+    let name: String
+    let sprites: Sprites
+    let types: [TypeElement]
+    let abilities: [Ability]
+    let id: Int
+    
+}
+
+struct Sprites: Codable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}
+
+struct TypeElement: Codable {
+    let type: Species
+}
+
+struct Species: Codable {
+    let name: String
+}
+
+struct Ability: Codable {
+    let ability: Species
+}
+
