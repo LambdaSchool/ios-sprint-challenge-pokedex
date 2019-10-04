@@ -13,6 +13,7 @@ struct Pokemon:Codable {
     let ID: String
     let ablities: Abilities
     let types: Types
+    let imageURL : String
 }
 
 struct Abilities: Codable {

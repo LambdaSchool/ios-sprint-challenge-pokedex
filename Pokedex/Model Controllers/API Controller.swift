@@ -23,7 +23,7 @@ class APIController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    func fetchPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
+    func fetchPokemon(for pokemonName: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
         
         // Setting up URL
         let requestURL = baseURL
