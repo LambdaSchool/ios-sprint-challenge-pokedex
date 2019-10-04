@@ -38,7 +38,7 @@ class PokemonListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
         let pokemon = pokemonController.pokemonList[indexPath.row]
-        let name = pokemon.name.prefix(1).uppercased() + pokemon.name.dropFirst()
+        let name = pokemon.name.capitalizingFirstLetter()
         cell.textLabel?.text = name
 
         return cell

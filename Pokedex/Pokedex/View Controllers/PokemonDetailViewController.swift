@@ -15,6 +15,10 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
     
     //MARK: Properties
     
@@ -36,14 +40,31 @@ class PokemonDetailViewController: UIViewController {
             saveButton.isEnabled = true
             saveButton.isHidden = false
             nameLabel.isHidden = false
+            stackView.isHidden = false
             
-            let name = pokemon.name.prefix(1).uppercased() + pokemon.name.dropFirst()
+            let name = pokemon.name.capitalizingFirstLetter()
             self.title = name
             nameLabel.text = name
+            idLabel.text = "ID: \(pokemon.id)"
+            
+            var abilities = "Abilities: "
+            for ability in pokemon.abilities {
+                abilities += "\(ability.ability.name.capitalizingFirstLetter()), "
+            }
+            abilities = String(abilities.dropLast(2))
+            abilitiesLabel.text = abilities
+            
+            var types = "Types: "
+            for type in pokemon.types {
+                types += "\(type.type.name.capitalizingFirstLetter()), "
+            }
+            types = String(types.dropLast(2))
+            typesLabel.text = types
         } else {
             saveButton.isEnabled = false
             saveButton.isHidden = true
             nameLabel.isHidden = true
+            stackView.isHidden = true
         }
         
         if pokemonController == nil {

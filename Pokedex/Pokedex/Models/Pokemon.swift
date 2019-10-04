@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Pokemon: Codable, Equatable {
-    var name: String
-    var id: Int
-    // arrays
+struct Pokemon: Codable {
+    let name: String
+    let id: Int
+    let abilities: [Ability]
+    let types: [Type]
 }
