@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -13,6 +14,7 @@ enum HTTPMethod: String {
 }
 
 enum NetworkingError: Error {
+    case badURL
     case noInput
     case noData
     case noBearer
@@ -54,6 +56,31 @@ class PokemonController {
                 completion(.success(pokemon))
             } catch {
                 completion(.failure(.badDecode(error)))
+            }
+        }.resume()
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkingError>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.badURL))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if let error = error {
+                completion(.failure(.serverError(error)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.noData))
             }
         }.resume()
     }

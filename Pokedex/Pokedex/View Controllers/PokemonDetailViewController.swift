@@ -96,12 +96,25 @@ extension PokemonDetailViewController: UISearchBarDelegate {
             pokemonController?.getPokemon(from: search) { (result) in
                 do {
                     let pokemon = try result.get()
+                    
                     DispatchQueue.main.async {
                         self.pokemon = pokemon
                         self.updateViews()
                     }
+                    
+                    self.pokemonController?.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+                        do {
+                            let image = try result.get()
+                            
+                            DispatchQueue.main.async {
+                                self.imageView.image = image
+                            }
+                        } catch {
+                            NSLog("Error getting image: \(error)")
+                        }
+                    })
                 } catch {
-                    print("Error getting pokemon: \(error)")
+                    NSLog("Error getting pokemon: \(error)")
                 }
             }
         }
