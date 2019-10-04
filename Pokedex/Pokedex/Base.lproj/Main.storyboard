@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Pokedex-->
         <scene sceneID="olW-G3-PCR">
             <objects>
-                <tableViewController id="cng-kr-1vK" sceneMemberID="viewController">
+                <tableViewController id="cng-kr-1vK" customClass="PokemonListTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Opt-kD-V0x">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="g6g-A1-7dN" kind="show" identifier="PokemonDetailShowSegue" id="MOV-jC-Kbl"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -39,10 +42,10 @@
                             <outlet property="delegate" destination="cng-kr-1vK" id="Ji9-Ze-Xk3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="jal-D8-G5A">
+                    <navigationItem key="navigationItem" title="Pokedex" id="jal-D8-G5A">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="85d-00-RDU">
                             <connections>
-                                <segue destination="g6g-A1-7dN" kind="show" id="eDJ-iR-z3g"/>
+                                <segue destination="g6g-A1-7dN" kind="show" identifier="AddPokemonShowSegue" id="eDJ-iR-z3g"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -73,11 +76,20 @@
                                 <rect key="frame" x="87" y="248" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60S-9f-weJ">
+                                <rect key="frame" x="150.5" y="832" width="113" height="30"/>
+                                <state key="normal" title="Save to Pokedex"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="g6g-A1-7dN" eventType="touchUpInside" id="FC0-FT-9wz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="60S-9f-weJ" firstAttribute="bottom" secondItem="Ykb-lk-NHw" secondAttribute="bottom" id="64l-rh-Jbg"/>
                             <constraint firstItem="RoN-va-kga" firstAttribute="leading" secondItem="Ykb-lk-NHw" secondAttribute="leading" id="8IZ-lc-Uhy"/>
                             <constraint firstItem="3Me-I1-fyJ" firstAttribute="centerX" secondItem="l9L-MB-klf" secondAttribute="centerX" id="gdk-KE-FSw"/>
+                            <constraint firstItem="60S-9f-weJ" firstAttribute="centerX" secondItem="l9L-MB-klf" secondAttribute="centerX" id="hg4-CP-R7N"/>
                             <constraint firstItem="3Me-I1-fyJ" firstAttribute="top" secondItem="RoN-va-kga" secondAttribute="bottom" constant="8" id="pe3-5x-r8A"/>
                             <constraint firstItem="RoN-va-kga" firstAttribute="trailing" secondItem="Ykb-lk-NHw" secondAttribute="trailing" id="sVk-z0-0pH"/>
                             <constraint firstItem="RoN-va-kga" firstAttribute="top" secondItem="Ykb-lk-NHw" secondAttribute="top" id="vKp-sd-Hw7"/>
@@ -88,6 +100,7 @@
                     <connections>
                         <outlet property="imageView" destination="bWi-vs-LGY" id="Eog-jn-7dd"/>
                         <outlet property="nameLabel" destination="3Me-I1-fyJ" id="bGd-AY-Dez"/>
+                        <outlet property="saveButton" destination="60S-9f-weJ" id="oLX-Wt-xBN"/>
                         <outlet property="searchBar" destination="RoN-va-kga" id="Ded-L8-lm7"/>
                     </connections>
                 </viewController>
@@ -114,4 +127,7 @@
             <point key="canvasLocation" x="57.971014492753625" y="123.88392857142857"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="MOV-jC-Kbl"/>
+    </inferredMetricsTieBreakers>
 </document>
