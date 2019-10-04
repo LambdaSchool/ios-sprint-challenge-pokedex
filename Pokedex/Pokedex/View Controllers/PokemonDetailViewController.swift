@@ -42,6 +42,18 @@ class PokemonDetailViewController: UIViewController {
             nameLabel.isHidden = false
             stackView.isHidden = false
             
+            PokemonController().fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+                do {
+                    let image = try result.get()
+                    
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
+                } catch {
+                    NSLog("Error getting image: \(error)")
+                }
+            })
+            
             let name = pokemon.name.capitalizingFirstLetter()
             self.title = name
             nameLabel.text = name
@@ -101,18 +113,6 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                         self.pokemon = pokemon
                         self.updateViews()
                     }
-                    
-                    self.pokemonController?.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
-                        do {
-                            let image = try result.get()
-                            
-                            DispatchQueue.main.async {
-                                self.imageView.image = image
-                            }
-                        } catch {
-                            NSLog("Error getting image: \(error)")
-                        }
-                    })
                 } catch {
                     NSLog("Error getting pokemon: \(error)")
                 }
