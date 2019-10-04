@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokedexDetailViewController: UIViewController {
+class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -19,32 +19,63 @@ class PokedexDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     
     let apiController = APIController()
+    var pokemon: Pokemon?
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        updateViews()
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         
         guard let searchTerm = searchBar.text else { return }
-               
-//               apiController.searchForPokemon(with: searchTerm) {
-//                   DispatchQueue.main.async {
-//                       self.tableView.reloadData()
-//                   }
-//               }
         
+        getDetails(for: searchTerm)
+        //updateViews()        TODO: Not sure if I need to call updateview here cause inside getDatial, it's being called
+
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func getDetails(for pokemonName: String) {
+        
+        apiController.fetchPokemonDetails(for: pokemonName) { (result) in
+            
+            do {
+                let pokemon = try result.get()
+                
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
+                
+                self.apiController.fetchImage(at: pokemon.imageURL) { (image) in
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
+                }
+                
+            } catch {
+                NSLog("Error fetching pokemon details: \(error)")
+            }
+        }
     }
-    */
-
+    
+    
+    func updateViews() {
+        
+        if let pokemon = pokemon {
+            title = pokemon.name
+            nameLabel.text = pokemon.name
+            idLabel.text = pokemon.id
+            typesLabel.text = pokemon.types
+            abilitiesLabel.text = pokemon.abilities
+            
+        } else {
+            nameLabel.alpha = 0
+            idLabel.alpha = 0
+            typesLabel.alpha = 0
+            abilitiesLabel.alpha = 0
+        }
+    }
 }

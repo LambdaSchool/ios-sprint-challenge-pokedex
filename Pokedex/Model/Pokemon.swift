@@ -17,6 +17,8 @@ struct Pokemon: Equatable, Decodable, Encodable {
     var id: String
     var abilities: String
     var types: String
+    var imageURL: String = "sprites"  // TODO: might have to set this with a didSet so it takes in a number inside the string to determine wich picture of this pokemon
+    
     
 //    enum CodingKeys: String, CodingKey {
 //
