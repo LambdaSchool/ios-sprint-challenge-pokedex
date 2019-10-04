@@ -23,18 +23,45 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setViews(with: pokemon)
     }
-    */
+    
+    func setViews(with pokemon: Pokemon?) {
+        
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
+        
+        let url = URL(string: pokemon.sprites.frontDefault)!
+        if let image = try? Data(contentsOf: url) {
+            imageView.image = UIImage(data: image)
+        }
+        
+        iDLabel.text = String(pokemon.id)
+        
+        var types = ""
+        let typeArray = pokemon.types
+        
+        for type in typeArray {
+            types.append("\(type.type.name)")
+            types.append("\n")
+        }
+
+        typesLabel.text = types
+        
+        var abilities = ""
+        let abilityArray = pokemon.abilities
+        
+        for ability in abilityArray {
+            abilities.append("\(ability.ability.name)")
+            abilities.append("\n")
+        }
+        
+        abilitiesLabel.text = abilities
+    }
 
 }

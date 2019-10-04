@@ -35,7 +35,7 @@ class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
-    func performSearch(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func performSearch(with searchTerm: String, completion: @escaping () -> Void) {
         
         let requestURL = baseURL.appendingPathComponent(searchTerm)
         
@@ -50,7 +50,7 @@ class PokemonController {
             
             guard let data = data else {
                 NSLog("No data returned from search")
-                completion(.failure(.noData))
+                completion()
                 return
             }
             
@@ -58,10 +58,10 @@ class PokemonController {
                let decoder = JSONDecoder()
                let pokemon = try decoder.decode(Pokemon.self, from: data)
                self.pokemon = pokemon
-               completion(.success(pokemon))
+               completion()
             } catch {
                 NSLog("Error retrieving search results: \(error)")
-                completion(.failure(.noDecode))
+                completion()
                 return
             }
         }.resume()
