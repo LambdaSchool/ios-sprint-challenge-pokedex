@@ -29,7 +29,7 @@ enum HeaderName: String {
 
 class APIController {
     
-    var pokemonNames: [Pokemon] = []
+    var pokemonList: [Pokemon] = []
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     

@@ -30,11 +30,20 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         
-        guard let searchTerm = searchBar.text else { return }
         
+        
+
+        
+    }
+    
+    
+    // MARK: - UISearchBarDelegate
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    
+        guard let searchTerm = searchBar.text else { return }
         getDetails(for: searchTerm)
         //updateViews()        TODO: Not sure if I need to call updateview here cause inside getDatial, it's being called
-
         
     }
     
