@@ -45,6 +45,14 @@ class PokemonDetailViewController: UIViewController {
             saveButton.isHidden = true
             nameLabel.isHidden = true
         }
+        
+        if pokemonController == nil {
+            searchBar.isHidden = true
+            saveButton.isEnabled = false
+            saveButton.isHidden = true
+        } else {
+            searchBar.isHidden = false
+        }
     }
     
     //MARK: Actions
