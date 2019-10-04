@@ -65,11 +65,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 imageView.image = UIImage(data: image)
             }
         }
-
-        
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController.performSearch(with: searchTerm) { (error) in 
