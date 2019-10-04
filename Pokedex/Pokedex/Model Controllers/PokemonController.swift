@@ -138,4 +138,14 @@ class PokemonController {
         }
     }
     
+    func sortPokemon(by sortType: SortType) {
+        
+        switch sortType {
+        case .name:
+            savedPokemons.sort {$0.name < $1.name}
+        case .id:
+            savedPokemons.sort {$0.id < $1.id}
+        }
+    }
+    
 }

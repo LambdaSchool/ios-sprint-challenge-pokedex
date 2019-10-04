@@ -8,14 +8,23 @@
 
 import UIKit
 
+enum SortType: Int {
+    case name = 0
+    case id = 1
+}
+
 class PokedexTableViewController: UITableViewController {
     
+    @IBOutlet weak var sortTypeSegment: UISegmentedControl!
+    
     let pokemonController = PokemonController()
-
+    var sortType: SortType!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        sortSavedPokemons()
     }
+
 
     // MARK: - Table view data source
 
@@ -50,4 +59,17 @@ class PokedexTableViewController: UITableViewController {
         }
     }
     
+    func sortSavedPokemons() {
+        if sortTypeSegment.selectedSegmentIndex == 0 {
+            sortType = .name
+        } else {
+            sortType = .id
+        }
+        pokemonController.sortPokemon(by: sortType)
+        tableView.reloadData()
+    }
+    
+    @IBAction func sortValueChanged(_ sender: UISegmentedControl) {
+        sortSavedPokemons()
+    }
 }
