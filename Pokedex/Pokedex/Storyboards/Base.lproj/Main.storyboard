@@ -23,7 +23,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gsp-mK-67I">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Pokemon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gsp-mK-67I">
                                             <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -79,8 +79,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeC-cB-OXo">
-                                <rect key="frame" x="47" y="599.5" width="357" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeC-cB-OXo">
+                                <rect key="frame" x="47" y="599.5" width="357" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -91,8 +91,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSJ-z8-fVK">
-                                <rect key="frame" x="73" y="630.5" width="331" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSJ-z8-fVK">
+                                <rect key="frame" x="73" y="609.5" width="331" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -109,7 +109,15 @@
                                     <constraint firstAttribute="width" secondItem="7cw-uh-4hZ" secondAttribute="height" multiplier="1:1" id="HtY-xO-ttU"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJx-1L-iRZ">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8EN-So-7vj">
+                                <rect key="frame" x="157" y="832" width="101" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="SaveButtonTabbed:" destination="bf2-17-TG9" eventType="touchUpInside" id="fxP-Q1-Zbu"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJx-1L-iRZ">
                                 <rect key="frame" x="87" y="662" width="317" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -146,11 +154,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="bHD-E0-lU0"/>
                     <connections>
+                        <outlet property="ability" destination="91x-WK-fCB" id="edc-97-Upr"/>
                         <outlet property="abilityLabel" destination="EJx-1L-iRZ" id="pwz-1g-Fgh"/>
+                        <outlet property="id" destination="t4u-NJ-ya2" id="LXb-Ic-aTD"/>
                         <outlet property="idLabel" destination="JeC-cB-OXo" id="E3u-HX-L8x"/>
                         <outlet property="pokeImageView" destination="7cw-uh-4hZ" id="MQ8-f3-l6o"/>
                         <outlet property="pokeNameLabel" destination="HI8-3i-wdm" id="H1c-JC-pLd"/>
-                        <outlet property="searchBar" destination="Qwc-by-vDS" id="bte-IV-kgY"/>
+                        <outlet property="pokeSearchBar" destination="Qwc-by-vDS" id="mGS-8r-UWh"/>
+                        <outlet property="saveButton" destination="8EN-So-7vj" id="USd-WN-OEP"/>
+                        <outlet property="type" destination="j5q-EN-5MH" id="y19-U5-KUf"/>
                         <outlet property="typeLabel" destination="TSJ-z8-fVK" id="P9x-kf-F8a"/>
                     </connections>
                 </viewController>
