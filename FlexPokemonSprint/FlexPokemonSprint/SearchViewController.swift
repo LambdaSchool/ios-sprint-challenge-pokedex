@@ -17,6 +17,9 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    var pokemonController = PokemonController()
+    
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
