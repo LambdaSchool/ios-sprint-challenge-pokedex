@@ -14,15 +14,15 @@ struct PokemonSearch: Codable {
 
 struct Pokemon: Equatable, Decodable, Encodable {
     var name: String
-    var id: Int
+    var id: String
     var abilities: String
     var types: String
     
-    enum CodingKeys: String, CodingKey {
-        
-        case name = "name"
-        case id = "id"
-        case abilities = "abilities"
-        case types = "types"
-    }
+//    enum CodingKeys: String, CodingKey {
+//
+//        case name = "name"
+//        case id = "id"
+//        case abilities = "abilities"
+//        case types = "types"
+//    }
 }

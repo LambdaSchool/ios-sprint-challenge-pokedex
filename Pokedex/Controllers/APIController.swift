@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -33,27 +34,11 @@ class APIController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     // MARK: Function for fetching all pokemon names
-    
-    func fetchSearchedPokemonNames(with searchTerm: String, completion: @escaping (Result<[String], NetworkingError>) -> Void) {
-     
-        
-        var pathComponent = 0
-               
-        
-        switch searchTerm {
-        case "bulbasaur" :
-            pathComponent = 0
-        case "ivysaur" :
-            pathComponent = 1
-        case "venusaur" :
-            pathComponent = 2
-        default:
-            pathComponent = 3
-        }
-        
+    func fetchSearchedPokemon(with searchTerm: String, completion: @escaping (Result<[Pokemon], NetworkingError>) -> Void) {
+   
         
         let requestURL = baseURL
-        .appendingPathComponent(String(pathComponent))
+        .appendingPathComponent(searchTerm)
         
 //
 //         var components = URLComponents(url: peopleURL, resolvingAgainstBaseURL: true)
@@ -76,7 +61,7 @@ class APIController {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
-                NSLog("Error fetching animal names: \(error)")
+                NSLog("Error fetching pokemon objects: \(error)")
                 completion(.failure(.serverError(error)))
                 return
             }
@@ -91,20 +76,97 @@ class APIController {
                 return
             }
             
-           let decoder = JSONDecoder()
-            
             do {
-                let pokemonSearch = try decoder.decode(PokemonSearch.self, from: data)
-                
-                self.pokemonNames = pokemonSearch.results
+            
+            let pokemonList = try JSONDecoder().decode([Pokemon].self, from: data)
+            
+            completion(.success(pokemonList))
+            
+            
+            
+//           let decoder = JSONDecoder()
+//
+//            do {
+//                let pokemonSearch = try decoder.decode(PokemonSearch.self, from: data)
+//
+//                self.pokemonNames = pokemonSearch.results
             } catch {
-                NSLog("Error decoding animal names: \(error)")
+                NSLog("Error decoding pokemon objects: \(error)")
                 completion(.failure(.badDecode))
             }
         }.resume()
+    }
+    
+    // MARK: Fetching Details of specific Pokemon function
+    func fetchPokemonDetails(for pokemonName: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
         
+        let requestURL = baseURL
+            .appendingPathComponent(pokemonName)
         
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod.get.rawValue
         
+        // MARK: DataTask of fetchPokemonDetail function
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if let error = error {
+                NSLog("Error fetching pokemon details: \(error)")
+                completion(.failure(.serverError(error)))
+            }
+            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                completion(.failure(.unexpectedStatusCode))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                
+                completion(.success(pokemon))
+                
+            } catch {
+                NSLog("Error decoding pokemon: \(error)")
+                completion(.failure(.badDecode))
+            }
+        }.resume()
+    }
+    
+    //MARK: Fetching Pokemon Image function
+    func fetchImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        //MARK DataTask
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error fetching pokemon image: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data returned from image fetch data task")
+                completion(nil)
+                return
+            }
+            
+            let image = UIImage(data: data)
+            
+            completion(image)
+            
+        }.resume()
     }
 
     
