@@ -27,11 +27,11 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    var pokemon: Pokemon?
-    
     var pokemons: [Pokemon] = []
     
-    var pokemonController = PokemonController()
+    var pokemon: Pokemon?
+    
+//    var pokemonController = PokemonController()
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
@@ -56,8 +56,8 @@ class PokemonController {
             
             do {
                let decoder = JSONDecoder()
-               let pokemon = try decoder.decode(Pokemon.self, from: data)
-               self.pokemon = pokemon
+               let pokemon = try decoder.decode(Results.self, from: data)
+                self.pokemons = pokemon.results
                completion()
             } catch {
                 NSLog("Error retrieving search results: \(error)")
@@ -99,7 +99,7 @@ class PokemonController {
         }
     }
     
-    private var pokemonURL: URL? {
+     var pokemonURL: URL? {
         let fm = FileManager.default
         guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         return dir.appendingPathComponent("pokemons.plist")

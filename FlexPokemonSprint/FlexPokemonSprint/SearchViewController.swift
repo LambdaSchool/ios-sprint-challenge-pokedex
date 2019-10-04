@@ -28,7 +28,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func setViews() {
-        if let pokemon = pokemonController.pokemon {
+        guard let pokemon = pokemon else  { return }
             
             nameLabel.isHidden = false
             iDLabel.isHidden = false
@@ -66,18 +66,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             if let image = try? Data(contentsOf: url) {
                 imageView.image = UIImage(data: image)
             }
-        } else  {
-            
-            let alert = UIAlertController(title: "Oops! We could not find that pokemon!", message: "Please try again.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            
-            alert.addAction(action)
-            
-            self.present(alert, animated: true)
         }
 
         
-    }
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
@@ -91,7 +83,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func saveButton(_ sender: UIButton) {
         
-        guard let pokemon = pokemonController.pokemon else { return }
+        guard let pokemon = pokemon else { return }
         
         pokemonController.createPokemon(name: pokemon.name, sprites: pokemon.sprites, types: pokemon.types, abilities: pokemon.abilities, id: pokemon.id)
         pokemonController.saveToPersistentStore()
