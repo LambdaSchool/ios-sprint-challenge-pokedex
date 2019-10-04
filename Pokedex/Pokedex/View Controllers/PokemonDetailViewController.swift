@@ -30,11 +30,15 @@ class PokemonDetailViewController: UIViewController {
     
     private func updateViews() {
         if let pokemon = pokemon {
-            self.title = pokemon.name
-            nameLabel.text = pokemon.name
+            let name = pokemon.name.prefix(1).uppercased() + pokemon.name.dropFirst()
+            
+            self.title = name
+            nameLabel.text = name
         }
     }
 }
+
+//MARK: Search Bar Delegate
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
