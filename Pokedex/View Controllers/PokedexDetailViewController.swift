@@ -11,18 +11,30 @@ import UIKit
 class PokedexDetailViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    let apiController = APIController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        
+        guard let searchTerm = searchBar.text else { return }
+               
+//               apiController.searchForPokemon(with: searchTerm) {
+//                   DispatchQueue.main.async {
+//                       self.tableView.reloadData()
+//                   }
+//               }
+        
+        
     }
     
     /*
