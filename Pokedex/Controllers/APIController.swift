@@ -38,7 +38,7 @@ class APIController {
    
         
         let requestURL = baseURL
-        .appendingPathComponent(searchTerm)
+            .appendingPathComponent(searchTerm.lowercased())
         
 //
 //         var components = URLComponents(url: peopleURL, resolvingAgainstBaseURL: true)
