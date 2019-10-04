@@ -47,6 +47,14 @@ class PokemonController {
         saveToPersistentStore()
     }
     
+    func move(from oldIndex: Int, to newIndex: Int) {
+        let pokemon = pokemonList[oldIndex]
+        pokemonList.remove(at: oldIndex)
+        pokemonList.insert(pokemon, at: newIndex)
+        saveToPersistentStore()
+        
+    }
+    
     //MARK: PokeAPI
     
     func getPokemon(from name: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
