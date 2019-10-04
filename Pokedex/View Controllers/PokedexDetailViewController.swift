@@ -11,6 +11,7 @@ import UIKit
 class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -29,6 +30,14 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        if let pokemonName = searchBar.text,
+            let pokemon = pokemon,
+            !pokemonName.isEmpty {
+        
+            apiController.pokemonList.append(pokemon)
+            dismiss(animated: true, completion: nil)
+        
+        } else { return }
         
         
         
@@ -79,6 +88,9 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
             idLabel.text = pokemon.id
             typesLabel.text = pokemon.types
             abilitiesLabel.text = pokemon.abilities
+            searchBar.alpha = 0
+            saveButton.alpha = 0
+            
             
         } else {
             nameLabel.alpha = 0

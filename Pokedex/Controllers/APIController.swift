@@ -68,6 +68,7 @@ class APIController {
             
             if let response = response as? HTTPURLResponse,
                 response.statusCode != 200 {
+                NSLog("\(response.statusCode)")
                 completion(.failure(.unexpectedStatusCode))
             }
             
