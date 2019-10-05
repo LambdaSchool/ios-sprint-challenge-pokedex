@@ -10,37 +10,45 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    private var pokemon: [String] = []
     let pokemonController = PokemonController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return pokemon.count
+        return pokemonController.savedPokemon.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-        
-        cell.textLabel?.text = pokemon[indexPath.row]
+        let pokemon = pokemonController.savedPokemon[indexPath.row]
+        cell.textLabel?.text = pokemon.name
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailPokemon" {
+        if segue.identifier == "SearchPokemon" {
+            if let searchVC = segue.destination as? SearchViewController {
+                searchVC.pokemonController = pokemonController
+            }
+        } else if segue.identifier == "DetailPokemon" {
             if let detailVC = segue.destination as? DetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
-                
                 detailVC.pokemonController = pokemonController
-                detailVC.pokemon = pokemon[indexPath.row]
+                detailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
             }
         }
     }
-    
 }
+

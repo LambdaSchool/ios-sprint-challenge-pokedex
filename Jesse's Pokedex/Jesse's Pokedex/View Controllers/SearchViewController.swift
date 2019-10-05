@@ -11,7 +11,8 @@ import UIKit
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
-    let pokemonController = PokemonController()
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
     
     // MARK: - Outlets
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -31,13 +32,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Actions
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        
+        guard let pokemon = pokemon,
+                let pokemonController = pokemonController else { return }
+        pokemonController.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     
     // MARK: - Methods
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
+        guard let searchTerm = searchBar.text,
+                let pokemonController = pokemonController else { return }
         
         pokemonController.searchForPokemon(with: searchTerm) { (result) in
             
@@ -45,8 +50,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
                     self.updateViews(with: pokemon)
+                    self.pokemon = pokemon
                 }
-                self.pokemonController.fetchImage(at: pokemon.image) { (image) in
+                self.pokemonController!.fetchImage(at: pokemon.sprites.front_default) { (image) in
                     DispatchQueue.main.async {
                         self.pokemonImage.image = image
                     }
@@ -61,8 +67,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         title = pokemon.name
         pokemonNameLabel.text = pokemon.name
         pokemonID.text = String(pokemon.id)
-        pokemonType.text = pokemon.type
-        pokemonAbility.text = pokemon.ability
+        pokemonType.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
+        pokemonAbility.text = pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")
         
         pokemonNameLabel.isHidden = false
         pokemonID.isHidden = false

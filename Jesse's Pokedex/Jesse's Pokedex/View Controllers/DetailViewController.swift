@@ -20,30 +20,15 @@ class DetailViewController: UIViewController {
     
     // MARK: - Properties
     var pokemonController: PokemonController!
-    var pokemon: String!
+    var pokemon: Pokemon?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let pokemon = pokemon else { return }
+        updateViews(with: pokemon)
     }
-    
-    func getDetails() {
-        pokemonController.searchForPokemon(with: pokemon) { (result) in
-            do {
-                let pokemon = try result.get()
-                DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
-                }
-                self.pokemonController.fetchImage(at: pokemon.image) { (image) in
-                    DispatchQueue.main.async {
-                        self.pokemonImage.image = image
-                    }
-                }
-            } catch {
-                NSLog("Error fetching pokemon details: \(error)")
-            }
-        }
-    }
+
     
     
     func updateViews(with pokemon: Pokemon) {
@@ -51,8 +36,13 @@ class DetailViewController: UIViewController {
         title = pokemon.name
         pokemonName.text = pokemon.name
         pokemonID.text = String(pokemon.id)
-        pokemonType.text = pokemon.type
-        pokemonAbility.text = pokemon.ability
+        pokemonType.text = pokemon.types.description
+        pokemonAbility.text = pokemon.abilities.description
+        pokemonController.fetchImage(at: pokemon.sprites.front_default) { (image) in
+            DispatchQueue.main.async {
+            self.pokemonImage.image = image
+            }
+        }
     }
     
 }

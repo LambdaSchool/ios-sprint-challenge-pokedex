@@ -35,13 +35,13 @@ class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    var pokemon: [Pokemon] = []
+    var savedPokemon: [Pokemon] = []
     
     func searchForPokemon(with searchedPokemon: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
         
         let pokemonURL = baseURL
             .appendingPathComponent("pokemon")
-            .appendingPathComponent(searchedPokemon)
+            .appendingPathComponent(searchedPokemon.lowercased())
         
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -106,7 +106,10 @@ class PokemonController {
             completion(image)
             
             }.resume()
-        
+    }
+    
+    func savePokemon(pokemon: Pokemon) {
+        savedPokemon.append(pokemon)
     }
 }
 
