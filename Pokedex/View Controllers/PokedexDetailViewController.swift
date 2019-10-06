@@ -85,9 +85,9 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
         if let pokemon = pokemon {
             title = pokemon.name
             nameLabel.text = pokemon.name
-            idLabel.text = pokemon.id
+            idLabel.text = String(pokemon.id)
             typesLabel.text = pokemon.types
-            abilitiesLabel.text = pokemon.abilities
+            abilitiesLabel.text = pokemon.ability
             searchBar.alpha = 0
             saveButton.alpha = 0
             

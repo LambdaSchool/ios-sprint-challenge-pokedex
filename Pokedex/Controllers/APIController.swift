@@ -31,28 +31,14 @@ class APIController {
     
     var pokemonList: [Pokemon] = []
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     // MARK: Function for fetching all pokemon names
-    func fetchSearchedPokemon(with searchTerm: String, completion: @escaping (Result<[Pokemon], NetworkingError>) -> Void) {
+    func fetchSearchedPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
    
         
         let requestURL = baseURL
             .appendingPathComponent(searchTerm.lowercased())
-        
-//
-//         var components = URLComponents(url: peopleURL, resolvingAgainstBaseURL: true)
-//
-//               let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
-//
-//               components?.queryItems = [searchQueryItem]
-//
-//               guard let requestURL = components?.url else {
-//                   completion()
-//                   return
-//               }
-//
-       
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue  //Setting the http protocol
@@ -70,6 +56,7 @@ class APIController {
                 response.statusCode != 200 {
                 NSLog("\(response.statusCode)")
                 completion(.failure(.unexpectedStatusCode))
+                return
             }
             
             guard let data = data else {
@@ -79,66 +66,18 @@ class APIController {
             
             do {
             
-            let pokemonList = try JSONDecoder().decode([Pokemon].self, from: data)
+            let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
             
-            completion(.success(pokemonList))
+            completion(.success(pokemon))
             
-            
-            
-//           let decoder = JSONDecoder()
-//
-//            do {
-//                let pokemonSearch = try decoder.decode(PokemonSearch.self, from: data)
-//
-//                self.pokemonNames = pokemonSearch.results
             } catch {
-                NSLog("Error decoding pokemon objects: \(error)")
+                NSLog("Error decoding pokemon object: \(error)")
                 completion(.failure(.badDecode))
             }
         }.resume()
     }
     
-    // MARK: Fetching Details of specific Pokemon function
-    func fetchPokemonDetails(for pokemonName: String, completion: @escaping (Result<Pokemon, NetworkingError>) -> Void) {
-        
-        let requestURL = baseURL
-            .appendingPathComponent(pokemonName)
-        
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = HTTPMethod.get.rawValue
-        
-        // MARK: DataTask of fetchPokemonDetail function
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            if let error = error {
-                NSLog("Error fetching pokemon details: \(error)")
-                completion(.failure(.serverError(error)))
-            }
-            
-            if let response = response as? HTTPURLResponse,
-                response.statusCode != 200 {
-                completion(.failure(.unexpectedStatusCode))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                
-                let pokemon = try decoder.decode(Pokemon.self, from: data)
-                
-                completion(.success(pokemon))
-                
-            } catch {
-                NSLog("Error decoding pokemon: \(error)")
-                completion(.failure(.badDecode))
-            }
-        }.resume()
-    }
+  
     
     //MARK: Fetching Pokemon Image function
     func fetchImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
