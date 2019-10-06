@@ -108,11 +108,4 @@ class APIController {
             
         }.resume()
     }
-
-    
-    
-    
-    
-    
-    
 }

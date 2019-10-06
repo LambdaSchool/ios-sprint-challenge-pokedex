@@ -9,7 +9,7 @@
 import UIKit
 
 class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
     
@@ -21,7 +21,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     
     let apiController = APIController()
     var pokemon: Pokemon?
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,26 +30,21 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        if let pokemonName = searchBar.text,
-            let pokemon = pokemon,
+        if let pokemon = pokemon,
+            let pokemonName = searchBar.text,
             !pokemonName.isEmpty {
-        
+            
             apiController.pokemonList.append(pokemon)
             dismiss(animated: true, completion: nil)
-        
+            
         } else { return }
-        
-        
-        
-
-        
     }
     
     
     // MARK: - UISearchBarDelegate
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    
+        
         guard let searchTerm = searchBar.text else { return }
         getDetails(for: searchTerm)
         //updateViews()        TODO: Not sure if I need to call updateview here cause inside getDatial, it's being called
@@ -58,7 +53,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     
     func getDetails(for pokemonName: String) {
         
-        apiController.fetchPokemonDetails(for: pokemonName) { (result) in
+        apiController.fetchSearchedPokemon(with: pokemonName) { (result) in
             
             do {
                 let pokemon = try result.get()
