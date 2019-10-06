@@ -77,8 +77,6 @@ class APIController {
         }.resume()
     }
     
-  
-    
     //MARK: Fetching Pokemon Image function
     func fetchImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
         
@@ -103,7 +101,6 @@ class APIController {
             }
             
             let image = UIImage(data: data)
-            
             completion(image)
             
         }.resume()

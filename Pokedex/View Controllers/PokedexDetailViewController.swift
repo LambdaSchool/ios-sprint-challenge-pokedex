@@ -19,7 +19,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    let apiController = APIController()
+    var apiController: APIController?
     var pokemon: Pokemon?
     
     
@@ -30,16 +30,16 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        
         if let pokemon = pokemon,
             let pokemonName = searchBar.text,
             !pokemonName.isEmpty {
-            
-            apiController.pokemonList.append(pokemon)
-            dismiss(animated: true, completion: nil)
-            
+
+            apiController?.pokemonList.append(pokemon)
+            self.navigationController?.popToRootViewController(animated: true)
+
         } else { return }
     }
-    
     
     // MARK: - UISearchBarDelegate
     
@@ -47,22 +47,27 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
         
         guard let searchTerm = searchBar.text else { return }
         getDetails(for: searchTerm)
-        //updateViews()        TODO: Not sure if I need to call updateview here cause inside getDatial, it's being called
-        
     }
     
     func getDetails(for pokemonName: String) {
         
-        apiController.fetchSearchedPokemon(with: pokemonName) { (result) in
+        apiController?.fetchSearchedPokemon(with: pokemonName) { (result) in
             
             do {
                 let pokemon = try result.get()
                 
                 DispatchQueue.main.async {
-                    self.updateViews()
+                    self.pokemon = pokemon
+                    
+                    //self.updateViews()
+                    //title = pokemon.name
+                    self.nameLabel.text = pokemon.name
+                    self.idLabel.text = String(pokemon.id)
+                    self.typesLabel.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
+                    self.abilitiesLabel.text = pokemon.abilities.map({ $0.ability.name.capitalized}).joined(separator: ", ")
                 }
                 
-                self.apiController.fetchImage(at: pokemon.imageURL) { (image) in
+                self.apiController?.fetchImage(at: pokemon.imageURL.frontDefault) { (image) in
                     DispatchQueue.main.async {
                         self.imageView.image = image
                     }
@@ -74,24 +79,21 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    
     func updateViews() {
         
         if let pokemon = pokemon {
             title = pokemon.name
             nameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
-            typesLabel.text = pokemon.types
-            abilitiesLabel.text = pokemon.ability
+            typesLabel.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
+            abilitiesLabel.text = pokemon.abilities.map({ $0.ability.name.capitalized}).joined(separator: ", ")
             searchBar.alpha = 0
             saveButton.alpha = 0
-            
-            
-        } else {
-            nameLabel.alpha = 0
-            idLabel.alpha = 0
-            typesLabel.alpha = 0
-            abilitiesLabel.alpha = 0
+            self.apiController?.fetchImage(at: pokemon.imageURL.frontDefault) { (image) in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+            }
         }
     }
 }

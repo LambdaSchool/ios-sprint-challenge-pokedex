@@ -8,32 +8,49 @@
 
 import Foundation
 
-struct PokemonSearch: Codable {
-    let results: [Pokemon]
-}
-
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
-    let ability: String
-    let types: String
-    let imageURL: String  // TODO: might have to set this with a didSet so it takes in a number inside the string to determine wich picture of this pokemon
-    
-    
+    let abilities: [Ability]
+    let types: [TypeElement]
+    let imageURL: Sprites  
+
+
     enum CodingKeys: String, CodingKey {
 
         case name = "name"
         case id = "id"
-        case ability = "abilities"
+        case abilities = "abilities"
         case types = "types"
-        case imageURL = "sprite"
+        case imageURL = "sprites"
     }
 }
 
-struct Abilities: Codable {
-    let abilitiesArray: [Ability]
+// MARK: - Ability
+struct Ability: Codable, Equatable {
+    let ability: SubAbility
 
-    struct Ability: Codable {
-        let abilities: String
+    enum CodingKeys: String, CodingKey {
+        case ability
     }
+}
+
+// MARK: - Sprites
+struct Sprites: Codable, Equatable {
+    let frontDefault: String
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}
+
+// MARK: - TypeElement
+struct TypeElement: Codable, Equatable {
+    let slot: Int
+    let type: SubAbility
+}
+
+// MARK: - Species
+struct SubAbility: Codable, Equatable {
+    let name: String
 }
