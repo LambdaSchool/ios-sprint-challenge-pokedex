@@ -31,81 +31,87 @@ class PokemonController {
     
     var pokemon: Pokemon?
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
+    
+    
 //    var pokemonController = PokemonController()
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
-    func searchForPeople(with searchTerm: String, completion: @escaping () -> Void) {
-        
-        let peopleURL = baseURL.appendingPathComponent("pokemon")
-        var components = URLComponents(url: peopleURL, resolvingAgainstBaseURL: true)
-        let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
-        components?.queryItems = [searchQueryItem]
-        guard let requestURL = components?.url else {
-            completion()
-            return
-        }
-        // Create a URLRequest
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = HTTPMethod.get.rawValue
-        // Perform the request (with a data task)
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            // Handle any errors
-            if let error = error {
-                NSLog("Error fetching people: \(error)")
-                completion()
-                return
-            }
-            // (Usually) decode the data
-            guard let data = data else {
-                NSLog("No data returned from person search")
-                completion()
-                return
-            }
-            let decoder = JSONDecoder()
-            do {
-                let personSearch = try decoder.decode(Results.self, from: data)
-                self.pokemons = personSearch.results
-            } catch {
-                NSLog("Unable to decode data into PersonSearch: \(error)")
-            }
-            completion()
-        }
-        // This is what performs the data task, or gets it to go to the server
-        dataTask.resume()
-    }
-    
-//    func performSearch(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-//
-//        let requestURL = baseURL.appendingPathComponent(searchTerm)
-//
+//    func searchForPeople(with searchTerm: String, completion: @escaping () -> Void) {
+//        
+//        let peopleURL = baseURL.appendingPathComponent(searchTerm)
+//        var components = URLComponents(url: peopleURL, resolvingAgainstBaseURL: true)
+//        let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
+//        components?.queryItems = [searchQueryItem]
+//        guard let requestURL = components?.url else {
+//            completion()
+//            return
+//        }
+//        // Create a URLRequest
 //        var request = URLRequest(url: requestURL)
 //        request.httpMethod = HTTPMethod.get.rawValue
-//
-//        URLSession.shared.dataTask(with: request) { (data, _, error) in
-//
+//        // Perform the request (with a data task)
+//        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+//            // Handle any errors
 //            if let error = error {
-//                NSLog("Error retrieving searched object: \(error)")
+//                NSLog("Error fetching people: \(error)")
+//                completion()
+//                return
 //            }
-//
+//            // (Usually) decode the data
 //            guard let data = data else {
-//                NSLog("No data returned from search")
-//                completion(.failure(.noData))
+//                NSLog("No data returned from person search")
+//                completion()
 //                return
 //            }
-//
+//            let decoder = JSONDecoder()
 //            do {
-//               let decoder = JSONDecoder()
-//               let pokemon = try decoder.decode(Pokemon.self, from: data)
-//                self.pokemon = pokemon
-//               completion(.success(pokemon))
+//                let personSearch = try decoder.decode(Results.self, from: data)
+//                self.pokemons = personSearch.results
 //            } catch {
-//                NSLog("Error retrieving search results: \(error)")
-//                completion(.failure(.noDecode))
-//                return
+//                NSLog("Unable to decode data into PersonSearch: \(error)")
 //            }
-//        }.resume()
+//            completion()
+//        }
+//        // This is what performs the data task, or gets it to go to the server
+//        dataTask.resume()
 //    }
+    
+    func performSearch(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+
+        let requestURL = baseURL.appendingPathComponent(searchTerm)
+
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+
+            if let error = error {
+                NSLog("Error retrieving searched object: \(error)")
+            }
+
+            guard let data = data else {
+                NSLog("No data returned from search")
+                completion(.failure(.noData))
+                return
+            }
+
+            do {
+               let decoder = JSONDecoder()
+               let pokemon = try decoder.decode(Pokemon.self, from: data)
+                self.pokemon = pokemon
+               completion(.success(pokemon))
+            } catch {
+                NSLog("Error retrieving search results: \(error)")
+                completion(.failure(.noDecode))
+                return
+            }
+        }.resume()
+    }
     
     func createPokemon(name: String, sprites: Sprites, types: [TypeElement], abilities: [Ability], id: Int) {
         let pokemon = Pokemon(name: name, sprites: sprites, types: types, abilities: abilities, id: id)

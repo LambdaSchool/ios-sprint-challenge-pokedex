@@ -25,6 +25,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        setViews()
     }
     
     func setViews() {
@@ -71,17 +72,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         guard let searchTerm = searchBar.text else { return }
         
-        pokemonController.searchForPeople(with: searchTerm) {
-            DispatchQueue.main.async {
-                self.setViews()
-            }
-        }
-        
-//        pokemonController.performSearch(with: searchTerm) { (error) in
+//        pokemonController.searchForPeople(with: searchTerm) {
 //            DispatchQueue.main.async {
 //                self.setViews()
 //            }
 //        }
+        
+        pokemonController.performSearch(with: searchTerm) { (error) in
+            DispatchQueue.main.async {
+                self.setViews()
+            }
+        }
     }
     
     @IBAction func saveButton(_ sender: UIButton) {

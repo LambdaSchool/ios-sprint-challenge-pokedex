@@ -22,7 +22,7 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        pokemonController.loadFromPersistentStore()
+        //pokemonController.loadFromPersistentStore()
         //tableView.reloadData()
         
     }
