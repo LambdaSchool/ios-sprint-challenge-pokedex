@@ -36,12 +36,35 @@ class SearchDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        updateViews()
+        searchBar.delegate = self
         // Do any additional setup after loading the view.
     }
+    // MARK: Save
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let pokemon = pokemon else { return }
+        apiController?.addPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+        
+    }
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        apiController?.delete(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
     //MARK: Update Views Function
     func updateViews() {
         guard isViewLoaded else { return }
-        guard let pokemonObject = pokemon else { return }
+        guard let pokemonObject = pokemon else {
+            title = "Pokemon Search"
+            print("Labels not updated")
+            return }
+        
+        print("\(pokemonObject.name) set in detail view")
+        title = pokemonObject.name.capitalized
         pokemonNameLabel.text = pokemon?.name
         idLabel.text = "\(pokemonObject.id)"
         
@@ -52,29 +75,35 @@ class SearchDetailViewController: UIViewController {
         
         typeLabel.text = "\(types.joined(separator: ", "))"
         abilityLabel.text = "\(pokemonObject.abilities[0].ability.name)"
+        
+        apiController?.fetchImage(from: pokemonObject.sprites.imageUrl, completion: { (pokemonImage) in
+                    DispatchQueue.main.async {
+                       
+                       self.imageView.image = pokemonImage
+                    }
+                })
     }
 }
  extension SearchDetailViewController: UISearchBarDelegate {
      func searchBarSearchButtonClicked(_ sender: UISearchBar) {
-         guard let searchTerm = searchBar.text,
-             let apiController = apiController else {
-                 return
-         }
-           apiController.fetchPokemon(pokemonName: searchTerm) { (pokemonObject, error) in
-                if let error = error {
-                    print("Error searching pokemon: \(error)")
-                    return
-                }
+        guard let searchTerm = searchBar.text else { return }
+
+        apiController?.fetchPokemon(pokemonName: searchTerm) { (pokemonObject) in
+                
+            guard let pokemon = try? pokemonObject.get() else { return }
+            
+            
              DispatchQueue.main.async {
-                 self.pokemon = pokemonObject
+                 self.pokemon = pokemon
              }
          }
          guard let pokemonImgUrl = pokemon?.sprites.imageUrl else { return }
-        apiController.fetchImage(from: pokemonImgUrl) { (pokemonImage) in
+        apiController?.fetchImage(from: pokemonImgUrl, completion: { (pokemonImage) in
              DispatchQueue.main.async {
- //                self.imageView.image = pokemonImage
+                
+                self.imageView.image = pokemonImage
              }
-         }
+         })
      }
  }
 

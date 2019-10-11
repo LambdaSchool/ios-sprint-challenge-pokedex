@@ -9,30 +9,30 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let types: [TypeInfo]
     let abilities: [AbilityInfo]
     let id: Int
     let sprites: SpriteFront
     
-    struct AbilityInfo: Codable {
+    struct AbilityInfo: Codable, Equatable {
         let ability: Ability
         
-        struct Ability: Codable {
+        struct Ability: Codable, Equatable {
             let name: String
         }
     }
     
-    struct TypeInfo: Codable {
+    struct TypeInfo: Codable, Equatable {
         let type: TypieType
         
-        struct TypieType: Codable {
+        struct TypieType: Codable, Equatable {
             let name: String
         }
     }
     
-    struct SpriteFront: Codable {
+    struct SpriteFront: Codable, Equatable {
         let imageUrl: String
         
         enum CodingKeys: String, CodingKey {

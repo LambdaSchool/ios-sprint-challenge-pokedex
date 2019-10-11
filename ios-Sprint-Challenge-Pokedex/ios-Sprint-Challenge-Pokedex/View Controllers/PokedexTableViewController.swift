@@ -23,6 +23,9 @@ class PokedexTableViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
 
     }
@@ -37,7 +40,9 @@ class PokedexTableViewController: UIViewController, UITableViewDataSource, UITab
         // #warning Incomplete implementation, return the number of rows
         return apiController.pokemonArray.count
     }
-
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        self.performSegue(withIdentifier: "DetailViewSegue", sender: indexPath)
+//    }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokedexTableViewCell", for: indexPath)
@@ -52,10 +57,11 @@ class PokedexTableViewController: UIViewController, UITableViewDataSource, UITab
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailViewSegue" {
-            if let detailVC = segue.destination as? SearchDetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow{
+            guard let detailVC = segue.destination as? SearchDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+                detailVC.apiController = apiController
                 detailVC.pokemon = apiController.pokemonArray[indexPath.row]
-            }
+            print("DetailViewSegue hit")
         } else if segue.identifier == "SearchPokemonSegue" {
             if let searchVC = segue.destination as? SearchDetailViewController {
                 searchVC.apiController = apiController

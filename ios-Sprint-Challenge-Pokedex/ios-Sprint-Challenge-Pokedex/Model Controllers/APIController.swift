@@ -31,7 +31,7 @@ class APIController {
     
     // MARK: PokemonSearch
     
-        func fetchPokemon(pokemonName: String, completion: @escaping (Pokemon?, Error?) -> Void) {
+        func fetchPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
         let pokemonUrl = baseURL?.appendingPathComponent(pokemonName.lowercased())
         guard let pokeUrl = pokemonUrl else { return }
         var request = URLRequest(url: pokeUrl)
@@ -50,7 +50,7 @@ class APIController {
             
             do {
                 let pokemonSearch = try JSONDecoder().decode(Pokemon.self, from: data)
-                completion(pokemonSearch, nil)
+                completion(.success(pokemonSearch))
             } catch {
                 print("Unable to decode data into object of type [Pokemon]: \(error)")
             }
@@ -59,9 +59,11 @@ class APIController {
     
     // MARK: Fetch Sprite
     
-    func fetchImage(from imageURL: String, completion: @escaping(Result<Data, NetworkError>) -> Void) {
+    func fetchImage(from imageURL: String, completion: @escaping(UIImage?) -> Void) {
 
-        guard let imageURL = URL(string: imageURL) else { return }
+        guard let imageURL = URL(string: imageURL) else {
+            completion(nil)
+            return }
 
         var request = URLRequest(url: imageURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -69,17 +71,20 @@ class APIController {
         URLSession.shared.dataTask(with: request) { (imageData, _, error) in
 
             if let error = error {
-                completion(.failure(.otherError))
+                
                 NSLog("Error fetching image: \(error)")
                 return
             }
 
             guard let data = imageData else {
-                completion(.failure(.noData))
                 NSLog("No data provided for image: \(imageURL)")
+                completion(nil)
                 return
             }
-            completion(.success(data))
+            
+            let image = UIImage(data: data)
+            
+            completion(image)
         }.resume()
     }
    
@@ -89,10 +94,10 @@ class APIController {
             pokemonArray.append(pokemon)
         }
 
-//        func delete(pokemon: Pokemon) {
-//            guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
-//            pokemonArray.remove(at: index)
-//        }
+        func delete(pokemon: Pokemon) {
+            guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
+            pokemonArray.remove(at: index)
+        }
 
 
   
