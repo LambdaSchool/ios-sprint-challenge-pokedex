@@ -14,3 +14,7 @@ struct Pokemon: Codable {
     let abilities: [String]
     let types: [String]
 }
+
+struct PokeSearch: Decodable {
+    let results: [Pokemon]
+}
