@@ -17,6 +17,7 @@ enum NetworkError: String, Error {
     case otherError = "Unknown error occurred: see log for details."
     case badData = "No data received, or data corrupted."
     case noDecode = "JSON could not be decoded. See log for details."
+    case badImageURL = "The image URL could not be found."
 }
 
 class PokemonController {
@@ -64,9 +65,15 @@ class PokemonController {
                     }
                 }
                 
-                let foundPokemon = Pokemon(name: apiPokemon.name, id: apiPokemon.id, types: types, abilities: abilities)
+                guard let imageURLString = apiPokemon.sprites["front_default"],
+                    let imageURL = URL(string: imageURLString) else {
+                        completion(.failure(.badImageURL))
+                        return
+                }
                 
+                let foundPokemon = Pokemon(name: apiPokemon.name, id: apiPokemon.id, types: types, abilities: abilities, imageURL: imageURL)
                 self.pokemonList.append(foundPokemon)
+                
                 completion(.success(foundPokemon))
             } catch {
                 print(error)
@@ -74,5 +81,9 @@ class PokemonController {
             }
         }
         task.resume()
+    }
+    
+    func fetchSpriteImage(from url: URL) {
+        
     }
 }
