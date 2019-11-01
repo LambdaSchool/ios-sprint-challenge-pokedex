@@ -22,7 +22,7 @@ class PokemonsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         pokeController.fetchPokemon(named: "ditto") { error in
-            if let error = error {
+            if let _ = error {
                 print("Oops.")
             }
         }
