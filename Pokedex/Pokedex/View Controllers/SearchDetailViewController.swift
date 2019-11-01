@@ -25,10 +25,10 @@ class SearchDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         updateViews()
     }
     
