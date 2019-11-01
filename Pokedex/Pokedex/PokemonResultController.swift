@@ -33,11 +33,14 @@ class PokemonResultController {
             let jsonDecoder = JSONDecoder()
             do {
                 let pokemonResult = try jsonDecoder.decode(PokemonResult.self, from: data)
-                self.pokemons.append(pokemonResult)
                 completion(.success(pokemonResult))
             } catch {
                 completion(.failure(NSError()))
             }
         }.resume()
+    }
+    
+    func savePokemon(with pokemon: PokemonResult) {
+        pokemons.append(pokemon)
     }
 }

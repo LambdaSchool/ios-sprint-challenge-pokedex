@@ -52,6 +52,7 @@ class PokemonDetailViewController: UIViewController {
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
+                    self.pokemon = pokemon
                     self.title = pokemon.name
                     self.nameLabel.text = pokemon.name
                     self.idLabel.text = String(pokemon.id)
@@ -66,7 +67,10 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func saveTapped(_ sender: UIButton){
-        
+        guard let pokemonResultController = pokemonResultController,
+            let pokemon = pokemon else { return }
+        pokemonResultController.savePokemon(with: pokemon)
+        self.navigationController?.popViewController(animated: true)
     }
     
     /*
