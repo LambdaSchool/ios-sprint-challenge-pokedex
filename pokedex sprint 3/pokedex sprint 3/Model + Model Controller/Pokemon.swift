@@ -11,12 +11,12 @@ import Foundation
 
 struct Pokemon: Equatable, Codable {
     
-    let name: String
-    let id: Int
+    var name: String
+    var id: Int
    var type: [Types]
     var ability: [Abilities]
-    let imageSprites: Sprites
-    let imageData: Data?
+    var imageSprites: Sprites
+    var imageData: Data?
     
     
     init(name: String, id: Int, type: [Types], ability: [Abilities], imageSprites: Sprites, imageData: Data? = nil) {

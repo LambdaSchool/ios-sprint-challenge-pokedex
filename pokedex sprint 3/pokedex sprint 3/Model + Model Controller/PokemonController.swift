@@ -13,7 +13,7 @@ let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
 class PokemonController {
        
-       private(set) var pokedex: [Pokemon] = []
+       var pokedex: [Pokemon] = []
     
     
     func search(searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {

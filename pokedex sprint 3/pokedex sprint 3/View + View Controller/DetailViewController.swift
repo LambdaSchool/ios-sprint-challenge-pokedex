@@ -24,6 +24,22 @@ class DetailViewController: UIViewController {
             super.viewWillAppear(animated)
             updateViews()
         }
+    
+    private func updateViews() {
+           guard let pokemon = pokemon,
+               let imageData = pokemon.imageData else { return }
+           
+           nameLabel.text = pokemon.name
+           idLabel.text = "I.D.: \(pokemon.id)"
+           
+           let typeString = pokemon.type.map {$0.type.name}.joined(separator: "/")
+           typesLabel.text = "Types: \(typeString)"
+           
+           let stringOfAbilities = pokemon.ability.map {$0.ability.name}.joined(separator: ", ")
+           abilitiesLabel.text = "Abilities: \(stringOfAbilities)"
+           
+           imageView.image = UIImage(data: imageData)
+       }
         
    
     }
