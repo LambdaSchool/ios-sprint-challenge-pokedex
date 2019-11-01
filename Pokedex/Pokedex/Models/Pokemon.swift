@@ -57,21 +57,3 @@ struct APIPokemon: Codable {
         }
     }
 }
-
-struct mainStruct: Equatable, Decodable {
-    
-    let someVar: String
-    let otherVar: Int
-    
-    let items: [Item]
-    
-    struct Item: Equatable, Decodable {
-        
-        let item: SubItem
-        
-        struct SubItem: Equatable, Decodable {
-            
-            let descriptor: String
-        }
-    }
-}
