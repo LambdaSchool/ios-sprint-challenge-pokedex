@@ -9,7 +9,22 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    var apiController: APIController?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,5 +41,15 @@ class PokemonDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    private func updateViews() {
+        if let pokemon = pokemon {
+            nameLabel.text = pokemon.name
+            abilitiesLabel.text = "\(pokemon.abilities)"
+            typesLabel.text = "\(pokemon.types)"
+            idLabel.text = "\(pokemon.id)"
+        }
+        
+    }
 
 }

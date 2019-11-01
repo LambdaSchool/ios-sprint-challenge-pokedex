@@ -12,45 +12,49 @@ enum HTTPMethod: String {
     case get = "GET"
 }
 
+enum NetworkError: Error {
+    case noAuth
+    case badAuth
+    case otherError
+    case badData
+    case noDecode
+}
+
 class APIController {
     
-    let baseURL = URL(string: "https://pokeapi.co/api/v2")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     var pokemon: [Pokemon] = []
+
+    // create function to fetch details
     
-    func searchForPokemonWith(searchTerm: String, completion: @escaping () -> Void) {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
-        urlComponents?.queryItems = [searchTermQueryItem]
+    func fetchPokemonDetails(for pokemonName: String, completion: @escaping ( NetworkError?) -> Void) {
         
-        guard let requestURL = urlComponents?.url else {
-            print("Request URL doesn't exist.")
-            completion()
-            return
-        }
-        
-        var request = URLRequest(url: requestURL)
+        let pokemonURL = baseURL.appendingPathComponent(pokemonName)
+        var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
-                print("Error fetching data: \(error)")
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if let _ = error {
+                completion(.otherError)
                 return
             }
             
             guard let data = data else {
-                print("No data returned.")
+                completion(.badData)
                 return
             }
             
-            let jsonDecoder = JSONDecoder()
+            let decoder = JSONDecoder()
             do {
-                let pokeSearch = try jsonDecoder.decode(PokeSearch.self, from: data)
-                self.pokemon.append(contentsOf: pokeSearch.results)
+                self.pokemon = try decoder.decode([Pokemon].self, from: data)
+                completion(nil)
             } catch {
-                print("Unable to retrieve Pokemon: \(error)")
+                print("Error retrieving pokemon objects: \(error)")
+                completion(.noDecode)
+                return
             }
-            completion()
-        }
-        task.resume()
+        }.resume()
     }
+    
 }

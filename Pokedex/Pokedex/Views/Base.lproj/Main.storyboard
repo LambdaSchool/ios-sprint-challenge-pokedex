@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="lSe-gW-ymQ">
             <objects>
-                <tableViewController id="AgK-8I-AxP" customClass="PokemondTableViewController" sceneMemberID="viewController">
+                <tableViewController id="AgK-8I-AxP" customClass="PokemondTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RKr-qs-lZc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="nameLabel" destination="To1-yx-Ll6" id="5ml-uN-Fne"/>
+                                    <outlet property="nameLabel" destination="To1-yx-Ll6" id="uH2-JV-AJP"/>
                                     <segue destination="uA8-tK-wCF" kind="show" identifier="ToPokemonDetailSegue" id="Qtb-na-ZFJ"/>
                                 </connections>
                             </tableViewCell>
@@ -50,9 +50,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="nameLabel" destination="7hW-bM-QxZ" id="tBy-yf-kbL"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMZ-oS-8Su" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,6 +105,14 @@
                         <viewLayoutGuide key="safeArea" id="i5P-u3-Oep"/>
                     </view>
                     <navigationItem key="navigationItem" id="Y3a-7R-8SK"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="lZI-f2-Px7" id="2xZ-f5-a8h"/>
+                        <outlet property="deleteButton" destination="Ww6-DS-1ec" id="etq-5g-88o"/>
+                        <outlet property="idLabel" destination="iFk-kf-iwm" id="MiQ-TX-Wbn"/>
+                        <outlet property="image" destination="7An-7i-uV2" id="1Rq-EM-Qug"/>
+                        <outlet property="nameLabel" destination="hqS-DZ-ATh" id="oTD-P6-7TB"/>
+                        <outlet property="typesLabel" destination="rNF-g0-RzK" id="CJr-BY-eRq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6j-ex-Vu7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +138,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obj-FV-36p">
-                                <rect key="frame" x="42" y="438" width="17" height="21"/>
+                                <rect key="frame" x="42" y="424" width="17" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -168,10 +173,19 @@
                         <viewLayoutGuide key="safeArea" id="Opf-4T-pbz"/>
                     </view>
                     <navigationItem key="navigationItem" id="tRc-g8-xwl"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="b3A-H7-jnz" id="YEQ-os-Qip"/>
+                        <outlet property="idLabel" destination="Obj-FV-36p" id="mpP-ly-rhF"/>
+                        <outlet property="image" destination="vdm-Ue-yy5" id="gBO-nn-xaa"/>
+                        <outlet property="nameLabel" destination="pVL-5t-dLZ" id="u6S-V2-hTd"/>
+                        <outlet property="saveButton" destination="HmJ-x7-TcJ" id="opj-jm-lrg"/>
+                        <outlet property="searchBar" destination="CxH-3S-Cua" id="uth-P8-10c"/>
+                        <outlet property="typesLabel" destination="4TK-Xo-o4C" id="0Un-Zk-qoz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e2b-rI-dz4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2019" y="-192"/>
+            <point key="canvasLocation" x="2018.840579710145" y="-192.1875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jpo-fJ-Zq6">
