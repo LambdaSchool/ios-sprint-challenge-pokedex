@@ -47,7 +47,7 @@ class APIController {
                 let pokeSearch = try jsonDecoder.decode(PokeSearch.self, from: data)
                 self.pokemon.append(contentsOf: pokeSearch.results)
             } catch {
-                print("Unable to retrueve Pokemon: \(error)")
+                print("Unable to retrieve Pokemon: \(error)")
             }
             completion()
         }

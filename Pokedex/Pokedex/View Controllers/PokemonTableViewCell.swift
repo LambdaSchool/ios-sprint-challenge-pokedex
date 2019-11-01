@@ -10,15 +10,19 @@ import UIKit
 
 class PokemonTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    private func updateViews() {
+        guard let pokemon = pokemon else { return }
+        
+        nameLabel.text = pokemon.name
     }
-
+    
 }

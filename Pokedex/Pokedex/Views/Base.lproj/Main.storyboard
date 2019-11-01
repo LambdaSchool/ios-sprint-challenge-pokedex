@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="To1-yx-Ll6" style="IBUITableViewCellStyleDefault" id="JyL-Xa-gCK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="To1-yx-Ll6" style="IBUITableViewCellStyleDefault" id="JyL-Xa-gCK" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JyL-Xa-gCK" id="7hW-bM-QxZ">
@@ -33,6 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="nameLabel" destination="To1-yx-Ll6" id="5ml-uN-Fne"/>
                                     <segue destination="uA8-tK-wCF" kind="show" identifier="ToPokemonDetailSegue" id="Qtb-na-ZFJ"/>
                                 </connections>
                             </tableViewCell>
@@ -49,6 +50,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="nameLabel" destination="7hW-bM-QxZ" id="tBy-yf-kbL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMZ-oS-8Su" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -57,7 +61,7 @@
         <!--Pokemon Detail View Controller-->
         <scene sceneID="fLO-aD-qTw">
             <objects>
-                <viewController id="uA8-tK-wCF" customClass="PokemonDetailViewController" sceneMemberID="viewController">
+                <viewController id="uA8-tK-wCF" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DcT-rp-zcE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,7 +116,7 @@
         <!--Pokemon Search View Controller-->
         <scene sceneID="H9o-6s-Z7r">
             <objects>
-                <viewController id="g4H-DS-wOj" customClass="PokemonSearchViewController" sceneMemberID="viewController">
+                <viewController id="g4H-DS-wOj" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BTP-g8-vOT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
