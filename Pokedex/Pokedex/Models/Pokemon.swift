@@ -31,7 +31,15 @@ struct APIPokemon: Codable {
     let id: Int
     let types: [SpeciesType]
     let abilities: [Ability]
-    let sprites: [String : String]
+    let sprites: SpriteList
+    
+    struct SpriteList: Codable {
+        let frontDefault: String
+        
+        enum CodingKeys: String, CodingKey {
+            case frontDefault = "front_default"
+        }
+    }
     
     struct Ability: Codable {
         let ability: SubAbility

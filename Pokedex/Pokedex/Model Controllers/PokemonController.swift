@@ -54,10 +54,7 @@ class PokemonController {
             do {
                 let apiPokemon = try jsonDecoder.decode(APIPokemon.self, from: data)
                 
-                guard let imageURL = apiPokemon.sprites["front_default"] else {
-                    completion(.failure(.badImageURL))
-                    return
-                }
+                let imageURL = apiPokemon.sprites.frontDefault
                 
                 var types = [String]()
                 for type in apiPokemon.types {
