@@ -21,9 +21,17 @@ enum NetworkError: String, Error {
 }
 
 class PokemonController {
-    var pokemonList: [Pokemon] = []
+    var pokemonList: [Pokemon] = [] {
+        didSet {
+            savePokemonToPersistenceStore()
+        }
+    }
     
     let baseURL: URL = URL(string: "https://pokeapi.co/api/v2")!
+    
+    init() {
+        loadPokemonFromPersistenceStore()
+    }
     
     func performSearch(for pokemonName: String, completion: @escaping (Result<Pokemon,NetworkError>) -> Void) {
         let searchTerm = pokemonName.lowercased()
@@ -103,5 +111,53 @@ class PokemonController {
                 return
             }
         }.resume()
+    }
+    
+    // MARK: - Persistence
+    
+    private var persistenceURL: URL? {
+        let fm = FileManager.default
+        guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("cannot get persistence url; invalid directory?")
+            return nil
+        }
+        return dir.appendingPathComponent("PokemonList.plist")
+    }
+    
+    /// Encodes and saves pokemon list to plist.
+    private func savePokemonToPersistenceStore() {
+        guard let url = persistenceURL else {
+            print("Invalid persistence url for pokemon list.")
+            return
+        }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let pokemonData = try encoder.encode(pokemonList)
+            try pokemonData.write(to: url)
+        } catch {
+            print("Error saving pokemon list data to persistence store: \(error)")
+        }
+    }
+    
+    /// Decodes and loads pokemon list from plist.
+    private func loadPokemonFromPersistenceStore() {
+        let fm = FileManager.default
+        guard let url = persistenceURL else {
+            print("Invalid persistence url for pokemon list.")
+            return
+        }
+        if !fm.fileExists(atPath: url.path) {
+            print("Pokemon list data file does not yet exist!")
+            return
+        }
+        
+        do {
+            let pokemonData = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            pokemonList = try decoder.decode([Pokemon].self, from: pokemonData)
+        } catch {
+            print("Error loading pokemon list data from persistence store: \(error)")
+        }
     }
 }
