@@ -47,7 +47,7 @@ class PokemonDetailViewController: UIViewController {
         _ = pokemon.types.compactMap{ typeString.append( $0.type.name) }
         typesLabel.text = typeString
         var abilityString = "Abilities: "
-        _ = pokemon.abilities.compactMap { abilityString.append("\($0.ability.name), ") }
+        _ = pokemon.abilities.compactMap { abilityString.append("\($0.ability.name) ") }
         abilitiesLabel.text = abilityString
     }
     

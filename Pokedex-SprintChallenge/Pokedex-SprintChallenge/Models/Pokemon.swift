@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Decodable, Equatable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
     let abilities: [AbilityContainer]
@@ -16,22 +16,22 @@ struct Pokemon: Decodable, Equatable {
     let sprites: SpriteContainer
 }
 
-struct AbilityContainer: Decodable, Equatable {
+struct AbilityContainer: Codable, Equatable {
     let ability: Ability
 }
 
-struct Ability: Decodable, Equatable {
+struct Ability: Codable, Equatable {
     let name: String
 }
 
-struct KindContainer: Decodable, Equatable {
+struct KindContainer: Codable, Equatable {
     let type: Kind
 }
 
-struct Kind: Decodable, Equatable {
+struct Kind: Codable, Equatable {
     let name: String
 }
 
-struct SpriteContainer: Decodable, Equatable {
+struct SpriteContainer: Codable, Equatable {
     let frontDefault: String
 }

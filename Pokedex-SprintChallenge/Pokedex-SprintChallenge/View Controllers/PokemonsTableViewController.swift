@@ -9,6 +9,7 @@
 import UIKit
 
 class PokemonsTableViewController: UITableViewController {
+    @IBOutlet weak var segmentedController: UISegmentedControl!
     
     struct PropertyKeys {
         static let cell = "PokemonCell"
@@ -21,8 +22,7 @@ class PokemonsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        pokeController.fetchPokemon(named: "ditto") { result in
-            print(result)
+        
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -30,12 +30,30 @@ class PokemonsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
+
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         tableView.reloadData()
+        sortPokemon()
     }
+    
+    func sortPokemon() {
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            pokeController.sortBy(type: .name)
+        default:
+            pokeController.sortBy(type: .id)
+        }
+        tableView.reloadData()
+    }
+    
+    @IBAction func sortChanged(_ sender: UISegmentedControl) {
+        sortPokemon()
+    }
+    
 
     // MARK: - Table view data source
 

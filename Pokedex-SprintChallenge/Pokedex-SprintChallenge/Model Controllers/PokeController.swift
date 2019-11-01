@@ -19,6 +19,9 @@ class PokeController {
     enum ErrorType: Error {
         case badResponse, otherError, noData, noDecode, noImage, badData
     }
+    enum SortType {
+        case name, id
+    }
     
     var pokemons: [Pokemon] = []
     
@@ -92,5 +95,14 @@ class PokeController {
     
     func save(pokemon: Pokemon) {
         pokemons.append(pokemon)
+    }
+    
+    func sortBy(type: SortType) {
+        switch type {
+        case .id:
+            pokemons = pokemons.sorted { $0.id < $1.id }
+        case .name:
+            pokemons = pokemons.sorted { $0.name < $1.name }
+        }
     }
 }
