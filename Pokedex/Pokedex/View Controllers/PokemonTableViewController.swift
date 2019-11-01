@@ -89,9 +89,17 @@ class PokemonTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailSegue" {
-            guard let detailVC = segue.destination as? SearchDetailViewController else { return }
+            guard let detailVC = segue.destination as? SearchDetailViewController,
+                let indexRow = tableView.indexPathForSelectedRow?.row
+                else { return }
+            
+            detailVC.pokemonController = pokemonController
+            detailVC.pokemon = pokemonController.pokemonList[indexRow]
+            detailVC.searchBar.isHidden = true
         } else if segue.identifier == "SearchSegue" {
             guard let searchVC = segue.destination as? SearchDetailViewController else { return }
+            searchVC.pokemonController = pokemonController
+            searchVC.showPokemonDetails(false)
         }
     }
 
