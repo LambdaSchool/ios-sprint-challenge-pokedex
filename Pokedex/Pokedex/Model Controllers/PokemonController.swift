@@ -6,7 +6,7 @@
 //  Copyright © 2019 Jon Bash. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 fileprivate let HTTPMethod = (
     get: "GET",
@@ -54,10 +54,9 @@ class PokemonController {
             do {
                 let apiPokemon = try jsonDecoder.decode(APIPokemon.self, from: data)
                 
-                guard let imageURLString = apiPokemon.sprites["front_default"],
-                    let imageURL = URL(string: imageURLString) else {
-                        completion(.failure(.badImageURL))
-                        return
+                guard let imageURL = apiPokemon.sprites["front_default"] else {
+                    completion(.failure(.badImageURL))
+                    return
                 }
                 
                 var types = [String]()
@@ -82,7 +81,30 @@ class PokemonController {
         task.resume()
     }
     
-    func fetchSpriteImage(from url: URL) {
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageURL = URL(string: urlString)!
         
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                print("Error fetching image: \(error)")
+                completion(.failure(.otherError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.noDecode))
+                return
+            }
+        }.resume()
     }
 }

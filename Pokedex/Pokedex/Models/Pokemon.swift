@@ -13,10 +13,10 @@ class Pokemon: Codable {
     let id: Int
     let types: [String]
     let abilities: [String]
-    let imageURL: URL
+    let imageURL: String
     let imageData: Data?
     
-    init(name: String, id: Int, types: [String], abilities: [String], imageURL: URL) {
+    init(name: String, id: Int, types: [String], abilities: [String], imageURL: String) {
         self.name = name
         self.id = id
         self.types = types

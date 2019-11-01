@@ -68,6 +68,19 @@ class SearchDetailViewController: UIViewController {
                     self.pokemon = pokemon
                     self.updateViews()
                 }
+                self.pokemonController?.fetchImage(at: pokemon.imageURL, completion: { result in
+                    do {
+                        let image = try result.get()
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                            self.updateViews()
+                        }
+                    } catch {
+                        if let error = error as? NetworkError {
+                            print(error.rawValue)
+                        }
+                    }
+                })
             } catch {
                 if let error = error as? NetworkError {
                     print(error.rawValue)
