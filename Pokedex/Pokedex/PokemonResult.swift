@@ -12,20 +12,21 @@ struct PokemonResult: Equatable, Codable {
     let name: String
     let id: Int
     
-//    let types: [PokemonType]
-//    struct PokemonType: Equatable, Codable {
-//        let type: [Type]
-//        struct `Type`: Equatable, Codable {
-//            let name: String
-//        }
-//    }
-//
-//    let abilities: [PokemonAbility]
-//    struct PokemonAbility: Equatable, Codable {
-//        let ability: [Ability]
-//        struct Ability: Equatable, Codable {
-//            let name: String
-//        }
-//    }
+    let types: [PokemonType]
+    struct PokemonType: Equatable, Codable {
+        let type: Type
+        struct `Type`: Equatable, Codable {
+            let name: String
+        }
+    }
+
+
+    let abilities: [PokemonAbility]
+    struct PokemonAbility: Equatable, Codable {
+        let ability: Ability
+        struct Ability: Equatable, Codable {
+            let name: String
+        }
+    }
 }
 

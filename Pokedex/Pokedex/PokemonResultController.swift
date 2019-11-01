@@ -13,19 +13,8 @@ class PokemonResultController {
     var pokemons: [PokemonResult] = []
     
     func performSearch(for pokemonName: String, completion: @escaping (Result<PokemonResult, Error>) -> Void) {
-//        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-//        urlComponents?.queryItems = [
-//            URLQueryItem(name: "pokemon", value: pokemonName)
-//        ]
-        
         let pokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemonName)")
-        
-//        guard let requestURL = urlComponents?.url else {
-//            print("Request URL is nil")
-//            completion(.failure(NSError()))
-//            return
-//        }
-        
+
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = "GET"
         

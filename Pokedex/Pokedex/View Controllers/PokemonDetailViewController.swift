@@ -55,11 +55,8 @@ class PokemonDetailViewController: UIViewController {
                     self.title = pokemon.name
                     self.nameLabel.text = pokemon.name
                     self.idLabel.text = String(pokemon.id)
-                    //self.abilitiesLabel.text = pokemon.abilities.map({ ($0.ability).map { ($0.name)
-                    //}.joined(separator: ",")})
-
-                    //self.typesLabel.text = pokemon.types.map({ ($0.name)
-                    //}).joined(separator: ",")
+                    self.abilitiesLabel.text = pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+                    self.typesLabel.text = pokemon.types.map({$0.type.name}).joined(separator: ", ")
                 }
             } catch {
                 print("Error getting pokemon! \(error)")
