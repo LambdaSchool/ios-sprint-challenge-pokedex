@@ -12,12 +12,17 @@ class PokemonTableViewController: UITableViewController {
 
     // MARK: - Properties
     
-    var pokemonController = PokemonController()
+    let pokemonController = PokemonController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
 
     // MARK: - Table view data source
 
@@ -27,17 +32,21 @@ class PokemonTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell() }
+         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
 
-        cell.pokemon?.name = pokemonController.savedPokemon[indexPath.row].name
+        cell.textLabel?.text = pokemonController.savedPokemon[indexPath.row].name.capitalized
 
         return cell
     }
 
-
-
-
-
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            pokemonController.deletePokemon(pokemonController.savedPokemon[indexPath.row])
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+    }
 
 
 
@@ -45,8 +54,21 @@ class PokemonTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchSegue" {
+            if let pokemonDetailVC = segue.destination as? PokemonDetailViewController {
+                pokemonDetailVC.pokemonController = pokemonController
+            }
+        } else if segue.identifier == "DetailSegue" {
+            if let pokemonDetailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
+                pokemonDetailVC.pokemonController = pokemonController
+                pokemonDetailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
+            }
+        }
+        
+        
+        
+        
+        
     }
 
 }

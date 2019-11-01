@@ -9,34 +9,37 @@
 import Foundation
 
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
-    
-    
     let abilities: [PokemonAbilities] // main
-        struct PokemonAbilities: Codable {
-                var ability: Ability
-            }
-            struct Ability: Codable {
-                    var name: String
-                }
-    
-    
     var types: [PokemonType] // main
-        struct PokemonType: Codable {
-            var type: Types
-        }
-            struct Types: Codable {
-                var name: String
-            }
-
-    
     var sprites: Sprites // main
-        struct Sprites: Codable {
-            var front_shiny: String
-        }
+    
+    
+    
+    
+    
+    struct PokemonAbilities: Codable, Equatable {
+        var ability: Ability
+    }
+    struct Ability: Codable, Equatable {
+        var name: String
+    }
+    
+    
+    struct PokemonType: Codable, Equatable {
+        var type: Types
+    }
+    struct Types: Codable, Equatable {
+        var name: String
+    }
+    
+    
+    struct Sprites: Codable, Equatable {
+        var front_default: String
+    }
 
 
     
