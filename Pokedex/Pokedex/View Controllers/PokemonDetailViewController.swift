@@ -38,6 +38,11 @@ class PokemonDetailViewController: UIViewController {
             title = pokemon.name
             nameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
+            abilitiesLabel.text = pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+            typesLabel.text = pokemon.types.map({$0.type.name}).joined(separator: ", ")
+            fetchImage(from: pokemon)
+            saveButton.isHidden = true
+            searchBar.isHidden = true
         } else {
             title = "Pokemon Search"
         }
@@ -58,10 +63,26 @@ class PokemonDetailViewController: UIViewController {
                     self.idLabel.text = String(pokemon.id)
                     self.abilitiesLabel.text = pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
                     self.typesLabel.text = pokemon.types.map({$0.type.name}).joined(separator: ", ")
+                    self.fetchImage(from: pokemon)
                 }
             } catch {
                 print("Error getting pokemon! \(error)")
                 
+            }
+        }
+    }
+    
+    private func fetchImage(from pokemon: PokemonResult) {
+        guard let pokemonResultController = pokemonResultController else { return }
+        
+        pokemonResultController.fetchImage(at: pokemon.sprites.frontDefault) { imageResult in
+            do {
+                let image = try imageResult.get()
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            } catch {
+                print("Error with image \(error)")
             }
         }
     }
@@ -72,17 +93,6 @@ class PokemonDetailViewController: UIViewController {
         pokemonResultController.savePokemon(with: pokemon)
         self.navigationController?.popViewController(animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension PokemonDetailViewController: UISearchBarDelegate {

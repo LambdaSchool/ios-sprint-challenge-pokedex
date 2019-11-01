@@ -29,10 +29,13 @@ struct PokemonResult: Equatable, Codable {
         }
     }
     
-    //let sprites: String
-    
-    //enum PokemonSprites: String, Codable {
-        //case front = "front_default"
-    //}
+    let sprites: PokemonSprites
+    struct PokemonSprites: Equatable, Codable {
+        let frontDefault: String
+        
+        enum CodingKeys: String, CodingKey {
+            case frontDefault = "front_default"
+        }
+    }
 }
 

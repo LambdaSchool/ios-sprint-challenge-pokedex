@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokemonResultController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
@@ -40,7 +41,38 @@ class PokemonResultController {
         }.resume()
     }
     
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let imageURL = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error fetching image: \(error)")
+                completion(.failure(NSError()))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError()))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(NSError()))
+            }
+        }.resume()
+    }
+    
     func savePokemon(with pokemon: PokemonResult) {
         pokemons.append(pokemon)
+    }
+    
+    func deletePokemon(_ pokemon: PokemonResult) {
+        guard let pokemonIndex = pokemons.firstIndex(of: pokemon) else { return }
+        pokemons.remove(at: pokemonIndex)
     }
 }
