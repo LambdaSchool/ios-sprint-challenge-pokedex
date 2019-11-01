@@ -94,7 +94,9 @@ class PokeController {
     }
     
     func save(pokemon: Pokemon) {
-        pokemons.append(pokemon)
+        var capitalPokemon = pokemon
+        capitalPokemon.name = capitalize(pokemon.name)
+        pokemons.append(capitalPokemon)
     }
     
     func sortBy(type: SortType) {
@@ -104,5 +106,14 @@ class PokeController {
         case .name:
             pokemons = pokemons.sorted { $0.name < $1.name }
         }
+    }
+    
+    func capitalize(_ word: String) -> String {
+        var newWord = word
+        let firstLetter = newWord.startIndex
+        let capFirst = newWord[firstLetter].uppercased()
+        newWord.remove(at: firstLetter)
+        newWord.insert(Character(capFirst), at: firstLetter)
+        return newWord
     }
 }

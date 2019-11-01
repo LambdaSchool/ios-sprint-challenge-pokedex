@@ -43,12 +43,10 @@ class PokemonDetailViewController: UIViewController {
         })
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        var typeString = "Types: "
-        _ = pokemon.types.compactMap{ typeString.append( $0.type.name) }
-        typesLabel.text = typeString
-        var abilityString = "Abilities: "
-        _ = pokemon.abilities.compactMap { abilityString.append("\($0.ability.name) ") }
-        abilitiesLabel.text = abilityString
+        let types = pokemon.types.compactMap { $0.type.name }
+        typesLabel.text = "Types: \(types.joined(separator: ", "))"
+        let abilities = pokemon.abilities.compactMap { $0.ability.name }
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
     }
     
     func toggleSearchItems() {
@@ -91,7 +89,7 @@ class PokemonDetailViewController: UIViewController {
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
+        guard let searchTerm = searchBar.text?.lowercased() else { return }
         pokeController?.fetchPokemon(named: searchTerm, completion: { result in
             let pokemon = try? result.get()
             DispatchQueue.main.async {
