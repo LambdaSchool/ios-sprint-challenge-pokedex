@@ -53,4 +53,14 @@ class SearchDetailViewController: UIViewController {
         typesLabel.isHidden = !shouldShow
         abilitiesLabel.isHidden = !shouldShow
     }
+    
+    func search() {
+        
+    }
+}
+
+extension SearchDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search()
+    }
 }
