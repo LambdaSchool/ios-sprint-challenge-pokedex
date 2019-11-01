@@ -19,7 +19,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     var pokemon: Pokemon?
-    var apiController: APIController?
+    var apiController = APIController()
     
     
     override func viewDidLoad() {
@@ -42,6 +42,15 @@ class PokemonSearchViewController: UIViewController {
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
-
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+             guard let searchTerm = searchBar.text,
+               !searchTerm.isEmpty else { return }
+        
+        apiController.fetchPokemonDetails(for: searchTerm) {_ in
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
 }
 
