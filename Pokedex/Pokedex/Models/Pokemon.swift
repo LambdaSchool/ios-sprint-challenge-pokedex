@@ -9,21 +9,28 @@
 import Foundation
 
 class Pokemon: Codable {
-    let name: String?
-    let id: Int?
-    let types: [String]?
-    let abilities: [String]?
+    let name: String
+    let id: Int
+    let types: [String]
+    let abilities: [String]
+    
+    init(name: String, id: Int, types: [String], abilities: [String]) {
+        self.name = name
+        self.id = id
+        self.types = types
+        self.abilities = abilities
+    }
 }
 
-class APIAbility: Codable {
-    let name: String?
+struct APIAbility: Codable {
+    let name: String
 }
 
-class APIPokemonType: Codable {
+struct APIPokemonType: Codable {
     let type: [String: String]
 }
 
-struct APIPokemon {
+struct APIPokemon: Codable {
     let name: String
     let id: Int
     let types: [APIPokemonType]

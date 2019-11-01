@@ -16,7 +16,7 @@ fileprivate let HTTPMethod = (
 enum NetworkError: String, Error {
     case otherError = "Unknown error occurred: see log for details."
     case badData = "No data received, or data corrupted."
-    case noDecode = "JSON could not be decoded."
+    case noDecode = "JSON could not be decoded. See log for details."
 }
 
 class PokemonController {
@@ -53,7 +53,22 @@ class PokemonController {
             
             let jsonDecoder = JSONDecoder()
             do {
-                let foundPokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                let apiPokemon = try jsonDecoder.decode(APIPokemon.self, from: data)
+                
+                var abilities = [String]()
+                for ability in apiPokemon.abilities {
+                    abilities.append(ability.name)
+                }
+                
+                var types = [String]()
+                for type in apiPokemon.types {
+                    if let typeName = type.type["name"] {
+                        types.append(typeName)
+                    }
+                }
+                
+                let foundPokemon = Pokemon(name: apiPokemon.name, id: apiPokemon.id, types: types, abilities: abilities)
+                
                 self.pokemonList.append(foundPokemon)
                 completion(.success(foundPokemon))
             } catch {
