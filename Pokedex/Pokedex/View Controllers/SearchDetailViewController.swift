@@ -10,6 +10,8 @@ import UIKit
 
 class SearchDetailViewController: UIViewController {
     
+    var pokemonController: PokemonController?
+    
     var pokemon: Pokemon?
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -54,8 +56,24 @@ class SearchDetailViewController: UIViewController {
         abilitiesLabel.isHidden = !shouldShow
     }
     
-    func search() {
+    private func search() {
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty
+            else { return }
+        searchBar.resignFirstResponder()
         
+        pokemonController?.performSearch(for: searchTerm, completion: { result in
+            do {
+                let pokemon = try result.get()
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
+            } catch {
+                if let error = error as? NetworkError {
+                    print(error.rawValue)
+                }
+            }
+        })
     }
 }
 
