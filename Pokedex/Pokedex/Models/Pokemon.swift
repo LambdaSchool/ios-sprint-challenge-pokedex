@@ -26,18 +26,44 @@ class Pokemon: Codable {
     }
 }
 
-struct APIAbility: Codable {
-    let name: String
-}
-
-struct APIPokemonType: Codable {
-    let type: [String : String]
-}
-
 struct APIPokemon: Codable {
     let name: String
     let id: Int
-    let types: [APIPokemonType]
-    let abilities: [APIAbility]
+    let types: [SpeciesType]
+    let abilities: [Ability]
     let sprites: [String : String]
+    
+    struct Ability: Codable {
+        let ability: SubAbility
+        
+        struct SubAbility: Codable {
+            let name: String
+        }
+    }
+    
+    struct SpeciesType: Codable {
+        let type: SubType
+        
+        struct SubType: Codable {
+            let name: String
+        }
+    }
+}
+
+struct mainStruct: Equatable, Decodable {
+    
+    let someVar: String
+    let otherVar: Int
+    
+    let items: [Item]
+    
+    struct Item: Equatable, Decodable {
+        
+        let item: SubItem
+        
+        struct SubItem: Equatable, Decodable {
+            
+            let descriptor: String
+        }
+    }
 }

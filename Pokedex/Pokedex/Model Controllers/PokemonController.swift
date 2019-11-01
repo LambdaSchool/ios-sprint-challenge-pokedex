@@ -54,22 +54,20 @@ class PokemonController {
             do {
                 let apiPokemon = try jsonDecoder.decode(APIPokemon.self, from: data)
                 
-                var abilities = [String]()
-                for ability in apiPokemon.abilities {
-                    abilities.append(ability.name)
-                }
-                
-                var types = [String]()
-                for type in apiPokemon.types {
-                    if let typeName = type.type["name"] {
-                        types.append(typeName)
-                    }
-                }
-                
                 guard let imageURLString = apiPokemon.sprites["front_default"],
                     let imageURL = URL(string: imageURLString) else {
                         completion(.failure(.badImageURL))
                         return
+                }
+                
+                var types = [String]()
+                for type in apiPokemon.types {
+                    types.append(type.type.name)
+                }
+                
+                var abilities = [String]()
+                for ability in apiPokemon.abilities {
+                    abilities.append(ability.ability.name)
                 }
                 
                 let foundPokemon = Pokemon(name: apiPokemon.name, id: apiPokemon.id, types: types, abilities: abilities, imageURL: imageURL)
