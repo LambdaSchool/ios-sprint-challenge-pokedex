@@ -100,7 +100,14 @@ class PokeController {
     func save(pokemon: Pokemon) {
         var capitalPokemon = pokemon
         capitalPokemon.name = capitalize(pokemon.name)
-        pokemons.append(capitalPokemon)
+        fetchImage(at: pokemon.sprites.frontDefault) { result in
+            if let image = try? result.get() {
+                capitalPokemon.image = image.pngData()
+                self.pokemons.append(capitalPokemon)
+                self.saveToPersistentStore()
+            }
+        }
+        
         saveToPersistentStore()
     }
     

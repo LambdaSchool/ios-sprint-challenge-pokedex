@@ -43,9 +43,21 @@ class PokemonDetailViewController: UIViewController {
         })
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        let types = pokemon.types.compactMap { $0.type.name }
+        var types = pokemon.types.compactMap { $0.type.name }
+        
+        _ = types.compactMap {
+        if let index = types.firstIndex(of: $0) {
+            types[index] = self.pokeController?.capitalize($0) ?? $0 }
+        }
+        
         typesLabel.text = "Types: \(types.joined(separator: ", "))"
-        let abilities = pokemon.abilities.compactMap { $0.ability.name }
+        
+        
+        var abilities = pokemon.abilities.compactMap { $0.ability.name }
+        _ = abilities.compactMap {
+            if let index = abilities.firstIndex(of: $0) {
+                abilities[index] = self.pokeController?.capitalize($0) ?? $0 }
+            }
         abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
     }
     

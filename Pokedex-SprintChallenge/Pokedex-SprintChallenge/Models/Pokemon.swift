@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Pokemon: Codable, Equatable {
     var name: String
@@ -14,6 +15,7 @@ struct Pokemon: Codable, Equatable {
     var abilities: [AbilityContainer]
     var types: [KindContainer]
     var sprites: SpriteContainer
+    var image: Data?
 }
 
 struct AbilityContainer: Codable, Equatable {
