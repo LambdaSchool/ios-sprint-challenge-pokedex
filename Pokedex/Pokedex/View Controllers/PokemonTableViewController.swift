@@ -57,17 +57,13 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            pokemonController.pokemonList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -96,10 +92,12 @@ class PokemonTableViewController: UITableViewController {
             detailVC.pokemonController = pokemonController
             detailVC.pokemon = pokemonController.pokemonList[indexRow]
             detailVC.searching = false
+            detailVC.title = detailVC.pokemon!.name
         } else if segue.identifier == "SearchSegue" {
             guard let searchVC = segue.destination as? SearchDetailViewController else { return }
             searchVC.pokemonController = pokemonController
             searchVC.searching = true
+            searchVC.title = "Pokemon Search"
         }
     }
 
