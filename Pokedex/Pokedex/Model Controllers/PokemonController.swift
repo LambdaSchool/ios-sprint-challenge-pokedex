@@ -61,15 +61,15 @@ class PokemonController {
                 
                 var types = [String]()
                 for type in apiPokemon.types {
-                    types.append(type.type.name)
+                    types.append(type.type.name.capitalized)
                 }
                 
                 var abilities = [String]()
                 for ability in apiPokemon.abilities {
-                    abilities.append(ability.ability.name)
+                    abilities.append(ability.ability.name.capitalized)
                 }
                 
-                let foundPokemon = Pokemon(name: apiPokemon.name, id: apiPokemon.id, types: types, abilities: abilities, imageURL: imageURL)
+                let foundPokemon = Pokemon(name: apiPokemon.name.capitalized, id: apiPokemon.id, types: types, abilities: abilities, imageURL: imageURL)
                 self.pokemonList.append(foundPokemon)
                 
                 completion(.success(foundPokemon))

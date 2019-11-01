@@ -95,10 +95,11 @@ class PokemonTableViewController: UITableViewController {
             
             detailVC.pokemonController = pokemonController
             detailVC.pokemon = pokemonController.pokemonList[indexRow]
-            detailVC.searchBar.isHidden = true
+            detailVC.searching = false
         } else if segue.identifier == "SearchSegue" {
             guard let searchVC = segue.destination as? SearchDetailViewController else { return }
             searchVC.pokemonController = pokemonController
+            searchVC.searching = true
         }
     }
 

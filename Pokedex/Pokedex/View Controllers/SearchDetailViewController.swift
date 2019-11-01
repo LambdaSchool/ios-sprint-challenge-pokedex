@@ -14,6 +14,8 @@ class SearchDetailViewController: UIViewController {
     
     var pokemon: Pokemon?
     
+    var searching: Bool?
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -33,18 +35,23 @@ class SearchDetailViewController: UIViewController {
     }
     
     func updateViews() {
+        if let searching = searching {
+            searchBar.isHidden = !searching
+        }
         if let pokemon = pokemon {
             nameLabel.text = pokemon.name
             pokemonIDLabel.text = "\(pokemon.id)"
             pokemonTypesLabel.text = pokemon.types.joined(separator: ", ")
             pokemonAbilitiesLabel.text = pokemon.abilities.joined(separator: ", ")
-            showPokemonDetails(true)
+            showPokemonDetailLabels(true)
+            
+            fetchImage()
         } else {
-            showPokemonDetails(false)
+            showPokemonDetailLabels(false)
         }
     }
 
-    func showPokemonDetails(_ shouldShow: Bool) {
+    func showPokemonDetailLabels(_ shouldShow: Bool) {
         nameLabel.isHidden = !shouldShow
         imageView.isHidden = !shouldShow
         pokemonIDLabel.isHidden = !shouldShow
@@ -68,19 +75,24 @@ class SearchDetailViewController: UIViewController {
                     self.pokemon = pokemon
                     self.updateViews()
                 }
-                self.pokemonController?.fetchImage(at: pokemon.imageURL, completion: { result in
-                    do {
-                        let image = try result.get()
-                        DispatchQueue.main.async {
-                            self.imageView.image = image
-                            self.updateViews()
-                        }
-                    } catch {
-                        if let error = error as? NetworkError {
-                            print(error.rawValue)
-                        }
-                    }
-                })
+                self.fetchImage()
+            } catch {
+                if let error = error as? NetworkError {
+                    print(error.rawValue)
+                }
+            }
+        })
+    }
+    
+    private func fetchImage() {
+        guard let pokemon = pokemon else { return }
+        self.pokemonController?.fetchImage(at: pokemon.imageURL, completion: { result in
+            do {
+                let image = try result.get()
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                    self.updateViews()
+                }
             } catch {
                 if let error = error as? NetworkError {
                     print(error.rawValue)
