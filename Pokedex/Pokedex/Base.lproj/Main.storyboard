@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="6o1-2D-Y7d" kind="show" identifier="ShowDetailPokemonSegue" id="TbY-Sk-KBI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -42,7 +45,7 @@
                     <navigationItem key="navigationItem" title="Pokemon" id="Xrt-yt-V0f">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Dfh-4f-PGp">
                             <connections>
-                                <segue destination="6o1-2D-Y7d" kind="show" id="uca-39-QnA"/>
+                                <segue destination="6o1-2D-Y7d" kind="show" identifier="SearchPokemonSegue" id="uca-39-QnA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -69,18 +72,29 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gc-2w-uvB">
-                                <rect key="frame" x="20" y="696" width="65" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCU-Pu-5pc">
-                                <rect key="frame" x="20" y="737" width="65" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nla-iP-pmt">
+                                <rect key="frame" x="20" y="696" width="65" height="71.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gc-2w-uvB">
+                                        <rect key="frame" x="0.0" y="0.0" width="21" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCU-Pu-5pc">
+                                        <rect key="frame" x="0.0" y="25.5" width="51" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOX-Gw-c3e">
+                                        <rect key="frame" x="0.0" y="51" width="65" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ci8-ic-nb1">
                                 <rect key="frame" x="60" y="302" width="294" height="294"/>
                                 <constraints>
@@ -92,40 +106,40 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YO6-HJ-Ws8">
                                 <rect key="frame" x="156.5" y="812" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="6o1-2D-Y7d" eventType="touchUpInside" id="6fj-jh-Gds"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOX-Gw-c3e">
-                                <rect key="frame" x="20" y="778" width="65" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="YO6-HJ-Ws8" firstAttribute="centerX" secondItem="N2Z-tP-e4p" secondAttribute="centerX" id="1AD-Ex-Hwf"/>
                             <constraint firstItem="uNL-c4-U4e" firstAttribute="top" secondItem="ZP3-Qu-4ca" secondAttribute="top" id="5Dk-O1-kL0"/>
                             <constraint firstItem="J4T-dr-fPk" firstAttribute="top" secondItem="uNL-c4-U4e" secondAttribute="bottom" constant="30" id="5kc-qu-p6S"/>
-                            <constraint firstItem="6gc-2w-uvB" firstAttribute="top" secondItem="uNL-c4-U4e" secondAttribute="bottom" constant="500" id="75d-GP-mvq"/>
-                            <constraint firstItem="SCU-Pu-5pc" firstAttribute="top" secondItem="6gc-2w-uvB" secondAttribute="bottom" constant="20" id="8Zr-6N-GeZ"/>
                             <constraint firstItem="ci8-ic-nb1" firstAttribute="centerX" secondItem="N2Z-tP-e4p" secondAttribute="centerX" id="8Zv-tT-BQr"/>
-                            <constraint firstItem="HOX-Gw-c3e" firstAttribute="trailing" secondItem="SCU-Pu-5pc" secondAttribute="trailing" id="EY5-NK-yPT"/>
+                            <constraint firstItem="nla-iP-pmt" firstAttribute="leading" secondItem="ZP3-Qu-4ca" secondAttribute="leading" constant="20" id="Epe-K7-ewl"/>
                             <constraint firstItem="ZP3-Qu-4ca" firstAttribute="bottom" secondItem="YO6-HJ-Ws8" secondAttribute="bottom" constant="20" id="Hq8-Yq-mnm"/>
                             <constraint firstItem="ci8-ic-nb1" firstAttribute="top" secondItem="J4T-dr-fPk" secondAttribute="bottom" constant="40" id="KYx-aU-qE7"/>
                             <constraint firstItem="J4T-dr-fPk" firstAttribute="centerX" secondItem="N2Z-tP-e4p" secondAttribute="centerX" id="MBU-rn-6tR"/>
-                            <constraint firstItem="HOX-Gw-c3e" firstAttribute="top" secondItem="SCU-Pu-5pc" secondAttribute="bottom" constant="20" id="P7P-35-QzK"/>
                             <constraint firstItem="uNL-c4-U4e" firstAttribute="trailing" secondItem="ZP3-Qu-4ca" secondAttribute="trailing" id="R2x-bu-MdL"/>
-                            <constraint firstItem="6gc-2w-uvB" firstAttribute="leading" secondItem="ZP3-Qu-4ca" secondAttribute="leading" constant="20" id="UPV-vK-UVV"/>
-                            <constraint firstItem="SCU-Pu-5pc" firstAttribute="trailing" secondItem="6gc-2w-uvB" secondAttribute="trailing" id="lVz-2r-Qok"/>
+                            <constraint firstItem="ZP3-Qu-4ca" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nla-iP-pmt" secondAttribute="trailing" constant="20" id="VLd-nR-gC2"/>
+                            <constraint firstItem="YO6-HJ-Ws8" firstAttribute="top" secondItem="ci8-ic-nb1" secondAttribute="bottom" constant="216" id="c3A-kK-b8W"/>
                             <constraint firstItem="ci8-ic-nb1" firstAttribute="leading" secondItem="ZP3-Qu-4ca" secondAttribute="leading" constant="60" id="oP6-Oh-A75"/>
-                            <constraint firstItem="SCU-Pu-5pc" firstAttribute="leading" secondItem="6gc-2w-uvB" secondAttribute="leading" id="pIp-xc-FXR"/>
                             <constraint firstItem="ZP3-Qu-4ca" firstAttribute="trailing" secondItem="ci8-ic-nb1" secondAttribute="trailing" constant="60" id="pXe-Aj-U7H"/>
-                            <constraint firstItem="HOX-Gw-c3e" firstAttribute="leading" secondItem="SCU-Pu-5pc" secondAttribute="leading" id="uBN-i4-O1H"/>
                             <constraint firstItem="uNL-c4-U4e" firstAttribute="leading" secondItem="ZP3-Qu-4ca" secondAttribute="leading" id="wmH-4L-zWU"/>
-                            <constraint firstItem="ZP3-Qu-4ca" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6gc-2w-uvB" secondAttribute="trailing" constant="20" id="zNP-Fk-HbV"/>
+                            <constraint firstItem="nla-iP-pmt" firstAttribute="top" secondItem="ci8-ic-nb1" secondAttribute="bottom" constant="100" id="zbi-zD-ZDg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZP3-Qu-4ca"/>
                     </view>
                     <navigationItem key="navigationItem" id="Leq-Ty-Yqh"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="HOX-Gw-c3e" id="EAR-WJ-x53"/>
+                        <outlet property="idLabel" destination="6gc-2w-uvB" id="Teq-9b-c6V"/>
+                        <outlet property="nameLabel" destination="J4T-dr-fPk" id="ooS-Dh-HiE"/>
+                        <outlet property="saveButton" destination="YO6-HJ-Ws8" id="TUL-FQ-ISb"/>
+                        <outlet property="searchBar" destination="uNL-c4-U4e" id="aKw-An-Ufc"/>
+                        <outlet property="typesLabel" destination="SCU-Pu-5pc" id="SZL-il-bvn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1nK-zi-fbh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -150,4 +164,7 @@
             <point key="canvasLocation" x="128.98550724637681" y="99.776785714285708"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="TbY-Sk-KBI"/>
+    </inferredMetricsTieBreakers>
 </document>
