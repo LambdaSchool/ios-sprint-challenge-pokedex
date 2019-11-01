@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokeController {
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
@@ -15,41 +16,81 @@ class PokeController {
         static let get = "GET"
     }
     
-    var pokemons: [Pokemon] = []
-    var currentPokemon: Pokemon?
+    enum ErrorType: Error {
+        case badResponse, otherError, noData, noDecode, noImage, badData
+    }
     
-    func fetchPokemon(named name: String, completion: @escaping (Error?) -> Void) {
+    var pokemons: [Pokemon] = []
+    
+    func fetchPokemon(named name: String, completion: @escaping (Result<Pokemon, ErrorType>) -> Void) {
         let url = baseURL.appendingPathComponent(name)
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            //            print(request)
+            
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode != 200 {
+                    completion(.failure(.badResponse))
+                }
+            }
+            
             if let error = error {
                 print("Error fetching data: \(error)")
-                completion(error)
+                completion(.failure(.otherError))
                 return
             }
             
             guard let data = data else {
                 print("No data returned from data task.")
-                completion(NSError())
+                completion(.failure(.noData))
                 return
             }
             
             let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
             do {
                 let decoded = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.currentPokemon = decoded
-                completion(nil)
+                completion(.success(decoded))
+                print(decoded.types.compactMap({ $0.type.name }))
             } catch {
                 print("Unable to decode data into object of type Pokemon: \(error)")
-                completion(error)
+                completion(.failure(.noDecode))
             }
-            print(self.currentPokemon?.name)
         }.resume()
+    }
+    
+    func fetchImage(at urlString:
+        String, completion: @escaping (Result<UIImage, ErrorType>) -> Void) {
+        guard let imageURL = URL(string: urlString) else {
+            completion(.failure(.noImage))
+            return
+        }
         
-        print(url)
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error: \(error)")
+                completion(.failure(.otherError))
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.noDecode))
+            }
+        }.resume()
+    }
+    
+    func save(pokemon: Pokemon) {
+        pokemons.append(pokemon)
     }
 }
