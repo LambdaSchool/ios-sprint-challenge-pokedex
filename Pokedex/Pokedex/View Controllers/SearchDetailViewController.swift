@@ -45,7 +45,11 @@ class SearchDetailViewController: UIViewController {
             pokemonAbilitiesLabel.text = pokemon.abilities.joined(separator: ", ")
             showPokemonDetailLabels(true)
             
-            fetchImage()
+            if let imageData = pokemon.imageData {
+                imageView.image = UIImage(data: imageData)
+            } else {
+                fetchImage()
+            }
         } else {
             showPokemonDetailLabels(false)
         }
@@ -92,6 +96,7 @@ class SearchDetailViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.imageView.image = image
                     self.updateViews()
+                    pokemon.imageData = image.pngData()
                 }
             } catch {
                 if let error = error as? NetworkError {

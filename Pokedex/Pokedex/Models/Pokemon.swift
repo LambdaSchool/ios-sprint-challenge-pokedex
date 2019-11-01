@@ -14,7 +14,7 @@ class Pokemon: Codable {
     let types: [String]
     let abilities: [String]
     let imageURL: String
-    let imageData: Data?
+    var imageData: Data?
     
     init(name: String, id: Int, types: [String], abilities: [String], imageURL: String) {
         self.name = name
