@@ -9,22 +9,69 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
+//        didSet{
+//            updateViews()
+//        }
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
 
-        // Do any additional setup after loading the view.
+
+    }
+    
+    private func updateViews() {
+        if let pokemon = pokemon {
+            navigationItem.title = pokemon.name
+            pokemonNameLabel.text = pokemon.name
+            idLabel.text  = "\(pokemon.id)"
+            typesLabel.text = pokemon.types.description
+            abilitiesLabel.text = pokemon.types.description
+        }
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        guard let pokemonController = pokemonController else { return }
+        
+        pokemonController.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
-    */
+    
+    
+    
+}
 
+
+
+
+
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let pokemonController = pokemonController else { return }
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
+        
+        pokemonController.getPokemon(searchTerm: searchTerm) { (result) in
+                DispatchQueue.main.async {
+                    self.updateViews()
+            }
+        }
+    
+    }
 }
