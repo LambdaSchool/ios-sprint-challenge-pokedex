@@ -18,5 +18,14 @@ class PokeController {
     var pokemons: [Pokemon] = []
     var currentPokemon: Pokemon?
     
-    
+    func fetchPokemon(named name: String, completion: @escaping (Error?) -> Void) {
+            let url = baseURL.appendingPathComponent(name)
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = HTTPMethod.get
+            
+            
+            
+            print(url)
+        }
 }
