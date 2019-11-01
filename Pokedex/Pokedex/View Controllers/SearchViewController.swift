@@ -41,24 +41,27 @@ class SearchViewController: UIViewController {
         if let pokemon = pokemon {
             self.title = "\(pokemon.name.capitalized)"
             nameLabel.text = pokemon.name.capitalized
-//            getImage(imageString: pokemon.sprites.front_default)
+            getImage(imageString: pokemon.sprites.front_default)
             IDLabel.text = ("ID: \(String(pokemon.id))")
             for aType in pokemon.types {
-                typesLabel.text = ("Type(s): \(aType.type.name)")
+                typesLabel.text = ("Type(s): \(aType.type.name.capitalized)")
             }
             for anAbility in pokemon.abilities {
-                abilitiesLabel.text = ("Abilities: \(anAbility.ability.name)")
+                abilitiesLabel.text = ("Abilities: \(anAbility.ability.name.capitalized)")
             }
         } else {
             self.title = "Pokemon Search"
         }
     }
     
-//    func getImage(imageString: String) {
-//        pokemonController?.fetchImage(at: imageString, completion: { result in
-//
-//        })
-//    }
+    func getImage(imageString: String) {
+        pokemonController?.fetchImage(at: imageString, completion: { (result) in
+            guard let image = result else { return }
+            DispatchQueue.main.async {
+                self.PokeImageView.image = image
+            }
+        })
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {

@@ -63,22 +63,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Ah7-z7-76u">
-                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQV-wG-Uqa">
-                                <rect key="frame" x="207" y="216" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZOW-4I-dVp">
-                                <rect key="frame" x="61.5" y="244" width="291" height="291"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZOW-4I-dVp" secondAttribute="height" multiplier="1:1" id="fr5-OS-hd9"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJr-kN-Sso">
                                 <rect key="frame" x="136.5" y="798" width="141" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -87,54 +71,70 @@
                                     <action selector="savePokemonButtonTapped:" destination="GNY-Vg-Ptt" eventType="touchUpInside" id="huG-f1-Fmt"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpE-u7-J7M">
-                                <rect key="frame" x="20" y="729" width="0.0" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpE-u7-J7M" userLabel="Types">
+                                <rect key="frame" x="20" y="623" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Kw-1b-Sxw">
-                                <rect key="frame" x="20" y="697" width="0.0" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Kw-1b-Sxw" userLabel="IdLabel">
+                                <rect key="frame" x="20" y="603" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Szu-8L-GeO">
-                                <rect key="frame" x="20" y="755" width="0.0" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Szu-8L-GeO" userLabel="Abilities">
+                                <rect key="frame" x="20" y="643" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VDx-3i-GeH">
+                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qg2-hW-y5o" userLabel="NameLabel">
+                                <rect key="frame" x="207" y="216" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yR7-zL-7Ec">
+                                <rect key="frame" x="40" y="224" width="334" height="334"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yR7-zL-7Ec" secondAttribute="height" multiplier="1:1" id="vd6-XA-UNe"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="PxT-3Q-dOa" firstAttribute="bottom" secondItem="XJr-kN-Sso" secondAttribute="bottom" constant="25" id="2pj-2T-lOa"/>
-                            <constraint firstItem="ZOW-4I-dVp" firstAttribute="top" secondItem="uQV-wG-Uqa" secondAttribute="bottom" constant="28" id="52N-5j-dkd"/>
-                            <constraint firstItem="Ah7-z7-76u" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" id="8dh-f7-dO1"/>
-                            <constraint firstItem="Szu-8L-GeO" firstAttribute="top" secondItem="tpE-u7-J7M" secondAttribute="bottom" constant="26" id="8hJ-Ea-H6f"/>
-                            <constraint firstItem="uQV-wG-Uqa" firstAttribute="centerX" secondItem="2Vj-qO-tpr" secondAttribute="centerX" id="9gJ-8u-tBq"/>
-                            <constraint firstItem="6Kw-1b-Sxw" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" constant="20" id="B85-Bj-UEE"/>
-                            <constraint firstItem="XJr-kN-Sso" firstAttribute="centerX" secondItem="2Vj-qO-tpr" secondAttribute="centerX" id="HgO-G2-kfl"/>
-                            <constraint firstItem="Ah7-z7-76u" firstAttribute="top" secondItem="PxT-3Q-dOa" secondAttribute="top" id="ICR-6s-oIs"/>
-                            <constraint firstItem="XJr-kN-Sso" firstAttribute="top" secondItem="ZOW-4I-dVp" secondAttribute="bottom" constant="263" id="Mmm-7J-vho"/>
-                            <constraint firstItem="PxT-3Q-dOa" firstAttribute="bottom" secondItem="Szu-8L-GeO" secondAttribute="bottom" constant="107" id="Qzm-LH-img"/>
-                            <constraint firstItem="Ah7-z7-76u" firstAttribute="trailing" secondItem="PxT-3Q-dOa" secondAttribute="trailing" id="b4c-Lg-yFf"/>
-                            <constraint firstItem="ZOW-4I-dVp" firstAttribute="centerX" secondItem="2Vj-qO-tpr" secondAttribute="centerX" id="cfX-4T-LeR"/>
-                            <constraint firstItem="Szu-8L-GeO" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" constant="20" id="imf-ep-dG1"/>
-                            <constraint firstItem="tpE-u7-J7M" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" constant="20" id="jEC-y7-xkl"/>
-                            <constraint firstItem="tpE-u7-J7M" firstAttribute="top" secondItem="6Kw-1b-Sxw" secondAttribute="bottom" constant="32" id="nCh-6E-u5Y"/>
-                            <constraint firstItem="uQV-wG-Uqa" firstAttribute="top" secondItem="Ah7-z7-76u" secondAttribute="bottom" constant="20" id="qpe-AL-SUE"/>
+                            <constraint firstItem="tpE-u7-J7M" firstAttribute="top" secondItem="6Kw-1b-Sxw" secondAttribute="bottom" constant="20" id="0To-4L-yfM"/>
+                            <constraint firstItem="PxT-3Q-dOa" firstAttribute="bottom" secondItem="XJr-kN-Sso" secondAttribute="bottom" constant="25" id="8FI-8q-Edf"/>
+                            <constraint firstItem="VDx-3i-GeH" firstAttribute="top" secondItem="PxT-3Q-dOa" secondAttribute="top" id="Krx-xd-4ka"/>
+                            <constraint firstItem="VDx-3i-GeH" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" id="Mgr-j3-qSA"/>
+                            <constraint firstItem="6Kw-1b-Sxw" firstAttribute="leading" secondItem="2Vj-qO-tpr" secondAttribute="leading" constant="20" id="R5g-vg-Qm9"/>
+                            <constraint firstItem="Qg2-hW-y5o" firstAttribute="centerX" secondItem="2Vj-qO-tpr" secondAttribute="centerX" id="SgD-vq-UYM"/>
+                            <constraint firstItem="yR7-zL-7Ec" firstAttribute="top" secondItem="Qg2-hW-y5o" secondAttribute="bottom" constant="8" id="WJK-6f-9oP"/>
+                            <constraint firstItem="Szu-8L-GeO" firstAttribute="leading" secondItem="tpE-u7-J7M" secondAttribute="leading" id="aU4-ss-mtE"/>
+                            <constraint firstItem="VDx-3i-GeH" firstAttribute="trailing" secondItem="PxT-3Q-dOa" secondAttribute="trailing" id="aiD-gD-Tzz"/>
+                            <constraint firstItem="yR7-zL-7Ec" firstAttribute="leading" secondItem="PxT-3Q-dOa" secondAttribute="leading" constant="40" id="bZ0-yv-5VH"/>
+                            <constraint firstItem="tpE-u7-J7M" firstAttribute="leading" secondItem="2Vj-qO-tpr" secondAttribute="leading" constant="20" id="cGt-TX-tDL"/>
+                            <constraint firstItem="Szu-8L-GeO" firstAttribute="top" secondItem="tpE-u7-J7M" secondAttribute="bottom" constant="20" id="gJa-9v-bjX"/>
+                            <constraint firstItem="Qg2-hW-y5o" firstAttribute="top" secondItem="VDx-3i-GeH" secondAttribute="bottom" constant="20" id="p1U-gS-YFx"/>
+                            <constraint firstItem="PxT-3Q-dOa" firstAttribute="trailing" secondItem="yR7-zL-7Ec" secondAttribute="trailing" constant="40" id="ruR-IA-Kjr"/>
+                            <constraint firstItem="XJr-kN-Sso" firstAttribute="centerX" secondItem="2Vj-qO-tpr" secondAttribute="centerX" id="y31-vI-Fcm"/>
+                            <constraint firstItem="6Kw-1b-Sxw" firstAttribute="top" secondItem="yR7-zL-7Ec" secondAttribute="bottom" constant="45" id="z7w-Ye-i9o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PxT-3Q-dOa"/>
                     </view>
                     <navigationItem key="navigationItem" id="Ofd-nv-7WR"/>
                     <connections>
-                        <outlet property="IDLabel" destination="6Kw-1b-Sxw" id="8vo-cG-EjX"/>
-                        <outlet property="PokeImageView" destination="ZOW-4I-dVp" id="G5s-QN-CyC"/>
-                        <outlet property="abilitiesLabel" destination="Szu-8L-GeO" id="Ks1-WT-YB5"/>
-                        <outlet property="nameLabel" destination="uQV-wG-Uqa" id="AGd-HL-SiL"/>
-                        <outlet property="pokeSearch" destination="Ah7-z7-76u" id="iYq-8Q-C3E"/>
-                        <outlet property="typesLabel" destination="tpE-u7-J7M" id="cIE-ye-BfX"/>
+                        <outlet property="IDLabel" destination="6Kw-1b-Sxw" id="cvD-cc-IVq"/>
+                        <outlet property="PokeImageView" destination="yR7-zL-7Ec" id="hHd-Hv-fkZ"/>
+                        <outlet property="abilitiesLabel" destination="Szu-8L-GeO" id="Y2r-oL-Ab3"/>
+                        <outlet property="nameLabel" destination="Qg2-hW-y5o" id="VXN-Tg-9aX"/>
+                        <outlet property="pokeSearch" destination="VDx-3i-GeH" id="5jA-el-Jch"/>
+                        <outlet property="typesLabel" destination="tpE-u7-J7M" id="yiV-5d-uaJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m4p-DZ-YUu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
