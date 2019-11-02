@@ -28,12 +28,12 @@ class APIController {
     
     func fetchAPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        guard let pokeURL = baseURL?.appendingPathComponent("\(searchTerm)") else { return }
+        guard let pokeURL = baseURL?.appendingPathComponent("/\(searchTerm.lowercased())") else { return }
         
         var request = URLRequest(url: pokeURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 completion(.failure(.otherError))
                 return
@@ -44,13 +44,13 @@ class APIController {
                 return
             }
             
-            let jsonDecodr = JSONDecoder()
+            let jsonDecoder = JSONDecoder()
             do {
-                let pokemon = try jsonDecodr.decode(Pokemon.self, from: data)
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 print("Ohhhh.  Did we get something?!?!")
                 completion(.success(pokemon))
             } catch {
-                print("He's dead, Jim.")
+                print("He's dead, Jim. \(error)")
                 completion(.failure(.noDecode))
                 return
             }

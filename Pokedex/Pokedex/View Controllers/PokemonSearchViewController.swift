@@ -58,7 +58,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-        guard let searchTerm = searchBar.text?.lowercased(),
+        guard let searchTerm = searchBar.text,
         !searchTerm.isEmpty else { return }
         print("Is there something here? \(searchTerm)")
         

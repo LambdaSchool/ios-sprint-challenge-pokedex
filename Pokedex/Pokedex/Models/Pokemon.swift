@@ -11,14 +11,18 @@ import Foundation
 struct Pokemon: Codable {
     let name: String
     let id: Int
-    let abilities: [Abilities]
-    let imageURL: String
+    let abilities: [Ability]
+//    let imageURL: String
 }
 
-struct Abilities: Codable {
-    let ability: String
+struct Ability: Codable {
+    let ability: Ability
+    
+    struct Ability: Codable {
+        let name: String
+    }
 }
 
 struct PokemonSearch: Codable {
-    let results: Pokemon
+    let results: [Pokemon]
 }
