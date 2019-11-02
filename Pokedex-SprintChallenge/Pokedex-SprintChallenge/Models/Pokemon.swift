@@ -16,6 +16,10 @@ struct Pokemon: Codable, Equatable, Hashable {
     var types: [KindContainer]
     var sprites: SpriteContainer
     var image: Data?
+    
+    static func ==(lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name && lhs.id == rhs.id
+    }
 }
 
 struct AbilityContainer: Codable, Equatable, Hashable {

@@ -89,12 +89,25 @@ class PokeController {
             }
             
             if let image = UIImage(data: data) {
+                
                 completion(.success(image))
             } else {
                 completion(.failure(.noDecode))
             }
         }.resume()
     }
+    
+//    func saveImage() {
+//        
+//        fetchImage(at: pokemon.sprites.frontDefault, completion: { result in
+//            if let thisImage = try? result.get() {
+//                guard let index = self.pokeController?.pokemons.firstIndex(of: pokemon) else { return }
+//                
+//                self.pokeController?.pokemons[index].image = thisImage.pngData()
+//                
+//            }
+//        })
+//    }
     
     func save(pokemon: Pokemon) {
         
