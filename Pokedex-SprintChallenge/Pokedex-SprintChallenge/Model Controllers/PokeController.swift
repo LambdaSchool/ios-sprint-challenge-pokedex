@@ -60,7 +60,6 @@ class PokeController {
             do {
                 let decoded = try jsonDecoder.decode(Pokemon.self, from: data)
                 completion(.success(decoded))
-                print(decoded.types.compactMap({ $0.type.name }))
             } catch {
                 print("Unable to decode data into object of type Pokemon: \(error)")
                 completion(.failure(.noDecode))
@@ -98,15 +97,23 @@ class PokeController {
     }
     
     func save(pokemon: Pokemon) {
-        var capitalPokemon = pokemon
-        capitalPokemon.name = capitalize(pokemon.name)
-        fetchImage(at: pokemon.sprites.frontDefault) { result in
-            if let image = try? result.get() {
-                capitalPokemon.image = image.pngData()
-                self.pokemons.append(capitalPokemon)
-                self.saveToPersistentStore()
-            }
+        
+        if !pokemons.contains(pokemon) {
+            pokemons.append(pokemon)
         }
+        
+//        fetchImage(at: pokemon.sprites.frontDefault) { result in
+//            if let image = try? result.get() {
+//                capitalPokemon.image = image.pngData()
+//                if self.pokemons.contains(pokemon) {
+//                    return
+//                }
+//                self.pokemons.append(capitalPokemon)
+//                self.pokemons = Array(Set(self.pokemons))
+//                self.saveToPersistentStore()
+//            }
+//        }
+        
         
         saveToPersistentStore()
     }

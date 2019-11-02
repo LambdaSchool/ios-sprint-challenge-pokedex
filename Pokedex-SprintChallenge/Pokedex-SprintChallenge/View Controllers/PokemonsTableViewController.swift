@@ -59,7 +59,7 @@ class PokemonsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
-        cell.textLabel?.text = pokeController.pokemons[indexPath.row].name
+        cell.textLabel?.text = pokeController.capitalize(pokeController.pokemons[indexPath.row].name)
 
         return cell
     }

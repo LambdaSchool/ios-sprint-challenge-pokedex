@@ -29,19 +29,37 @@ class PokemonDetailViewController: UIViewController {
         searchBar.delegate = self
         toggleSearchItems()
         updateViews()
+        saveImage()
+    }
+    
+    func saveImage() {
+        guard let pokemon = pokemon else { return }
+        pokeController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { result in
+            if let thisImage = try? result.get() {
+                guard let index = self.pokeController?.pokemons.firstIndex(of: pokemon) else { return }
+                
+                self.pokeController?.pokemons[index].image = thisImage.pngData()
+                
+            }
+        })
     }
     
     func updateViews() {
         togglePokemonItems()
         guard let pokemon = pokemon else { return }
-        pokeController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { result in
-            if let image = try? result.get() {
-                DispatchQueue.main.async {
-                    self.imageView.image = image
+        if let data = pokemon.image {
+            let image = UIImage(data: data)
+            imageView.image = image
+        } else {
+            pokeController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { result in
+                if let image = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
                 }
-            }
-        })
-        nameLabel.text = pokemon.name
+            })
+        }
+        nameLabel.text = pokeController?.capitalize(pokemon.name)
         idLabel.text = "ID: \(pokemon.id)"
         var types = pokemon.types.compactMap { $0.type.name }
         
@@ -63,7 +81,7 @@ class PokemonDetailViewController: UIViewController {
     
     func toggleSearchItems() {
         if pokemon != nil {
-            navigationItem.title = pokemon?.name
+            navigationItem.title = pokeController?.capitalize(pokemon?.name ?? "")
             searchBar.isHidden = true
             saveButton.isHidden = true
         } //
@@ -86,12 +104,10 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func saveTapped(_ sender: Any) {
-        guard let pokemon = pokemon,
-            let pokeController = pokeController,
-            !pokeController.pokemons.contains(pokemon) else {
+        guard let pokemon = pokemon else {
                 navigationController?.popViewController(animated: true)
                 return }
-        pokeController.save(pokemon: pokemon)
+        pokeController?.save(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     

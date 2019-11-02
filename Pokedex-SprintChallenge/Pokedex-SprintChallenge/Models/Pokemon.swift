@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable, Equatable, Hashable {
     var name: String
     var id: Int
     var abilities: [AbilityContainer]
@@ -18,22 +18,22 @@ struct Pokemon: Codable, Equatable {
     var image: Data?
 }
 
-struct AbilityContainer: Codable, Equatable {
+struct AbilityContainer: Codable, Equatable, Hashable {
     var ability: Ability
 }
 
-struct Ability: Codable, Equatable {
+struct Ability: Codable, Equatable, Hashable {
     var name: String
 }
 
-struct KindContainer: Codable, Equatable {
+struct KindContainer: Codable, Equatable, Hashable {
     var type: Kind
 }
 
-struct Kind: Codable, Equatable {
+struct Kind: Codable, Equatable, Hashable {
     var name: String
 }
 
-struct SpriteContainer: Codable, Equatable {
+struct SpriteContainer: Codable, Equatable, Hashable {
     var frontDefault: String
 }
