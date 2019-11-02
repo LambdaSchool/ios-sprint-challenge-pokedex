@@ -13,8 +13,6 @@ enum HTTPMethod: String {
 }
 
 enum NetworkError: Error {
-    case noAuth
-    case badAuth
     case otherError
     case badData
     case noDecode
@@ -22,66 +20,41 @@ enum NetworkError: Error {
 
 class APIController {
     
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
-    var pokemon: [Pokemon] = []
-
-    // create function to fetch details
+    private var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
+    var pokemon: Pokemon?
+    var pokemons = [Pokemon]()
     
-    func fetchPokemonDetails(for pokemonName: String, completion: @escaping (NetworkError?) -> Void) {
+    // Fetch a pokemon
+    
+    func fetchAPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        let pokemonURL = baseURL.appendingPathComponent(pokemonName)
-        var request = URLRequest(url: pokemonURL)
+        guard let pokeURL = baseURL?.appendingPathComponent("\(searchTerm)") else { return }
+        
+        var request = URLRequest(url: pokeURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            if let _ = error {
-                completion(.otherError)
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if error != nil {
+                completion(.failure(.otherError))
                 return
             }
             
             guard let data = data else {
-                completion(.badData)
+                completion(.failure(.badData))
                 return
             }
             
-            let decoder = JSONDecoder()
+            let jsonDecodr = JSONDecoder()
             do {
-                self.pokemon = try decoder.decode([Pokemon].self, from: data)
-                completion(nil)
+                let pokemon = try jsonDecodr.decode(Pokemon.self, from: data)
+                print("Ohhhh.  Did we get something?!?!")
+                completion(.success(pokemon))
             } catch {
-                print("Error retrieving pokemon objects: \(error)")
-                completion(.noDecode)
+                print("He's dead, Jim.")
+                completion(.failure(.noDecode))
                 return
             }
-        }.resume()
+        }
+        task.resume()
     }
-    
-    // fetch Pokemon Image
-    
-//    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-//         let imageURL = URL(string: urlString)!
-//         
-//         var request = URLRequest(url: imageURL)
-//         request.httpMethod = HTTPMethod.get.rawValue
-//         
-//         URLSession.shared.dataTask(with: request) { data, _, error in
-//             if let error = error {
-//                 print("Error fetching image: \(error)")
-//                 completion(.failure(.otherError))
-//                 return
-//             }
-//             guard let data = data else  {
-//                 completion(.failure(.badData))
-//                 return
-//             }
-//             
-//             if let image = UIImage(data: data) {
-//                 completion(.success(image))
-//             } else {
-//                 completion(.failure(.noDecode))
-//             }
-//         }.resume()
-//     }
-    
 }
