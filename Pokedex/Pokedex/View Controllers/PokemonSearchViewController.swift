@@ -47,11 +47,15 @@ class PokemonSearchViewController: UIViewController {
         abilitiesLabel.isHidden = false
         saveButton.isHidden = false
         
-        nameLabel.text = pokemon.name
-        idLabel.text = "\(pokemon.id)"
-        abilitiesLabel.text = "\(pokemon.abilities)"
+        nameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        
+        let pokeAbilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        abilitiesLabel.text = "Abilities: \(pokeAbilities)".capitalized
 
     }
+    
+
     
     func fetchImage() {
         apiController.fetchImage(at: pokemon!.sprites.imageURL, completion: { result in
