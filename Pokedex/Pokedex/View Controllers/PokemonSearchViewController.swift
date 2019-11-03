@@ -50,6 +50,9 @@ class PokemonSearchViewController: UIViewController {
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
         
+        let pokeTypes = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        typesLabel.text = "Types: \(pokeTypes)".capitalized
+        
         let pokeAbilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         abilitiesLabel.text = "Abilities: \(pokeAbilities)".capitalized
 
