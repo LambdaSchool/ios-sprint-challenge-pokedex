@@ -28,6 +28,7 @@ class PokemonsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        segmentedController.selectedSegmentIndex = UserDefaults.standard.integer(forKey: PokeController.PropertyKeys.sortMethodKey)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +39,12 @@ class PokemonsTableViewController: UITableViewController {
     // MARK: - actions
     
     @IBAction func sortChanged(_ sender: UISegmentedControl) {
+        switch UserDefaults.standard.integer(forKey: PokeController.PropertyKeys.sortMethodKey) {
+        case 0:
+            UserDefaults.standard.set(1, forKey: PokeController.PropertyKeys.sortMethodKey)
+        default:
+            UserDefaults.standard.set(0, forKey: PokeController.PropertyKeys.sortMethodKey)
+        }
         sortPokemon()
     }
     
@@ -58,7 +65,7 @@ class PokemonsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
-        cell.textLabel?.text = capitalize(pokeController.pokemons[indexPath.row].name)
+        cell.textLabel?.text = "\(capitalize(pokeController.pokemons[indexPath.row].name))-\(pokeController.pokemons[indexPath.row].id)"
 
         return cell
     }
@@ -74,12 +81,15 @@ class PokemonsTableViewController: UITableViewController {
     // MARK: - Private
     
     private func sortPokemon() {
-        switch segmentedController.selectedSegmentIndex {
-        case 0:
-            pokeController.sortBy(type: .name)
-        default:
-            pokeController.sortBy(type: .id)
-        }
+        pokeController.sortBy()
+//        switch segmentedController.selectedSegmentIndex {
+//        case 0:
+//            pokeController.sortBy(type: .name)
+////            UserDefaults.standard.set(PokeController.SortType.name, forKey: PropertyKeys.sortMethodKey)
+//        default:
+//            pokeController.sortBy(type: .id)
+////            UserDefaults.standard.set(PokeController.SortType.id, forKey: PropertyKeys.sortMethodKey)
+//        }
         tableView.reloadData()
     }
     

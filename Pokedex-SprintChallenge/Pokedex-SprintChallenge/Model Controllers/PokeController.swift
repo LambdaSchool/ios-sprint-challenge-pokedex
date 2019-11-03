@@ -15,6 +15,10 @@ class PokeController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
+    struct PropertyKeys {
+        static let sortMethodKey = "ShouldSortBy"
+    }
+    
     struct HTTPMethod {
         static let get = "GET"
     }
@@ -22,8 +26,8 @@ class PokeController {
     enum ErrorType: Error {
         case badResponse, otherError, noData, noDecode, noImage, badData, noPokemon
     }
-    enum SortType {
-        case name, id
+    enum SortType: Int {
+        case name = 0, id = 1
     }
     
     var pokemons: [Pokemon] = []
@@ -105,14 +109,13 @@ class PokeController {
         }.resume()
     }
     
-    // MARK: - Persistence Functions
+    // MARK: - CRUD Functions
     
     func save(pokemon: Pokemon) {
         
         if !pokemons.contains(pokemon) {
             pokemons.append(pokemon)
         }
-        
         saveToPersistentStore()
     }
     
@@ -121,6 +124,8 @@ class PokeController {
         pokemons.remove(at: index)
         saveToPersistentStore()
     }
+    
+    // MARK: - Persistence Functions
     
     private var persistentFileURL: URL? {
         let fm = FileManager.default
@@ -156,12 +161,14 @@ class PokeController {
     
     // MARK: - Utility Functions
     
-    func sortBy(type: SortType) {
-        switch type {
-        case .id:
-            pokemons = pokemons.sorted { $0.id < $1.id }
-        case .name:
+    func sortBy() {
+        switch UserDefaults.standard.integer(forKey: PropertyKeys.sortMethodKey) {
+        case SortType.name.rawValue:
             pokemons = pokemons.sorted { $0.name < $1.name }
+//            UserDefaults.standard.set(SortType.id.rawValue, forKey: PropertyKeys.sortMethodKey)
+        default:
+            pokemons = pokemons.sorted { $0.id < $1.id }
+//            UserDefaults.standard.set(SortType.name.rawValue, forKey: PropertyKeys.sortMethodKey)
         }
         saveToPersistentStore()
     }
