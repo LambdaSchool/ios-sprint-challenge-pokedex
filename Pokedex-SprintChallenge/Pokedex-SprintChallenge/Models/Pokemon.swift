@@ -22,6 +22,8 @@ struct Pokemon: Codable, Equatable, Hashable {
     }
 }
 
+// MARK: - Internal Types
+
 struct AbilityContainer: Codable, Equatable, Hashable {
     var ability: Ability
 }

@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class PokeController {
+    
+    // MARK: - Properties
+    
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     struct HTTPMethod {
@@ -17,13 +20,15 @@ class PokeController {
     }
     
     enum ErrorType: Error {
-        case badResponse, otherError, noData, noDecode, noImage, badData
+        case badResponse, otherError, noData, noDecode, noImage, badData, noPokemon
     }
     enum SortType {
         case name, id
     }
     
     var pokemons: [Pokemon] = []
+    
+    // MARK: - Fetching Functions
     
     init() {
         loadFromPersistentStore()
@@ -67,9 +72,9 @@ class PokeController {
         }.resume()
     }
     
-    func fetchImage(at urlString:
-        String, completion: @escaping (Result<UIImage, ErrorType>) -> Void) {
-        guard let imageURL = URL(string: urlString) else {
+    func fetchImage(for pokemon:
+        Pokemon, completion: @escaping (Result<UIImage, ErrorType>) -> Void) {
+        guard let imageURL = URL(string: pokemon.sprites.frontDefault) else {
             completion(.failure(.noImage))
             return
         }
@@ -88,8 +93,11 @@ class PokeController {
                 return
             }
             
+            if let index = self.pokemons.firstIndex(of: pokemon) {
+                self.pokemons[index].image = data
+            }
+            
             if let image = UIImage(data: data) {
-                
                 completion(.success(image))
             } else {
                 completion(.failure(.noDecode))
@@ -97,36 +105,13 @@ class PokeController {
         }.resume()
     }
     
-//    func saveImage() {
-//        
-//        fetchImage(at: pokemon.sprites.frontDefault, completion: { result in
-//            if let thisImage = try? result.get() {
-//                guard let index = self.pokeController?.pokemons.firstIndex(of: pokemon) else { return }
-//                
-//                self.pokeController?.pokemons[index].image = thisImage.pngData()
-//                
-//            }
-//        })
-//    }
+    // MARK: - Persistence Functions
     
     func save(pokemon: Pokemon) {
         
         if !pokemons.contains(pokemon) {
             pokemons.append(pokemon)
         }
-        
-//        fetchImage(at: pokemon.sprites.frontDefault) { result in
-//            if let image = try? result.get() {
-//                capitalPokemon.image = image.pngData()
-//                if self.pokemons.contains(pokemon) {
-//                    return
-//                }
-//                self.pokemons.append(capitalPokemon)
-//                self.pokemons = Array(Set(self.pokemons))
-//                self.saveToPersistentStore()
-//            }
-//        }
-        
         
         saveToPersistentStore()
     }
@@ -135,25 +120,6 @@ class PokeController {
         guard let index = pokemons.firstIndex(of: pokemon) else { return }
         pokemons.remove(at: index)
         saveToPersistentStore()
-    }
-    
-    func sortBy(type: SortType) {
-        switch type {
-        case .id:
-            pokemons = pokemons.sorted { $0.id < $1.id }
-        case .name:
-            pokemons = pokemons.sorted { $0.name < $1.name }
-        }
-        saveToPersistentStore()
-    }
-    
-    func capitalize(_ word: String) -> String {
-        var newWord = word
-        let firstLetter = newWord.startIndex
-        let capFirst = newWord[firstLetter].uppercased()
-        newWord.remove(at: firstLetter)
-        newWord.insert(Character(capFirst), at: firstLetter)
-        return newWord
     }
     
     private var persistentFileURL: URL? {
@@ -186,5 +152,17 @@ class PokeController {
         } catch {
             print("Error loading data: \(error)")
         }
+    }
+    
+    // MARK: - Utility Functions
+    
+    func sortBy(type: SortType) {
+        switch type {
+        case .id:
+            pokemons = pokemons.sorted { $0.id < $1.id }
+        case .name:
+            pokemons = pokemons.sorted { $0.name < $1.name }
+        }
+        saveToPersistentStore()
     }
 }

@@ -9,7 +9,12 @@
 import UIKit
 
 class PokemonsTableViewController: UITableViewController {
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var segmentedController: UISegmentedControl!
+    
+    // MARK: - Properties
     
     struct PropertyKeys {
         static let cell = "PokemonCell"
@@ -18,7 +23,9 @@ class PokemonsTableViewController: UITableViewController {
     }
     
     let pokeController = PokeController()
-
+    
+    // MARK: - Life Cycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,15 +35,7 @@ class PokemonsTableViewController: UITableViewController {
         sortPokemon()
     }
     
-    func sortPokemon() {
-        switch segmentedController.selectedSegmentIndex {
-        case 0:
-            pokeController.sortBy(type: .name)
-        default:
-            pokeController.sortBy(type: .id)
-        }
-        tableView.reloadData()
-    }
+    // MARK: - actions
     
     @IBAction func sortChanged(_ sender: UISegmentedControl) {
         sortPokemon()
@@ -59,7 +58,7 @@ class PokemonsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
-        cell.textLabel?.text = pokeController.capitalize(pokeController.pokemons[indexPath.row].name)
+        cell.textLabel?.text = capitalize(pokeController.pokemons[indexPath.row].name)
 
         return cell
     }
@@ -70,6 +69,27 @@ class PokemonsTableViewController: UITableViewController {
             pokeController.delete(pokeController.pokemons[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    // MARK: - Private
+    
+    private func sortPokemon() {
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            pokeController.sortBy(type: .name)
+        default:
+            pokeController.sortBy(type: .id)
+        }
+        tableView.reloadData()
+    }
+    
+    private func capitalize(_ word: String) -> String {
+        var newWord = word
+        let firstLetter = newWord.startIndex
+        let capFirst = newWord[firstLetter].uppercased()
+        newWord.remove(at: firstLetter)
+        newWord.insert(Character(capFirst), at: firstLetter)
+        return newWord
     }
     
     // MARK: - Navigation
@@ -85,9 +105,5 @@ class PokemonsTableViewController: UITableViewController {
                 detailVC.pokemon = pokeController.pokemons[indexPath.row]
             }
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    
-
 }
