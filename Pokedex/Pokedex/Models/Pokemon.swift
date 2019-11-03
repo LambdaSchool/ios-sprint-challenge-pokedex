@@ -12,7 +12,7 @@ struct Pokemon: Codable {
     let name: String
     let id: Int
     let abilities: [Ability]
-//    let imageURL: String
+    let sprites: Sprite
 }
 
 struct Ability: Codable {
@@ -23,6 +23,11 @@ struct Ability: Codable {
     }
 }
 
-struct PokemonSearch: Codable {
-    let results: [Pokemon]
+struct Sprite: Codable {
+    let imageURL: String
+    
+    enum CodingKeys: String, CodingKey {
+        case imageURL = "front_shiny"
+    }
 }
+

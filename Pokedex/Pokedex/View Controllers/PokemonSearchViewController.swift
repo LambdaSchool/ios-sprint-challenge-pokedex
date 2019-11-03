@@ -50,8 +50,18 @@ class PokemonSearchViewController: UIViewController {
         nameLabel.text = pokemon.name
         idLabel.text = "\(pokemon.id)"
         abilitiesLabel.text = "\(pokemon.abilities)"
+
     }
     
+    func fetchImage() {
+        apiController.fetchImage(at: pokemon!.sprites.imageURL, completion: { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImage.image = image
+                }
+            }
+        })
+    }
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
@@ -62,20 +72,20 @@ extension PokemonSearchViewController: UISearchBarDelegate {
         !searchTerm.isEmpty else { return }
         print("Is there something here? \(searchTerm)")
         
-
-
         apiController.fetchAPokemon(searchTerm: searchTerm) { (result) in
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                     self.updateViews()
+                    self.fetchImage()
                 }
             } catch {
                 print("There's an error - no Pikachu for you!")
                 return
             }
         }
+        
     }
 }
 
