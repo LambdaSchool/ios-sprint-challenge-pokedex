@@ -55,8 +55,6 @@ class PokemonSearchViewController: UIViewController {
 
     }
     
-
-    
     func fetchImage() {
         apiController.fetchImage(at: pokemon!.sprites.imageURL, completion: { result in
             if let image = try? result.get() {
