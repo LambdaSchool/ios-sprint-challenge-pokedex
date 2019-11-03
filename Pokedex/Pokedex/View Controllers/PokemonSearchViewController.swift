@@ -48,14 +48,14 @@ class PokemonSearchViewController: UIViewController {
         saveButton.isHidden = false
         
         nameLabel.text = pokemon.name.capitalized
-        idLabel.text = "ID: \(pokemon.id)"
+        idLabel.text = "Pokemon ID: \(pokemon.id)"
         
         let pokeTypes = pokemon.types.map { $0.type.name }.joined(separator: ", ")
         typesLabel.text = "Types: \(pokeTypes)".capitalized
         
         let pokeAbilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         abilitiesLabel.text = "Abilities: \(pokeAbilities)".capitalized
-
+        
     }
     
     func fetchImage() {
@@ -67,14 +67,24 @@ class PokemonSearchViewController: UIViewController {
             }
         })
     }
+    
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+    
+        guard let pokemon = pokemon else { return }
+        
+        apiController.savePokemon(pokemon)
+        navigationController?.popViewController(animated: true)
+        
+    }
+    
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
+        
         guard let searchTerm = searchBar.text,
-        !searchTerm.isEmpty else { return }
+            !searchTerm.isEmpty else { return }
         print("Is there something here? \(searchTerm)")
         
         apiController.fetchAPokemon(searchTerm: searchTerm) { (result) in

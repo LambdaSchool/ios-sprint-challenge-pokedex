@@ -23,7 +23,7 @@ class APIController {
     
     private var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     var pokemon: Pokemon?
-    var pokemons = [Pokemon]()
+    var pokeList: [Pokemon] = []
     
     // Fetch a pokemon
     
@@ -59,6 +59,8 @@ class APIController {
         task.resume()
     }
     
+    // Fetch Pokemon Image 'Sprite'
+    
     func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         let imageURL = URL(string: urlString)!
         
@@ -83,4 +85,11 @@ class APIController {
             }
         }.resume()
     }
+    
+    // Save A Pokemon
+    
+    func savePokemon(_ pokemon: Pokemon) {
+        pokeList.append(pokemon)
+    }
+    
 }
