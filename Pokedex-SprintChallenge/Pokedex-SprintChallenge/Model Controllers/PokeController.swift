@@ -165,10 +165,8 @@ class PokeController {
         switch UserDefaults.standard.integer(forKey: PropertyKeys.sortMethodKey) {
         case SortType.name.rawValue:
             pokemons = pokemons.sorted { $0.name < $1.name }
-//            UserDefaults.standard.set(SortType.id.rawValue, forKey: PropertyKeys.sortMethodKey)
         default:
             pokemons = pokemons.sorted { $0.id < $1.id }
-//            UserDefaults.standard.set(SortType.name.rawValue, forKey: PropertyKeys.sortMethodKey)
         }
         saveToPersistentStore()
     }

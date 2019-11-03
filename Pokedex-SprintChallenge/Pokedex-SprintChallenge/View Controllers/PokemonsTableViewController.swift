@@ -61,11 +61,10 @@ class PokemonsTableViewController: UITableViewController {
         return pokeController.pokemons.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
-        cell.textLabel?.text = "\(capitalize(pokeController.pokemons[indexPath.row].name))-\(pokeController.pokemons[indexPath.row].id)"
+        cell.textLabel?.text = capitalize(pokeController.pokemons[indexPath.row].name)
 
         return cell
     }
@@ -82,14 +81,6 @@ class PokemonsTableViewController: UITableViewController {
     
     private func sortPokemon() {
         pokeController.sortBy()
-//        switch segmentedController.selectedSegmentIndex {
-//        case 0:
-//            pokeController.sortBy(type: .name)
-////            UserDefaults.standard.set(PokeController.SortType.name, forKey: PropertyKeys.sortMethodKey)
-//        default:
-//            pokeController.sortBy(type: .id)
-////            UserDefaults.standard.set(PokeController.SortType.id, forKey: PropertyKeys.sortMethodKey)
-//        }
         tableView.reloadData()
     }
     
