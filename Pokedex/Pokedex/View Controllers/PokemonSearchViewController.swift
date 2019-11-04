@@ -18,10 +18,10 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
-    
-    
-    let apiController = APIController()
+    var apiController = APIController()
     var pokemon: Pokemon?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class PokemonSearchViewController: UIViewController {
         typesLabel.isHidden = true
         abilitiesLabel.isHidden = true
         saveButton.isHidden = true
-        
+            
         searchBar.delegate = self
         
         updateViews()
@@ -57,8 +57,10 @@ class PokemonSearchViewController: UIViewController {
         abilitiesLabel.text = "Abilities: \(pokeAbilities)".capitalized
         
     }
+
     
     func fetchImage() {
+        
         apiController.fetchImage(at: pokemon!.sprites.imageURL, completion: { result in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
@@ -69,15 +71,21 @@ class PokemonSearchViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-    
-        guard let pokemon = pokemon else { return }
         
-        apiController.savePokemon(pokemon)
-        navigationController?.popViewController(animated: true)
-        
+        if let pokemon = pokemon,
+            let pokemonName = searchBar.text,
+            !pokemonName.isEmpty {
+
+            apiController.pokeList.append(pokemon)
+            apiController.saveToPersistentStore()
+            
+            self.navigationController?.popToRootViewController(animated: true)
+
+        } else { return }
     }
     
 }
+
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     

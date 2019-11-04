@@ -10,13 +10,13 @@
         <!--Pokedex-->
         <scene sceneID="lSe-gW-ymQ">
             <objects>
-                <tableViewController id="AgK-8I-AxP" customClass="PokemondTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="AgK-8I-AxP" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RKr-qs-lZc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="To1-yx-Ll6" style="IBUITableViewCellStyleDefault" id="JyL-Xa-gCK" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokeCell" textLabel="To1-yx-Ll6" style="IBUITableViewCellStyleDefault" id="JyL-Xa-gCK">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JyL-Xa-gCK" id="7hW-bM-QxZ">
@@ -33,7 +33,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="nameLabel" destination="To1-yx-Ll6" id="uH2-JV-AJP"/>
                                     <segue destination="uA8-tK-wCF" kind="show" identifier="ToPokemonDetailSegue" id="Qtb-na-ZFJ"/>
                                 </connections>
                             </tableViewCell>
@@ -173,7 +172,7 @@
                                 <rect key="frame" x="156.5" y="593" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
-                                    <action selector="saveButtonTapped:" destination="g4H-DS-wOj" eventType="touchUpInside" id="WXo-pn-Q6l"/>
+                                    <action selector="saveButtonTapped:" destination="g4H-DS-wOj" eventType="touchUpInside" id="uP2-Ea-fdF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -196,7 +195,7 @@
                         <outlet property="idLabel" destination="Obj-FV-36p" id="Xui-u2-KlX"/>
                         <outlet property="nameLabel" destination="pVL-5t-dLZ" id="ywV-Lc-R7x"/>
                         <outlet property="pokemonImage" destination="vdm-Ue-yy5" id="H0y-Qe-Qrm"/>
-                        <outlet property="saveButton" destination="HmJ-x7-TcJ" id="qOL-4d-O7M"/>
+                        <outlet property="saveButton" destination="HmJ-x7-TcJ" id="ahW-qY-2UE"/>
                         <outlet property="searchBar" destination="CxH-3S-Cua" id="OWP-Ge-wGY"/>
                         <outlet property="typesLabel" destination="4TK-Xo-o4C" id="Vz7-1V-Cs5"/>
                     </connections>

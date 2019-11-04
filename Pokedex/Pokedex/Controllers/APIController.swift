@@ -25,6 +25,10 @@ class APIController {
     var pokemon: Pokemon?
     var pokeList: [Pokemon] = []
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
     // Fetch a pokemon
     
     func fetchAPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
@@ -86,10 +90,40 @@ class APIController {
         }.resume()
     }
     
-    // Save A Pokemon
+    // Mark: Persistence
     
-    func savePokemon(_ pokemon: Pokemon) {
-        pokeList.append(pokemon)
+    func loadFromPersistentStore() {
+        do {
+            guard let fileURL = pokedexURL else { return }
+            let pokemonData = try Data(contentsOf: fileURL)
+            let pListDecoder = PropertyListDecoder()
+            self.pokeList = try pListDecoder.decode([Pokemon].self, from: pokemonData)
+        } catch {
+            print("There was an error retreiving your Pokedex: \(error)")
+        }
     }
     
+        func saveToPersistentStore() {
+            
+            let plistEncoder = PropertyListEncoder()
+            
+            do  {
+                let pokemonData = try plistEncoder.encode(pokeList)
+                guard let fileURL = pokedexURL else { return }
+                try pokemonData.write(to: fileURL)
+            } catch {
+                print("There was an error saving your foodMinders: \(error)")
+            }
+        }
+        
+        
+        private var pokedexURL: URL? {
+            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            let fileName = "pokedex.plist"
+            
+            return documentDirectory?.appendingPathComponent(fileName)
+        }
+    
 }
+    
+
