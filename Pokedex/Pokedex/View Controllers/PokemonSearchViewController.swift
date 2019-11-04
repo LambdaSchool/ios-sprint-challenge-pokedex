@@ -21,8 +21,6 @@ class PokemonSearchViewController: UIViewController {
     var apiController = APIController()
     var pokemon: Pokemon?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,10 +76,10 @@ class PokemonSearchViewController: UIViewController {
 
             apiController.pokeList.append(pokemon)
             apiController.saveToPersistentStore()
-            
+
             self.navigationController?.popToRootViewController(animated: true)
 
-        } else { return }
+        }
     }
     
 }
