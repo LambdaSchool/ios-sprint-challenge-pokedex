@@ -43,7 +43,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
            
-            let pokemon = self.apiController.pokeList[indexPath.row]
+            _ = self.apiController.pokeList[indexPath.row]
             self.apiController.pokeList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
@@ -57,6 +57,14 @@ class PokemonTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToSearchSegue" {
          
+        } else if segue.identifier == "ToPokemonDetailSegue" {
+            
+            if let indexPath = tableView.indexPathForSelectedRow,
+                let detailVC = segue.destination as?
+                PokemonDetailViewController {
+                detailVC.pokemon = apiController.pokeList[indexPath.row]
+                detailVC.apiController = apiController
             }
+        }
         }
     }
