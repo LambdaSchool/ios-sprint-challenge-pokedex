@@ -1,8 +1,8 @@
 //
 //  PokemonTableViewController.swift
-//  pokedex sprint 3
+//  Pokedex
 //
-//  Created by Rick Wolter on 11/1/19.
+//  Created by Rick Wolter on 11/3/19.
 //  Copyright © 2019 Richar Wolter. All rights reserved.
 //
 
@@ -10,29 +10,39 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
+    
     let pokemonController = PokemonController()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokedex.count
+        return pokemonController.pokemonArray.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
-        let pokemon = pokemonController.pokedex[indexPath.row]
-        guard let image = pokemon.imageData else {return cell}
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
 
-        cell.textLabel?.text = pokemon.name
-        cell.imageView?.image = UIImage(data: image)
-        // Configure the cell...
+        cell.textLabel?.text = pokemonController.pokemonArray[indexPath.row].name
 
         return cell
     }
@@ -73,25 +83,20 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
-            guard let searchVC = segue.destination as? DetailViewController else {return}
+            guard let searchVC = segue.destination as? PokemonSearchViewController else {return}
             searchVC.pokemonController = pokemonController
-        }
-        if segue.identifier == "DetailPokemonSegue" {
-            guard let detailVC = segue.destination as? DetailViewController else {return}
-            guard let cellIndex = tableView.indexPathForSelectedRow else {return} //oops
-            detailVC.pokemon = pokemonController.pokedex[cellIndex.row]
-            detailVC.pokemonController = pokemonController
+
+            
         }
         
-        
-        
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
     
-
 }

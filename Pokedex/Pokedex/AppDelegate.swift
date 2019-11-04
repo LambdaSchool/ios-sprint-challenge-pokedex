@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  pokedex sprint 3
+//  Pokedex
 //
-//  Created by Rick Wolter on 11/1/19.
+//  Created by Rick Wolter on 11/3/19.
 //  Copyright © 2019 Richar Wolter. All rights reserved.
 //
 
