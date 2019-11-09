@@ -9,13 +9,37 @@
 import UIKit
 
 class PokemonSearchViewController: UIViewController {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var deleteDutton: UIButton!
+    
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    var pokemonController: PokemonController? {
+        didSet {
+            updateViews()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
+        
     }
     
+    func updateViews() {
+        
+    }
 
     /*
     // MARK: - Navigation
