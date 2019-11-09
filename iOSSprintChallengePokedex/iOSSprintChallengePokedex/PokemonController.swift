@@ -1,5 +1,5 @@
 //
-//  SearchController.swift
+//  PokemonController.swift
 //  iOSSprintChallengePokedex
 //
 //  Created by denis cedeno on 11/9/19.
@@ -20,11 +20,11 @@ enum NetworkError: Error {
     case noDecode
 }
 
-class SearchController {
+class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
-    var searchResults: [SearchResult] = []
+    var pokemons: [Pokemon] = []
     
     func preformSearch(for searchTerm: String, completion: @escaping () -> Void){
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
