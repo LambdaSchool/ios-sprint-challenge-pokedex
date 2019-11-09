@@ -1,0 +1,68 @@
+//
+//  ApiController.swift
+//  Pokedex
+//
+//  Created by Lambda_School_Loaner_201 on 11/9/19.
+//  Copyright © 2019 Christian Lorenzo. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+
+enum HTTMethod: String {
+    case get = "GET"
+    case push = "PUSH"
+}
+
+enum NetworkError: Error {
+    case otherError
+    case badData
+    case noDecode
+    case noData
+}
+
+class APIController {
+    
+    var pokemonArray: [Pokemon] = []
+    var pokemonImages: [URL] = []
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
+
+
+func fetchPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+    
+    let pokemonUrl = baseURL?.appendingPathComponent(pokemonName.lowercased())
+    guard let pokeUrl = pokemonUrl else {return}
+    var request = URLRequest(url: pokeUrl)
+    request.httpMethod = HTTPMethod.get.rawValue
+    
+    URLSession.shared.dataTask(with: request) { (data, _, error) in
+        if let error = error {
+            print("Error fetching data: \(error)")
+            return
+        }
+        
+        guard let data = data else {
+            print("No data returned from data task")
+            return
+        }
+        
+        do {
+            let pokemonSearch = try JSONDecoder().decode(Pokemon.self, from: data)
+            completion(.success(pokemonSearch))
+            
+        }catch {
+            print("Unable to decode data into object of type [Pokemon]: \(error)")
+        }
+    }.resume()
+}
+    
+    func addPokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+    }
+    
+    func delete(pokemon: Pokemon) {
+        guard let index = pokemonArray.firstIndex(of: pokemon) else {return}
+        pokemonArray.remove(at: index)
+    }
+}
