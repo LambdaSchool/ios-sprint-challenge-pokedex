@@ -26,8 +26,9 @@ class PokemonController {
     
     var pokemons: [Pokemon] = []
     
-    func preformSearch(for searchTerm: String, completion: @escaping () -> Void){
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+    func fetchPokemon(for name: String, completion: @escaping (Pokemon, Error) -> Void){
+        let url = baseURL.appendingPathComponent(name)
+        let request = URLRequest(url: url)
     }
 
 }
