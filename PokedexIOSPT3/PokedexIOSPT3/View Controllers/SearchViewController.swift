@@ -25,7 +25,9 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        
+        if let pokemon = pokemon {
+            updateViews(with: pokemon)
+        }
     }
     
     @IBAction func savePokemon(_ sender: UIBarButtonItem) {
@@ -33,7 +35,6 @@ class SearchViewController: UIViewController {
             delegate?.savePokemonToPokedex(pokemon: pokemon)
         }
         navigationController?.popViewController(animated: true)
-//        dismiss(animated: true, completion: nil)
     }
     
     private func updateViews(with pokemon: Pokemon) {

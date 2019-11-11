@@ -60,6 +60,7 @@ class PokeTableViewController: UITableViewController {
             if let detailVC = segue.destination as? SearchViewController,
                     let indexPath = tableView.indexPathForSelectedRow {
                 detailVC.pokemon = pokeList[indexPath.row]
+                detailVC.pokemonController = pokemonController
             }
         }
     }
