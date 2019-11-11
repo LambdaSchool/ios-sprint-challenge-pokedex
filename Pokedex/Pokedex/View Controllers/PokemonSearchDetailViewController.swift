@@ -16,11 +16,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Properties
     var pokemonController: PokemonController?
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon? 
     var delegate: AddPokemonDelegate?
 
     
@@ -35,7 +31,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updateViews()
         searchField.delegate = self
 
         // Do any additional setup after loading the view.
@@ -60,6 +56,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
                     
                     // TODO: Dismiss keyboard
                     self.pokemon = pokemon
+                    self.updateViews()
 
                 }
                 pokemonController.fetchImage(at: pokemon.sprites.front_default) { (result) in
@@ -92,6 +89,18 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
         for abilities in pokemon.abilities {
             let abilityName = abilities.ability.name
             pokeAbility.text = pokeAbility.text! + abilityName + ", "
+        }
+        
+        if pokeImage.image != nil {
+            return
+        } else {
+            pokemonController?.fetchImage(at: pokemon.sprites.front_default) { (result) in
+                if let image = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.pokeImage.image = image
+                    }
+                }
+            }
         }
     }
 
