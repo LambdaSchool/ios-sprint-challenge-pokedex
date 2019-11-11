@@ -26,9 +26,12 @@ class PokemonController {
         var request = URLRequest(url: pokemonUrl)
         request.httpMethod = HTTPMethods.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                completion(.failure(.otherError))
+            }
             
-            if let error = error {
+            if let error = error { // handles non HTTP error (server time out etc)
                 print("Error fetching data: \(error)")
                 completion(.failure(.otherError))
                 return
