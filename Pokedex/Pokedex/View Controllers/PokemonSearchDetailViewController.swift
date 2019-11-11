@@ -59,8 +59,9 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         pokeName.text = pokemon.name
-        pokeID.text = String(pokemon.id)
-        pokeType.text = pokemon.types[0].type.name
+        pokeID.text = ("ID: \(pokemon.id)")
+        pokeType.text = ("Types: \(pokemon.types[0].type.name)")
+        pokeAbility.text = ("Abilities: \(pokemon.abilities[0].ability.name)")
     }
     
 
