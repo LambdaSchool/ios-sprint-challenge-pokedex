@@ -29,16 +29,28 @@ import Foundation
 //A set of sprites used to depict this Pokémon in the game.
 //PokemonSprites
 
-struct Pokemon: Codable {
-    let id: Int?
-    let name: String?
-    let types: [Type]
-    let abilities: [Ability]
+struct Pokemon: Codable, Equatable {
+    let id: Int
+    let name: String
+    let types: [Types]
+    let abilities: [Abilities]
     let sprite: Sprite
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name 
+    }
+}
+
+struct Abilities: Codable {
+    let ability: Ability
 }
 
 struct Ability: Codable {
     let name: String
+}
+
+struct Types: Codable {
+    let type: Type
 }
 
 struct Type: Codable {
