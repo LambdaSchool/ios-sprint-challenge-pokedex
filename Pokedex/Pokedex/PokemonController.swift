@@ -32,7 +32,18 @@ class PokemonController {
                 completion(.failure(.badData))
                 return
             }
-        }
+            
+            let decoder = JSONDecoder()
+            do {
+                let pokeSearchResult = try decoder.decode(Pokemon.self, from: data)
+                self.pokemon.append(pokeSearchResult)
+                completion(.success(self.pokemon))
+            } catch {
+                print("Error decoding search results objects: \(error)")
+                completion(.failure(.notDecodedProperly))
+                return
+            }
+        }.resume()
         
     }
     
