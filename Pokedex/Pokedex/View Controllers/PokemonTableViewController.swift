@@ -20,7 +20,6 @@ class PokemonTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.reloadData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,7 +38,6 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        print("There are \(pokemonController.pokemons.count) in the array.")
         cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name
         cell.detailTextLabel?.text = String(pokemonController.pokemons[indexPath.row].id)
 
@@ -73,9 +71,20 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchSegue" {
             guard let pokeSearchVC = segue.destination as? PokemonSearchDetailViewController else { return }
             pokeSearchVC.pokemonController = pokemonController
+            pokeSearchVC.delegate = self
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
 
+}
+
+extension PokemonTableViewController: AddPokemonDelegate {
+    func pokeWasAdded(_ pokemons: [Pokemon]) {
+        self.pokemons = pokemons
+        tableView.reloadData()
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
 }

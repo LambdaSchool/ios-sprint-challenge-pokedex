@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AddPokemonDelegate {
+    func pokeWasAdded(_ pokemons: [Pokemon])
+}
+
 class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Properties
@@ -17,6 +21,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             updateViews()
         }
     }
+    var delegate: AddPokemonDelegate?
 
     
     // MARK: Outlets
@@ -38,9 +43,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Actions
     @IBAction func savePokemon(_ sender: UIButton) {
-        guard let pokemon = pokemon else { return }
-        print(pokemonController!.pokemons)
-        self.navigationController?.popViewController(animated: true)
+        guard let pokemonController = pokemonController else { return }
+        delegate?.pokeWasAdded(pokemonController.pokemons)
     }
     
     // MARK: Methods
