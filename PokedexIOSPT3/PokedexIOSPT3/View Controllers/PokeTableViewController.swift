@@ -11,34 +11,40 @@ import UIKit
 class PokeTableViewController: UITableViewController {
 
     let pokemonController = PokemonController()
-    
+    var pokeList: [Pokemon] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.dataSource = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokeList?.count ?? 0
+        return pokeList.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath) as? PokeTableViewCell else { return UITableViewCell() }
         
-        let pokemon = pokemonController.pokeList?[indexPath.row]
+        let pokemon = pokeList[indexPath.row]
         cell.pokemon = pokemon
         cell.pokemonController = pokemonController
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokeList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 
     // MARK: - Navigation
@@ -48,14 +54,21 @@ class PokeTableViewController: UITableViewController {
         if segue.identifier == "ShowSearch" {
             if let searchVC = segue.destination as? SearchViewController {
                 searchVC.pokemonController = pokemonController
-//                searchVC.delegate = self
+                searchVC.delegate = self
             }
         } else if segue.identifier == "ShowDetail" {
             if let detailVC = segue.destination as? SearchViewController,
                     let indexPath = tableView.indexPathForSelectedRow {
-                detailVC.pokemon = pokemonController.pokeList?[indexPath.row]
+                detailVC.pokemon = pokeList[indexPath.row]
             }
         }
     }
-
 }
+
+extension PokeTableViewController: UpdatePokedex {
+    func savePokemonToPokedex(pokemon: Pokemon) {
+        pokeList.append(pokemon)
+        tableView.reloadData()
+    }
+}
+

@@ -20,18 +20,20 @@ class SearchViewController: UIViewController {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var delegate: UpdatePokedex?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         searchBar.delegate = self
         
     }
     
     @IBAction func savePokemon(_ sender: UIBarButtonItem) {
         if let pokemon = pokemon {
-            pokemonController?.pokeList?.append(pokemon)
+            delegate?.savePokemonToPokedex(pokemon: pokemon)
         }
+        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
     }
     
     private func updateViews(with pokemon: Pokemon) {
@@ -42,6 +44,21 @@ class SearchViewController: UIViewController {
                 }
             }
         }
+        
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
+        
+        var types: String = ""
+        for pokemonType in pokemon.types {
+            types += "\(pokemonType.type.name), "
+        }
+        typesLabel.text = "Types: \(types)"
+
+        var abilities: String = ""
+        for pokemonAbility in pokemon.abilities {
+            abilities += "\(pokemonAbility.ability.name), "
+        }
+        abilitiesLabel.text = "Abilities: \(abilities)"
     }
 }
 

@@ -13,7 +13,6 @@ class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")
     var pokemon: Pokemon?
-    var pokeList: [Pokemon]?
     
     func searchForPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         guard let baseURL = baseURL else {
