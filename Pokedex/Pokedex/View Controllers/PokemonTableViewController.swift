@@ -11,9 +11,16 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     var pokemonController = PokemonController()
+    var pokemons: [Pokemon]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.reloadData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -26,13 +33,15 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokemon.count
+        return pokemonController.pokemons.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        // Configure the cell...
+        print("There are \(pokemonController.pokemons.count) in the array.")
+        cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name
+        cell.detailTextLabel?.text = String(pokemonController.pokemons[indexPath.row].id)
 
         return cell
     }

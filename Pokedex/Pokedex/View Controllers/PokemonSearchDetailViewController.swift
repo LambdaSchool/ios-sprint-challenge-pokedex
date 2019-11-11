@@ -38,6 +38,9 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Actions
     @IBAction func savePokemon(_ sender: UIButton) {
+        guard let pokemon = pokemon else { return }
+        print(pokemonController!.pokemons)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: Methods
@@ -51,9 +54,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     
                     // TODO: Dismiss keyboard
-                    
                     self.pokemon = pokemon
-                    self.updateViews()
+
                 }
                 pokemonController.fetchImage(at: pokemon.sprites.front_default) { (result) in
                     if let image = try? result.get() {
@@ -89,7 +91,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -97,6 +99,6 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
+
 
 }

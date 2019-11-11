@@ -12,7 +12,7 @@ import UIKit
 class PokemonController {
     
     // MARK: Properties
-    var pokemon: [Pokemon] = []
+    var pokemons: [Pokemon] = []
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     
@@ -36,7 +36,7 @@ class PokemonController {
             let decoder = JSONDecoder()
             do {
                 let pokeSearchResult = try decoder.decode(Pokemon.self, from: data)
-                self.pokemon.append(pokeSearchResult)
+                self.pokemons.append(pokeSearchResult)
                 completion(.success(pokeSearchResult))
             } catch {
                 print("Error decoding search results objects: \(error)")
