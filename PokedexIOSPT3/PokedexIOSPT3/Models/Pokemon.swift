@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Decodable {
+struct Pokemon: Codable {
     let id: Int
     let name: String
     let abilities: [PokemonAbility]
@@ -24,11 +24,11 @@ struct Pokemon: Decodable {
     }
 }
 
-struct PokemonType: Decodable {
+struct PokemonType: Codable {
     let type: Type
 }
 
-struct Type: Decodable {
+struct Type: Codable {
     let name: String
 //
 //    private enum CodingKeys: String, CodingKey {
@@ -36,7 +36,7 @@ struct Type: Decodable {
 //    }
 }
 
-struct PokemonAbility: Decodable {
+struct PokemonAbility: Codable {
     let ability: Ability
 //
 //    private enum CodingKeys: String, CodingKey {
@@ -44,7 +44,7 @@ struct PokemonAbility: Decodable {
 //    }
 }
 
-struct Ability: Decodable {
+struct Ability: Codable {
     let name: String
 //
 //    private enum CodingKeys: String, CodingKey {
@@ -52,7 +52,7 @@ struct Ability: Decodable {
 //    }
 }
 
-struct Sprites: Decodable {
+struct Sprites: Codable {
     let front_default: String
 //
 //    private enum CodingKeys: String, CodingKey {

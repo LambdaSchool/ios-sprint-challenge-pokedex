@@ -9,10 +9,13 @@
 import Foundation
 import UIKit
 
+let pokemonListKey = "pokemonListKey"
+
 class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")
     var pokemon: Pokemon?
+    var pokeList: [Pokemon] = []
     
     func searchForPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         guard let baseURL = baseURL else {
@@ -77,5 +80,62 @@ class PokemonController {
                 completion(.success(image))
             }
         }.resume()
+    }
+    
+    // Persistence
+    let userDefaults = UserDefaults.standard
+        
+    private var pokemonListURL: URL? {
+        let fileManager = FileManager.default
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documents.appendingPathComponent("PokemonList.plist")
+    }
+    
+    init() {
+        let userDefault = UserDefaults.standard.bool(forKey: pokemonListKey)
+        // if it's true it means the app has been run before
+        if userDefault {
+            loadFromPersistentStore() // populates array from saved data
+        } else {
+ //           createPokemonList() // creates array
+        }
+    }
+    
+//    private func createPokemonList() {
+//        
+//        for poke in pokeList {
+//            let newPoke = try? Pokemon(from: poke)
+//            pokeList.append(newPoke)
+//        }
+//        saveToPersistentStore()
+//        // this saves the "key" info that this function has already been run once
+//        userDefaults.set(true, forKey: pokemonListKey)
+//    }
+//    
+    private func saveToPersistentStore() {
+        guard let url = pokemonListURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let listData = try encoder.encode(pokeList)
+            try listData.write(to: url)
+        } catch {
+            print("Error saving shopping list data: \(error)")
+        }
+    }
+    
+    // method to load data from the url created when saving the data - this method also checks if the file exists
+    private func loadFromPersistentStore() {
+        let fileManager = FileManager.default
+        
+        do {
+            guard let url = pokemonListURL, fileManager.fileExists(atPath: url.path) else { return }
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            let decodedList = try decoder.decode([Pokemon].self, from: data)
+            self.pokeList = decodedList
+        } catch {
+            print("Error loading/decoding shopping list: \(error)")
+        }
     }
 }

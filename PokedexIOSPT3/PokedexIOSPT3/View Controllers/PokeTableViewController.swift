@@ -11,7 +11,10 @@ import UIKit
 class PokeTableViewController: UITableViewController {
 
     let pokemonController = PokemonController()
-    var pokeList: [Pokemon] = []
+//    var pokeList: [Pokemon]? {
+//        let pokeList = pokemonController.pokeList
+//        return pokeList
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,13 +30,13 @@ class PokeTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokeList.count
+        return pokemonController.pokeList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath) as? PokeTableViewCell else { return UITableViewCell() }
         
-        let pokemon = pokeList[indexPath.row]
+        let pokemon = pokemonController.pokeList[indexPath.row]
         cell.pokemon = pokemon
         cell.pokemonController = pokemonController
         
@@ -42,7 +45,7 @@ class PokeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            pokeList.remove(at: indexPath.row)
+            pokemonController.pokeList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -59,7 +62,7 @@ class PokeTableViewController: UITableViewController {
         } else if segue.identifier == "ShowDetail" {
             if let detailVC = segue.destination as? SearchViewController,
                     let indexPath = tableView.indexPathForSelectedRow {
-                detailVC.pokemon = pokeList[indexPath.row]
+                detailVC.pokemon = pokemonController.pokeList[indexPath.row]
                 detailVC.pokemonController = pokemonController
             }
         }
@@ -68,7 +71,7 @@ class PokeTableViewController: UITableViewController {
 
 extension PokeTableViewController: UpdatePokedex {
     func savePokemonToPokedex(pokemon: Pokemon) {
-        pokeList.append(pokemon)
+        pokemonController.pokeList.append(pokemon)
         tableView.reloadData()
     }
 }
