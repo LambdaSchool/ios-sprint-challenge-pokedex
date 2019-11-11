@@ -44,6 +44,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     // MARK: Actions
     @IBAction func savePokemon(_ sender: UIButton) {
         guard let pokemonController = pokemonController else { return }
+        pokemonController.pokemons.append(pokemon!)
         delegate?.pokeWasAdded(pokemonController.pokemons)
     }
     
@@ -93,16 +94,5 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             pokeAbility.text = pokeAbility.text! + abilityName + ", "
         }
     }
-    
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-
 
 }
