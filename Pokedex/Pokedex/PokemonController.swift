@@ -16,7 +16,7 @@ class PokemonController {
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     
-    func performSearch (searchTerm: String, completion: @escaping (Result<[Pokemon], ErrorCodes>) -> ()) {
+    func performSearch (searchTerm: String, completion: @escaping (Result<Pokemon, ErrorCodes>) -> ()) {
         let searchUrl = baseUrl.appendingPathComponent(searchTerm)
         var request = URLRequest(url: searchUrl)
         request.httpMethod = "GET"
@@ -37,7 +37,7 @@ class PokemonController {
             do {
                 let pokeSearchResult = try decoder.decode(Pokemon.self, from: data)
                 self.pokemon.append(pokeSearchResult)
-                completion(.success(self.pokemon))
+                completion(.success(pokeSearchResult))
             } catch {
                 print("Error decoding search results objects: \(error)")
                 completion(.failure(.notDecodedProperly))

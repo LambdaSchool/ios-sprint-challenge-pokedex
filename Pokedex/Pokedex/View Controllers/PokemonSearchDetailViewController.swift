@@ -17,6 +17,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             updateViews()
         }
     }
+
     
     // MARK: Outlets
     @IBOutlet weak var searchField: UISearchBar!
@@ -44,10 +45,11 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
         guard let searchField = searchField.text else { return }
         
         pokemonController.performSearch(searchTerm: searchField) {
-            error in
-            if let error = error {
-                print("Error loading search results: \(error)")
-                return
+            result in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                }
             }
             
             DispatchQueue.main.async {
@@ -57,7 +59,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     private func updateViews() {
-        
+        guard let pokemon = pokemon else { return }
+        pokeName.text = pokemon.name
     }
     
 
