@@ -45,6 +45,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     }
     
     // MARK: Methods
+    // when the user enters a search term, the performSearch function is called and returns a pokemon if successful.
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let pokemonController = pokemonController,
             let searchField = searchField.text else { return }
@@ -91,6 +92,7 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             pokeAbility.text = pokeAbility.text! + abilityName + ", "
         }
         
+        // sets the sprite image when segue is from tapping a cell in the table view.
         if pokeImage.image != nil {
             return
         } else {

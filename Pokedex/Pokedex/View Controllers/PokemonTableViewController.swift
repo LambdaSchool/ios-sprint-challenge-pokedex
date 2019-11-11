@@ -10,6 +10,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+    // pokemonController is initialized here and passed to the detail view controller
     var pokemonController = PokemonController()
     var pokemons: [Pokemon]? {
         didSet {
@@ -19,13 +20,6 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -44,10 +38,10 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
     
+    // Swipe to delete from the table view
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         pokemonController.pokemons.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
