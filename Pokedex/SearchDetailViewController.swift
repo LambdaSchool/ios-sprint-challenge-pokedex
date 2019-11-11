@@ -23,7 +23,7 @@ class SearchDetailViewController: UIViewController {
         }
     }
     
-    var types: [String] = []
+    
     
     
     @IBOutlet weak var searchBarOutlet: UISearchBar!
@@ -45,7 +45,12 @@ class SearchDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        updateViews()
+        searchBarOutlet.delegate = self
+    }
+    
+    func hideKeyboard() {
+        searchBarOutlet.resignFirstResponder()
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -71,8 +76,9 @@ class SearchDetailViewController: UIViewController {
         print("\(pokemonObject.name) set in detail view")
         title = pokemonObject.name.capitalized
         pokemonNameLabel.text = pokemon?.name
-        idLabel.text = "\(pokemonObject.id)"
+        idLabel.text = "ID: \(pokemonObject.id)"
         
+        var types: [String] = []
         for typeInfo in pokemonObject.types {
             types.append(typeInfo.type.name)
         }
@@ -85,16 +91,26 @@ class SearchDetailViewController: UIViewController {
                 self.imageView.image = pokemonImage
             }
         })
-        
     }
-    
 }
 
 
 extension SearchDetailViewController: UISearchBarDelegate {
-    func searchBarButtonClicked(_ sender: UISearchBar) {
-        guard let searchTerm = searchBar.text else {return}
-        apiController?.fetchImage(from: pokemonImgUrl, completion: {(pokemonImage) in
+     func searchBarSearchButtonClicked(_ sender: UISearchBar) {
+        guard let searchTerm = searchBarOutlet.text else { return }
+
+         apiController?.fetchPokemon(pokemonName: searchTerm) { (pokemonObject) in
+
+             guard let pokemon = try? pokemonObject.get() else { return }
+
+
+              DispatchQueue.main.async {
+                 self.pokemon = pokemon
+             }
+         }
+        
+        guard let pokemonImgUrl = pokemon?.sprites.imageUrl else {return}
+        apiController?.fetchImage(from: pokemonImgUrl, completion: { (pokemonImage) in
             DispatchQueue.main.async {
                 self.imageView.image = pokemonImage
             }

@@ -31,20 +31,19 @@ class PokedexTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return apiController.pokemonArray.count
     }
-
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexpath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "", for: IndexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
         
-        let pokemonCharacter = apiController.pokemonArray[indexpath.row]
+        let pokemonCharacter = apiController.pokemonArray[indexPath.row]
         cell.textLabel?.text = pokemonCharacter.name
         return cell
     }
-    
+
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailsSegue" {
@@ -54,7 +53,7 @@ class PokedexTableViewController: UITableViewController {
             detailVC.pokemon = apiController.pokemonArray[indexPath.row]
             print("DetailViewSegue hit")
             
-        }else if let segue.identifier == "SearchSegue" {
+        }else if segue.identifier == "SearchSegue" {
             if let searchVC = segue.destination as? SearchDetailViewController {
                 searchVC.apiController = apiController
             }
