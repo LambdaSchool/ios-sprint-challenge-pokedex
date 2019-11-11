@@ -15,6 +15,7 @@ struct Pokemon: Codable {
     let abilities: [Abilities]
     // I care about types/type/name
     let types: [Types]
+    let sprites: Sprite
 
     struct Abilities: Codable {
         let ability: Ability
@@ -29,5 +30,9 @@ struct Pokemon: Codable {
         struct PokeType: Codable {
             let name: String
         }
+    
+    struct Sprite: Codable {
+        var front_default: String
+    }
 }
 

@@ -49,8 +49,18 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             result in
             if let pokemon = try? result.get() {
                 DispatchQueue.main.async {
+                    
+                    // TODO: Dismiss keyboard
+                    
                     self.pokemon = pokemon
                     self.updateViews()
+                }
+                pokemonController.fetchImage(at: pokemon.sprites.front_default) { (result) in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.pokeImage.image = image
+                        }
+                    }
                 }
             }
         }
@@ -60,20 +70,21 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
         // Make sure a pokemon exists
         guard let pokemon = pokemon else { return }
         // set the pokemon name label equal to the name.
-        pokeName.text = pokemon.name
+        pokeName.text = pokemon.name.capitalized
+        self.title = pokemon.name.capitalized
         // set the pokemon id equal to the id.
         pokeID.text = ("ID: \(pokemon.id)")
         // the type can be more than one. Iterate through the array and add the name to the label.
         pokeType.text = "Type: "
         for types in pokemon.types {
             let typeName = types.type.name
-            pokeType.text = pokeType.text! + typeName + " "
+            pokeType.text = pokeType.text! + typeName + ", "
         }
         // the ability can be more than one. Iterate through the array and add the name to the label.
         pokeAbility.text = "Abilities: "
         for abilities in pokemon.abilities {
             let abilityName = abilities.ability.name
-            pokeAbility.text = pokeAbility.text! + abilityName + " "
+            pokeAbility.text = pokeAbility.text! + abilityName + ", "
         }
     }
     
