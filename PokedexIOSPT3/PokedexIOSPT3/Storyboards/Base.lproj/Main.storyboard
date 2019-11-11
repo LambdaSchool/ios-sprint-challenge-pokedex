@@ -50,6 +50,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="spriteImageView" destination="8BD-Lh-l3u" id="SmJ-pa-yir"/>
+                                    <outlet property="titleLabel" destination="IH9-RP-CND" id="NgC-lW-LgJ"/>
                                     <segue destination="OXb-IH-2Ze" kind="show" identifier="ShowDetail" id="LeN-vh-GgH"/>
                                 </connections>
                             </tableViewCell>
@@ -185,8 +187,20 @@
                         <viewLayoutGuide key="safeArea" id="y5N-uI-PhA"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="Ip7-8c-7tH">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zX7-KM-Pdx"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zX7-KM-Pdx">
+                            <connections>
+                                <action selector="savePokemon:" destination="3yi-6K-hcq" id="f6V-5o-sxG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="wNu-Gj-FBH" id="kbQ-Io-w1Z"/>
+                        <outlet property="idLabel" destination="OUY-xy-gDN" id="Ir2-uC-S86"/>
+                        <outlet property="imageView" destination="GDZ-Ot-wCL" id="2jy-y6-oYX"/>
+                        <outlet property="nameLabel" destination="o4W-ye-vwK" id="kS7-dK-cEw"/>
+                        <outlet property="searchBar" destination="CsY-vW-9It" id="wgw-Sq-7xA"/>
+                        <outlet property="typesLabel" destination="64d-6Y-USc" id="nfs-2s-g01"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXJ-jM-OwU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
