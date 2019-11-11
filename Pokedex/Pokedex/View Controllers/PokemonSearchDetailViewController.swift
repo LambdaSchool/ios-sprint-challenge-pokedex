@@ -8,13 +8,30 @@
 
 import UIKit
 
-class PokemonSearchDetailViewController: UIViewController {
+class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
+    
+    // MARK: Properties
+    let pokemonController = PokemonController()
+    
+    // MARK: Outlets
+    @IBOutlet weak var searchField: UISearchBar!
+    @IBOutlet weak var pokeName: UILabel!
+    @IBOutlet weak var pokeImage: UIImageView!
+    @IBOutlet weak var pokeID: UILabel!
+    @IBOutlet weak var pokeType: UILabel!
+    @IBOutlet weak var pokeAbility: UILabel!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    // MARK: Actions
+    @IBAction func savePokemon(_ sender: UIButton) {
+    }
+    
     
 
     /*
