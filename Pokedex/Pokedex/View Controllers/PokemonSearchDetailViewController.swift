@@ -11,7 +11,7 @@ import UIKit
 class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Properties
-    let pokemonController = PokemonController()
+    var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
             updateViews()
@@ -42,7 +42,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Methods
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchField = searchField.text else { return }
+        guard let pokemonController = pokemonController,
+            let searchField = searchField.text else { return }
         
         pokemonController.performSearch(searchTerm: searchField) {
             result in
