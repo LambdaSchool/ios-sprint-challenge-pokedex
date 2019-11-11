@@ -17,7 +17,7 @@ struct Pokemon: Codable {
     let types: [Types]
     
     struct Abilities: Codable {
-        let ability: [Ability]
+        let ability: Ability
         
         struct Ability: Codable {
             let name: String
@@ -25,7 +25,7 @@ struct Pokemon: Codable {
     }
     
     struct Types: Codable {
-        let type: [PokeType]
+        let type: PokeType
         
         struct PokeType: Codable {
             let name: String

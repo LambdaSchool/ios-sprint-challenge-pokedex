@@ -17,7 +17,7 @@ class PokemonController {
     
     
     func performSearch (searchTerm: String, completion: @escaping (Result<Pokemon, ErrorCodes>) -> ()) {
-        let searchUrl = baseUrl.appendingPathComponent(searchTerm)
+        let searchUrl = baseUrl.appendingPathComponent(searchTerm.lowercased())
         var request = URLRequest(url: searchUrl)
         request.httpMethod = "GET"
         
