@@ -13,8 +13,27 @@ class PokemonController {
     
     // MARK: Properties
     var pokemon: [Pokemon] = []
-    private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
+    private let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     
+    func performSearch (searchTerm: String, completion: @escaping (Result<[Pokemon], ErrorCodes>) -> ()) {
+        let searchUrl = baseUrl.appendingPathComponent(searchTerm)
+        var request = URLRequest(url: searchUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error receiving search results: \(error)")
+                completion(.failure(.otherError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+        }
+        
+    }
     
 }

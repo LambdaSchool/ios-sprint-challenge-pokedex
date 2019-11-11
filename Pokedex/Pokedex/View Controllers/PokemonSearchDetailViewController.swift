@@ -12,6 +12,11 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: Properties
     let pokemonController = PokemonController()
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     // MARK: Outlets
     @IBOutlet weak var searchField: UISearchBar!
@@ -46,9 +51,13 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             }
             
             DispatchQueue.main.async {
-                <#code#>
+                self.updateViews()
             }
         }
+    }
+    
+    private func updateViews() {
+        
     }
     
 
