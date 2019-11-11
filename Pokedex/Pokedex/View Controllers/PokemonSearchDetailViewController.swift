@@ -24,6 +24,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchField.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -32,6 +34,22 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     @IBAction func savePokemon(_ sender: UIButton) {
     }
     
+    // MARK: Methods
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchField = searchField.text else { return }
+        
+        pokemonController.performSearch(searchTerm: searchField) {
+            error in
+            if let error = error {
+                print("Error loading search results: \(error)")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                <#code#>
+            }
+        }
+    }
     
 
     /*
