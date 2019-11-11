@@ -50,11 +50,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
             if let pokemon = try? result.get() {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
+                    self.updateViews()
                 }
-            }
-            
-            DispatchQueue.main.async {
-                self.updateViews()
             }
         }
     }
@@ -62,6 +59,8 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
     private func updateViews() {
         guard let pokemon = pokemon else { return }
         pokeName.text = pokemon.name
+        pokeID.text = String(pokemon.id)
+        pokeType.text = pokemon.types[0].type.name
     }
     
 

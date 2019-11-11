@@ -15,20 +15,19 @@ struct Pokemon: Codable {
     let abilities: [Abilities]
     // I care about types/type/name
     let types: [Types]
-    
+
     struct Abilities: Codable {
         let ability: Ability
-        
+    }
         struct Ability: Codable {
             let name: String
         }
-    }
     
     struct Types: Codable {
         let type: PokeType
-        
+    }
         struct PokeType: Codable {
             let name: String
         }
-    }
 }
+
