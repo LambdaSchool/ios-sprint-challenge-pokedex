@@ -25,7 +25,6 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return pokemonController.pokemons.count
     }
 
@@ -63,8 +62,6 @@ class PokemonTableViewController: UITableViewController {
             pokeDetailVC.pokemonController = pokemonController
             pokeDetailVC.pokemon = pokemonController.pokemons[indexPath.row]
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
 
 }

@@ -33,8 +33,6 @@ class PokemonSearchDetailViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         updateViews()
         searchField.delegate = self
-
-        // Do any additional setup after loading the view.
     }
     
     // MARK: Actions
