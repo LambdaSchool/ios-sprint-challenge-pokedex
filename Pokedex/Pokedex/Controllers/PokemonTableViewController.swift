@@ -38,7 +38,7 @@ class PokemonTableViewController: UIViewController {
         } else if segue.identifier == "DetailView" {
             if let searchVC = segue.destination as? SearchViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
-                searchVC.newPokemon = pokemon[indexPath.row]
+                searchVC.selectedPokemon = pokemon[indexPath.row]
                 }
             }
         }
@@ -68,8 +68,8 @@ class PokemonTableViewController: UIViewController {
 
 
 extension PokemonTableViewController: AddPokemonDelegate {
-    func pokemonWasAdded(_ newPokemon: Pokemon) {
-        pokemon.append(newPokemon)
+    func pokemonWasAdded(_ selectedPokemon: Pokemon) {
+        pokemon.append(selectedPokemon)
     }
     
 }

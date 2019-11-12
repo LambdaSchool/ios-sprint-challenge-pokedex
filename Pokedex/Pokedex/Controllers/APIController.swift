@@ -11,7 +11,6 @@ import Foundation
 class APIController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
-//    var pokemon: [Pokemon] = []
     var myPokemon: Pokemon?
     
     func performSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
