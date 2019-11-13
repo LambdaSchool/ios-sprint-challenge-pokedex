@@ -32,8 +32,8 @@ import Foundation
 struct Pokemon: Codable, Equatable {
     let id: Int
     let name: String
-    let types: [Types]
-    let abilities: [Abilities]
+    let types: [TypeArray]
+    let abilities: [AbilitiyArray]
     let sprite: Sprite
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -41,21 +41,21 @@ struct Pokemon: Codable, Equatable {
     }
 }
 
-struct Abilities: Codable {
+struct AbilitiyArray: Codable {
     let ability: Ability
-}
-
-struct Ability: Codable {
-    let name: String
-}
-
-struct Types: Codable {
-    let type: Type
-}
-
-struct Type: Codable {
-    let name: String
-}
+    
+    struct Ability: Codable, Equatable {
+           let name: String
+       }
+   }
+   
+struct TypeArray: Codable, Equatable {
+       let type: Types
+       
+    struct Types: Codable, Equatable {
+           let name: String
+       }
+   }
 
 struct Sprite: Codable {
     let imageURL: String

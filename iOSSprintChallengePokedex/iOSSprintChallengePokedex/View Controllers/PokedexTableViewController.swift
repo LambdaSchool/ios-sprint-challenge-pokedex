@@ -12,9 +12,15 @@ class PokedexTableViewController: UITableViewController {
 
     
     let pokemonController = PokemonController()
+    var pokemon: Pokemon! {
+        didSet{
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -23,9 +29,9 @@ class PokedexTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokemons.count
@@ -45,11 +51,12 @@ class PokedexTableViewController: UITableViewController {
         if segue.identifier == "SearchPokemon" {
             let searchVC = segue.destination as? PokemonDetailViewController
             searchVC?.pokemonController = pokemonController
+            
         } else if segue.identifier == "ViewPokemon" {
             guard let pokeDVC = segue.destination as? PokemonDetailViewController,
             let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = pokemonController.pokemons[indexPath.row]
             pokeDVC.pokemonController = pokemonController
+            let pokemon = pokemonController.pokemons[indexPath.row]
             pokeDVC.pokemon = pokemon
         }
     }
