@@ -2,9 +2,10 @@
 //  PokemonController.swift
 //  iOSSprintChallengePokedex
 //
-//  Created by denis cedeno on 11/9/19.
+//  Created by denis cedeno on 11/13/19.
 //  Copyright © 2019 DenCedeno Co. All rights reserved.
 //
+
 
 import Foundation
 import UIKit
@@ -15,36 +16,44 @@ enum HTTPMethod: String {
 }
 
 enum NetworkError: Error {
-    case noAuth
-    case badAuth
     case otherError
     case badData
     case noDecode
+    case noData
 }
 
 class PokemonController {
     
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
-    var pokemons: [Pokemon] = []
-    var pokemonImages: [URL] = []
     
-    func save(pokemon: Pokemon) {
-        pokemons.append(pokemon)
+    var pokemonArray: [Pokemon] = []
+    var pokemonImages: [URL] = []
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
+    
+    
+    
+    func addPokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
     }
     
-    func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
-        let url = baseURL.appendingPathComponent(name.lowercased())
-        var request = URLRequest(url: url)
+    // MARK: FetchPokemon
+    
+    func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        
+        let url = baseURL?.appendingPathComponent(name.lowercased())
+        guard let apiURL = url else { return }
+        var request = URLRequest(url: apiURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 print("Error fetching data: \(error)")
+                completion(.failure(.otherError))
                 return
             }
             
             guard let data = data else {
                 print("No data returned from data task.")
+                completion(.failure(.badData))
                 return
             }
             
@@ -53,12 +62,14 @@ class PokemonController {
                 completion(.success(pokemonSearch))
             } catch {
                 print("Unable to decode data into object of type [Pokemon]: \(error)")
+                completion(.failure(.noDecode))
             }
         }.resume()
     }
     
+    // MARK: Fetch Sprite
     
-    func fetchSprite(from imageURL: String, completion: @escaping(UIImage?) -> Void) {
+    func fetchImage(from imageURL: String, completion: @escaping(UIImage?) -> Void) {
         
         guard let imageURL = URL(string: imageURL) else {
             completion(nil)
@@ -70,7 +81,6 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { (imageData, _, error) in
             
             if let error = error {
-                
                 NSLog("Error fetching image: \(error)")
                 return
             }
@@ -86,5 +96,6 @@ class PokemonController {
             completion(image)
         }.resume()
     }
+    
 }
 
