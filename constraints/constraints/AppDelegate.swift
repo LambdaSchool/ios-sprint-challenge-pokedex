@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Pokédex
+//  constraints
 //
-//  Created by Thomas Sabino-Benowitz on 11/1/19.
+//  Created by Thomas Sabino-Benowitz on 11/4/19.
 //  Copyright © 2019 Lambda School. All rights reserved.
 //
 
@@ -14,9 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-           UINavigationBar.appearance().barTintColor = UIColor.red
-             UINavigationBar.appearance().tintColor = UIColor.white
-             UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        // Override point for customization after application launch.
         return true
     }
 
