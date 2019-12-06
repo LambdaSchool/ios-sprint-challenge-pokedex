@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var displayName: UILabel!
@@ -19,43 +19,57 @@ class PokemonDetailViewController: UIViewController {
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    var pokemonController: PokemonController!
+    var pokemonController: PokemonController?
     var pokemon: Pokemon?
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
-        getDetails()
+        super.viewDidLoad()
         
         
     }
-    
-    private func getDetails() {
-        guard let = pokemonController = pokemonController,
-            let pokemon = pokemon else {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        guard let searchResult = searchBar.text,
+            let pokemonController = pokemonController else {
                 print("ApiDetailViewController: and animal name are required.")
                 return
                 
         }
-        
-        pokemonController.fet
-        
-        
-        private func updateViews(with pokemon: Pokemon) {
-            title = pokemon.name
-            displayName.text = pokemon.name
-            //            IdLabel.text = pokemon.
-            typesLabel.text = pokemon.types
-            abilitiesLabel.text = pokemon.abilities
-            //        pokemonImage.
+        pokemonController.fetchDetails(for: searchResult) { (result) in
+            do {
+                guard let pokemon = self.pokemon else { return }
+                var temp = pokemon
+                temp = try result.get()
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+            } catch {
+//                if let error = error {
+////                    print("Error fetching pokemon")
+////                }
+////
+            }
             
         }
         
-        
-        
-        // Do any additional setup after loading the view.
     }
+    
+    private func updateViews(with pokemon: Pokemon) {
+        title = pokemon.name
+        displayName.text = pokemon.name
+        //            IdLabel.text = pokemon.
+        //        typesLabel.text = pokemon.types
+        //        abilitiesLabel.text = pokemon.abilities
+        //        pokemonImage.
+        
+    }
+    
+    
+    
+    // Do any additional setup after loading the view.
+    
     
     @IBAction func savePokemonTapped(_ sender: UIButton) {
         
