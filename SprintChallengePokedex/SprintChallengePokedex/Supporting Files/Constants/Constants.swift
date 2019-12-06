@@ -14,4 +14,5 @@ struct Cells {
 
 struct Segues {
     static let searchPokemonSegue = "SearchPokemonSegue"
+    static let showDetailSegue = "ShowDetailSegue"
 }

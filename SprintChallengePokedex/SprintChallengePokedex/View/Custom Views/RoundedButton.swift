@@ -10,6 +10,9 @@ import UIKit
 
 @IBDesignable
 class RoundedButton: UIButton {
+    
+    
+    /// Function set up to round the Save Pokemon Button
     override func layoutSubviews() {
         self.layer.cornerRadius = 15
         self.clipsToBounds = true

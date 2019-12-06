@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+/// Struct to Model Pokemon Objects
 struct Pokemon: Codable {
     let name: String
     let id: Int

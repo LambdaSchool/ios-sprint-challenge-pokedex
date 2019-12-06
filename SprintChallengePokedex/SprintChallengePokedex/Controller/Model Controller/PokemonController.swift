@@ -10,16 +10,22 @@ import Foundation
 
 class PokemonController {
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Properties
     var pokemon = [Pokemon]() {
         didSet {
             saveToPersistentStore()
         }
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Initialization
     init() {
         loadFromPersistentStore()
     }
     
+    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    // MARK: - Persistence
     var persistentFileURL: URL? = {
         let fm = FileManager.default
         guard let documentsDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }

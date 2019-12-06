@@ -24,7 +24,6 @@ class PokedexTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        pokemonController.saveToPersistentStore()
         print(pokemonController.pokemon.count)
     }
     
@@ -36,6 +35,10 @@ class PokedexTableViewController: UITableViewController {
             guard let pokeSearchVC = segue.destination as? PokedexSearchViewController else { return }
             pokeSearchVC.apiController = self.apiController
             pokeSearchVC.pokemonController = self.pokemonController
+        case Segues.showDetailSegue:
+            guard let pokeDetailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
+            pokeDetailVC.apiController = self.apiController
+            pokeDetailVC.pokemon = pokemonController.pokemon[indexPath.row]
         default:
             break
         }

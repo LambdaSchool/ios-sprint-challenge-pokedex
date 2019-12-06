@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+/// Enum to describe the various networking errors
 enum NetworkError: Error {
     case invalidURL
     case otherError
@@ -16,13 +18,24 @@ enum NetworkError: Error {
     case noDecode
 }
 
+
+/// Enum for the various HTTPMethods
 enum HTTPMethod: String {
     case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
 }
 
 class APIController {
+    
     let baseURL = "https://pokeapi.co/api/v2"
     
+    
+    /// Function utilized to make a network call and retrieve Pokemon based on the search term passed in
+    /// - Parameters:
+    ///   - term: The term searched for
+    ///   - completion: Callback informing the caller that the networking has completed
     func searchForPokemon(with term: String, completion: @escaping (Result<Pokemon, NetworkError>) -> ()) {
         guard let url = URL(string: baseURL)?.appendingPathComponent("pokemon").appendingPathComponent("\(term)") else {
             completion(.failure(.invalidURL))
@@ -63,6 +76,11 @@ class APIController {
         }.resume()
     }
     
+    
+    /// Function utilized to make a network call and retrieve the image for the selected Pokemon
+    /// - Parameters:
+    ///   - urlString: The url for the image
+    ///   - completion: Callback informing the caller that the networking has completed
     func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
         guard let imageURL = URL(string: urlString) else {
             completion(.failure(.invalidURL))
