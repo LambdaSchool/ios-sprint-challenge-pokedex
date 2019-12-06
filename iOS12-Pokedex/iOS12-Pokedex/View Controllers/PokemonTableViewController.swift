@@ -10,76 +10,99 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: - Outlets
+    
+    @IBOutlet weak var segmentedController: UISegmentedControl!
 
+    // MARK: - Properties
+    
+    struct PropertyKeys {
+        static let cell = "PokemonCell"
+        static let addSegue = "AddPokemonSegue"
+        static let detailSegue = "PokemonDetailSegue"
     }
 
-    // MARK: - Table view data source
+    let pokeController = PokemonController()
 
+    // MARK: - Life Cycle Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        segmentedController.selectedSegmentIndex = UserDefaults.standard.integer(forKey: PokemonController.PropertyKeys.sortMethodKey)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        sortPokemon()
+    }
+
+    // MARK: - Actions
+    
+    @IBAction func sortChanged(_ sender: UISegmentedControl) {
+        switch UserDefaults.standard.integer(forKey: PokemonController.PropertyKeys.sortMethodKey) {
+        case 0:
+            UserDefaults.standard.set(1, forKey: PokemonController.PropertyKeys.sortMethodKey)
+        default:
+            UserDefaults.standard.set(0, forKey: PokemonController.PropertyKeys.sortMethodKey)
+        }
+        sortPokemon()
+    }
+
+
+    // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokeController.pokemons.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
-        // Configure the cell...
+        cell.textLabel?.text = capitalize(pokeController.pokemons[indexPath.row].name)
 
         return cell
     }
-    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+
+            pokeController.delete(pokeController.pokemons[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    // MARK: - Private
     
+    private func sortPokemon() {
+        pokeController.sortBy()
+        tableView.reloadData()
+    }
+
+    private func capitalize(_ word: String) -> String {
+        var newWord = word
+        let firstLetter = newWord.startIndex
+        let capFirst = newWord[firstLetter].uppercased()
+        newWord.remove(at: firstLetter)
+        newWord.insert(Character(capFirst), at: firstLetter)
+        return newWord
+    }
+
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == PropertyKeys.addSegue {
+            if let addVC = segue.destination as? PokemonDetailViewController {
+                addVC.pokeController = pokeController
+            }
+        } else if segue.identifier == PropertyKeys.detailSegue {
+            if let detailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
+                detailVC.pokeController = pokeController
+                detailVC.pokemon = pokeController.pokemons[indexPath.row]
+            }
+        }
     }
-    
-
 }

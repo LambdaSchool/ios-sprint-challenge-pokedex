@@ -15,9 +15,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="yvT-3f-9Jw">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Name"/>
+                                <segment title="ID"/>
+                            </segments>
+                            <connections>
+                                <action selector="sortChanged:" destination="hQi-uR-9fU" eventType="valueChanged" id="GKf-5c-PX4"/>
+                            </connections>
+                        </segmentedControl>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="Wdi-pH-Fff" rowHeight="50" style="IBUITableViewCellStyleDefault" id="kj8-1Q-1B2">
-                                <rect key="frame" x="0.0" y="28" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kj8-1Q-1B2" id="TCg-6W-LAo">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -33,7 +44,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="hNK-gg-CIv" kind="show" identifier="CellTappedSegue" id="Mda-bk-Eru"/>
+                                    <segue destination="hNK-gg-CIv" kind="show" identifier="PokemonDetailSegue" id="Mda-bk-Eru"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -49,6 +60,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="segmentedController" destination="yvT-3f-9Jw" id="56G-Qn-cG7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hw6-Ui-4Kn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -57,7 +71,7 @@
         <!--Pokemon Search-->
         <scene sceneID="TN8-KR-uSA">
             <objects>
-                <viewController id="hNK-gg-CIv" customClass="PokemonViewController" customModule="iOS12_Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hNK-gg-CIv" customClass="PokemonDetailViewController" customModule="iOS12_Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ywk-iN-0md">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,8 +80,8 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAt-9W-oQ7">
-                                <rect key="frame" x="169" y="240" width="77" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAt-9W-oQ7">
+                                <rect key="frame" x="8" y="240" width="398" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -83,6 +97,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfZ-ip-wfS">
                                 <rect key="frame" x="157" y="771.5" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="hNK-gg-CIv" eventType="touchUpInside" id="hB3-Ei-DYB"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1di-v5-K2c">
                                 <rect key="frame" x="8" y="638" width="398" height="105"/>
@@ -118,8 +135,8 @@
                             <constraint firstItem="464-uq-CwR" firstAttribute="centerY" secondItem="ywk-iN-0md" secondAttribute="centerY" id="BXi-79-Bqf"/>
                             <constraint firstItem="PfZ-ip-wfS" firstAttribute="leading" secondItem="e3o-3t-sBK" secondAttribute="leading" constant="157" id="DqY-ap-m4o"/>
                             <constraint firstItem="e3o-3t-sBK" firstAttribute="trailing" secondItem="464-uq-CwR" secondAttribute="trailing" constant="87" id="FV5-Oi-8eg"/>
-                            <constraint firstItem="cAt-9W-oQ7" firstAttribute="leading" secondItem="e3o-3t-sBK" secondAttribute="leading" constant="169" id="FpE-mH-bD9"/>
-                            <constraint firstItem="e3o-3t-sBK" firstAttribute="trailing" secondItem="cAt-9W-oQ7" secondAttribute="trailing" constant="168" id="H8w-rJ-iFd"/>
+                            <constraint firstItem="cAt-9W-oQ7" firstAttribute="leading" secondItem="e3o-3t-sBK" secondAttribute="leading" constant="8" id="FpE-mH-bD9"/>
+                            <constraint firstItem="e3o-3t-sBK" firstAttribute="trailing" secondItem="cAt-9W-oQ7" secondAttribute="trailing" constant="8" id="H8w-rJ-iFd"/>
                             <constraint firstItem="g3h-io-ev0" firstAttribute="leading" secondItem="e3o-3t-sBK" secondAttribute="leading" id="Mu7-wj-ffF"/>
                             <constraint firstItem="g3h-io-ev0" firstAttribute="trailing" secondItem="e3o-3t-sBK" secondAttribute="trailing" id="Pa3-6s-STk"/>
                             <constraint firstItem="g3h-io-ev0" firstAttribute="top" secondItem="e3o-3t-sBK" secondAttribute="top" id="Yio-Xa-b2S"/>
@@ -135,12 +152,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="6sg-CN-OHP"/>
                     <connections>
-                        <outlet property="abilitiesLabel" destination="9Qf-BZ-kI3" id="ujB-On-DDn"/>
-                        <outlet property="idLabel" destination="JPv-2y-F5b" id="sGV-y4-H8T"/>
-                        <outlet property="imageView" destination="464-uq-CwR" id="xo6-vP-Miy"/>
-                        <outlet property="nameLabel" destination="cAt-9W-oQ7" id="KJg-vg-DLR"/>
-                        <outlet property="searchBar" destination="g3h-io-ev0" id="7E5-rP-TTt"/>
-                        <outlet property="typesLabel" destination="DYI-bO-ReA" id="OYJ-VR-ZaG"/>
+                        <outlet property="abilitiesLabel" destination="9Qf-BZ-kI3" id="NpC-Tg-0f2"/>
+                        <outlet property="idLabel" destination="JPv-2y-F5b" id="S6X-DU-jmX"/>
+                        <outlet property="imageView" destination="464-uq-CwR" id="0fJ-UF-wx6"/>
+                        <outlet property="nameLabel" destination="cAt-9W-oQ7" id="sT4-Kc-TS9"/>
+                        <outlet property="saveButton" destination="PfZ-ip-wfS" id="uHA-uy-VSy"/>
+                        <outlet property="searchBar" destination="g3h-io-ev0" id="gwx-p2-4JY"/>
+                        <outlet property="typesLabel" destination="DYI-bO-ReA" id="Z9P-JI-TLG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W2B-8Y-TmN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
