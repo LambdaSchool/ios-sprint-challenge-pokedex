@@ -12,4 +12,16 @@ class PokedexTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
+    
+    var pokemon: Pokemon? {
+        didSet {
+            configureCell()
+        }
+    }
+    
+    private func configureCell() {
+        guard let pokemon = pokemon else { return }
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
+    }
 }

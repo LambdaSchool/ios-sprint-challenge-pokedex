@@ -97,15 +97,19 @@
                                     <constraint firstItem="0Yg-fP-5he" firstAttribute="trailing" secondItem="WWs-a4-bOZ" secondAttribute="trailing" id="k9H-WL-u5i"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rc9-cp-gyr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rc9-cp-gyr" customClass="RoundedButton" customModule="SprintChallengePokedex" customModuleProvider="target">
                                 <rect key="frame" x="40" y="782" width="334" height="40"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="GR9-qX-yp2"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Save Pokemon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="savePokemonTapped:" destination="NpM-d8-eQi" eventType="touchUpInside" id="fAZ-OD-eky"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -123,6 +127,14 @@
                         <viewLayoutGuide key="safeArea" id="fS8-fC-QPN"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" largeTitleDisplayMode="always" id="66T-mz-Lx6"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="gIl-eH-cGF" id="DA9-nG-HRw"/>
+                        <outlet property="idLabel" destination="P0l-4g-QZw" id="l8N-MP-u19"/>
+                        <outlet property="nameLabel" destination="9WC-8h-mVq" id="YL7-RS-HaL"/>
+                        <outlet property="pokeSpriteImageView" destination="WWs-a4-bOZ" id="q01-Us-wS8"/>
+                        <outlet property="searchBar" destination="CPu-FD-PeC" id="3tL-jk-KWT"/>
+                        <outlet property="typesLabel" destination="ACB-5N-Xnr" id="bM2-x0-L3Z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BXX-zI-xve" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
