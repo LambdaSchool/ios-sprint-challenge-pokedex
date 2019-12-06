@@ -64,7 +64,8 @@ class PokemonTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: PropertyKeys.cell, for: indexPath)
 
         cell.textLabel?.text = capitalize(pokeController.pokemons[indexPath.row].name)
-
+        cell.detailTextLabel?.text = "ID: \(pokeController.pokemons[indexPath.row].id)"
+        
         return cell
     }
 
