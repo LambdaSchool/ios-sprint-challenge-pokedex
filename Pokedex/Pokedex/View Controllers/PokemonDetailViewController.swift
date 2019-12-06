@@ -19,24 +19,57 @@ class PokemonDetailViewController: UIViewController {
     
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    var pokemonController: PokemonController!
+    var pokemon: Pokemon?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        getDetails()
+        
+        
+    }
+    
+    private func getDetails() {
+        guard let = pokemonController = pokemonController,
+            let pokemon = pokemon else {
+                print("ApiDetailViewController: and animal name are required.")
+                return
+                
+        }
+        
+        pokemonController.fet
+        
+        
+        private func updateViews(with pokemon: Pokemon) {
+            title = pokemon.name
+            displayName.text = pokemon.name
+            //            IdLabel.text = pokemon.
+            typesLabel.text = pokemon.types
+            abilitiesLabel.text = pokemon.abilities
+            //        pokemonImage.
+            
+        }
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func savePokemonTapped(_ sender: UIButton) {
+        
+        //        guard let title =
     }
     
-    /*
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    
 }

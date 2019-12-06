@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let name: String
-    let imageURL: String
+    let sprites: String
     let id: Int
     let types: String
     let abilities: String
