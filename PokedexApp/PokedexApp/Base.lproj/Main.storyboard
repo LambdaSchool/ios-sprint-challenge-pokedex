@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="Dph-4X-62l">
             <objects>
-                <tableViewController id="Q3q-Ug-Qux" sceneMemberID="viewController">
+                <tableViewController id="Q3q-Ug-Qux" customClass="PokemonTableViewController" customModule="PokedexApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8XM-lS-9DJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,10 +47,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="115.84821428571428"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detial View Controller-->
         <scene sceneID="juN-1l-1xj">
             <objects>
-                <viewController id="rvI-Hu-Elb" sceneMemberID="viewController">
+                <viewController id="rvI-Hu-Elb" customClass="PokemonDetialViewController" customModule="PokedexApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pm1-xC-XFQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,15 +98,22 @@
                         <viewLayoutGuide key="safeArea" id="dEg-ac-e3c"/>
                     </view>
                     <navigationItem key="navigationItem" id="aQy-62-idb"/>
+                    <connections>
+                        <outlet property="abilityLabel" destination="S8e-Pg-kIc" id="3Ae-0U-eko"/>
+                        <outlet property="idLabel" destination="pdF-UF-FTx" id="fqQ-MM-Wdu"/>
+                        <outlet property="nameLabel" destination="Awi-fq-LX3" id="aW0-NC-ZpT"/>
+                        <outlet property="pokeImageView" destination="CTU-E1-s9k" id="vqp-ba-Njm"/>
+                        <outlet property="typeLabel" destination="khh-QY-Ull" id="amx-tG-nhz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Anm-PL-tMN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1048" y="808"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Pokemon View Controller-->
         <scene sceneID="UsL-rr-Dtk">
             <objects>
-                <viewController id="Erf-2D-Aof" sceneMemberID="viewController">
+                <viewController id="Erf-2D-Aof" customClass="SearchPokemonViewController" customModule="PokedexApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e7v-sU-YcQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
