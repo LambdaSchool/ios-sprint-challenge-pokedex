@@ -56,7 +56,7 @@ class PokemonAPIController {
             do {
                 let pokeSearch = try decoder.decode(Pokemon.self, from: data)
             } catch {
-                print("Unable to decode data into object of type [Person]: \(error)")
+                print("Unable to decode data into object of type [Pokemon]: \(error)")
                 }
                 DispatchQueue.main.async {
                     completion(.failure(.noDecode))
