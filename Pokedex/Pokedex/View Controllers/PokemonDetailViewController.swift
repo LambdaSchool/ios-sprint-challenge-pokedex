@@ -27,16 +27,21 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        searchBar.becomeFirstResponder()
+        
+        
         
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        guard let searchResult = searchBar.text,
+        guard let searchResult = searchBar.text?.lowercased(),
             let pokemonController = pokemonController else {
                 print("ApiDetailViewController: and animal name are required.")
                 return
                 
         }
+        print(searchResult)
         pokemonController.fetchDetails(for: searchResult) { (result) in
             do {
                 guard let pokemon = self.pokemon else { return }
@@ -46,10 +51,10 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
                     self.updateViews(with: pokemon)
                 }
             } catch {
-//                if let error = error {
-////                    print("Error fetching pokemon")
-////                }
-////
+                //                if let error = error {
+                ////                    print("Error fetching pokemon")
+                ////                }
+                ////
             }
             
         }
@@ -72,18 +77,29 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func savePokemonTapped(_ sender: UIButton) {
+        guard let title = displayName.text,
+            let idLabel = IdLabel.text else { return }
         
-        //        guard let title =
-    }
+//        pokemonController?.fetchDetails(for: pokemonName, completion: { result  in
+//            DispatchQueue.main.async {
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//        }
+//
+//    })
+//
     
     
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    
-    
+}
+
+
+// MARK: - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Get the new view controller using segue.destination.
+    // Pass the selected object to the new view controller.
+}
+
+
 }

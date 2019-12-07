@@ -87,4 +87,6 @@ class PokemonController {
         }.resume()
         
     }
+    
+    var pokemons: [Pokemon] = []
 }
