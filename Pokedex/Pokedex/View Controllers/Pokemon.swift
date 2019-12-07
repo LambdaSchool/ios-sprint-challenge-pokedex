@@ -16,15 +16,18 @@ struct Pokemon: Codable, Equatable {
 //    let abilities: String
 }
 
-struct Abilities {
-    
+struct Abilities: Codable, Equatable {
+    let is_hidden: Bool
+    let slot: Int
 }
 
-struct Ability {
+struct Ability: Codable, Equatable {
+    let nameAbility: String
     
 }
 
 struct Types {
     let type: String
+    let nameType: String
     
 }

@@ -21,6 +21,10 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var abilities: Abilities?
+    var ability: Ability?
+    var types: Types?
+    
     
     
     override func viewDidLoad() {
@@ -35,38 +39,45 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        guard let searchResult = searchBar.text?.lowercased(),
-            let pokemonController = pokemonController else {
-                print("ApiDetailViewController: and animal name are required.")
-                return
-                
-        }
-        print(searchResult)
-        pokemonController.fetchDetails(for: searchResult) { (result) in
-            do {
-                guard let pokemon = self.pokemon else { return }
-                var temp = pokemon
-                temp = try result.get()
-                DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
-                }
-            } catch {
-                //                if let error = error {
-                ////                    print("Error fetching pokemon")
-                ////                }
-                ////
-            }
+        guard let searchResult = searchBar.text?.lowercased() else {
+//             let pokemonController = pokemonController else {
+            print("You didn't enter a Pokemon.")
+            return
             
         }
-        
+        print(searchResult)
+        pokemonController?.fetchDetails(for: searchResult, completion: { (result) in
+            guard let pokemon = try? result.get() else {
+                print("Did not find a pokemon")
+                return
+            }
+            print(pokemon)
+        })
+        //        pokemonController.fetchDetails(for: searchResult) { (result) in
+        //            do {
+        //                guard let pokemon = self.pokemon else { return }
+        //                var temp = pokemon
+        //                temp = try result.get()
+        //                DispatchQueue.main.async {
+        //                    self.updateViews(with: pokemon)
+        //                }
+        //            } catch {
+        //                //                if let error = error {
+        //                ////                    print("Error fetching pokemon")
+        //                ////                }
+        //                ////
+        //            }
+        //
+        //        }
+        //
     }
     
-    private func updateViews(with pokemon: Pokemon) {
+    private func updateViews(with pokemon: Pokemon, with ability: Ability, with abilities: Abilities, with types: Types) {
         title = pokemon.name
         displayName.text = pokemon.name
-        //            IdLabel.text = pokemon.
-        //        typesLabel.text = pokemon.types
-        //        abilitiesLabel.text = pokemon.abilities
+//        IdLabel.text = pokemon.id
+        typesLabel.text = types.nameType
+        abilitiesLabel.text = ability.nameAbility
         //        pokemonImage.
         
     }
@@ -80,26 +91,26 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         guard let title = displayName.text,
             let idLabel = IdLabel.text else { return }
         
-//        pokemonController?.fetchDetails(for: pokemonName, completion: { result  in
-//            DispatchQueue.main.async {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
-//
-//    })
-//
+        //        pokemonController?.fetchDetails(for: pokemonName, completion: { result  in
+        //            DispatchQueue.main.async {
+        //                self.navigationController?.popViewController(animated: true)
+        //            }
+        //        }
+        //
+        //    })
+        //
+        
+        
+    }
     
     
-}
-
-
-// MARK: - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    // Get the new view controller using segue.destination.
-    // Pass the selected object to the new view controller.
-}
-
-
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    
+    
 }
