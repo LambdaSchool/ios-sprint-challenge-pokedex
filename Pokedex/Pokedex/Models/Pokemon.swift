@@ -22,19 +22,19 @@ struct Sprite: Codable {
 }
 
 //Ability
-struct Ability: Codable {
+struct Ability: Codable, Equatable {
     let ability: AbilityDet
 }
 
-struct AbilityDet: Codable {
+struct AbilityDet: Codable, Equatable {
     let name: String
 }
 
 //Type
-struct Type: Codable {
+struct Type: Codable, Equatable {
     let type: TypeDet
 }
 
-struct TypeDet: Codable{
+struct TypeDet: Codable, Equatable {
     let name: String
 }

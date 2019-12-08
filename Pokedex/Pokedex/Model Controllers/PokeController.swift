@@ -9,12 +9,21 @@
 import Foundation
 
 class PokeController {
+    
+    //Attributes
     var addedPokemon = [Pokemon]()
     var currentPokemon: Pokemon?
     
+    //
     func savePokemon() {
         guard let currentPokemon = currentPokemon else { return }
         addedPokemon.append(currentPokemon)
+        self.currentPokemon = nil
+    }
+    
+    // Deletion
+    func removePokemon(index: Int) {
+        addedPokemon.remove(at: index)
     }
     
     // MARK: - Networking

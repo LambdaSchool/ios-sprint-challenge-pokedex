@@ -9,16 +9,25 @@
 import UIKit
 
 class PokeTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    //Outlets
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var pokeImage: UIImageView!
+    
+    //Attributes
+    var pokemon: Pokemon?{
+        didSet{
+            updateViews()
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    //Lifecycle
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        label.text = pokemon.name.capitalized
+        
+        //Image
+        guard let pokeImg = try? Data(contentsOf: pokemon.sprites.frontDefault) else { return }
+        pokeImage.image = UIImage(data: pokeImg)
     }
-
 }
