@@ -13,12 +13,21 @@ class PokeController {
     //Attributes
     var addedPokemon = [Pokemon]()
     var currentPokemon: Pokemon?
+    var sortByName = UserDefaults.standard.bool(forKey: "sortingByName"){ didSet { sortPokemon() } }
+    
+    //Lifecycle
+    init() {
+        loadFromPersistantStore()
+        sortPokemon()
+    }
     
     //
     func savePokemon() {
         guard let currentPokemon = currentPokemon else { return }
         addedPokemon.append(currentPokemon)
         self.currentPokemon = nil
+        sortPokemon()
+        saveToPersistentStore()
     }
     
     // Deletion
@@ -65,6 +74,50 @@ class PokeController {
             }
         }.resume()
     }
+    
+    // MARK: - Persistence
+    var locationURL: URL? {
+        let fileManager = FileManager.default
+        guard let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        
+        return docDir.appendingPathComponent("Pokedex.plist")
+    }
+    
+    func saveToPersistentStore() {
+        let encoder = PropertyListEncoder()
+        do {
+            let dexData = try encoder.encode(addedPokemon)
+            guard let fileURL = locationURL else { return }
+            try dexData.write(to: fileURL)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func loadFromPersistantStore() {
+        let fileManager = FileManager.default
+        guard let fileURL = locationURL,
+            fileManager.fileExists(atPath: fileURL.path) else { return }
+        do {
+            let dexData = try Data(contentsOf: fileURL)
+            let decoder = PropertyListDecoder()
+            addedPokemon = try decoder.decode([Pokemon].self, from: dexData)
+        } catch  {
+            print(error)
+        }
+    }
+    
+    // MARK: - Sorting
+    func sortPokemon() {
+        if sortByName {
+            addedPokemon.sort{ $0.name < $1.name }
+            UserDefaults.standard.set(true, forKey: "sortingByName")
+        } else {
+            addedPokemon.sort{ $0.id < $1.id }
+            UserDefaults.standard.set(false, forKey: "sortingByName")
+        }
+    }
+    
 }
 
 // MARK: - Enums

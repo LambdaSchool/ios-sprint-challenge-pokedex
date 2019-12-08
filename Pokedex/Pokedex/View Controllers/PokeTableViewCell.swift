@@ -15,11 +15,7 @@ class PokeTableViewCell: UITableViewCell {
     @IBOutlet weak var pokeImage: UIImageView!
     
     //Attributes
-    var pokemon: Pokemon?{
-        didSet{
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon? { didSet{ updateViews() } }
     
     //Lifecycle
     func updateViews() {

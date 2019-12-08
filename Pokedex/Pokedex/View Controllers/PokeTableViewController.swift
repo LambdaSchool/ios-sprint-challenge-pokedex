@@ -10,12 +10,18 @@ import UIKit
 
 class PokeTableViewController: UITableViewController {
     
-    //Attributes
+    // Outlets
+    @IBOutlet weak var sortSegment: UISegmentedControl!
+    
+    // Attributes
     var pokeContr = PokeController()
     
-    //Lifecycle
+    // Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        if UserDefaults.standard.bool(forKey: "sortingByName"){
+            sortSegment.selectedSegmentIndex = 1
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,5 +62,20 @@ class PokeTableViewController: UITableViewController {
             guard let destination = segue.destination as? PokeDetailViewController else { return }
             destination.pokemon = self.pokeContr.addedPokemon[tableView.indexPathForSelectedRow?.row ?? 0]
         }
+    }
+    
+    // MARK: - Sorting
+    @IBAction func indexChanged(_ sender: Any) {
+        switch sortSegment.selectedSegmentIndex
+           {
+           case 0:
+            pokeContr.sortByName = false
+            tableView.reloadData()
+           case 1:
+            pokeContr.sortByName = true
+            tableView.reloadData()
+           default:
+               break
+           }
     }
 }
