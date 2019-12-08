@@ -11,6 +11,7 @@ import Foundation
 class PokeController {
     
     //Attributes
+    var pokeList: PokemonList?
     var addedPokemon = [Pokemon]()
     var currentPokemon: Pokemon?
     var sortByName = UserDefaults.standard.bool(forKey: "sortingByName"){ didSet { sortPokemon() } }
@@ -19,6 +20,7 @@ class PokeController {
     init() {
         loadFromPersistantStore()
         sortPokemon()
+        allPokemon()
     }
     
     //
@@ -33,6 +35,7 @@ class PokeController {
     // Deletion
     func removePokemon(index: Int) {
         addedPokemon.remove(at: index)
+        saveToPersistentStore()
     }
     
     // MARK: - Networking
@@ -118,7 +121,36 @@ class PokeController {
         }
     }
     
-}
+ // MARK: - Suggestions
+        func allPokemon() {
+            var request = URLRequest(url: baseURL)
+            request.httpMethod = HTTPMethod.get.rawValue
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let response = response as? HTTPURLResponse,
+                    response.statusCode == 401 {
+                    return
+                }
+                
+                if let _ = error {
+                    return
+                }
+                
+                guard let data = data else {
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    self.pokeList = try decoder.decode(PokemonList.self, from: data)
+                } catch {
+                    print("Error decoding object: \(error)")
+                    return
+                }
+            }.resume()
+        }
+    }
 
 // MARK: - Enums
 enum HTTPMethod: String {

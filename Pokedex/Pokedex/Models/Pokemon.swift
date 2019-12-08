@@ -38,3 +38,13 @@ struct Type: Codable, Equatable {
 struct TypeDet: Codable, Equatable {
     let name: String
 }
+
+// MARK: PokemonList
+
+struct PokemonList: Codable {
+    let results: [PokeResult]
+}
+
+struct PokeResult: Codable {
+    var name: String
+}
