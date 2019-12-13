@@ -20,12 +20,11 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var abilitiesLabel: UILabel!
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon?
-    var abilities: Abilities?
-    var ability: Ability?
-    var types: Types?
-    
-    
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     override func viewDidLoad() {
         
@@ -34,83 +33,66 @@ class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
         
-        
-        
+        updateViews()
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         guard let searchResult = searchBar.text?.lowercased() else {
-//             let pokemonController = pokemonController else {
+            
             print("You didn't enter a Pokemon.")
             return
             
         }
-        print(searchResult)
+        print("search \(searchResult)")
         pokemonController?.fetchDetails(for: searchResult, completion: { (result) in
+            
             guard let pokemon = try? result.get() else {
                 print("Did not find a pokemon")
                 return
             }
-            print(pokemon)
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+            }
+            
         })
-        //        pokemonController.fetchDetails(for: searchResult) { (result) in
-        //            do {
-        //                guard let pokemon = self.pokemon else { return }
-        //                var temp = pokemon
-        //                temp = try result.get()
-        //                DispatchQueue.main.async {
-        //                    self.updateViews(with: pokemon)
-        //                }
-        //            } catch {
-        //                //                if let error = error {
-        //                ////                    print("Error fetching pokemon")
-        //                ////                }
-        //                ////
-        //            }
-        //
-        //        }
-        //
     }
     
-    private func updateViews(with pokemon: Pokemon, with ability: Ability, with abilities: Abilities, with types: Types) {
-        title = pokemon.name
-        displayName.text = pokemon.name
-//        IdLabel.text = pokemon.id
-        typesLabel.text = types.nameType
-        abilitiesLabel.text = ability.nameAbility
+    private func updateViews() {
+        guard isViewLoaded else { return }
+        guard let pokemon = pokemon else { return }
+        
+        title = pokemon.name.capitalized
+        displayName.text = pokemon.name.capitalized
+        IdLabel.text = String(pokemon.id)
+        
+        let typeString = pokemon.types.map({ $0.type.name }).joined(separator: ", ")
+        typesLabel.text = "Types: \(typeString)"
+        
+        let abilityString = pokemon.abilities.map( {$0.ability.name}).joined(separator: ", ")
+        abilitiesLabel.text = "Abilities: \(abilityString)"
         //        pokemonImage.
+        pokemonController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { (image) in
+            DispatchQueue.main.async {
+                 self.pokemonImage.image = image
+            }
+           
+        })
+        let image = UIImage(named: pokemon.sprites.frontDefault)
+        pokemonImage.image = image
         
     }
-    
-    
     
     // Do any additional setup after loading the view.
     
-    
     @IBAction func savePokemonTapped(_ sender: UIButton) {
-        guard let title = displayName.text,
-            let idLabel = IdLabel.text else { return }
         
-        //        pokemonController?.fetchDetails(for: pokemonName, completion: { result  in
-        //            DispatchQueue.main.async {
-        //                self.navigationController?.popViewController(animated: true)
-        //            }
-        //        }
-        //
-        //    })
-        //
-        
-        
-    }
-    
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    
-    
+        // unwrap pokemon
+        guard let pokemon = pokemon else { return }
+        pokemonController?.addPokemon(pokemon: pokemon)
+           DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
 }
+

@@ -24,12 +24,12 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
     func fetchDetails(for pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonDetailsURL = baseURL?.appendingPathComponent("pokemon")
+        let pokemonDetailsURL = baseURL?.appendingPathComponent(pokemonName)
         let request = URLRequest(url: pokemonDetailsURL!)
-        print(request)
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let response = response as? HTTPURLResponse, response.statusCode == 401 {
                 completion(.failure(.badAuth))
@@ -48,6 +48,7 @@ class PokemonController {
             }
             
             let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
             decoder.dateDecodingStrategy = .secondsSince1970
             
             do {
@@ -64,29 +65,34 @@ class PokemonController {
         }.resume()
         
     }
-    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func fetchImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
         let imageUrl = URL(string: urlString)!
         
         var request = URLRequest(url: imageUrl)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { data, _, error in
-            if let _ = error {
-                completion(.failure(.otherError))
+            if let error = error {
+                print("Error fetching image:\(error)")
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.badData))
+                completion(nil)
                 return
-                
             }
             
             let image = UIImage(data: data)!
-            completion(.success(image))
+            completion(image)
         }.resume()
         
     }
     
+    func addPokemon(pokemon: Pokemon) {
+        // do stuff to add to the pokemons array
+        pokemons.append(pokemon)
+    }
+    
     var pokemons: [Pokemon] = []
 }
+

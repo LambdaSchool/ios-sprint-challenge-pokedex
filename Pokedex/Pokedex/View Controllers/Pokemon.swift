@@ -10,24 +10,28 @@ import Foundation
 
 struct Pokemon: Codable, Equatable {
     let name: String
-//    let sprites: String
+    let sprites: Sprites
     let id: Int
-//    let types: String
-//    let abilities: String
+    let types: [Types]
+    let abilities: [Abilities]
+}
+
+struct Sprites: Codable, Equatable {
+    let frontDefault: String
 }
 
 struct Abilities: Codable, Equatable {
-    let is_hidden: Bool
-    let slot: Int
+    let ability: Ability
 }
 
 struct Ability: Codable, Equatable {
-    let nameAbility: String
-    
+    let name: String
 }
 
-struct Types {
-    let type: String
-    let nameType: String
-    
+struct Types: Codable, Equatable {
+    let type: Type
+}
+
+struct Type: Codable, Equatable {
+    let name: String
 }
