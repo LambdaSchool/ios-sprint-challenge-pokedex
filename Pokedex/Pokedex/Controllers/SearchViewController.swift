@@ -28,15 +28,18 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        clearView()
+       
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if selectedPokemon != nil {
             navItem.title = "Pokemon Detail"
+            navItem.backBarButtonItem?.tintColor = UIColor.black
+            clearView()
         } else {
             navItem.title = "Pokemon Search"
+            navItem.backBarButtonItem?.tintColor = UIColor.black
         }
     }
     
@@ -48,26 +51,17 @@ class SearchViewController: UIViewController {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
         protocolDelegate?.pokemonWasAdded(addPokemon)
-
     }
     
     func clearView() {
         if let selectedPokemon = selectedPokemon  {
-            idLabel.text = String(selectedPokemon.id)
-            typesLabel.text = selectedPokemon.types?[0].type?.name
-            abilitiesLabel.text = selectedPokemon.abilities[0].ability?.name
-            nameLabel.text = selectedPokemon.name
-            guard let image = selectedPokemon.sprites?.frontDefault else {return}
-            let url = URL(string: image)!
-            let data = try? Data(contentsOf: url)
-            
-            if let imageData = data {
-                self.pokemonImage.image = UIImage(data: imageData)
-            }
+            updateViews()
         } else {
-            idLabel.text = ""
-            abilitiesLabel.text = ""
-            nameLabel.text = ""
+            DispatchQueue.main.async {
+                self.idLabel.text = ""
+                self.abilitiesLabel.text = ""
+                self.nameLabel.text = ""
+            }
         }
     }
     func updateViews() {
