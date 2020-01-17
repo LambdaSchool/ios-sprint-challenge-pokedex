@@ -20,14 +20,6 @@ class PokeListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonController.getPokemonData { (error) in
-            let pokemon = self.pokemonController.pokeDataArray[0]
-            let url = URL(string: pokemon.url)
-            self.pokemonController.getPokemonFromURL(url: url) { (pokemon) in
-                guard let pokemon = pokemon else {return}
-                DispatchQueue.main.async {
-                    self.savedPokemon.append(pokemon)
-                }
-            }
         }
     }
 
@@ -65,6 +57,10 @@ class PokeListTableViewController: UITableViewController {
             guard let destination = segue.destination as? DetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else {return}
             destination.pokemon = savedPokemon[indexPath.row]
+            destination.pokemonController = pokemonController
+        }
+        if segue.identifier == "PokemonSearchSegue" {
+            guard let destination = segue.destination as? DetailViewController else {return}
             destination.pokemonController = pokemonController
         }
     }

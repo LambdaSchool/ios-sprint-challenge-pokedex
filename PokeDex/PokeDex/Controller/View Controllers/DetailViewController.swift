@@ -18,6 +18,11 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     var pokemon: Pokemon?
+    var searchedPokemon: Pokemon? {
+        didSet {
+            updateUI()
+        }
+    }
     var pokemonController: PokemonTrainer?
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -46,7 +51,7 @@ class DetailViewController: UIViewController {
     }
     
     func updateUI() {
-        guard let pokemon = pokemon else {return}
+        guard let pokemon = searchedPokemon else {return}
         if nameLabel.isHidden { //if this is hidden, so are other elements
             nameLabel.isHidden = false
             idLabel.isHidden = false
@@ -102,11 +107,34 @@ class DetailViewController: UIViewController {
         return returnString
     }
     
+    func getPokemonFromUrl(url: String) {
+        let url = URL(string: url)
+        print(url)
+        pokemonController?.getPokemonFromURL(url: url) { (pokemon) in
+            print(pokemon)
+            guard let pokemon = pokemon else {return}
+            DispatchQueue.main.async {
+                self.searchedPokemon = pokemon
+                self.searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
 }
 
 extension DetailViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("clicked")
+        guard let searchText = searchBar.text,
+            searchText != "",
+            let pokeDataArray = pokemonController?.pokeDataArray
+        else {return}
+        for pokemonData in pokeDataArray {
+            if pokemonData.name == searchText {
+                print(pokemonData.url)
+                getPokemonFromUrl(url: pokemonData.url)
+            }
+        }
     }
 }
 
