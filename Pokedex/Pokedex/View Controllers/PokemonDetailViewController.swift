@@ -85,13 +85,17 @@ class PokemonDetailViewController: UIViewController {
         guard let pokemon = pokemon, let nameLabel = pokemonNameLabel, let idLabel = pokemonIDLabel, let typesLabel = pokemonTypesLabel, let abilityLabel = pokemonAbilitiesLabel, let imageView = pokemonImageView, let imageURL = URL(string: pokemon.sprites.frontShiny), let imageData = try? Data(contentsOf: imageURL) else { return }
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        for type in pokemon.types {
-            typesLabel.text = "Types: \(type)"
+        var abilitiesArray: [String] = []
+        var typesArray: [String] = []
+        for parentType in pokemon.types {
+            typesArray.append(parentType.type.name)
+        }
+        for parentAbility in pokemon.abilities {
+            abilitiesArray.append(parentAbility.ability.name)
         }
         
-        for ability in pokemon.abilities {
-            abilityLabel.text = "Abilities \(ability)"
-        }
+        typesLabel.text = "Types: \(typesArray)"
+        abilityLabel.text = "Abilities: \(abilitiesArray)"
         imageView.image = UIImage(data: imageData)
     }
 }
