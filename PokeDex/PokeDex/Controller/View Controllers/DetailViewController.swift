@@ -22,6 +22,8 @@ class DetailViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         if let pokemon = searchedPokemon {
             pokemonController?.savePokemon(pokemon: pokemon)
+            self.saveButton.isHidden = true
+            self.saveButton.isUserInteractionEnabled = false
         } else if let pokemon = pokemon {
             pokemonController?.removePokemon(pokemon: pokemon)
         }
@@ -30,6 +32,9 @@ class DetailViewController: UIViewController {
     //MARK: Class Properties
     var pokemon: Pokemon?
     var pokemonController: PokemonTrainer?
+    /**
+        Updates the UI when a pokemon is found using the searchBar
+     */
     var searchedPokemon: Pokemon? {
         didSet {
             updateUI()
@@ -56,7 +61,9 @@ class DetailViewController: UIViewController {
         
         updateUI()
     }
-    
+    /**
+     Updates UI elements with Pokemon details. Switches elements based on state
+     */
     func updateUI() {
         guard let pokemon = pokemon,
             let pokemonController = pokemonController
@@ -93,7 +100,6 @@ class DetailViewController: UIViewController {
                 self.imageView.image = image
             }
         })
-        //hide or show save button
         for savedPokemon in pokemonController.pokemon {
             if pokemon == savedPokemon {
                 saveButton.setTitle("Delete Pokemon", for: .normal)
