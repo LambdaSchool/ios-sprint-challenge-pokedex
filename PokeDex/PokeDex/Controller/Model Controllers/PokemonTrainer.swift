@@ -8,9 +8,13 @@
 
 import Foundation
 class PokemonTrainer {
+    //MARK: Completion Handlers
     typealias CompletionHandlerWithError = (Error?) -> ()
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=964")
+    typealias CompletionHandlerWithPokemon = (Pokemon?) -> ()
+    
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=964") //could get count and appendPathComponent dynamically if there's time
     var pokeDataArray: [PokemonData] = []
+    var pokemon: [Pokemon] = []
 
     func getPokemonData(completion: @escaping CompletionHandlerWithError) {
         guard let baseURL = baseURL else {return}
@@ -41,5 +45,33 @@ class PokemonTrainer {
         }.resume()
     }
     
-    
+    func getPokemonFromURL(url: URL?, completion: @escaping CompletionHandlerWithPokemon) {
+        guard let url = url else {
+            print("invalid URL")
+            completion(nil)
+            return
+        }
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            //Handle error
+            if let error = error {
+               NSLog("Error getting Pokemon \(error)")
+               completion(nil)
+               return
+            }
+            //Handle data
+            guard let data = data else {
+               NSLog("No data")
+               completion(nil)
+               return
+            }
+            do {
+                let pokeData = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(pokeData)
+            } catch {
+                NSLog("Error decoding Pokemon: \(error)")
+                completion(nil)
+                return
+            }
+        }.resume()
+    }
 }

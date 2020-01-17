@@ -15,7 +15,11 @@ class PokeListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonController.getPokemonData { (error) in
-            print(self.pokemonController.pokeDataArray)
+            let pokemon = self.pokemonController.pokeDataArray[0]
+            let url = URL(string: pokemon.url)
+            self.pokemonController.getPokemonFromURL(url: url) { (pokemon) in
+                print(pokemon?.name)
+            }
         }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
