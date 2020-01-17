@@ -22,8 +22,8 @@ struct PokemonData: Decodable {
 struct Pokemon: Decodable {
     let id: Int
     let name: String
-    let abilities: [Ability]
-    let types: [Type]
+    let abilities: [Abilities]
+    let types: [Types]
     let picture: Picture
     
     enum CodingKeys: String, CodingKey {
@@ -37,11 +37,17 @@ struct Pokemon: Decodable {
 
 
 //MARK: Pokemon Abilities
+struct Abilities: Decodable {
+    let ability: Ability
+}
 struct Ability: Decodable {
     let name: String
 }
 
 //MARK: Pokemon Types
+struct Types: Decodable {
+    let type: Type
+}
 struct Type: Decodable {
     let name: String
 }
