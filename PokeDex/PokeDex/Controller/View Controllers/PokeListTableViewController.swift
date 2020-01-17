@@ -22,6 +22,12 @@ class PokeListTableViewController: UITableViewController {
         pokemonController.getPokemonData { (error) in
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(pokemonController.pokemon)
+        savedPokemon = pokemonController.pokemon
+    }
 
     // MARK: - Table view data source
 

@@ -26,7 +26,8 @@ class DetailViewController: UIViewController {
     var pokemonController: PokemonTrainer?
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        print("tapped")
+        guard let pokemon = searchedPokemon else {return} //pokemon that arent searched for shouldn't be saved
+        pokemonController?.savePokemon(pokemon: pokemon)
     }
     //pokemon var with didset to
     
@@ -57,11 +58,13 @@ class DetailViewController: UIViewController {
             idLabel.isHidden = false
             typesLabel.isHidden = false
             abilitiesLabel.isHidden = false
-            saveButton.isHidden = false
-            saveButton.isUserInteractionEnabled = true
-            //TODO: Hide save button if pokemon is in saved List
-            //        saveButton.isHidden = true
-            //        saveButton.isUserInteractionEnabled = false
+            if pokemon == self.pokemon {
+                saveButton.isHidden = true
+                saveButton.isUserInteractionEnabled = false
+            } else {
+                saveButton.isHidden = false
+                saveButton.isUserInteractionEnabled = true
+            }
         }
         
         //fill in UI elements
@@ -109,9 +112,7 @@ class DetailViewController: UIViewController {
     
     func getPokemonFromUrl(url: String) {
         let url = URL(string: url)
-        print(url)
         pokemonController?.getPokemonFromURL(url: url) { (pokemon) in
-            print(pokemon)
             guard let pokemon = pokemon else {return}
             DispatchQueue.main.async {
                 self.searchedPokemon = pokemon
@@ -124,17 +125,19 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("clicked")
         guard let searchText = searchBar.text,
             searchText != "",
             let pokeDataArray = pokemonController?.pokeDataArray
         else {return}
+        
         for pokemonData in pokeDataArray {
-            if pokemonData.name == searchText {
+            if pokemonData.name.uppercased() == searchText.uppercased() {
                 print(pokemonData.url)
                 getPokemonFromUrl(url: pokemonData.url)
+                return
             }
         }
+        //Alert not found, check spelling
     }
 }
 

@@ -96,4 +96,9 @@ class PokemonTrainer {
             completion(data)
         }.resume()
     }
+    
+    //MARK: Update
+    func savePokemon(pokemon: Pokemon) {
+        self.pokemon.append(pokemon) //shouldn't need to check conditionally since UI is disabled if pokemon is already saved
+    }
 }
