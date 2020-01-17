@@ -10,9 +10,13 @@ import UIKit
 
 class PokeListTableViewController: UITableViewController {
     
+    var pokemonController = PokemonTrainer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        pokemonController.getPokemonData { (error) in
+            print(self.pokemonController.pokeDataArray)
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
