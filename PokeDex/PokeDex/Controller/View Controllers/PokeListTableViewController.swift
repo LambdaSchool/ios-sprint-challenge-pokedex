@@ -23,7 +23,10 @@ class PokeListTableViewController: UITableViewController {
             let pokemon = self.pokemonController.pokeDataArray[0]
             let url = URL(string: pokemon.url)
             self.pokemonController.getPokemonFromURL(url: url) { (pokemon) in
-                print(pokemon?.name)
+                guard let pokemon = pokemon else {return}
+                DispatchQueue.main.async {
+                    self.savedPokemon.append(pokemon)
+                }
             }
         }
     }
@@ -43,15 +46,6 @@ class PokeListTableViewController: UITableViewController {
         return cell
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -64,29 +58,16 @@ class PokeListTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "PokemonDetailSegue" {
+            guard let destination = segue.destination as? DetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else {return}
+            destination.pokemon = savedPokemon[indexPath.row]
+            destination.pokemonController = pokemonController
+        }
     }
-    */
+   
 
 }

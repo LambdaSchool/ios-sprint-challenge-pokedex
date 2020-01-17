@@ -11,6 +11,7 @@ class PokemonTrainer {
     //MARK: Completion Handlers
     typealias CompletionHandlerWithError = (Error?) -> ()
     typealias CompletionHandlerWithPokemon = (Pokemon?) -> ()
+    typealias CompletionHandlerWithPictureData = (Data?) -> ()
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=964") //could get count and appendPathComponent dynamically if there's time
     var pokeDataArray: [PokemonData] = []
@@ -72,6 +73,27 @@ class PokemonTrainer {
                 completion(nil)
                 return
             }
+        }.resume()
+    }
+    
+    func getPokemonPicture(url: URL?, completion: @escaping CompletionHandlerWithPictureData) {
+        guard let url = url else {
+            print("invalid URL")
+            completion(nil)
+            return
+        }
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if let error = error {
+                print("Error retrieving Picture Data: \(error)")
+                completion(nil)
+                return
+            }
+            guard let data = data else {
+                print("no data")
+                completion(nil)
+                return
+            }
+            completion(data)
         }.resume()
     }
 }
