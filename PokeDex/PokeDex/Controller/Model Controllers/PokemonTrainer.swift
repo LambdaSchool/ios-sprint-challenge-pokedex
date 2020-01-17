@@ -101,4 +101,15 @@ class PokemonTrainer {
     func savePokemon(pokemon: Pokemon) {
         self.pokemon.append(pokemon) //shouldn't need to check conditionally since UI is disabled if pokemon is already saved
     }
+    
+    //MARK: Delete
+    func removePokemon(pokemon: Pokemon) {
+        self.pokemon.removeAll{
+            if $0 == pokemon {
+                print("removing \(pokemon)")
+                return true
+            }
+            return false
+        }
+    }
 }

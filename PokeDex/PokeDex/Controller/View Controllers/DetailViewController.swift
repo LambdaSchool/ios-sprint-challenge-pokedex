@@ -26,8 +26,11 @@ class DetailViewController: UIViewController {
     var pokemonController: PokemonTrainer?
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        guard let pokemon = searchedPokemon else {return} //pokemon that arent searched for shouldn't be saved
-        pokemonController?.savePokemon(pokemon: pokemon)
+        if let pokemon = searchedPokemon {
+            pokemonController?.savePokemon(pokemon: pokemon)
+        } else if let pokemon = pokemon {
+            pokemonController?.removePokemon(pokemon: pokemon)
+        }
     }
     //pokemon var with didset to
     
