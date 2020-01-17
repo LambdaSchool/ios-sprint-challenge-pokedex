@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="N8p-is-7Dg">
             <objects>
-                <tableViewController id="RqW-t9-nqp" sceneMemberID="viewController">
+                <tableViewController id="RqW-t9-nqp" customClass="PokedexTableViewController" customModule="PokedexSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uRZ-gY-UB3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,7 +48,7 @@
         <!--Pokemon Search-->
         <scene sceneID="E1h-gH-KKM">
             <objects>
-                <viewController id="CNx-FS-hRj" sceneMemberID="viewController">
+                <viewController id="CNx-FS-hRj" customClass="DetailViewController" customModule="PokedexSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="15c-w7-PQ2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,6 +77,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="CNx-FS-hRj" eventType="touchUpInside" id="oZd-0b-dMR"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9X-KC-QBy">
                                 <rect key="frame" x="20" y="632" width="374" height="21"/>
@@ -115,6 +118,15 @@
                         <viewLayoutGuide key="safeArea" id="f0I-bj-Gqs"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="msB-1d-ovV"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="KZJ-vS-fne" id="rKd-hT-mdq"/>
+                        <outlet property="buttonLabel" destination="WPX-jd-0xW" id="fo3-cJ-1nt"/>
+                        <outlet property="idLabel" destination="V9X-KC-QBy" id="wmk-0y-QWf"/>
+                        <outlet property="imageView" destination="IhH-zW-AKf" id="YpX-m4-WU5"/>
+                        <outlet property="nameLabel" destination="hRi-MT-gfQ" id="qU9-5w-03B"/>
+                        <outlet property="searchBar" destination="O6f-W3-cbr" id="dz2-Ub-mTX"/>
+                        <outlet property="typeLabel" destination="iv0-ac-knW" id="aPf-1M-am0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ejg-cV-FHn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
