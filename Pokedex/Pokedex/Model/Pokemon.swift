@@ -33,9 +33,9 @@ struct PokemonType: Decodable {
 }
 
 struct PokemonSprites: Decodable {
-    var frontDefault: URL
+    var picture: URL
     
     enum CodiKeys: String, CodingKey {
-        case frontDefault = "front_default"
+        case picture = "front_default"
     }
 }
