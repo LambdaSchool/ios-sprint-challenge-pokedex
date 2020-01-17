@@ -9,6 +9,8 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
+    
+    let apiController = ApiController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +21,16 @@ class PokedexTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return apiController.pokemonArray.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-
+        let pokemon = apiController.pokemonArray[indexPath.row]
+        
+        cell
+        
         return cell
     }
 
