@@ -24,7 +24,7 @@ enum NetworkError: Error {
 
 class Auth {
     
-    var pokemon: [Pokemon] = []
+    var pokemonArray: [Pokemon] = []
     let pokemonImages: [URL] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
@@ -81,6 +81,15 @@ class Auth {
             let image = UIImage(data: data)
             completion(image)
         }.resume()
+    }
+    
+    func addPokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+    }
+    
+    func deletePokemon(pokemon: Pokemon) {
+        guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
+        pokemonArray.remove(at: index)
     }
     
 }

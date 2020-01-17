@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Gfl-LF-Bz2" style="IBUITableViewCellStyleDefault" id="G2Q-mt-6Hf">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="Gfl-LF-Bz2" style="IBUITableViewCellStyleDefault" id="G2Q-mt-6Hf">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G2Q-mt-6Hf" id="gdG-e1-mfj">
@@ -33,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="DJ7-wg-4eG" kind="show" id="sZz-V7-dT7"/>
+                                    <segue destination="DJ7-wg-4eG" kind="show" identifier="DetailSegue" id="sZz-V7-dT7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" title="PokeDex" id="qpi-pb-uQ1">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="ndH-4P-yve">
                             <connections>
-                                <segue destination="DJ7-wg-4eG" kind="show" id="CVi-an-fz6"/>
+                                <segue destination="DJ7-wg-4eG" kind="show" identifier="SearchSegue" id="CVi-an-fz6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -62,54 +62,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d3T-k1-Yj1">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d3T-k1-Yj1">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQC-pJ-jfR">
-                                <rect key="frame" x="187" y="153" width="34" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NWU-44-ke5">
-                                <rect key="frame" x="84" y="182" width="240" height="227"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I.D:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gb-gu-rqv">
-                                <rect key="frame" x="84" y="438" width="240" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6j-6D-DJE">
-                                <rect key="frame" x="84" y="467" width="222" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28m-uX-Pex">
-                                <rect key="frame" x="84" y="496" width="234" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZJn-dn-g3T">
+                                <rect key="frame" x="82" y="150" width="250" height="417.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQC-pJ-jfR">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NWU-44-ke5">
+                                        <rect key="frame" x="0.0" y="48" width="250" height="250"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I.D:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2gb-gu-rqv">
+                                        <rect key="frame" x="0.0" y="298" width="250" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6j-6D-DJE">
+                                        <rect key="frame" x="0.0" y="318.5" width="250" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28m-uX-Pex">
+                                        <rect key="frame" x="0.0" y="339" width="250" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Pd-jK-3M8">
+                                        <rect key="frame" x="0.0" y="359.5" width="250" height="58"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="savePokemonButton:" destination="DJ7-wg-4eG" eventType="touchUpInside" id="xcp-qI-VT3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="kwO-NU-hmf" firstAttribute="bottom" secondItem="ZJn-dn-g3T" secondAttribute="bottom" constant="294.5" id="8Ga-N3-K93"/>
+                            <constraint firstItem="ZJn-dn-g3T" firstAttribute="top" secondItem="d3T-k1-Yj1" secondAttribute="bottom" constant="6" id="IpL-PK-oZ3"/>
+                            <constraint firstItem="d3T-k1-Yj1" firstAttribute="leading" secondItem="kwO-NU-hmf" secondAttribute="leading" id="KQl-97-bI7"/>
+                            <constraint firstItem="d3T-k1-Yj1" firstAttribute="top" secondItem="kwO-NU-hmf" secondAttribute="top" id="P4B-ko-9lV"/>
+                            <constraint firstItem="d3T-k1-Yj1" firstAttribute="trailing" secondItem="kwO-NU-hmf" secondAttribute="trailing" id="WwJ-jP-3k9"/>
+                            <constraint firstItem="kwO-NU-hmf" firstAttribute="trailing" secondItem="ZJn-dn-g3T" secondAttribute="trailing" constant="82" id="do4-85-FY8"/>
+                            <constraint firstItem="ZJn-dn-g3T" firstAttribute="top" secondItem="d3T-k1-Yj1" secondAttribute="bottom" constant="6" id="kh4-nR-nK2"/>
+                            <constraint firstItem="ZJn-dn-g3T" firstAttribute="leading" secondItem="kwO-NU-hmf" secondAttribute="leading" constant="82" id="xc3-Mc-3kq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="kwO-NU-hmf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6D8-mM-zrV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wLO-ID-b3e">
-                            <connections>
-                                <action selector="savePokemonButton:" destination="DJ7-wg-4eG" id="WmV-WL-vQc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="6D8-mM-zrV"/>
                     <connections>
                         <outlet property="abilityLabel" destination="28m-uX-Pex" id="oX5-1E-IeK"/>
                         <outlet property="idLabel" destination="2gb-gu-rqv" id="lFd-sW-3yt"/>
@@ -143,6 +153,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sZz-V7-dT7"/>
+        <segue reference="CVi-an-fz6"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -15,7 +15,7 @@ struct Pokemon: Codable, Equatable {
     let types: [TypeInfo]
     let abilities: [AbilityInfo]
     let id: Int
-    let images: Image
+    let sprites: Image
     
     struct AbilityInfo: Codable, Equatable {
         let ability: Ability

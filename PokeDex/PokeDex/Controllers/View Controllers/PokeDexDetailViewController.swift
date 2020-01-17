@@ -22,12 +22,6 @@ class PokeDexDetailViewController: UIViewController {
         }
     }
     
-    var pokeFunc: PokemonFunctions? {
-        didSet {
-            updateViews()
-        }
-    }
-    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var titleLabelText: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -41,9 +35,9 @@ class PokeDexDetailViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    @IBAction func savePokemonButton(_ sender: Any) {
+    @IBAction func savePokemonButton(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
-        pokeFunc?.addPokemon(pokemon: pokemon)
+        auth?.addPokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
     
@@ -61,9 +55,9 @@ class PokeDexDetailViewController: UIViewController {
         title = pokemonDetail.name.capitalized
         titleLabelText.text = pokemon?.name
         idLabel.text = "ID: \(pokemonDetail.id)"
-        typesLabel.text = "\(types.joined(separator: ", "))"
-        abilityLabel.text = "\(pokemonDetail.abilities[0].ability.name)"
-        auth?.fetchImage(from: pokemonDetail.images.imageURL, completion: { (pokemonImage) in
+        typesLabel.text = "Types: \(types.joined(separator: ", "))"
+        abilityLabel.text = "Ability: \(pokemonDetail.abilities[0].ability.name)"
+        auth?.fetchImage(from: pokemonDetail.sprites.imageURL, completion: { (pokemonImage) in
             DispatchQueue.main.async {
                 self.imageView.image = pokemonImage
             }
@@ -72,5 +66,20 @@ class PokeDexDetailViewController: UIViewController {
 }
 
 extension PokeDexDetailViewController: UISearchBarDelegate {
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        auth?.fetchPokemon(pokemonName: searchTerm, completion: { (pokemonDetail) in
+            guard let pokemon = try? pokemonDetail.get() else { return }
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+            }
+        })
+        
+        guard let pokemonImageURL = pokemon?.sprites.imageURL else { return }
+        auth?.fetchImage(from: pokemonImageURL, completion: { (pokemonImage) in
+            DispatchQueue.main.async {
+                self.imageView.image = pokemonImage
+            }
+        })
+    }
 }
