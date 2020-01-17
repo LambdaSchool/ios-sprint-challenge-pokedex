@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -23,7 +24,7 @@ enum NetworkError: Error {
 
 class Auth {
     
-    let pokemon: [Pokemon] = []
+    var pokemon: [Pokemon] = []
     let pokemonImages: [URL] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
@@ -53,6 +54,32 @@ class Auth {
             } catch {
                 print("Unable to decode Pokemon data object: \(error)")
             }
+        }.resume()
+    }
+    
+    func fetchImage(from imageURL: String, completion: @escaping (UIImage?) -> Void) {
+        guard let imageURL = URL(string: imageURL) else {
+            completion(nil)
+            return
+        }
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                print("Error fetching Pokemon Images: \(error)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data Pokemon Image data provided: \(imageURL)")
+                completion(nil)
+                return
+            }
+            
+            let image = UIImage(data: data)
+            completion(image)
         }.resume()
     }
     

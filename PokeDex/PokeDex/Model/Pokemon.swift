@@ -9,10 +9,35 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Codable {
+
+struct Pokemon: Codable, Equatable {
     let name: String
-    let types: String
-    let abilities: String
+    let types: [TypeInfo]
+    let abilities: [AbilityInfo]
     let id: Int
-    let images: UIImage
+    let images: Image
+    
+    struct AbilityInfo: Codable, Equatable {
+        let ability: Ability
+        
+        struct Ability: Codable, Equatable {
+            let name: String
+        }
+    }
+    
+    struct TypeInfo: Codable, Equatable {
+        let type:TypieType
+        
+        struct TypieType: Codable, Equatable {
+            let name: String
+        }
+    }
+    
+    struct Image: Codable, Equatable {
+        let imageURL: String
+        
+        enum CodingKeys: String, CodingKey {
+            case imageURL = "front_default"
+        }
+    }
 }

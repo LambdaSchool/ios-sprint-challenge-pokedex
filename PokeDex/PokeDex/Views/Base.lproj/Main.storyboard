@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="1014.4927536231885" y="153.34821428571428"/>
         </scene>
-        <!--Poke Dex Detail Table View Controller-->
+        <!--Poke Dex Detail View Controller-->
         <scene sceneID="gA9-nt-sUs">
             <objects>
-                <viewController id="DJ7-wg-4eG" customClass="PokeDexDetailTableViewController" customModule="PokeDex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="DJ7-wg-4eG" customClass="PokeDexDetailViewController" customModule="PokeDex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mJz-ro-Wye">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,8 +104,20 @@
                         <viewLayoutGuide key="safeArea" id="kwO-NU-hmf"/>
                     </view>
                     <navigationItem key="navigationItem" id="6D8-mM-zrV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wLO-ID-b3e"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wLO-ID-b3e">
+                            <connections>
+                                <action selector="savePokemonButton:" destination="DJ7-wg-4eG" id="WmV-WL-vQc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="abilityLabel" destination="28m-uX-Pex" id="oX5-1E-IeK"/>
+                        <outlet property="idLabel" destination="2gb-gu-rqv" id="lFd-sW-3yt"/>
+                        <outlet property="imageView" destination="NWU-44-ke5" id="Gaz-jM-xHd"/>
+                        <outlet property="searchBar" destination="d3T-k1-Yj1" id="mgM-mP-wcl"/>
+                        <outlet property="titleLabelText" destination="xQC-pJ-jfR" id="TGG-jR-e1O"/>
+                        <outlet property="typesLabel" destination="x6j-6D-DJE" id="f5M-3d-ews"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ByH-8Z-QeL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
