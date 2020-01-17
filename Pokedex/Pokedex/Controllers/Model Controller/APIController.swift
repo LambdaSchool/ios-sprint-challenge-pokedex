@@ -25,13 +25,14 @@ class APIController {
     
     typealias FetchPokemonCompletionHandler = (Result<[Pokemon], NetworkError>) -> Void
     
-    func fetchPokemon(called pokemon: Pokemon, completion: @escaping FetchPokemonCompletionHandler) {
+    func fetchPokemon(called pokemonName: String, completion: @escaping FetchPokemonCompletionHandler) {
         let requestURL = baseURL
             .appendingPathComponent("pokemon")
-            .appendingPathComponent(pokemon.name)
+            .appendingPathComponent(pokemonName.lowercased())
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {

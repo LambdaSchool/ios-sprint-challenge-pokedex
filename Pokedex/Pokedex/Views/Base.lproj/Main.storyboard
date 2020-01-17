@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="nqw-Q4-thJ" kind="show" identifier="PokemonDetailShowSegue" id="7q2-mI-9Xh"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -42,7 +45,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="maz-hk-4a5">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="kEQ-Og-4Nq">
                             <connections>
-                                <segue destination="nqw-Q4-thJ" kind="show" id="wTc-hn-dc1"/>
+                                <segue destination="nqw-Q4-thJ" kind="show" identifier="PokemonSearchShowSegue" id="wTc-hn-dc1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -137,8 +140,9 @@
                     <connections>
                         <outlet property="abilitiesLabel" destination="4Nc-If-9K2" id="CTl-9H-Eck"/>
                         <outlet property="idLabel" destination="DiM-3G-Z1f" id="lYS-pX-eUk"/>
-                        <outlet property="imageViews" destination="wWm-KA-Tff" id="bug-CU-ob8"/>
+                        <outlet property="imageView" destination="wWm-KA-Tff" id="bug-CU-ob8"/>
                         <outlet property="nameLabel" destination="YZf-g2-5ux" id="JAf-3y-zf4"/>
+                        <outlet property="savePokemon" destination="eLI-QD-SNw" id="PB3-7s-p3x"/>
                         <outlet property="searchBar" destination="WGm-Vv-3AT" id="69L-zU-x8w"/>
                         <outlet property="typesLabel" destination="Gma-UQ-F1A" id="mL9-fW-Woq"/>
                     </connections>
@@ -164,4 +168,7 @@
             <point key="canvasLocation" x="-567" y="151"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wTc-hn-dc1"/>
+    </inferredMetricsTieBreakers>
 </document>
