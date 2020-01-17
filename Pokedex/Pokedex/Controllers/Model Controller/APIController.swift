@@ -23,7 +23,7 @@ class APIController {
     var pokemon: [Pokemon] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    typealias FetchPokemonCompletionHandler = (Result<[Pokemon], NetworkError>) -> Void
+    typealias FetchPokemonCompletionHandler = (Result<Pokemon, NetworkError>) -> Void
     
     func fetchPokemon(called pokemonName: String, completion: @escaping FetchPokemonCompletionHandler) {
         let requestURL = baseURL
@@ -49,8 +49,8 @@ class APIController {
             
             let decoder = JSONDecoder()
             do {
-                let pokemonJSON = try decoder.decode([Pokemon].self, from: data)
-                self.pokemon = pokemonJSON
+                let pokemonJSON = try decoder.decode(Pokemon.self, from: data)
+                self.pokemon.append(pokemonJSON)
                 completion(.success(pokemonJSON))
             } catch {
                 NSLog("Error decoding pokemon data: \(error)")

@@ -73,6 +73,7 @@ extension PokemonDetailViewController: UISearchBarDelegate {
         apiController?.fetchPokemon(called: pokemonName, completion: { (result) in
             let pokemon = try? result.get()
             DispatchQueue.main.async {
+                self.pokemon = pokemon
                 self.updateViews()
             }
         })
