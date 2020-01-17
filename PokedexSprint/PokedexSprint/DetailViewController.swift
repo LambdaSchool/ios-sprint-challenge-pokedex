@@ -26,10 +26,11 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard let unwrappedPokemon = pokemon else {return}
+        apiController?.pokemonArray.append(unwrappedPokemon)
         navigationController?.popViewController(animated: true)
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -44,24 +45,9 @@ class DetailViewController: UIViewController {
         idLabel.text = "ID: \("\(pokemon.id!)")"
         typeLabel.text = "Types: \(pokemon.types[0].type.name)"
         abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability.name)"
-        
-    
-
         guard let imageData = try? Data(contentsOf: pokemon.sprites.front_default) else {return}
         imageView.image = UIImage(data: imageData)
-        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension DetailViewController: UISearchBarDelegate {
@@ -72,11 +58,14 @@ extension DetailViewController: UISearchBarDelegate {
         
         let lowerSearch = search.lowercased()
         
-        apiController?.fetchPokemon(name: lowerSearch, completion: {
-            self.pokemon = self.apiController?.pokemonArray.last // ? newest one added
-            self.updateViews()
-            
-        })
-        
+        apiController?.fetchPokemon(name: lowerSearch) { (result) in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                    print("pokemon: \(pokemon)")
+                }
+            }
+        }
     }
 }
