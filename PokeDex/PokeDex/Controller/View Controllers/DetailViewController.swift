@@ -52,15 +52,17 @@ class DetailViewController: UIViewController {
     }
     
     func updateUI() {
-        guard let pokemon = searchedPokemon else {return}
+        guard let pokemon = pokemon,
+            let pokemonController = pokemonController
+        else {return}
         if nameLabel.isHidden { //if this is hidden, so are other elements
             nameLabel.isHidden = false
             idLabel.isHidden = false
             typesLabel.isHidden = false
             abilitiesLabel.isHidden = false
+            
             if pokemon == self.pokemon {
-                saveButton.isHidden = true
-                saveButton.isUserInteractionEnabled = false
+                
             } else {
                 saveButton.isHidden = false
                 saveButton.isUserInteractionEnabled = true
@@ -73,8 +75,9 @@ class DetailViewController: UIViewController {
         idLabel.text = "ID: \(pokemon.id)"
         typesLabel.text = "Types: \(prettyPrintTypes(typeArray: pokemon.types))"
         abilitiesLabel.text = "Abilities: \(prettyPrintAbilities(abilitiesArray: pokemon.abilities))"
+        //get image
         let imageUrl = URL(string: pokemon.picture.url)
-        pokemonController?.getPokemonPicture(url: imageUrl, completion: { (pictureData) in
+        pokemonController.getPokemonPicture(url: imageUrl, completion: { (pictureData) in
             guard let pictureData = pictureData else {
                 print("no picture data")
                 return
@@ -84,7 +87,17 @@ class DetailViewController: UIViewController {
                 self.imageView.image = image
             }
         })
+        //hide or show save button
+        for savedPokemon in pokemonController.pokemon {
+            if pokemon == savedPokemon {
+                saveButton.setTitle("Delete Pokemon", for: .normal)
+                saveButton.tintColor = UIColor.red
+            }
+        }
+        saveButton.isHidden = false
+        saveButton.isUserInteractionEnabled = true
     }
+    
     
     func prettyPrintTypes(typeArray: [Types]) -> String {
         var returnString = ""
@@ -115,6 +128,7 @@ class DetailViewController: UIViewController {
         pokemonController?.getPokemonFromURL(url: url) { (pokemon) in
             guard let pokemon = pokemon else {return}
             DispatchQueue.main.async {
+                self.pokemon = pokemon
                 self.searchedPokemon = pokemon
                 self.searchBar.resignFirstResponder()
             }
