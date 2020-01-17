@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
+    let pokemonController = PokemonController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,15 +21,16 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 0
+        return pokemonController.savedPokemon.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-
         
-
+        let selectedPokemon = pokemonController.savedPokemon[indexPath.row]
+        
+        cell.textLabel?.text = selectedPokemon.name
         return cell
     }
     
@@ -70,11 +73,13 @@ class PokemonTableViewController: UITableViewController {
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchPokemonSegue" {
+            guard let searchDetailVC = segue.destination as? PokemonDetailViewController else { return }
+            searchDetailVC.pokemonController = pokemonController
+        } else if segue.identifier == "PokemonDetailSegue" {
+            guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
+            pokemonDetailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
+        }
     }
-    
-
 }

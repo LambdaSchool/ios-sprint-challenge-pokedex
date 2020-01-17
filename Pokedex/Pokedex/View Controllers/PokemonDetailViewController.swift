@@ -10,13 +10,35 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    var pokemonController: PokemonController? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var pokemonImageView: UIImageView!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    @IBOutlet weak var pokemonTypesLabel: UILabel!
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func savePokemonTapped(_ sender: Any) {
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -27,4 +49,7 @@ class PokemonDetailViewController: UIViewController {
     }
     */
 
+    func updateViews() {
+        
+    }
 }
