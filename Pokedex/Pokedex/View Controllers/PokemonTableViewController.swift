@@ -14,9 +14,14 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.reloadData()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -25,11 +30,15 @@ class PokemonTableViewController: UITableViewController {
     }
 
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
         let selectedPokemon = pokemonController.savedPokemon[indexPath.row]
+        guard let imageURL = URL(string: selectedPokemon.sprites.frontShiny), let imageData = try? Data(contentsOf: imageURL) else { return UITableViewCell() }
         
+        
+        cell.imageView?.image = UIImage(data: imageData)
         cell.textLabel?.text = selectedPokemon.name
         return cell
     }
@@ -43,17 +52,13 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let pokemonToDelete = pokemonController.savedPokemon[indexPath.row]
         if editingStyle == .delete {
-            // Delete the row from the data source
+            pokemonController.deletePokemon(pokemon: pokemonToDelete)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -79,6 +84,7 @@ class PokemonTableViewController: UITableViewController {
             searchDetailVC.pokemonController = pokemonController
         } else if segue.identifier == "PokemonDetailSegue" {
             guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow else { return }
+            pokemonDetailVC.pokemonController = pokemonController
             pokemonDetailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
         }
     }

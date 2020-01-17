@@ -42,7 +42,7 @@
                             <outlet property="delegate" destination="ydF-Qd-vsY" id="VzD-8U-Icc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Pokedex" largeTitleDisplayMode="always" id="W1b-h2-QQw">
+                    <navigationItem key="navigationItem" title="Pokedex" id="W1b-h2-QQw">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="ByP-pc-Xtb">
                             <connections>
                                 <segue destination="y3u-UY-jd4" kind="show" identifier="SearchPokemonSegue" id="cb1-td-2RE"/>
@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="907" y="161"/>
         </scene>
-        <!--Pokemon Search-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="Uon-8j-mbW">
             <objects>
                 <viewController id="y3u-UY-jd4" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
@@ -85,61 +85,61 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IE3-WW-9Kt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IE3-WW-9Kt">
                                 <rect key="frame" x="20" y="627" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EL9-d3-3ZN">
-                                <rect key="frame" x="20" y="655.5" width="374" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3E-za-IDg">
-                                <rect key="frame" x="136" y="684" width="143" height="30"/>
+                                <rect key="frame" x="136" y="740" width="143" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
                                     <action selector="savePokemonTapped:" destination="y3u-UY-jd4" eventType="touchUpInside" id="3r9-eG-uAQ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Abilities:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL9-d3-3ZN">
+                                <rect key="frame" x="20" y="655.5" width="374" height="69.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="D3E-za-IDg" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="136" id="0aT-Jk-hoc"/>
                             <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="0rw-Zp-tSz" secondAttribute="trailing" constant="69" id="58u-31-how"/>
-                            <constraint firstItem="IE3-WW-9Kt" firstAttribute="top" secondItem="efB-pQ-HTa" secondAttribute="bottom" constant="8" id="6f5-D1-UR6"/>
-                            <constraint firstItem="D3E-za-IDg" firstAttribute="top" secondItem="EL9-d3-3ZN" secondAttribute="bottom" constant="8" id="BpY-oG-sQg"/>
+                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="EL9-d3-3ZN" secondAttribute="trailing" constant="20" id="7U6-Ky-lZ6"/>
+                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="D3E-za-IDg" secondAttribute="trailing" constant="135" id="Dqi-Hn-YKh"/>
                             <constraint firstItem="1GS-FL-tjv" firstAttribute="top" secondItem="0rw-Zp-tSz" secondAttribute="bottom" constant="33" id="EwM-wF-n7y"/>
-                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="EL9-d3-3ZN" secondAttribute="trailing" constant="20" id="IKY-lc-eLe"/>
                             <constraint firstItem="qFo-TY-pWT" firstAttribute="top" secondItem="meF-8e-weW" secondAttribute="top" id="LGm-PT-ZVb"/>
-                            <constraint firstItem="EL9-d3-3ZN" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="20" id="Mxz-3j-Ojc"/>
+                            <constraint firstItem="D3E-za-IDg" firstAttribute="top" secondItem="EL9-d3-3ZN" secondAttribute="bottom" constant="15" id="LcJ-l3-Apa"/>
+                            <constraint firstItem="EL9-d3-3ZN" firstAttribute="top" secondItem="IE3-WW-9Kt" secondAttribute="bottom" constant="8" id="NPk-ML-nVa"/>
                             <constraint firstItem="efB-pQ-HTa" firstAttribute="top" secondItem="1GS-FL-tjv" secondAttribute="bottom" constant="8" id="PRd-yg-zE3"/>
-                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="IE3-WW-9Kt" secondAttribute="trailing" constant="20" id="Q3x-FJ-m8u"/>
                             <constraint firstItem="1GS-FL-tjv" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="70" id="QVV-L0-0Ju"/>
-                            <constraint firstItem="EL9-d3-3ZN" firstAttribute="top" secondItem="IE3-WW-9Kt" secondAttribute="bottom" constant="8" id="Qns-lO-FOY"/>
                             <constraint firstItem="qFo-TY-pWT" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" id="Vhg-X6-gMa"/>
                             <constraint firstItem="0rw-Zp-tSz" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="70" id="Wo6-0e-YzL"/>
                             <constraint firstItem="efB-pQ-HTa" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="20" id="Wxk-TX-2Zh"/>
-                            <constraint firstItem="IE3-WW-9Kt" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="20" id="blz-qG-O8Y"/>
+                            <constraint firstItem="D3E-za-IDg" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="136" id="Xg8-df-F35"/>
+                            <constraint firstItem="EL9-d3-3ZN" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="20" id="Yqs-aq-7KP"/>
+                            <constraint firstItem="meF-8e-weW" firstAttribute="bottom" secondItem="D3E-za-IDg" secondAttribute="bottom" constant="92" id="cFY-RY-GUY"/>
                             <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="efB-pQ-HTa" secondAttribute="trailing" constant="20" id="dtL-1R-NN9"/>
-                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="D3E-za-IDg" secondAttribute="trailing" constant="135" id="ebG-Sa-wqB"/>
+                            <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="IE3-WW-9Kt" secondAttribute="trailing" constant="20" id="g5Z-d8-YXK"/>
                             <constraint firstItem="meF-8e-weW" firstAttribute="trailing" secondItem="1GS-FL-tjv" secondAttribute="trailing" constant="69" id="kW4-4G-Fxu"/>
-                            <constraint firstItem="IE3-WW-9Kt" firstAttribute="top" secondItem="efB-pQ-HTa" secondAttribute="bottom" constant="8" id="qGT-hX-zZ8"/>
-                            <constraint firstItem="meF-8e-weW" firstAttribute="bottom" secondItem="D3E-za-IDg" secondAttribute="bottom" constant="148" id="ufi-LH-yNq"/>
+                            <constraint firstItem="IE3-WW-9Kt" firstAttribute="leading" secondItem="meF-8e-weW" secondAttribute="leading" constant="20" id="pC9-PN-QiL"/>
+                            <constraint firstItem="IE3-WW-9Kt" firstAttribute="top" secondItem="efB-pQ-HTa" secondAttribute="bottom" constant="8" id="wjk-OP-Ydo"/>
                             <constraint firstItem="0rw-Zp-tSz" firstAttribute="top" secondItem="qFo-TY-pWT" secondAttribute="bottom" constant="55" id="xGG-g1-PQR"/>
                             <constraint firstItem="qFo-TY-pWT" firstAttribute="trailing" secondItem="meF-8e-weW" secondAttribute="trailing" id="yIc-cJ-Ryi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="meF-8e-weW"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokemon Search" largeTitleDisplayMode="always" id="WOC-Lk-YvX"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="WOC-Lk-YvX"/>
                     <connections>
                         <outlet property="pokemonAbilitiesLabel" destination="EL9-d3-3ZN" id="674-ww-vuY"/>
                         <outlet property="pokemonIDLabel" destination="efB-pQ-HTa" id="c6C-fV-lbH"/>
                         <outlet property="pokemonImageView" destination="1GS-FL-tjv" id="7Yg-xi-oI8"/>
                         <outlet property="pokemonNameLabel" destination="0rw-Zp-tSz" id="Qic-DI-7tP"/>
                         <outlet property="pokemonTypesLabel" destination="IE3-WW-9Kt" id="JIx-kT-eOB"/>
+                        <outlet property="savePokemonButton" destination="D3E-za-IDg" id="QKg-7p-e8i"/>
                         <outlet property="searchBar" destination="qFo-TY-pWT" id="mI6-Mk-6zc"/>
                     </connections>
                 </viewController>

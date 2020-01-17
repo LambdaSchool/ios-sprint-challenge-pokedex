@@ -60,4 +60,14 @@ class PokemonController {
             }
         }.resume()
     }
+    
+    func savePokemon(name: String, id: Int, abilities: [AbilityParent], type: [TypeParent], sprites: Sprites) {
+        let newSavedPokemon = Pokemon(id: id, name: name, abilities: abilities, sprites: sprites, types: type)
+        savedPokemon.append(newSavedPokemon)
+    }
+    
+    func deletePokemon(pokemon: Pokemon) {
+        guard let pokemonToRemove = savedPokemon.firstIndex(of: pokemon) else { return }
+        savedPokemon.remove(at: pokemonToRemove)
+    }
 }

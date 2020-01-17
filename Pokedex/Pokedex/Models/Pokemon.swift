@@ -12,18 +12,19 @@ struct Pokemon: Decodable, Equatable {
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         lhs.name == rhs.name && lhs.id == rhs.id
     }
+    
     let id: Int
     let name: String
-    let abilities: [Abilities]
+    let abilities: [AbilityParent]
     let sprites: Sprites
-    let types: [TypeElement]
+    let types: [TypeParent]
 }
 
-struct Abilities: Decodable {
-    let ability: [Ability]
+struct AbilityParent: Decodable {
+    let ability: AbilityChild
 }
 
-struct Ability: Decodable {
+struct AbilityChild: Decodable {
     let name: String
 }
 
@@ -37,11 +38,10 @@ struct Sprites: Decodable {
     }
 }
 
-struct TypeElement: Decodable {
-    let slot: Int
-    let type: PokemonType
+struct TypeParent: Decodable {
+    let type: TypeChild
 }
 
-struct PokemonType: Decodable {
+struct TypeChild: Decodable {
     let name: String
 }
