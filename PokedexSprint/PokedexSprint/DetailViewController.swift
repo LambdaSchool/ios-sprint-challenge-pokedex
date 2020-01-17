@@ -43,6 +43,7 @@ class DetailViewController: UIViewController {
         nameLabel.text = pokemon.name?.capitalized
         idLabel.text = "ID: \("\(pokemon.id!)")"
         typeLabel.text = "Types: \(pokemon.types[0].type.name)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability.name)"
     }
     
     /*

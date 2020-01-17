@@ -11,7 +11,7 @@ import Foundation
 struct Pokemon: Decodable {
     let name: String?
     let id: Int?
-    // abilities: [String] ???
+    let abilities: [Ability]
     // sprites: -> front_default ???
     let types: [Type]
 }
@@ -24,6 +24,13 @@ struct TypeName: Decodable {
     let name: String
 }
 
+struct Ability: Decodable {
+    let ability: AbilityName
+}
+
+struct AbilityName: Decodable {
+    let name: String
+}
 
 /*
  "types": [
@@ -34,4 +41,16 @@ struct TypeName: Decodable {
  ]
  
 { slot: int , type: {name: string, url: url} }
+ 
+ "abilities": [
+   {
+     "is_hidden": true,
+     "slot": 3,
+     "ability": {
+       "name": "tinted-lens",
+       "url": "https://pokeapi.co/api/v2/ability/110/"
+     }
+   }
+ ]
+ 
  */
