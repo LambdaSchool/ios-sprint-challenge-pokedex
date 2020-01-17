@@ -9,7 +9,7 @@
 import Foundation
 class PokemonTrainer {
     typealias CompletionHandlerWithError = (Error?) -> ()
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=964")
     var pokeDataArray: [PokemonData] = []
 
     func getPokemonData(completion: @escaping CompletionHandlerWithError) {
