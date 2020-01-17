@@ -44,6 +44,12 @@ class DetailViewController: UIViewController {
         idLabel.text = "ID: \("\(pokemon.id!)")"
         typeLabel.text = "Types: \(pokemon.types[0].type.name)"
         abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability.name)"
+        
+    
+
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.front_default) else {return}
+        imageView.image = UIImage(data: imageData)
+        
     }
     
     /*

@@ -12,7 +12,7 @@ struct Pokemon: Decodable {
     let name: String?
     let id: Int?
     let abilities: [Ability]
-    // sprites: -> front_default ???
+    let sprites: Sprite
     let types: [Type]
 }
 
@@ -30,6 +30,10 @@ struct Ability: Decodable {
 
 struct AbilityName: Decodable {
     let name: String
+}
+
+struct Sprite: Decodable {
+    let front_default: URL // ?
 }
 
 /*
@@ -52,5 +56,16 @@ struct AbilityName: Decodable {
      }
    }
  ]
+ 
+ "sprites": {
+   "back_female": "http://pokeapi.co/media/sprites/pokemon/back/female/12.png",
+   "back_shiny_female": "http://pokeapi.co/media/sprites/pokemon/back/shiny/female/12.png",
+   "back_default": "http://pokeapi.co/media/sprites/pokemon/back/12.png",
+   "front_female": "http://pokeapi.co/media/sprites/pokemon/female/12.png",
+   "front_shiny_female": "http://pokeapi.co/media/sprites/pokemon/shiny/female/12.png",
+   "back_shiny": "http://pokeapi.co/media/sprites/pokemon/back/shiny/12.png",
+   "front_default": "http://pokeapi.co/media/sprites/pokemon/12.png",
+   "front_shiny": "http://pokeapi.co/media/sprites/pokemon/shiny/12.png"
+ }
  
  */
