@@ -14,6 +14,12 @@ class PokedexTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        apiController.fetchPokemon(name: "pikachu") {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
 
     }
 
@@ -29,7 +35,8 @@ class PokedexTableViewController: UITableViewController {
 
         let pokemon = apiController.pokemonArray[indexPath.row]
         
-        cell
+        cell.textLabel?.text = pokemon.name
+        cell.detailTextLabel?.text = "\(pokemon.id)"
         
         return cell
     }

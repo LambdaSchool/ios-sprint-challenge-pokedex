@@ -13,14 +13,14 @@ class ApiController {
 
     var pokemonArray: [Pokemon] = []
     
-    func fetchPokemon(name: String, id: Int, completion: @escaping () -> Void) {
+    func fetchPokemon(name: String, completion: @escaping () -> Void) {
         let pokeUrl = baseURL.appendingPathComponent(name) // or id?
         
         var request = URLRequest(url: pokeUrl)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let response = response as? HTTPURLResponse, response.statusCode != 401 {
+            if let response = response as? HTTPURLResponse, response.statusCode != 200, response.statusCode != 401 {
                 completion()
                 print("CODE: \(response.statusCode)")
                 return

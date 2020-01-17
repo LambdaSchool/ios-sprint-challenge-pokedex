@@ -49,6 +49,6 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        // should lowercase the text 
     }
 }
