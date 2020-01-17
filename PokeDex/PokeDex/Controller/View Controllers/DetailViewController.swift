@@ -9,6 +9,7 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    //MARK: IBOutlets
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -17,14 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
-    var pokemon: Pokemon?
-    var searchedPokemon: Pokemon? {
-        didSet {
-            updateUI()
-        }
-    }
-    var pokemonController: PokemonTrainer?
-    
+    //MARK: IBActions
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         if let pokemon = searchedPokemon {
             pokemonController?.savePokemon(pokemon: pokemon)
@@ -32,15 +26,24 @@ class DetailViewController: UIViewController {
             pokemonController?.removePokemon(pokemon: pokemon)
         }
     }
-    //pokemon var with didset to
     
+    //MARK: Class Properties
+    var pokemon: Pokemon?
+    var pokemonController: PokemonTrainer?
+    var searchedPokemon: Pokemon? {
+        didSet {
+            updateUI()
+        }
+    }
     
+    //MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         setupViews()
     }
-
+    
+    //MARK: Helper Functions
     func setupViews() {
         if pokemon == nil {
             nameLabel.isHidden = true
@@ -101,7 +104,6 @@ class DetailViewController: UIViewController {
         saveButton.isUserInteractionEnabled = true
     }
     
-    
     func prettyPrintTypes(typeArray: [Types]) -> String {
         var returnString = ""
         for (index, value) in typeArray.enumerated() {
@@ -140,6 +142,7 @@ class DetailViewController: UIViewController {
     
 }
 
+//MARK: SearchBar Delegate
 extension DetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text,
@@ -149,7 +152,6 @@ extension DetailViewController: UISearchBarDelegate {
         
         for pokemonData in pokeDataArray {
             if pokemonData.name.uppercased() == searchText.uppercased() {
-                print(pokemonData.url)
                 getPokemonFromUrl(url: pokemonData.url)
                 return
             }

@@ -9,7 +9,7 @@
 import UIKit
 
 class PokeListTableViewController: UITableViewController {
-    
+    //MARK: Class Properties
     var pokemonController = PokemonTrainer()
     var savedPokemon: [Pokemon] = [] {
         didSet {
@@ -17,6 +17,7 @@ class PokeListTableViewController: UITableViewController {
         }
     }
     
+    //MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonController.getPokemonData { (error) in
@@ -30,9 +31,7 @@ class PokeListTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return savedPokemon.count
     }
 
@@ -57,6 +56,4 @@ class PokeListTableViewController: UITableViewController {
             destination.pokemonController = pokemonController
         }
     }
-   
-
 }

@@ -13,10 +13,12 @@ class PokemonTrainer {
     typealias CompletionHandlerWithPokemon = (Pokemon?) -> ()
     typealias CompletionHandlerWithPictureData = (Data?) -> ()
     
+    //MARK: Class properties
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=964") //could get count and appendPathComponent dynamically if there's time
     var pokeDataArray: [PokemonData] = []
     var pokemon: [Pokemon] = []
 
+    //MARK: URLSessions
     func getPokemonData(completion: @escaping CompletionHandlerWithError) {
         guard let baseURL = baseURL else {return}
         URLSession.shared.dataTask(with: baseURL) { (data, _, error) in
