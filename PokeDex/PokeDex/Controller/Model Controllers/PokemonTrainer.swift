@@ -101,17 +101,15 @@ class PokemonTrainer {
     
     //MARK: Update
     func savePokemon(pokemon: Pokemon) {
-        self.pokemon.append(pokemon) //shouldn't need to check conditionally since UI is disabled if pokemon is already saved
+        if self.pokemon.firstIndex(of: pokemon) == nil {
+            self.pokemon.append(pokemon)
+        }
+        
     }
     
     //MARK: Delete
     func removePokemon(pokemon: Pokemon) {
-        self.pokemon.removeAll{
-            if $0 == pokemon {
-                print("removing \(pokemon)")
-                return true
-            }
-            return false
-        }
+        guard let index = self.pokemon.firstIndex(of: pokemon) else {return}
+        self.pokemon.remove(at: index)
     }
 }

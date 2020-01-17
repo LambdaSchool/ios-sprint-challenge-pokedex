@@ -27,6 +27,7 @@ class DetailViewController: UIViewController {
         } else if let pokemon = pokemon {
             pokemonController?.removePokemon(pokemon: pokemon)
         }
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: Class Properties
@@ -74,9 +75,7 @@ class DetailViewController: UIViewController {
             typesLabel.isHidden = false
             abilitiesLabel.isHidden = false
             
-            if pokemon == self.pokemon {
-                
-            } else {
+            if pokemon != self.pokemon {
                 saveButton.isHidden = false
                 saveButton.isUserInteractionEnabled = true
             }
