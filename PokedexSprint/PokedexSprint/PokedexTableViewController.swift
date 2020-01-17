@@ -15,12 +15,16 @@ class PokedexTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        apiController.fetchPokemon(name: "pikachu") {
+        apiController.fetchPokemon(name: "20") {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -35,12 +39,25 @@ class PokedexTableViewController: UITableViewController {
 
         let pokemon = apiController.pokemonArray[indexPath.row]
         
-        cell.textLabel?.text = pokemon.name
-        cell.detailTextLabel?.text = "\(pokemon.id)"
+        cell.textLabel?.text = pokemon.name?.capitalized
         
         return cell
     }
 
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetailSegue" {
+            print("SHOW DETAIL SEG")
+            guard let detailVC = segue.destination as? DetailViewController, let indexPath = tableView.indexPathForSelectedRow else {return}
+            let pokemon = apiController.pokemonArray[indexPath.row]
+            detailVC.apiController = self.apiController
+            detailVC.pokemon = pokemon
+        }
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -76,14 +93,6 @@ class PokedexTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

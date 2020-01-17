@@ -13,5 +13,25 @@ struct Pokemon: Decodable {
     let id: Int?
     // abilities: [String] ???
     // sprites: -> front_default ???
-    // type: [String] ???
+    let types: [Type]
 }
+
+struct Type: Decodable {
+    let type: TypeName
+}
+
+struct TypeName: Decodable {
+    let name: String
+}
+
+
+/*
+ "types": [
+   {
+     "slot": 2,
+     "type": { "name": "flying", "url": "https://pokeapi.co/api/v2/type/3/"}
+   }
+ ]
+ 
+{ slot: int , type: {name: string, url: url} }
+ */
