@@ -33,6 +33,15 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let pokemon = apiController.pokeBall[indexPath.row]
+        if editingStyle == .delete {
+            apiController.deletePokemon(called: pokemon)
+        }
+    
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

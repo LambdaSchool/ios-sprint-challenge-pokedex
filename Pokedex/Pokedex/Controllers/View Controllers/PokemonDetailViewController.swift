@@ -29,11 +29,16 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         searchBar.delegate = self
+        
+        if pokemon != nil {
+            savePokemon.isHidden = true
+        }
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        if let pokemon = pokemon {
-            apiController?.savePokemon(called: pokemon)
+        if let pokemon = pokemon,
+            let apiController = apiController {
+            apiController.savePokemon(called: pokemon)
             self.navigationController?.popViewController(animated: true)
         }
     }
