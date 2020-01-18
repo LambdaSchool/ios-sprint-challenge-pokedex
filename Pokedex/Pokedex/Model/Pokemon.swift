@@ -36,6 +36,10 @@ struct TypeDetail: Decodable {
     let name: String
 }
 
-struct PokemonSprites: Decodable {
-    var front_default: URL
+struct PokemonSprites: Codable {
+    var picture: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case picture = "front_default"
+    }
 }

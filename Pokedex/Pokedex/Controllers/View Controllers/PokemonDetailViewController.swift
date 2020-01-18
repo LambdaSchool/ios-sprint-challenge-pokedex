@@ -51,13 +51,24 @@ class PokemonDetailViewController: UIViewController {
         searchBar.isHidden = true
         visibleOutlets()
         
-        title = pokemon.name
-        nameLabel.text = pokemon.name
-        idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = "Types: \(pokemon.types)"
-        abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+        var types: [String] = []
+        var abilities: [String] = []
         
-        guard let imageData = try? Data(contentsOf: pokemon.sprites.front_default) else {fatalError()}
+        for pokemonType in pokemon.types {
+            types.append(pokemonType.type.name)
+        }
+        
+        for pokemonAbility in pokemon.abilities {
+            abilities.append(pokemonAbility.ability.name)
+        }
+        
+        title = pokemon.name.capitalized
+        nameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        typesLabel.text = "Types: \(types.joined(separator: ", ").capitalized)"
+        abilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", ").capitalized)"
+        
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.picture) else {fatalError()}
         imageView.image = UIImage(data: imageData)
     }
     
