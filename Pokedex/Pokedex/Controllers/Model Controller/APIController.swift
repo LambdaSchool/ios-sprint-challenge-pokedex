@@ -16,6 +16,7 @@ enum NetworkError: Error {
     case requestError(Error)
     case noData
     case badData
+    case unexpectedStatusCode
 }
 
 class APIController {
@@ -34,11 +35,17 @@ class APIController {
         request.httpMethod = HTTPMethod.get.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 NSLog("Error fetching pokemon request: \(error)")
                 completion(.failure(.requestError(error)))
                 return
+            }
+            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                NSLog("Error with response")
+                completion(.failure(.unexpectedStatusCode))
             }
             
             guard let data = data else {

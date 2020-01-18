@@ -42,26 +42,39 @@ class PokemonDetailViewController: UIViewController {
     func updateViews() {
         guard isViewLoaded,
             let pokemon = pokemon else {
-            title = "Pokemon Search"
-            searchBar.placeholder = "Search by name"
-            nameLabel.isHidden = true
-            imageView.isHidden = true
-            idLabel.isHidden = true
-            typesLabel.isHidden = true
-            abilitiesLabel.isHidden = true
-            
-            return
+                title = "Pokemon Search"
+                searchBar.placeholder = "Search by name"
+                hiddenOutlets()
+                return
         }
         
         searchBar.isHidden = true
+        visibleOutlets()
+        
         title = pokemon.name
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
         typesLabel.text = "Types: \(pokemon.types)"
         abilitiesLabel.text = "Abilities: \(pokemon.abilities)"
         
-        guard let imageData = try? Data(contentsOf: pokemon.sprites.picture) else {fatalError()}
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.front_default) else {fatalError()}
         imageView.image = UIImage(data: imageData)
+    }
+    
+    func hiddenOutlets() {
+        nameLabel.isHidden = true
+        imageView.isHidden = true
+        idLabel.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
+    }
+    
+    func visibleOutlets() {
+        nameLabel.isHidden = false
+        imageView.isHidden = false
+        idLabel.isHidden = false
+        typesLabel.isHidden = false
+        abilitiesLabel.isHidden = false
     }
 }
 
@@ -72,9 +85,11 @@ extension PokemonDetailViewController: UISearchBarDelegate {
         
         apiController?.fetchPokemon(called: pokemonName, completion: { (result) in
             let pokemon = try? result.get()
-            DispatchQueue.main.async {
-                self.pokemon = pokemon
-                self.updateViews()
+            if let pokemon = pokemon {
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    self.updateViews()
+                }
             }
         })
     }

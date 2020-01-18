@@ -29,13 +29,13 @@ struct NamedAbility: Decodable {
 }
 
 struct PokemonType: Decodable {
+    let type: TypeDetail
+}
+
+struct TypeDetail: Decodable {
     let name: String
 }
 
 struct PokemonSprites: Decodable {
-    var picture: URL
-    
-    enum CodiKeys: String, CodingKey {
-        case picture = "front_default"
-    }
+    var front_default: URL
 }
