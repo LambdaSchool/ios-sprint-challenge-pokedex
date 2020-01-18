@@ -21,7 +21,7 @@ enum NetworkError: Error {
 
 class APIController {
     
-    var pokemon: [Pokemon] = []
+    var pokeBall: [Pokemon] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     typealias FetchPokemonCompletionHandler = (Result<Pokemon, NetworkError>) -> Void
@@ -57,12 +57,21 @@ class APIController {
             let decoder = JSONDecoder()
             do {
                 let pokemonJSON = try decoder.decode(Pokemon.self, from: data)
-                self.pokemon.append(pokemonJSON)
                 completion(.success(pokemonJSON))
             } catch {
                 NSLog("Error decoding pokemon data: \(error)")
                 completion(.failure(.badData))
             }
         }.resume()
+    }
+    
+    func savePokemon(called pokemon: Pokemon) {
+        let pokemon = Pokemon(name: pokemon.name, id: pokemon.id, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
+        pokeBall.append(pokemon)
+    }
+    
+    func deletePokemon(called pokemon: Pokemon) {
+        guard let pokemonToRemove = pokeBall.firstIndex(of: pokemon) else { return }
+        pokeBall.remove(at: pokemonToRemove)
     }
 }

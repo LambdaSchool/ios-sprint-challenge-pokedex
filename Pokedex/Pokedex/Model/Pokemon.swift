@@ -12,12 +12,16 @@ struct PokemonResults: Decodable {
     let results: [Pokemon]
 }
 
-struct Pokemon: Decodable {
+struct Pokemon: Decodable, Equatable {
     let name: String
     let id: Int
     let abilities: [PokemonAbility]
     let types: [PokemonType]
     var sprites: PokemonSprites
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name
+    }
 }
 
 struct PokemonAbility: Decodable {

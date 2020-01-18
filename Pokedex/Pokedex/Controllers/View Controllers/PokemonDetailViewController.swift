@@ -32,22 +32,21 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        if let apiController = apiController,
-            let pokemon = pokemon {
-            apiController.pokemon.append(pokemon)
+        if let pokemon = pokemon {
+            apiController?.savePokemon(called: pokemon)
             self.navigationController?.popViewController(animated: true)
         }
     }
     
     func updateViews() {
-        guard isViewLoaded,
-            let pokemon = pokemon else {
+        guard let pokemon = pokemon else {
                 title = "Pokemon Search"
                 searchBar.placeholder = "Search by name"
                 hiddenOutlets()
                 return
         }
         
+        guard let searchBar = searchBar else { return }
         searchBar.isHidden = true
         visibleOutlets()
         
