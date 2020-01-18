@@ -9,19 +9,27 @@
 import Foundation
 
 struct Pokemon: Decodable {
-    var name: String
-    var id: Int
-    //var ability: [Ability]
-    //var types: [PokeType]
-    var sprite: Sprite
+    var name: String?
+    var id: Int?
+    var abilities: [PokeAbility]
+    var types: [PokeType]
+    var sprites: Sprite?
     
-//    struct Ability: Decodable {
-//        var name: String
-//    }
-//
-//    struct PokeType: Decodable {
-//        var name: String
-//    }
+    struct PokeAbility: Decodable {
+        var ability: AbilityName
+    }
+
+    struct AbilityName: Decodable {
+        var name: String
+    }
+    
+    struct PokeType: Decodable {
+        var type: TypeName
+    }
+
+    struct TypeName: Decodable {
+        var name: String
+    }
     
     struct Sprite: Decodable {
         

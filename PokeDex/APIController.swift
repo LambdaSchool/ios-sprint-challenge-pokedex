@@ -67,7 +67,7 @@ class APIController {
                 self.pokemon = pokemonResult
                 completion(.success(pokemonResult))
             } catch {
-                print("Unable to decode data into object of type [Person]: \(error)")
+                print("error decodig: \(error)")
                 completion(.failure(.noDecode))
                 return
             }
