@@ -14,6 +14,7 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonController.loadFromPersistentStore()
         tableView.reloadData()
     }
 
@@ -39,7 +40,7 @@ class PokemonTableViewController: UITableViewController {
         
         
         cell.imageView?.image = UIImage(data: imageData)
-        cell.textLabel?.text = selectedPokemon.name
+        cell.textLabel?.text = selectedPokemon.name.localizedCapitalized
         return cell
     }
     

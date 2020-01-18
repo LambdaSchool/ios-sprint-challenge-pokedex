@@ -64,10 +64,52 @@ class PokemonController {
     func savePokemon(name: String, id: Int, abilities: [AbilityParent], type: [TypeParent], sprites: Sprites) {
         let newSavedPokemon = Pokemon(id: id, name: name, abilities: abilities, sprites: sprites, types: type)
         savedPokemon.append(newSavedPokemon)
+        saveToPersistentStore()
     }
     
     func deletePokemon(pokemon: Pokemon) {
         guard let pokemonToRemove = savedPokemon.firstIndex(of: pokemon) else { return }
         savedPokemon.remove(at: pokemonToRemove)
+        saveToPersistentStore()
+    }
+    
+    var pokemonURL: URL? {
+        let fileManager = FileManager.default
+        
+        guard let documentDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        
+        let pokemonURL = documentDir.appendingPathComponent("Pokemon.plist")
+        
+        return pokemonURL
+    }
+    
+    func saveToPersistentStore() {
+        guard let pokemonURL = pokemonURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            
+            let pokemonData = try encoder.encode(savedPokemon)
+            
+            try pokemonData.write(to: pokemonURL)
+        } catch {
+            print("Error saving data: \(error).")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        do {
+            guard let pokemonURL = pokemonURL else { return }
+            
+            let pokemonData = try Data(contentsOf: pokemonURL)
+            
+            let decoder = PropertyListDecoder()
+            
+            let pokemonArray = try decoder.decode([Pokemon].self, from: pokemonData)
+            
+            self.savedPokemon = pokemonArray
+        } catch {
+            print("Error loading data from plist: \(error).")
+        }
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Decodable, Equatable {
+struct Pokemon: Codable, Equatable {
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         lhs.name == rhs.name && lhs.id == rhs.id
     }
@@ -20,15 +20,15 @@ struct Pokemon: Decodable, Equatable {
     let types: [TypeParent]
 }
 
-struct AbilityParent: Decodable {
+struct AbilityParent: Codable {
     let ability: AbilityChild
 }
 
-struct AbilityChild: Decodable {
+struct AbilityChild: Codable {
     let name: String
 }
 
-struct Sprites: Decodable {
+struct Sprites: Codable {
     let frontDefault: String
     let frontShiny: String
 
@@ -38,10 +38,10 @@ struct Sprites: Decodable {
     }
 }
 
-struct TypeParent: Decodable {
+struct TypeParent: Codable {
     let type: TypeChild
 }
 
-struct TypeChild: Decodable {
+struct TypeChild: Codable {
     let name: String
 }

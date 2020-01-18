@@ -70,7 +70,7 @@ class PokemonDetailViewController: UIViewController {
             
         } else {
             guard let pokemon = pokemon else { return }
-            title = pokemon.name
+            title = pokemon.name.localizedCapitalized
             imageView.isHidden = false
             nameLabel.isHidden = false
             idLabel.isHidden = false
@@ -83,19 +83,30 @@ class PokemonDetailViewController: UIViewController {
     func updateViews() {
         searchOrDetail()
         guard let pokemon = pokemon, let nameLabel = pokemonNameLabel, let idLabel = pokemonIDLabel, let typesLabel = pokemonTypesLabel, let abilityLabel = pokemonAbilitiesLabel, let imageView = pokemonImageView, let imageURL = URL(string: pokemon.sprites.frontShiny), let imageData = try? Data(contentsOf: imageURL) else { return }
-        nameLabel.text = pokemon.name
+        nameLabel.text = (pokemon.name.localizedCapitalized)
+        nameLabel.layer.shadowRadius = 1.0
         idLabel.text = "ID: \(pokemon.id)"
         var abilitiesArray: [String] = []
         var typesArray: [String] = []
+        var stringTypes = ""
+        var stringAbilities = ""
         for parentType in pokemon.types {
-            typesArray.append(parentType.type.name)
+            typesArray.append(parentType.type.name.localizedCapitalized)
         }
         for parentAbility in pokemon.abilities {
-            abilitiesArray.append(parentAbility.ability.name)
+            abilitiesArray.append(parentAbility.ability.name.localizedCapitalized)
         }
+        for type in typesArray {
+            stringTypes = stringTypes + "\(type) "
+        }
+        for ability in abilitiesArray {
+            stringAbilities = stringAbilities + "\(ability) "
+        }
+//        typesLabel.text = "Types: \(stringTypes.localizedCapitalized)"
+        typesLabel.text = "Types:  \(typesArray.joined(separator: "          \n              "))"
+        abilityLabel.text = "Abilities:  \(abilitiesArray.joined(separator: "          \n                 "))"
         
-        typesLabel.text = "Types: \(typesArray)"
-        abilityLabel.text = "Abilities: \(abilitiesArray)"
+//        abilityLabel.text = "Abilities: \(abilitiesArray)"
         imageView.image = UIImage(data: imageData)
     }
 }
