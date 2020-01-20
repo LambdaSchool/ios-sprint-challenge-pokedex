@@ -43,8 +43,8 @@ class DetailViewController: UIViewController {
         title = pokemon.name?.capitalized
         nameLabel.text = pokemon.name?.capitalized
         idLabel.text = "ID: \("\(pokemon.id!)")"
-        typeLabel.text = "Types: \(pokemon.types[0].type.name)"
-        abilitiesLabel.text = "Abilities: \(pokemon.abilities[0].ability.name)"
+        typeLabel.text = "Types: " + pokemon.types.map( { $0.type.name.capitalized } ).joined(separator: ", ")
+        abilitiesLabel.text = "Abilities: " + pokemon.abilities.map( { $0.ability.name.capitalized } ).joined(separator: ", ")
         guard let imageData = try? Data(contentsOf: pokemon.sprites.front_default) else {return}
         imageView.image = UIImage(data: imageData)
     }
