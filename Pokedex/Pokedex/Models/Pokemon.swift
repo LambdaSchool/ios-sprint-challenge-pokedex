@@ -26,7 +26,7 @@ struct Pokemon: Codable, Equatable {
         return lhs.name == rhs.name
     }
     
-}
+    }
 
 struct AbilityInfo: Codable, Equatable {
     let ability: Ability
@@ -51,3 +51,4 @@ struct TypeInfo: Codable, Equatable {
         let name: String
     }
 }
+

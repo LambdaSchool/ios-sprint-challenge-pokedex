@@ -29,17 +29,18 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
         toggleSearchItems()
-        updateViews()
+    
         // Do any additional setup after loading the view.
     }
     
    private func updateViews() {
         guard let pokemon = pokemon else {
          title = "Pokemon Search"
-        searchBar.placeholder = "Search for Pokemon Character by name"
+        searchBar.placeholder = "Search for Pokemon Character by name ir ID"
         hidePokemonItems()
         return
     }
@@ -57,15 +58,16 @@ class DetailViewController: UIViewController {
         }
         
         nameLbl.text = pokemon.name.capitalized
-        idTxtField.text = "ID \(pokemon.id)"
-        typesTxtField.text = "Abilities: \(pokemon.abilities)"
+        idTxtField.text = "ID: \(pokemon.id)"
+        typesTxtField.text = "Types: \(pokemon.types)"
+        abilitiesTxtField.text = "Abilities: \(pokemon.abilities)"
         guard let imageData = try? Data(contentsOf: pokemon.sprites.imageURL) else {fatalError()}
         image.image = UIImage(data: imageData)
         }
       }
     private func toggleSearchItems() {
         if pokemon != nil {
-            navigationItem.title = capitalize(pokemon?.name ?? "")
+//            navigationItem.title = capitalize(pokemon?.name ?? "")
             searchBar.isHidden = true
             saveBtn.isHidden = true
         }
@@ -86,14 +88,14 @@ class DetailViewController: UIViewController {
             abilitiesTxtField.isHidden = false
         }
     
-    private func capitalize(_ word: String) -> String {
-          var newWord = word
-          let firstLetter = newWord.startIndex
-          let capFirst = newWord[firstLetter].uppercased()
-          newWord.remove(at: firstLetter)
-          newWord.insert(Character(capFirst), at: firstLetter)
-          return newWord
-      }
+//    private func capitalize(_ word: String) -> String {
+//          var newWord = word
+//          let firstLetter = newWord.startIndex
+//          let capFirst = newWord[firstLetter].uppercased()
+//          newWord.remove(at: firstLetter)
+//          newWord.insert(Character(capFirst), at: firstLetter)
+//          return newWord
+//      }
 
     /*
     // MARK: - Navigation
