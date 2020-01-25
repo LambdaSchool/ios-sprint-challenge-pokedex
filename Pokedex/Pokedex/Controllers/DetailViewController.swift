@@ -10,6 +10,26 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    var apiController: APIController? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    //ibOutlets
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var idTxtField: UITextField!
+    @IBOutlet weak var typesTxtField: UITextField!
+    @IBOutlet weak var abilitiesTxtField: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,5 +46,9 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func updateViews() {
+        
+    }
 
 }
