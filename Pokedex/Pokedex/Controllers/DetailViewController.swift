@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
    private func updateViews() {
         togglePokemonItems()
         guard let pokemon = pokemon else { return }
-        guard let searchBar = searchBar else { return } 
+        guard let searchBar = searchBar else { return }
     
     
     var types: [String] = []
@@ -51,12 +51,13 @@ class DetailViewController: UIViewController {
     for pokemonType in pokemon.types {
         types.append(pokemonType.type.name)
         
-        for pokemonAbility in pokemon.abilities {
+    for pokemonAbility in pokemon.abilities {
             abilities.append(pokemonAbility.ability.name)
         }
         
-        
-        
+        nameLbl.text = pokemon.name.capitalized
+        idTxtField.text = "ID \(pokemon.id)"
+        typesTxtField.text = "Abilities: \(pokemon.abilities)"
         
         
     }
