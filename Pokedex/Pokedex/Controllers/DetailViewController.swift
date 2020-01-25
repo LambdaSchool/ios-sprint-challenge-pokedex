@@ -15,11 +15,7 @@ class DetailViewController: UIViewController {
             updateViews()
         }
     }
-    var apiController: APIController? {
-        didSet {
-            updateViews()
-        }
-    }
+    var apiController: APIController?
     
     //ibOutlets
     @IBOutlet weak var searchBar: UISearchBar!
@@ -41,10 +37,15 @@ class DetailViewController: UIViewController {
     }
     
    private func updateViews() {
-        togglePokemonItems()
-        guard let pokemon = pokemon else { return }
-        guard let searchBar = searchBar else { return }
-    
+        guard let pokemon = pokemon else {
+         title = "Pokemon Search"
+        searchBar.placeholder = "Search for Pokemon Character by name"
+        hidePokemonItems()
+        return
+    }
+    guard let searchBar = searchBar else { return }
+    searchBar.isHidden = true
+    showPokemonItems()
     
     var types: [String] = []
     var abilities: [String] = []
@@ -58,12 +59,10 @@ class DetailViewController: UIViewController {
         nameLbl.text = pokemon.name.capitalized
         idTxtField.text = "ID \(pokemon.id)"
         typesTxtField.text = "Abilities: \(pokemon.abilities)"
-        
-        
-    }
-    
-    }
-    
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.imageURL) else {fatalError()}
+        image.image = UIImage(data: imageData)
+        }
+      }
     private func toggleSearchItems() {
         if pokemon != nil {
             navigationItem.title = capitalize(pokemon?.name ?? "")
@@ -72,21 +71,20 @@ class DetailViewController: UIViewController {
         }
     }
 
-    private func togglePokemonItems() {
-        if pokemon != nil {
+    func hidePokemonItems() {
+        image.isHidden = true
+        nameLbl.isHidden = true
+        idTxtField.isHidden = true
+        typesTxtField.isHidden = true
+        abilitiesTxtField.isHidden = true
+    }
+     func showPokemonItems() {
             image.isHidden = false
             nameLbl.isHidden = false
             idTxtField.isHidden = false
             typesTxtField.isHidden = false
             abilitiesTxtField.isHidden = false
-        } else {
-            image.isHidden = true
-            nameLbl.isHidden = true
-            idTxtField.isHidden = true
-            typesTxtField.isHidden = true
-            abilitiesTxtField.isHidden = true
         }
-    }
     
     private func capitalize(_ word: String) -> String {
           var newWord = word
@@ -119,14 +117,18 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController: UISearchBarDelegate {
     func searchBarClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
-        searchBar.placeholder = "Search for Pokemon Character by name"
-        apiController?.fetchAllPokemon(named: searchTerm, completion: { (pokemonDetail) in
-            guard let pokemon = try? pokemonDetail.get() else { return }
-            DispatchQueue.main.async {
+        guard let pokemonName = searchBar.text,
+        !pokemonName.isEmpty else { return }
+        
+        
+        apiController?.fetchAllPokemon(named: pokemonName, completion: { (result) in
+            let pokemon = try? result.get()
+            if let pokemon = pokemon {
+                DispatchQueue.main.async {
                 self.pokemon = pokemon
                 self.updateViews()
             }
+        }
         })
     }
 }
