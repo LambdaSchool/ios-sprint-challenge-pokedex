@@ -75,15 +75,15 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchBtnSegue" {
             if let detailVC = segue.destination as? DetailViewController {
                 detailVC.apiController = apiController
-            }
+            } else if segue.identifier == "DetailViewSegue" {
+                    guard let detailVC = segue.destination as? DetailViewController,
+                        let indexPath = tableView.indexPathForSelectedRow else { return }
+                detailVC.apiController = apiController
+                detailVC.pokemon = apiController.pokemonsArray[indexPath.row]
+                    
+                }
         }
         
-        if segue.identifier == "DetailViewSegue" {
-            guard let detailVC = segue.destination as? DetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow else { return }
-            detailVC.
-            
-        }
     }
   
 
