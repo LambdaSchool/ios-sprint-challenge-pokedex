@@ -11,46 +11,36 @@
 import Foundation
 import UIKit
 
-struct PokemonResults: Decodable {
-    let results: [Pokemon]
-}
-
 struct Pokemon: Codable, Equatable {
     let name: String
     let types: [TypeInfo]
     let abilities: [AbilityInfo]
     let id: Int
-    let sprites: Image
-
-    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs.name == rhs.name
-    }
-
-    }
-
-struct AbilityInfo: Codable, Equatable {
-    let ability: Ability
-
-    struct Ability: Codable, Equatable {
+    let sprites: SpriteFront
+    
+    struct AbilityInfo: Codable, Equatable {
+        let ability: Ability
+        
+        struct Ability: Codable, Equatable {
         let name: String
+        }
+    }
+    
+    struct TypeInfo: Codable, Equatable {
+        let type: PokeType
+        
+        struct PokeType: Codable, Equatable {
+            let name: String
+        }
+    }
+    
+    struct SpriteFront: Codable, Equatable {
+        let imageUrl: String
+        
+        enum CodingKeys: String, CodingKey {
+            case imageUrl = "front_default"
+        }
     }
 }
 
-struct Image: Codable, Equatable {
-    let imageURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case imageURL = "front_default"
-    }
-}
-
-struct TypeInfo: Codable, Equatable {
-    let type: TypieType
-
-    struct TypieType: Codable, Equatable {
-        let name: String
-    }
-}
-
-/// TRy
  

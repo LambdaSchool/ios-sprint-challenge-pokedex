@@ -28,45 +28,37 @@ class APIController {
     
     var pokemonsArray: [Pokemon] = []
     let pokemonImages: [URL] = []
-     let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+     let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")
 //    let baseUrl = URL(string: "http://poke-api.vapor.cloud/")!
 
     // create function for fetching all pokemon
     
-    func fetchAllPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURL = baseUrl.appendingPathComponent(pokemonName.lowercased())
-        let pokeURL = pokemonURL
-        
-//        let requestURL = baseUrl
-//        .appendingPathComponent("pokemon")
-//        .appendingPathComponent(pokemonName.lowercased())
+    func fetchAllPokemon(pokemonName: String, completion: @escaping ((Result<Pokemon, NetworkError>) -> Void)) {
+        let pokemonURL = baseUrl?.appendingPathComponent(pokemonName.lowercased())
+        guard let pokeURL = pokemonURL else { return }
         var request = URLRequest(url: pokeURL)
         request.httpMethod = HTTPMethod.get.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
-//            if let response = response as? HTTPURLResponse,
-//                response.statusCode == 401 {
-//                completion(.failure(.badAuth))
-//                return
-//            }
+
             guard error == nil else {
+//                print("Error fetching data: \(error)")
                 completion(.failure(.badData))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.noData))
+                print("No data returned")
                 return
             }
                
-            let decoder = JSONDecoder()
+       
             do {
-                let pokemonRetrieved = try decoder.decode(Pokemon.self, from: data)
+                let pokemonRetrieved = try JSONDecoder().decode(Pokemon.self, from: data)
                 completion(.success(pokemonRetrieved))
             } catch {
                 print("unable to decode data into object type Pokemon: \(error)")
-//                completion(.failure(.decodingError))
             }
         } .resume()
     }
@@ -82,13 +74,13 @@ class APIController {
         var request = URLRequest(url: imageUrl)
         request.httpMethod = HTTPMethod.get.rawValue
 
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
+        URLSession.shared.dataTask(with: request) { (imageData, _, error) in
         guard error == nil else {
 //            completion(.failure(.otherError))
             return
         }
 
-        guard let data = data else {
+        guard let data = imageData else {
             print("No data Pokemon Image data provided: \(imageURL)")
             completion(nil)
             return
