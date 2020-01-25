@@ -11,7 +11,8 @@ import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
-//    case post = "POST"
+    case post = "POST"
+    case push = "PUSH"
 }
 
 enum NetworkError: Error {
@@ -20,38 +21,42 @@ enum NetworkError: Error {
     case otherError
     case badData
     case decodingError
+    case noData
 }
 
 class APIController {
     
     var pokemonsArray: [Pokemon] = []
-//    let pokemonImages: [URL] = []
-     let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
+    let pokemonImages: [URL] = []
+     let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon")!
 //    let baseUrl = URL(string: "http://poke-api.vapor.cloud/")!
 
     // create function for fetching all pokemon
     
-    func fetchAllPokemon(named pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let requestURL = baseUrl
-        .appendingPathComponent("pokemon")
-        .appendingPathComponent(pokemonName.lowercased())
-        var request = URLRequest(url: requestURL)
+    func fetchAllPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let pokemonURL = baseUrl.appendingPathComponent(pokemonName.lowercased())
+        let pokeURL = pokemonURL
+        
+//        let requestURL = baseUrl
+//        .appendingPathComponent("pokemon")
+//        .appendingPathComponent(pokemonName.lowercased())
+        var request = URLRequest(url: pokeURL)
         request.httpMethod = HTTPMethod.get.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let response = response as? HTTPURLResponse,
-                response.statusCode == 401 {
-                completion(.failure(.badAuth))
-                return
-            }
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+//            if let response = response as? HTTPURLResponse,
+//                response.statusCode == 401 {
+//                completion(.failure(.badAuth))
+//                return
+//            }
             guard error == nil else {
-                completion(.failure(.otherError))
+                completion(.failure(.badData))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.badData))
+                completion(.failure(.noData))
                 return
             }
                
@@ -61,7 +66,7 @@ class APIController {
                 completion(.success(pokemonRetrieved))
             } catch {
                 print("unable to decode data into object type Pokemon: \(error)")
-                completion(.failure(.decodingError))
+//                completion(.failure(.decodingError))
             }
         } .resume()
     }
@@ -69,9 +74,9 @@ class APIController {
     
     // create function to fetch image
     
-    func fetchImage(for imageURL: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func fetchImage(from imageURL: String, completion: @escaping (UIImage?) -> Void) {
         guard let imageUrl = URL(string: imageURL ) else {
-            completion(.failure(.otherError))
+            completion(nil)
             return
         }
         var request = URLRequest(url: imageUrl)
@@ -79,21 +84,18 @@ class APIController {
 
         URLSession.shared.dataTask(with: request) { (data, _, error) in
         guard error == nil else {
-            completion(.failure(.otherError))
+//            completion(.failure(.otherError))
             return
         }
 
         guard let data = data else {
-            completion(.failure(.badData))
+            print("No data Pokemon Image data provided: \(imageURL)")
+            completion(nil)
             return
         }
 
-        guard let image = UIImage(data: data) else {
-            return
-        }
-            
-        completion(.success(image))
-
+        let image = UIImage(data: data)
+        completion(image)
     } .resume()
 
 }

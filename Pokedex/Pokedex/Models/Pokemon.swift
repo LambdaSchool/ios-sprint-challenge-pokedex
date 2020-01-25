@@ -7,7 +7,7 @@
 //
 
 //Establish a Pokemon record with properties for the Pokemon's name, ID, ability, and types.
-
+//
 import Foundation
 import UIKit
 
@@ -21,11 +21,11 @@ struct Pokemon: Codable, Equatable {
     let abilities: [AbilityInfo]
     let id: Int
     let sprites: Image
-    
+
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.name == rhs.name
     }
-    
+
     }
 
 struct AbilityInfo: Codable, Equatable {
@@ -37,7 +37,7 @@ struct AbilityInfo: Codable, Equatable {
 }
 
 struct Image: Codable, Equatable {
-    let imageURL: URL
+    let imageURL: String
 
     enum CodingKeys: String, CodingKey {
         case imageURL = "front_default"
@@ -45,10 +45,12 @@ struct Image: Codable, Equatable {
 }
 
 struct TypeInfo: Codable, Equatable {
-    let type:TypieType
+    let type: TypieType
 
     struct TypieType: Codable, Equatable {
         let name: String
     }
 }
 
+/// TRy
+ 

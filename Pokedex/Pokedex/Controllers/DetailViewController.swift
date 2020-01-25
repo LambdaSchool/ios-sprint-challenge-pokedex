@@ -32,15 +32,15 @@ class DetailViewController: UIViewController {
         updateViews()
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
-        toggleSearchItems()
+//        toggleSearchItems()
     
         // Do any additional setup after loading the view.
     }
     
    private func updateViews() {
-        guard let pokemon = pokemon else {
+        guard let pokemonDetail = pokemon else {
          title = "Pokemon Search"
-        searchBar.placeholder = "Search for Pokemon Character by name ir ID"
+//        searchBar.placeholder = "Search for Pokemon Character by name"
         hidePokemonItems()
         return
     }
@@ -49,22 +49,30 @@ class DetailViewController: UIViewController {
     showPokemonItems()
     
     var types: [String] = []
-    var abilities: [String] = []
-    for pokemonType in pokemon.types {
+//    var abilities: [String] = []
+    for pokemonType in pokemonDetail.types {
         types.append(pokemonType.type.name)
         
-    for pokemonAbility in pokemon.abilities {
-            abilities.append(pokemonAbility.ability.name)
-        }
-        
-        nameLbl.text = pokemon.name.capitalized
-        idTxtField.text = "ID: \(pokemon.id)"
-        typesTxtField.text = "Types: \(pokemon.types)"
-        abilitiesTxtField.text = "Abilities: \(pokemon.abilities)"
-        guard let imageData = try? Data(contentsOf: pokemon.sprites.imageURL) else {fatalError()}
-        image.image = UIImage(data: imageData)
+//
+//    for pokemonAbility in pokemon.abilities {
+//            abilities.append(pokemonAbility.ability.name)
+//        }
+//
+        title = pokemonDetail.name
+        nameLbl.text = pokemonDetail.name
+        idTxtField.text = "ID: \(pokemonDetail.id)"
+        typesTxtField.text = "Types: \(pokemonDetail.types)"
+        abilitiesTxtField.text = "Abilities: \(pokemonDetail.abilities)"
+        apiController?.fetchImage(from: pokemonDetail.sprites.imageURL, completion: { (pokemonImage) in
+            DispatchQueue.main.async {
+                self.image.image = pokemonImage
+            }
+        })
+//        guard let imageData = try? Data(contentsOf: pokemonDetail.sprites.imageURL) else {fatalError()}
+//        image.image = UIImage(data: imageData)
         }
       }
+   
     private func toggleSearchItems() {
         if pokemon != nil {
 //            navigationItem.title = capitalize(pokemon?.name ?? "")
@@ -87,15 +95,15 @@ class DetailViewController: UIViewController {
             typesTxtField.isHidden = false
             abilitiesTxtField.isHidden = false
         }
-    
-//    private func capitalize(_ word: String) -> String {
-//          var newWord = word
-//          let firstLetter = newWord.startIndex
-//          let capFirst = newWord[firstLetter].uppercased()
-//          newWord.remove(at: firstLetter)
-//          newWord.insert(Character(capFirst), at: firstLetter)
-//          return newWord
-//      }
+
+    private func capitalize(_ word: String) -> String {
+          var newWord = word
+          let firstLetter = newWord.startIndex
+          let capFirst = newWord[firstLetter].uppercased()
+          newWord.remove(at: firstLetter)
+          newWord.insert(Character(capFirst), at: firstLetter)
+          return newWord
+      }
 
     /*
     // MARK: - Navigation
@@ -119,18 +127,22 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController: UISearchBarDelegate {
     func searchBarClicked(_ searchBar: UISearchBar) {
-        guard let pokemonName = searchBar.text,
-        !pokemonName.isEmpty else { return }
+        guard let searchName = searchBar.text else { return }
+//        !searchName.isEmpty else { return }
         
         
-        apiController?.fetchAllPokemon(named: pokemonName, completion: { (result) in
-            let pokemon = try? result.get()
-            if let pokemon = pokemon {
+        apiController?.fetchAllPokemon(pokemonName: searchName, completion: { (pokemonDetail) in
+            guard let pokemon = try? pokemonDetail.get() else { return }
                 DispatchQueue.main.async {
                 self.pokemon = pokemon
                 self.updateViews()
             }
-        }
+        })
+        guard let pokemonImageURL = pokemon?.sprites.imageURL else { return }
+        apiController?.fetchImage(from: pokemonImageURL, completion: { (pokemonImage) in
+            DispatchQueue.main.async {
+                self.image.image = pokemonImage
+            }
         })
     }
 }
