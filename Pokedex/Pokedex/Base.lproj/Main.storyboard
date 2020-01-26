@@ -102,8 +102,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D2Y-Bv-CQu">
-                                <rect key="frame" x="60" y="705.5" width="294" height="22"/>
-                                <state key="normal" title="Save Pokemon" image="checkmark.circle" catalog="system">
+                                <rect key="frame" x="60" y="705.5" width="294" height="34"/>
+                                <state key="normal">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -132,7 +132,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8Sq-Dl-0JL"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokemon Search" id="fTd-xW-yq2"/>
+                    <navigationItem key="navigationItem" title="Pokemon Search" id="fTd-xW-yq2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="sPf-JD-hXP">
+                            <connections>
+                                <action selector="saveBarBtn:" destination="1sw-Ul-sDa" id="uNu-zi-UOM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="abilitiesLbl" destination="UOd-Wd-Reb" id="gFK-7O-U21"/>
                         <outlet property="idLbl" destination="3nI-mr-DKG" id="aZz-r8-ZP2"/>
@@ -164,9 +170,6 @@
             <point key="canvasLocation" x="-502" y="44"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="checkmark.circle" catalog="system" width="64" height="60"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Pl6-S4-Dgi"/>
     </inferredMetricsTieBreakers>

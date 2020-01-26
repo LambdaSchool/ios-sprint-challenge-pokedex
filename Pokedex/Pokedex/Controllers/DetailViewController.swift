@@ -20,58 +20,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var saveBtn: UIButton!
 
 
- 
-//
-//        // Do any additional setup after loading the view.
-//    }
-//
-//   private func updateViews() {
-////    guard isViewLoaded else { return }
-//        guard let pokemonObject = pokemon else {
-//         title = "Pokemon Search"
-////        searchBar.placeholder = "Search for Pokemon Character by name"
-////          print("Labels not updated")
-//
-//        return
-//    }
-//
-//    print("\(pokemonObject.name) set in detail view")
-//    title = pokemonObject.name.capitalized
-//    nameLbl.text = pokemon?.name
-//    idLbl.text = "ID: \(pokemonObject.id)"
-//
-////    guard let searchBar = searchBar else { return }
-
-//
-//    var types: [String] = []
-//    for typeInfo in pokemonObject.types {
-//        types.append(typeInfo.type.name)
-//        }
-//        typesLbl.text = "Pokemon Types: \(types.joined(separator: ", "))"
-//        abilitiesLbl.text = "Abilities: \(pokemonObject.abilities[0].ability.name)"
-////
-////    for pokemonAbility in pokemon.abilities {
-////            abilities.append(pokemonAbility.ability.name)
-////        }
-//////
-////        title = pokemonDetail.name
-////        nameLbl.text = pokemonDetail.name
-////        idLbl.text = "ID: \(pokemonDetail.id)"
-////        typesLbl.text = "Types: \(pokemonDetail.types)"
-////        abilitiesLbl.text = "Abilities: \(pokemonDetail.abilities)"
-//        apiController?.fetchImage(from: pokemonObject.sprites.imageUrl, completion: { (pokemonImage) in
-//            DispatchQueue.main.async {
-//                self.image.image = pokemonImage
-//            }
-//        })
-////        guard let imageData = try? Data(contentsOf: pokemonDetail.sprites.imageURL) else {fatalError()}
-////        image.image = UIImage(data: imageData)
-//        }
-//      }
-//
-
-
-
     var pokemon: Pokemon? {
         didSet {
             updateViews()
@@ -156,14 +104,39 @@ class DetailViewController: UIViewController {
             }
         })
     }
-    @IBAction func savePokemonBtnWasPressed(_ sender: Any) {
-         if let pokemon = pokemon,
-             let apiController = apiContoller {
-             apiController.addPokemon(pokemon: pokemon)
-             self.navigationController?.popViewController(animated: true)
-         }
-     }
+   
+        // setup save to tableview feature
+    @IBAction func saveBarBtn(_ sender: UIBarButtonItem) {
+        guard let pokemon = pokemon else { return }
+        apiContoller?.addPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+        
+    }
+    // Not working with UIBtn but does work with UIBArButtonItem .. why?
+    
+    @IBAction func savePokemonBtnWasPressed(_ sender: UIButton) {
+//        guard let pokemon = pokemon else { return }
+//        apiContoller?.addPokemon(pokemon: pokemon)
+//        navigationController?.popViewController(animated: true)
+        
+//        guard let pokemon = pokemon else { return }
+//        apiContoller?.addPokemon(pokemon: pokemon)
+//        self.navigationController?.popViewController(animated: true)
+//
+//         if let pokemon = pokemon,
+//             let apiController = apiContoller {
+//             apiController.addPokemon(pokemon: pokemon)
+//             self.navigationController?.popViewController(animated: true)
+//         }
+//     }
+        
+        
+        
 }
+}
+
+// search bar subclass via extension
+
 extension DetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
