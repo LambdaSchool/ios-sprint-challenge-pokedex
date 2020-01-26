@@ -22,7 +22,7 @@ class PokemonController {
     
     var pokemon: [Pokemon] = []
     
-    let baseURL = URL(string: "http://poke-api.vapor.cloud/api/v2/pokemon/133")!
+    let baseURL = URL(string: "http://poke-api.vapor.cloud/api/v2")!
     
     func searchPokeman(searchTerm: String, completion: @escaping (Pokemon?, Error?) -> Void) {
         let searchPokemanURL = baseURL.appendingPathComponent("pokemon/\(searchTerm.lowercased())")
