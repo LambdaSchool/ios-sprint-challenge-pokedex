@@ -5,7 +5,7 @@
 //  Created by patelpra on 1/25/20.
 //  Copyright © 2020 Crus Technologies. All rights reserved.
 //
-
+import UIKit
 import Foundation
 
 enum HTTPMethod: String {
@@ -57,6 +57,29 @@ class PokemonController {
             }
         }.resume()
         
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage,
+        NetworkError>) -> Void) {
+        let imageUrl = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: imageUrl) { (data, _, error) in
+            if let _ = error {
+            completion(.failure(.otherError))
+            return
+            }
+            
+            guard let data = data else {
+            completion(.failure(.badData))
+            return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
+        }.resume()
     }
     
     func savePokemon(with pokemon: Pokemon) {

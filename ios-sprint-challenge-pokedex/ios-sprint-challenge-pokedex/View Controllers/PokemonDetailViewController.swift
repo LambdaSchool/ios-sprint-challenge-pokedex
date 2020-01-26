@@ -67,6 +67,13 @@ class PokemonDetailViewController: UIViewController {
         self.typesLabel.text = pokemon.types.map({ $0.type.name }).joined(separator: ", ")
         self.abilitiesLabel.text = pokemon.abilities.map({ $0.ability.name }).joined(separator: ", ")
         
+        pokemonController.fetchImage(at: pokemon.sprites.front_default, completion: { (result) in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImageView.image = image
+                }
+            }
+        })
         
         if !self.detailView {
             self.pokemonView.isHidden = false
