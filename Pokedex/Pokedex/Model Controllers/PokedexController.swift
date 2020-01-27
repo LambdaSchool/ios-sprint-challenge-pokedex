@@ -25,12 +25,11 @@ class PokedexController {
     }
     
     // MARK: - Properties
-    var pokemon: [Pokemon] = []
+    var pokemons: [Pokemon] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     // Alternate baseURL: https://lambdapokeapi.herokuapp.com/
     
-
-    
+    // MARK: API Fetching Functions
     func fetchPokemon(named name: String, completion: @escaping (Result<Pokemon, ErrorType>) -> Void) {
         let url = baseURL.appendingPathComponent(name)
         
@@ -90,8 +89,8 @@ class PokedexController {
                 return
             }
             
-            if let index = self.pokemon.firstIndex(of: pokemon) {
-                self.pokemon[index].image = data
+            if let index = self.pokemons.firstIndex(of: pokemon) {
+                self.pokemons[index].image = data
             }
             
             if let image = UIImage(data: data) {
@@ -101,4 +100,56 @@ class PokedexController {
             }
         }.resume()
     }
+    
+    
+    // MARK: - Persistence Functions
+    
+    private var persistentFileURL: URL? {
+        let fm = FileManager.default
+        guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return dir.appendingPathComponent("pokemon.plist")
+    }
+    
+    private func saveToPersistentStore() {
+        guard let url = persistentFileURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemons)
+            try data.write(to: url)
+        } catch {
+            print("Error saving data: \(error)")
+        }
+    }
+    
+    private func loadFromPersistentStore() {
+        let fm = FileManager.default
+        guard let url = persistentFileURL,
+            fm.fileExists(atPath: url.path) else { return }
+        
+        do{
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            pokemons = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            print("Error loading data: \(error)")
+        }
+    }
+    
+    func save(pokemon: Pokemon) {
+        
+        if !pokemons.contains(pokemon) {
+            pokemons.append(pokemon)
+        }
+        saveToPersistentStore()
+    }
+    
+    func delete(_ pokemon: Pokemon) {
+        guard let index = pokemons.firstIndex(of: pokemon) else { return }
+        pokemons.remove(at: index)
+        saveToPersistentStore()
+    }
+    
+
+    
 }

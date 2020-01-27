@@ -9,6 +9,10 @@
 import UIKit
 
 class PokedexDetailViewController: UIViewController {
+    
+    // MARK: - Properties
+    var pokedexController: PokedexController?
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
