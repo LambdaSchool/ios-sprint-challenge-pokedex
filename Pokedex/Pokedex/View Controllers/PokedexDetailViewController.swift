@@ -52,7 +52,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
         
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "ID: \(pokemon.id)"
-        var types = pokemon.types.compactMap { $0.type.name }
+        var types = pokemon.types.compactMap { $0.type.name.capitalized }
         
         _ = types.compactMap {
             if let index = types.firstIndex(of: $0) {
@@ -62,7 +62,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
         pokemonTypesLabel.text = "Types: \(types.joined(separator: ", "))"
         
         
-        var abilities = pokemon.abilities.compactMap { $0.ability.name }
+        var abilities = pokemon.abilities.compactMap { $0.ability.name.capitalized }
         _ = abilities.compactMap {
             if let index = abilities.firstIndex(of: $0) {
                 abilities[index] = $0 }
