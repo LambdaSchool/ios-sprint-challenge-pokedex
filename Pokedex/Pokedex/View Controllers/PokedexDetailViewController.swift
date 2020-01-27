@@ -84,7 +84,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     
     private func toggleSearchItems() {
         if pokemon != nil {
-            navigationItem.title = pokemon?.name ?? ""
+            navigationItem.title = pokemon?.name.capitalized ?? ""
             searchBar.isHidden = true
             saveButton.isHidden = true
         }
