@@ -7,3 +7,33 @@
 //
 
 import Foundation
+
+struct Pokemon: Codable, Equatable {
+    var name: String
+    var id: Int
+    var abilities: [AbilityContainer]
+    var types: [TypeContainer]
+    var sprites: SpriteContainer
+    
+}
+
+struct Ability: Codable, Equatable{
+    var name: String
+}
+
+struct AbilityContainer: Codable, Equatable {
+    var ability: Ability
+}
+
+struct Types: Codable, Equatable {
+    var name: String
+}
+
+struct TypeContainer: Codable, Equatable{
+    var type: Types
+}
+
+struct SpriteContainer: Codable, Equatable {
+    var frontDefault: String
+}
+
