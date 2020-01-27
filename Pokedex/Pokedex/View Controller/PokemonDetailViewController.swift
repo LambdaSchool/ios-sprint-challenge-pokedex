@@ -64,7 +64,8 @@ class PokemonDetailViewController: UIViewController {
     //MARK: IBActions
     @IBAction func savePokemonTapped(_ sender: Any) {
         guard let pokemonApiController = pokemonApiController, let pokemon = pokemon else { return }
-        pokemonApiController.savePokemonToPersistentStore(for: pokemon)
+        pokemonApiController.savedPokemon.append(pokemon)
+        pokemonApiController.savePokemonToPersistentStore()
 
     }
     

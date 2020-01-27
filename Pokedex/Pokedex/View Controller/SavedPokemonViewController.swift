@@ -16,7 +16,6 @@ class SavedPokemonViewController: UIViewController {
     
     //MARK: Properties
     var pokemonApiController: PokemonAPIController?
-    var savedPokemon: [Pokemon] = []
     
     //MARK: View Lifecycle
     override func viewDidLoad() {
@@ -24,7 +23,21 @@ class SavedPokemonViewController: UIViewController {
         tableView.dataSource = self
         tableView.reloadData()
     }
+    
+    //MARK: Naviagtion
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SavedPokemonShowDetailSegue" {
+            guard let detailVC = segue.destination as? PokemonDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else {
+                return
+            }
+            detailVC.pokemonApiController = pokemonApiController
+            detailVC.pokemon = pokemonApiController?.savedPokemon[indexPath.row]
+            detailVC.saveButtonShouldShow = false
+        }
+    }
 
+    //MARK: IBActions
     @IBAction func closeButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -32,13 +45,14 @@ class SavedPokemonViewController: UIViewController {
 
 extension SavedPokemonViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let savedPokemon = pokemonApiController?.savedPokemon else { return 0 }
         return savedPokemon.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell() }
         
-        let pokemon = savedPokemon[indexPath.row]
+        guard let pokemon = pokemonApiController?.savedPokemon[indexPath.row] else { return UITableViewCell() }
         
         cell.pokemonNameLabel.text = "#\(pokemon.id): \(pokemon.name.capitalized)"
         cell.pokemonTypeLabel.text = pokemon.formatPokemonTypes()
@@ -62,17 +76,15 @@ extension SavedPokemonViewController: UITableViewDataSource {
         
         return cell
     }
+
+}
+
+extension SavedPokemonViewController: UITableViewDelegate {
     
-    //MARK: Naviagtion
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SavedPokemonShowDetailSegue" {
-            guard let detailVC = segue.destination as? PokemonDetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow else {
-                return
-            }
-            detailVC.pokemonApiController = pokemonApiController
-            detailVC.pokemon = savedPokemon[indexPath.row]
-            detailVC.saveButtonShouldShow = false
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonApiController?.savedPokemon.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     

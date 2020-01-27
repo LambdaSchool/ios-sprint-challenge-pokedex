@@ -121,7 +121,6 @@ class PokemonSearchTableViewController: UITableViewController {
             detailVC.pokemonApiController = pokemonApiController
         } else if segue.identifier == "SavedPokemonModalSegue" {
             guard let savedVC = segue.destination as? SavedPokemonViewController else { return }
-            savedVC.savedPokemon = pokemonApiController.savedPokemon
             savedVC.pokemonApiController = pokemonApiController
         }
     }

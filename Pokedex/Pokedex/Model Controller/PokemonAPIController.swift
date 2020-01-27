@@ -109,9 +109,8 @@ class PokemonAPIController {
         
     }
     
-    func savePokemonToPersistentStore(for pokemon: Pokemon) {
+    func savePokemonToPersistentStore() {
         guard let url = localStorageUrl else { return }
-        savedPokemon.append(pokemon)
         let encoder = PropertyListEncoder()
         
         do {
