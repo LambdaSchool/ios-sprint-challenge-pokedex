@@ -15,11 +15,12 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-    
+    @IBOutlet weak var savePokemonButton: UIButton!
     
     //MARK: Properties
     var pokemon: Pokemon?
     var pokemonApiController: PokemonAPIController?
+    var saveButtonShouldShow = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class PokemonDetailViewController: UIViewController {
         
         pokemonApiController.getPokemonSprite(with: pokemon.sprites.front_default) { (image, error) in
             guard error == nil else {
-                print("Error trying to retrieve data: \(error)")
+                print("Error trying to retrieve data: \(String(describing: error))")
                 return
             }
             
@@ -51,6 +52,20 @@ class PokemonDetailViewController: UIViewController {
             
         }
         
+        switch saveButtonShouldShow {
+        case true:
+            savePokemonButton.isHidden = false
+        case false:
+            savePokemonButton.isHidden = true
+        }
+        
     }
+    
+    //MARK: IBActions
+    @IBAction func savePokemonTapped(_ sender: Any) {
+        guard let pokemonApiController = pokemonApiController, let pokemon = pokemon else { return }
+        pokemonApiController.savePokemonToPersistentStore(for: pokemon)
 
+    }
+    
 }

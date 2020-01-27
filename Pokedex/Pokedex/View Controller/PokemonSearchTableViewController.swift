@@ -36,12 +36,12 @@ class PokemonSearchTableViewController: UITableViewController {
         
         pokemonApiController.getPokemonSprite(with: pokemon.sprites.front_default) { (image, error) in
             guard error == nil else {
-                print("Error retrieving sprite image for Pokemon: \(error)")
+                print("Error retrieving sprite image for Pokemon: \(String(describing: error))")
                 return
             }
             
             guard let image = image else {
-                print("Error with image file: \(error)")
+                print("Error with image file: \(String(describing: error))")
                 return
             }
             
@@ -119,7 +119,10 @@ class PokemonSearchTableViewController: UITableViewController {
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             detailVC.pokemon = pokemonApiController.searchResults[indexPath.row]
             detailVC.pokemonApiController = pokemonApiController
-            
+        } else if segue.identifier == "SavedPokemonModalSegue" {
+            guard let savedVC = segue.destination as? SavedPokemonViewController else { return }
+            savedVC.savedPokemon = pokemonApiController.savedPokemon
+            savedVC.pokemonApiController = pokemonApiController
         }
     }
 

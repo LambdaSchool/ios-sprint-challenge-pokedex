@@ -17,9 +17,19 @@ class PokemonAPIController {
     
     //API Properties
     let baseUrl: String = "https://pokeapi.co/api/v2/pokemon/"
+    var localStorageUrl: URL? {
+        let fileManager = FileManager()
+        guard let pokemonList = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return pokemonList.appendingPathComponent("Pokemon.plist")
+    }
     
     //Array to store results
     var searchResults: [Pokemon] = []
+    var savedPokemon: [Pokemon] = []
+    
+    init() {
+        loadPokemonFromPersistentStore()
+    }
     
     func getPokemonSprite(with url: String, completion: @escaping (UIImage?, Error?) -> Void) {
         //Ensure image URL is valid
@@ -68,7 +78,6 @@ class PokemonAPIController {
         //Create URLRequest
         var request = URLRequest(url: baseUrl)
         request.httpMethod = HTTPRequest.GET.rawValue
-        print(request)
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             //Check for errors in API Call
@@ -98,6 +107,33 @@ class PokemonAPIController {
             
         }.resume()
         
+    }
+    
+    func savePokemonToPersistentStore(for pokemon: Pokemon) {
+        guard let url = localStorageUrl else { return }
+        savedPokemon.append(pokemon)
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let pokemonData = try encoder.encode(savedPokemon)
+            try pokemonData.write(to: url)
+        } catch {
+            print("Error saving Pokemon to local storage")
+        }
+    }
+    
+    func loadPokemonFromPersistentStore() {
+        let fm = FileManager.default
+        guard let url = localStorageUrl, fm.fileExists(atPath: url.path) else { return }
+        let decoder = PropertyListDecoder()
+        
+        do {
+            let data = try Data.init(contentsOf: url)
+            let decodedPokemon = try decoder.decode([Pokemon].self, from: data)
+            savedPokemon = decodedPokemon
+        } catch {
+            print("Error loading Pokemon Data")
+        }
     }
     
 }
