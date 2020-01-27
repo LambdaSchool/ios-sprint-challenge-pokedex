@@ -10,6 +10,7 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
     
+    //MARK: - Properties
     let pokedexController = PokedexController()
 
     override func viewDidLoad() {
