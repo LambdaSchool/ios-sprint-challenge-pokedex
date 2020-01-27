@@ -22,15 +22,95 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
     // MARK: - Properties
     var pokedexController: PokedexController?
     var pokemon: Pokemon?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
+        toggleSearchItems()
+        updateViews()
     }
     
-// MARK: - IBActions
+    private func updateViews() {
+        pokemonDetails()
+        guard let pokemon = pokemon else { return }
+        
+        if let data = pokemon.image {
+            let image = UIImage(data: data)
+            pokemonImageView.image = image
+        } else {
+            pokedexController?.fetchImage(for: pokemon, completion: { result in
+                if let image = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.pokemonImageView.image = image
+                    }
+                } else {
+                    print(result)
+                }
+            })
+        }
+        
+        pokemonNameLabel.text = pokemon.name
+        pokemonIDLabel.text = "ID: \(pokemon.id)"
+        var types = pokemon.types.compactMap { $0.type.name }
+        
+        _ = types.compactMap {
+            if let index = types.firstIndex(of: $0) {
+                types[index] = $0 }
+        }
+        
+        pokemonTypesLabel.text = "Types: \(types.joined(separator: ", "))"
+        
+        
+        var abilities = pokemon.abilities.compactMap { $0.ability.name }
+        _ = abilities.compactMap {
+            if let index = abilities.firstIndex(of: $0) {
+                abilities[index] = $0 }
+        }
+        pokemonAbilitiesLabel.text = "Abilities: \(abilities.joined(separator: ", "))"
+    }
+    
+    // Searchbar Function
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text?.lowercased() else { return }
+        pokedexController?.fetchPokemon(named: searchTerm, completion: { result in
+            let pokemon = try? result.get()
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+                self.updateViews()
+            }
+        })
+    }
+    
+    private func toggleSearchItems() {
+        if pokemon != nil {
+            navigationItem.title = pokemon?.name ?? ""
+            searchBar.isHidden = true
+            saveButton.isHidden = true
+        }
+    }
+    
+    private func pokemonDetails() {
+        if pokemon != nil {
+            pokemonImageView.isHidden = false
+            pokemonNameLabel.isHidden = false
+            pokemonIDLabel.isHidden = false
+            pokemonTypesLabel.isHidden = false
+            pokemonAbilitiesLabel.isHidden = false
+        } else {
+            pokemonImageView.isHidden = true
+            pokemonNameLabel.isHidden = true
+            pokemonIDLabel.isHidden = true
+            pokemonTypesLabel.isHidden = true
+            pokemonAbilitiesLabel.isHidden = true
+        }
+    }
+    
+    // MARK: - IBActions
     @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let addedPokemon = pokemon else { return }
+        pokedexController?.pokemons.append(addedPokemon)
+        self.navigationController?.popToRootViewController(animated: true)
         
     }
 }
