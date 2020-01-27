@@ -10,6 +10,9 @@ import UIKit
 
 class PokemonSearchTableViewController: UITableViewController {
 
+    //MARK: IBOutlets
+    @IBOutlet weak var pokemonSearchbar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
