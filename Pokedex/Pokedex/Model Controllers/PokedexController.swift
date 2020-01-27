@@ -18,6 +18,10 @@ enum ErrorType: Error {
     case noPokemon
 }
 
+enum SortType: Int {
+    case name = 0, id = 1
+}
+
 class PokedexController {
     
     struct HTTPMethod {
@@ -100,6 +104,16 @@ class PokedexController {
             }
         }.resume()
     }
+    // MARK: -  Sort Pokemon
+    func sortPokemon() {
+          switch UserDefaults.standard.integer(forKey: "SortBy") {
+          case SortType.name.rawValue:
+              pokemons = pokemons.sorted { $0.name < $1.name }
+          default:
+              pokemons = pokemons.sorted { $0.id < $1.id }
+          }
+          saveToPersistentStore()
+      }
     
     
     // MARK: - Persistence Functions
@@ -149,7 +163,5 @@ class PokedexController {
         pokemons.remove(at: index)
         saveToPersistentStore()
     }
-    
 
-    
 }

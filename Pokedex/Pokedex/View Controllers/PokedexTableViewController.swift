@@ -10,23 +10,25 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
     
+    @IBOutlet weak var segmentedController: UISegmentedControl!
+    
     //MARK: - Properties
     let pokedexController = PokedexController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        segmentedController.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "SortBy")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tableView.reloadData()
+        sortPokemon()
     }
 
     // MARK: - Table view data source
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return pokedexController.pokemons.count
     }
     
@@ -60,6 +62,25 @@ class PokedexTableViewController: UITableViewController {
             }
         }
     }
+    
+    // MARK: - Sorting
+    
+    private func sortPokemon() {
+        pokedexController.sortPokemon()
+        tableView.reloadData()
+    }
+    
+    
+    @IBAction func pokemonSort(_ sender: Any) {
+        switch UserDefaults.standard.integer(forKey: "SortBy") {
+        case 0:
+            UserDefaults.standard.set(1, forKey: "SortBy")
+        default:
+            UserDefaults.standard.set(0, forKey: "SortBy")
+        }
+        sortPokemon()
+    }
+    
 
     
 }
