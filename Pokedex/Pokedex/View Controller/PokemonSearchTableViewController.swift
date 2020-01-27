@@ -15,6 +15,7 @@ class PokemonSearchTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonSearchbar.delegate = self
     }
 
     // MARK: - Table View Data Source
@@ -78,4 +79,12 @@ class PokemonSearchTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension PokemonSearchTableViewController: UISearchBarDelegate {
+   
+    //Execute search when "Search" button on keyboard is clicked
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        pokemonSearchbar.resignFirstResponder()
+    }
 }
