@@ -38,6 +38,14 @@ class PokedexTableViewController: UITableViewController {
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            pokemonController.pokemonList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 
     // MARK: - Navigation
 
