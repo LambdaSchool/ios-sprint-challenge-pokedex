@@ -18,6 +18,7 @@ class PokedexTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         segmentedController.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "SortBy")
+        segmentedController.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: UIControl.State.selected)
     }
     
     override func viewDidAppear(_ animated: Bool) {
