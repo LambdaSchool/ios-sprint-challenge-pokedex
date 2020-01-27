@@ -31,11 +31,11 @@ class PokedexController {
     // MARK: - Properties
     var pokemons: [Pokemon] = []
     
-    private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
+    let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
     
     // MARK: - Methods
     
-    func pokemonSearch(for searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func pokemonSearch(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
         let pokemonSearchUrl = baseUrl.appendingPathComponent("pokemon/\(searchTerm.lowercased())")
 
@@ -45,7 +45,7 @@ class PokedexController {
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
                    if let response = response as? HTTPURLResponse,
-            response.statusCode != 200 {
+            response.value(forHTTPHeaderField: "Content-Type") == "Not Found" {
                     completion(.failure(.otherError))
                     return
             }
@@ -60,8 +60,8 @@ class PokedexController {
         
         let jsonDecoder = JSONDecoder()
         do {
-            let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
-            completion(.success(pokemonSearch))
+            let search = try jsonDecoder.decode(Pokemon.self, from: data)
+            completion(.success(search))
         } catch {
             print("Error encoding user object: \(searchTerm) \(error)")
             completion(.failure(.decodingError))

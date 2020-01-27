@@ -10,15 +10,9 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
-    
-    private var pokemonName: [String] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
+    // MARK: -  Properties
+    var pokemon: Pokemon?
+
     let pokedexController = PokedexController()
     
     override func viewDidLoad() {
@@ -36,20 +30,27 @@ class PokedexTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return pokemonName.count
+
+        return pokedexController.pokemons.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+//        guard indexPath.row < pokedexController.pokemons.count else {
+//            return cell }
+//        let index = pokedexController.pokemons[indexPath.row]
+//
+//        cell.textLabel?.text = index.name
+        let index = pokedexController.pokemons[indexPath.row]
+        let pokemon = index.form_name[indexPath.row]
+        cell.textLabel?.text = pokemon.name
         
-        cell.textLabel?.text = pokemonName[indexPath.row]
-        
-
         return cell
     }
-
+    
+    // MARK: - Delete Pokemon
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             pokedexController.delete(pokedexController.pokemons[indexPath.row])
@@ -64,12 +65,17 @@ class PokedexTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "SearchSegue" {
-            if let pokedexVC = segue.destination as? PokedexDetailViewController {
-               
-                pokedexVC.pokedexController = pokedexController
-               
-              
+            if let pokedexSearchVC = segue.destination as? PokedexSearchViewController {
+                pokedexSearchVC.pokedexController = pokedexController
+            } else if segue.identifier == "PokeDetailSegue" {
+                if let pokeDetailVC = segue.destination as? PokedexDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
+                    pokeDetailVC.pokedexController = pokedexController
+                    pokeDetailVC.pokemon = pokedexController.pokemons[indexPath.row]
+                    
+                
+                }
                 
             }
         }
@@ -77,5 +83,6 @@ class PokedexTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
    
+
 
 }

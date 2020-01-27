@@ -10,42 +10,43 @@ import Foundation
 import UIKit
 
 struct Pokemon: Codable, Equatable {
-    let name: Name
+    let name: String
     let id: Int
-    let abilities: [Ability]
-    let type: [TypeContainer]
-    let sprite: Sprite
-  
-   
-    struct Ability: Codable, Equatable {
-        let name: String
-    }
-    
-//    struct Abilities: Codable, Equatable {
-//           let ability: Ability
-//       }
-    
-    struct Names: Codable, Equatable {
-        let name: String
-    }
-    
-    struct Name: Codable, Equatable {
-        let name: Names
-    }
-    
-    struct Types: Codable, Equatable {
-        let name: String
-    }
-    
-    struct TypeContainer: Codable, Equatable {
-        let name: Types
-    }
-    
-    struct Sprite: Codable, Equatable {
-        let  front_shiny: String
-    }
-    
-    
+    let abilities: [Abilities]
+    let types: [Types]
+    let sprites: Sprite
+    let form_name: [Forms]
     
 }
+
+
+struct Abilities: Codable, Equatable {
+    let ability: Ability
+}
+
+struct Ability: Codable, Equatable {
+    let name: String
+}
+
+struct Types: Codable, Equatable {
+    let type: TypeName
+}
+
+
+struct TypeName: Codable, Equatable {
+    let name: String
+}
+
+struct Forms: Codable, Equatable {
+    let name: String
+    let form: FormName
+}
+
+struct FormName: Codable, Equatable {
+    let form_name: String
+}
+struct Sprite: Codable, Equatable {
+    let front_shiny: String
+}
+
 
