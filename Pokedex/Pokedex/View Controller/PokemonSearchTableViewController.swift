@@ -31,8 +31,25 @@ class PokemonSearchTableViewController: UITableViewController {
 
         let pokemon = pokemonApiController.searchResults[indexPath.row]
         
-        cell.pokemonNameLabel.text = "#\(pokemon.id): \(pokemon.name)"
-        cell.pokemonTypeLabel.text = "\(pokemon.types)"
+        cell.pokemonNameLabel.text = "#\(pokemon.id): \(pokemon.name.capitalized)"
+        cell.pokemonTypeLabel.text = pokemon.formatPokemonTypes()
+        
+        pokemonApiController.getPokemonSprite(with: pokemon.sprites.front_default) { (image, error) in
+            guard error == nil else {
+                print("Error retrieving sprite image for Pokemon: \(error)")
+                return
+            }
+            
+            guard let image = image else {
+                print("Error with image file: \(error)")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                cell.pokemonImageView.image = image
+            }
+            
+        }
         
         return cell
     }
@@ -45,7 +62,19 @@ class PokemonSearchTableViewController: UITableViewController {
                 return
         }
         
-        pokemonApiController.searchForPokemon(with: pokemonName.lowercased())
+        pokemonApiController.searchForPokemon(with: pokemonName.lowercased()) { (error) in
+            //Checks for error when retrieving pokemon object from API
+            guard error == nil else {
+                print("Error when trying to find pokemon: \(String(describing: error))")
+                return
+            }
+            
+            //Update tableView
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
     }
 
     /*
@@ -83,15 +112,16 @@ class PokemonSearchTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "PokemonDetailShowSegue" {
+            guard let detailVC = segue.destination as? PokemonDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            detailVC.pokemon = pokemonApiController.searchResults[indexPath.row]
+            detailVC.pokemonApiController = pokemonApiController
+            
+        }
     }
-    */
 
 }
 

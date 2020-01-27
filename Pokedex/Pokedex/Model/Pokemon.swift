@@ -34,4 +34,24 @@ struct Pokemon: Codable {
     let types: [PokemonTypeAPIObject]
     let abilities: [PokemonAbilityAPIObject]
     let sprites: PokemonSprites
+    
+    func formatPokemonTypes() -> String {
+        var returnString = ""
+        
+        for pokemonType in types {
+            returnString += "\(pokemonType.type.name.capitalized) "
+        }
+        
+        return returnString
+    }
+    
+    func formatPokemonAbilities() -> String {
+        var returnString = ""
+        
+        for ability in abilities {
+            returnString += "\(ability.ability.name.capitalized) "
+        }
+        
+        return returnString
+    }
 }
