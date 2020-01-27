@@ -33,7 +33,7 @@ struct Pokemon: Codable {
     }
 }
 
-// Mark: - Ability Objects
+// Mark: - Ability Object Decoding Architecture
 
 struct Abilities: Codable {
     let ability: Ability
@@ -43,7 +43,7 @@ struct Ability: Codable {
     let name: String
 }
 
-// Mark: - Type Objects
+// Mark: - Type Object Decoding Architecture
 
 struct Types: Codable {
     let type: Type
@@ -53,7 +53,7 @@ struct Type: Codable {
     let name: String
 }
 
-// Mark: - Sprite Objects
+// Mark: - Sprite Object Decoding Architecture
 
 struct Sprites: Codable {
     let defaultSpriteUrl: String
@@ -63,7 +63,7 @@ struct Sprites: Codable {
     }
 }
 
-// Mark: - Extensions
+// Mark: - Equatable Extension
 
 extension Pokemon: Equatable {
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {

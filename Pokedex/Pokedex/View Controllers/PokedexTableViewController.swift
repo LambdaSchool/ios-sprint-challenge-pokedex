@@ -47,10 +47,10 @@ class PokedexTableViewController: UITableViewController {
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             guard indexPath.row < pokemonController.pokemonList.count else { return }
             
+            let pokemon = self.pokemonController.pokemonList[indexPath.row]
             pokemonSearchVC.pokemonController = self.pokemonController
-            pokemonSearchVC.pokemon = self.pokemonController.pokemonList[indexPath.row]
-            pokemonSearchVC.searchBar?.removeFromSuperview()
-            pokemonSearchVC.savePokemonButton?.removeFromSuperview()
+            pokemonSearchVC.pokemon = pokemon
+            pokemonSearchVC.navigationItem.title = pokemon.name.capitalized
             
         } else if segue.identifier == "ShowPokemonSearch" {
             guard let pokemonSearchVC = segue.destination as? PokemonSearchViewController else { return }

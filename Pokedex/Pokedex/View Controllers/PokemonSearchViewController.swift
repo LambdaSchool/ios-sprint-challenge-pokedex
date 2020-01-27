@@ -17,6 +17,7 @@ class PokemonSearchViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
+            updateNavigationItemTitle()
             pokemonDetailViewController?.pokemon = pokemon
         }
     }
@@ -27,7 +28,8 @@ class PokemonSearchViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon,
+            !pokemonController.pokemonList.contains(pokemon) else { return }
         
         pokemonController.pokemonList.append(pokemon)
         
@@ -36,11 +38,26 @@ class PokemonSearchViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
+    
+    private func updateNavigationItemTitle() {
+        DispatchQueue.main.async {
+            self.navigationItem.title = self.pokemon?.name.capitalized ?? "Pokemon Search"
+        }
+    }
+
     // MARK: - VC Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchBar?.delegate = self
+        if pokemon == nil {
+            searchBar?.delegate = self
+        } else {
+            self.searchBar?.removeFromSuperview()
+            self.savePokemonButton?.removeFromSuperview()
+        }
     }
     
     // MARK: - Navigation
@@ -50,6 +67,7 @@ class PokemonSearchViewController: UIViewController {
         let pokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
         
         pokemonDetailVC.pokemonController = self.pokemonController
+        pokemonDetailVC.pokemon = self.pokemon
         self.pokemonDetailViewController = pokemonDetailVC
     }
 }
