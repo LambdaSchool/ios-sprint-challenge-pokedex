@@ -50,7 +50,7 @@ class PokedexDetailViewController: UIViewController, UISearchBarDelegate {
             })
         }
         
-        pokemonNameLabel.text = pokemon.name
+        pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "ID: \(pokemon.id)"
         var types = pokemon.types.compactMap { $0.type.name }
         
