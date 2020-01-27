@@ -13,6 +13,9 @@ class PokemonSearchTableViewController: UITableViewController {
     //MARK: IBOutlets
     @IBOutlet weak var pokemonSearchbar: UISearchBar!
     
+    //MARK: Properties
+    let pokemonApiController = PokemonAPIController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonSearchbar.delegate = self
@@ -20,19 +23,30 @@ class PokemonSearchTableViewController: UITableViewController {
 
     // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonApiController.searchResults.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell() }
 
-        // Configure the cell...
-
+        let pokemon = pokemonApiController.searchResults[indexPath.row]
+        
+        cell.pokemonNameLabel.text = "#\(pokemon.id): \(pokemon.name)"
+        cell.pokemonTypeLabel.text = "\(pokemon.types)"
+        
         return cell
     }
-    */
+    
+    private func initiatePokemonSearch() {
+        //Ensure that valid text is entered into pokemonSearchbar
+        guard let pokemonName = pokemonSearchbar.text,
+            pokemonSearchbar.text != nil else {
+                print("Error with Pokemon Name search query")
+                return
+        }
+        
+        pokemonApiController.searchForPokemon(with: pokemonName.lowercased())
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -85,6 +99,7 @@ extension PokemonSearchTableViewController: UISearchBarDelegate {
    
     //Execute search when "Search" button on keyboard is clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        initiatePokemonSearch()
         pokemonSearchbar.resignFirstResponder()
     }
 }

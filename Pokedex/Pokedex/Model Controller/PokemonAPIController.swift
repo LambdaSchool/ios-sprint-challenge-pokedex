@@ -15,7 +15,7 @@ enum HTTPRequest: String {
 class PokemonAPIController {
     
     //API Properties
-    let baseUrl: String = "https://pokeapi.co/api/v2/pokemon"
+    let baseUrl: String = "https://pokeapi.co/api/v2/pokemon/"
     
     //Array to store results
     var searchResults: [Pokemon] = []
@@ -30,6 +30,7 @@ class PokemonAPIController {
         //Create URLRequest
         var request = URLRequest(url: baseUrl)
         request.httpMethod = HTTPRequest.GET.rawValue
+        print(request)
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             //Check for errors in API Call
@@ -47,7 +48,8 @@ class PokemonAPIController {
             //Decode JSON Data
             let jsonDecoder = JSONDecoder()
             do {
-                self.searchResults = try jsonDecoder.decode([Pokemon].self, from: data)
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.searchResults.append(pokemon)
             } catch {
                 print("Error decoding data from API: \(error)")
             }
