@@ -58,7 +58,7 @@
         <!--Pokemon Search-->
         <scene sceneID="vB3-Yx-fAw">
             <objects>
-                <viewController id="1uM-ai-IsS" sceneMemberID="viewController">
+                <viewController id="1uM-ai-IsS" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hB1-FG-7qJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -80,6 +80,9 @@
                                         <rect key="frame" x="0.0" y="589" width="375" height="33"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="savePokemonButtonTapped:" destination="1uM-ai-IsS" eventType="touchUpInside" id="H1A-vP-g5h"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -94,6 +97,10 @@
                         <viewLayoutGuide key="safeArea" id="HHa-Yv-rbN"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="kYJ-uK-RN6"/>
+                    <connections>
+                        <outlet property="savePokemonButton" destination="HZ4-IH-ckc" id="Ww9-vG-5mc"/>
+                        <outlet property="searchBar" destination="YXn-5j-HKJ" id="k4O-0r-kxj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTT-E6-9SH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -172,6 +179,13 @@
                             <constraint firstItem="bWm-bS-oD0" firstAttribute="leading" secondItem="q03-y4-r2G" secondAttribute="leadingMargin" id="mbu-be-Z8Z"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="QST-R9-0lh" id="crb-p6-u8g"/>
+                        <outlet property="idLabel" destination="47D-yV-qi6" id="EFY-g1-jFs"/>
+                        <outlet property="nameLabel" destination="2rR-4E-Tng" id="gzZ-NA-xIu"/>
+                        <outlet property="spriteImageView" destination="p0b-GK-Cye" id="Yj6-0Y-R6R"/>
+                        <outlet property="typesLabel" destination="m7Q-WG-ysu" id="i58-wo-Ds2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vt9-Sy-1cU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
