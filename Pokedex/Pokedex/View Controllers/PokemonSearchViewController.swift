@@ -14,48 +14,59 @@ class PokemonSearchViewController: UIViewController {
     
     var pokemonController: PokemonController!
     var pokemonDetailViewController: PokemonDetailViewController?
-    var pokemon: Pokemon?
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var savePokemonButton: UIButton!
+    var pokemon: Pokemon? {
+        didSet {
+            pokemonDetailViewController?.pokemon = pokemon
+        }
+    }
     
-    // MARK: - Actions
+    @IBOutlet weak var searchBar: UISearchBar?
+    @IBOutlet weak var savePokemonButton: UIButton?
+    
+    // MARK: - IBActions
 
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
-        // TODO: Implement savePokemonButtonTapped()
+        guard let pokemon = pokemon else { return }
+        
+        pokemonController.pokemonList.append(pokemon)
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
-    // MARK: - Private Methods
-    
-    private func updateDataSource() {
-        guard let searchTerm = searchBar.text else { return }
-        
-        print("Searching for \"\(searchTerm)\"...")
-        
-        // TODO: Call perform search method
-    }
-    
-    // MARK: - Lifecycle
+    // MARK: - VC Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
+        searchBar?.delegate = self
     }
-
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "EmbeddedPokemonDetailVC",
         let pokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
         
-        pokemonDetailVC
+        pokemonDetailVC.pokemonController = self.pokemonController
         self.pokemonDetailViewController = pokemonDetailVC
     }
-
 }
+
+// MARK: - Search Bar Delegate
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        updateDataSource()
+        guard let searchTerm = searchBar.text?.lowercased() else { return }
+                
+        pokemonController.fetchPokemon(with: searchTerm) { result in
+            do {
+                let pokemon = try result.get()
+                self.pokemon = pokemon
+            } catch {
+                self.pokemon = nil
+            }
+        }
     }
 }

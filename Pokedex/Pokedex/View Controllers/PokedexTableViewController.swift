@@ -16,28 +16,25 @@ class PokedexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return pokemonController.pokemonList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokedexTableViewCell", for: indexPath)
-
         guard indexPath.row < pokemonController.pokemonList.count else { return cell }
         
         let pokemon = pokemonController.pokemonList[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
 
         return cell
     }
@@ -45,8 +42,21 @@ class PokedexTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowPokemonDetail" {
+            guard let pokemonSearchVC = segue.destination as? PokemonSearchViewController else { return }
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            guard indexPath.row < pokemonController.pokemonList.count else { return }
+            
+            pokemonSearchVC.pokemonController = self.pokemonController
+            pokemonSearchVC.pokemon = self.pokemonController.pokemonList[indexPath.row]
+            pokemonSearchVC.searchBar?.removeFromSuperview()
+            pokemonSearchVC.savePokemonButton?.removeFromSuperview()
+            
+        } else if segue.identifier == "ShowPokemonSearch" {
+            guard let pokemonSearchVC = segue.destination as? PokemonSearchViewController else { return }
+            
+            pokemonSearchVC.pokemonController = self.pokemonController
+        }
     }
 
 }

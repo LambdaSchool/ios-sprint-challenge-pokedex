@@ -9,22 +9,27 @@
 import Foundation
 
 struct Pokemon: Codable {
+    
+    // Mark: - Properties
+
     let name: String
     let id: Int
     let abilities: [Abilities]
     let types: [Types]
     let sprites: Sprites
     
+    // Mark: - Computed Properties
+
     var abilityNames: [String] {
         return abilities.map { $0.ability.name }
     }
     
     var typeNames: [String] {
-        return abilities.map { $0.ability.name }
+        return types.map { $0.type.name }
     }
     
-    var spriteURLString: String {
-        return sprites.defaultSpriteUrlString
+    var spriteURL: String {
+        return sprites.defaultSpriteUrl
     }
 }
 
@@ -51,9 +56,17 @@ struct Type: Codable {
 // Mark: - Sprite Objects
 
 struct Sprites: Codable {
-    let defaultSpriteUrlString: String
+    let defaultSpriteUrl: String
     
     enum CodingKeys: String, CodingKey {
-        case defaultSpriteUrlString = "front_default"
+        case defaultSpriteUrl = "front_default"
+    }
+}
+
+// Mark: - Extensions
+
+extension Pokemon: Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        lhs.id == rhs.id
     }
 }
