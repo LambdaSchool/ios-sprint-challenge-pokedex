@@ -36,6 +36,8 @@ class PokedexTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
         cell.textLabel?.text = pokedexController.pokemons[indexPath.row].name.capitalized
+        cell.detailTextLabel?.text = String(pokedexController.pokemons[indexPath.row].id)
+        cell.detailTextLabel?.textColor = .systemGray
         return cell
     }
     
