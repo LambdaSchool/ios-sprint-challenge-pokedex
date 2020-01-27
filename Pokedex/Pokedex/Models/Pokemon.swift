@@ -12,6 +12,7 @@ struct Pokemon: Codable, Equatable {
     var name: String
     var id: Int
     var abilities: [AbilityContainer]
+    var image: Data?
     var types: [TypeContainer]
     var sprites: SpriteContainer
     
