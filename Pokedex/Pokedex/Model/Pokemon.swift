@@ -9,16 +9,25 @@
 import Foundation
 
 struct PokemonType: Codable {
-
+    var name: String
 }
 
 struct PokemonAbility: Codable {
-    
+    var name: String
 }
+
+struct PokemonAbilityAPIObject: Codable {
+    var abilities: [PokemonAbility]
+}
+
+struct PokemonTypeAPIObject: Codable {
+    var types: [PokemonType]
+}
+
 
 struct Pokemon: Codable {
     let name: String
     let id: Int
-    let type: [PokemonType]
-    let abilities: [PokemonAbility]
+    let types: PokemonTypeAPIObject
+    let abilities: PokemonAbilityAPIObject
 }
