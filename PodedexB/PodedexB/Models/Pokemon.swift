@@ -15,7 +15,6 @@ struct Pokemon: Codable, Equatable {
     let abilities: [Abilities]
     let types: [Types]
     let sprites: Sprite
-    let form_name: [Forms]
     
 }
 
@@ -37,16 +36,12 @@ struct TypeName: Codable, Equatable {
     let name: String
 }
 
-struct Forms: Codable, Equatable {
-    let name: String
-    let form: FormName
-}
-
-struct FormName: Codable, Equatable {
-    let form_name: String
-}
 struct Sprite: Codable, Equatable {
     let front_shiny: String
+}
+
+struct PokemonArray: Codable, Equatable {
+    let pokemons: [Pokemon]
 }
 
 

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="mYL-1z-lJE" style="IBUITableViewCellStyleDefault" id="QdT-Gg-8gn" customClass="PokeTableViewCell" customModule="PodedexB" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="mYL-1z-lJE" style="IBUITableViewCellStyleDefault" id="QdT-Gg-8gn">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QdT-Gg-8gn" id="b4n-I3-bZO">
@@ -33,6 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="pokeTitleLabel" destination="mYL-1z-lJE" id="HH5-7L-FV0"/>
                                     <segue destination="Syd-wz-eSK" kind="show" identifier="PokeDetailSegue" id="Uk6-mv-9tj"/>
                                 </connections>
                             </tableViewCell>
@@ -146,6 +147,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Fil-cc-9Nm"/>
                     <connections>
+                        <outlet property="abilitiesLabel" destination="E3U-bW-K75" id="4gL-RK-2Tp"/>
                         <outlet property="idLabel" destination="Hv0-Zk-mEO" id="Sqi-vc-cWd"/>
                         <outlet property="imageView" destination="MnD-ty-XSY" id="Jro-dF-kvy"/>
                         <outlet property="nameLabel" destination="bVt-kh-RTh" id="iYw-eq-ku0"/>

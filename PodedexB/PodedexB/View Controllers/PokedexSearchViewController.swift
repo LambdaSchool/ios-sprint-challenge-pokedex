@@ -27,27 +27,30 @@ class PokedexSearchViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
-            updateViews()
+         updateViews()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+           
         idLabel.isHidden = true
         nameLabel.isHidden = true
         typesLabel.isHidden = true
         abilitiesLabel.isHidden = true
         searchBar.becomeFirstResponder()
         searchBar.delegate = self
-        updateViews()
        
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        guard let pokemonSearch = pokemon else { return }
-        pokedexController.savePokemon(pokemon: pokemonSearch)
-     self.navigationController?.popViewController(animated: true)
-        print("\(pokemonSearch.name)")
+        guard let pokemon = pokemon else { return }
+//        pokedexController.pokemons.append(pokemon)
+        pokedexController.savePokemon(pokemon: pokemon)
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+        print("\(pokemon.name)")
         
     }
     

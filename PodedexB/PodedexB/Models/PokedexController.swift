@@ -31,7 +31,7 @@ class PokedexController {
     // MARK: - Properties
     var pokemons: [Pokemon] = []
     
-    let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
+    private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
     
     // MARK: - Methods
     
