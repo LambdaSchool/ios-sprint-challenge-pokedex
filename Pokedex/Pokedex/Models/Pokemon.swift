@@ -1,14 +1,13 @@
 //
 //  Pokemon.swift
-//  PodedexB
+//  Pokedex
 //
-//  Created by Gerardo Hernandez on 1/26/20.
+//  Created by Gerardo Hernandez on 1/27/20.
 //  Copyright © 2020 Gerardo Hernandez. All rights reserved.
 //
 
 import Foundation
-import UIKit
-
+ 
 struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
@@ -43,5 +42,3 @@ struct Sprite: Codable, Equatable {
 struct PokemonArray: Codable, Equatable {
     let pokemons: [Pokemon]
 }
-
-

@@ -1,8 +1,8 @@
 //
 //  PokedexController.swift
-//  PodedexB
+//  Pokedex
 //
-//  Created by Gerardo Hernandez on 1/26/20.
+//  Created by Gerardo Hernandez on 1/27/20.
 //  Copyright © 2020 Gerardo Hernandez. All rights reserved.
 //
 
