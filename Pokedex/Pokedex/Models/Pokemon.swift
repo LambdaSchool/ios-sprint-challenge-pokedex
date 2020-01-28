@@ -14,8 +14,17 @@ struct Pokemon: Codable, Equatable {
     let abilities: [Abilities]
     let types: [Types]
     let sprites: Sprite
-    
 }
+//
+//    let abilityNames: [String] {
+//        return abilities.map {$0.ability.name}
+//    }
+//
+//    let typeNames: [String] {
+//        return types.map { $0.type.name }
+//        }
+//}
+
 
 
 struct Abilities: Codable, Equatable {
@@ -37,8 +46,4 @@ struct TypeName: Codable, Equatable {
 
 struct Sprite: Codable, Equatable {
     let front_shiny: String
-}
-
-struct PokemonArray: Codable, Equatable {
-    let pokemons: [Pokemon]
 }

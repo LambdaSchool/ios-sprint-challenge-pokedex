@@ -106,4 +106,5 @@ class PokedexController {
         guard let index = pokemons.firstIndex(of: pokemon) else { return }
         pokemons.remove(at: index)
     }
+    
 }
