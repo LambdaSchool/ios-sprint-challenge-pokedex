@@ -42,7 +42,7 @@ class DetailViewController: UIViewController {
     
         private func toggleSearchItems() {
             if pokemon != nil {
-                navigationItem.title = capitalize(pokemon?.name ?? "")
+                navigationItem.title = pokemon?.name.capitalized
                 searchBar.isHidden = true
                 saveBtn.isHidden = true
             }
@@ -62,16 +62,6 @@ class DetailViewController: UIViewController {
                     typesLbl.isHidden = false
                     abilitiesLbl.isHidden = false
                 }
-        
-            private func capitalize(_ word: String) -> String {
-                  var newWord = word
-                  let firstLetter = newWord.startIndex
-                  let capFirst = newWord[firstLetter].uppercased()
-                  newWord.remove(at: firstLetter)
-                  newWord.insert(Character(capFirst), at: firstLetter)
-                  return newWord
-              }
-         
     
  
     func updateViews() {
@@ -83,8 +73,8 @@ class DetailViewController: UIViewController {
             return }
         
         print("\(pokemonObject.name) set in detail view")
-        title = pokemonObject.name.capitalized
-        nameLbl.text = pokemon?.name
+//        title = pokemonObject.name.capitalized
+        nameLbl.text = pokemon?.name.capitalized
         idLbl.text = "ID: \(pokemonObject.id)"
         
         searchBar.isHidden = true
@@ -115,14 +105,11 @@ class DetailViewController: UIViewController {
     // Not working with UIBtn but does work with UIBArButtonItem .. why?
     
     @IBAction func savePokemonBtnWasPressed(_ sender: UIButton) {
-//        guard let pokemon = pokemon else { return }
-//        apiContoller?.addPokemon(pokemon: pokemon)
-//        navigationController?.popViewController(animated: true)
-        
+// UIButton dindnt work either
 //        guard let pokemon = pokemon else { return }
 //        apiContoller?.addPokemon(pokemon: pokemon)
 //        self.navigationController?.popViewController(animated: true)
-//
+// Old Method didnt work
 //         if let pokemon = pokemon,
 //             let apiController = apiContoller {
 //             apiController.addPokemon(pokemon: pokemon)

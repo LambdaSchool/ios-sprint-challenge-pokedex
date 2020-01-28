@@ -46,13 +46,6 @@ class PokemonTableViewController: UITableViewController {
     }
  
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
 
     // Override to support editing the table view.
@@ -75,9 +68,10 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchBtnSegue" {
             if let detailVC = segue.destination as? DetailViewController {
                 detailVC.apiContoller = apiController
-            } else if segue.identifier == "DetailViewSegue" {
-                    guard let detailVC = segue.destination as? DetailViewController,
-                        let indexPath = tableView.indexPathForSelectedRow else { return }
+            }
+            } else {
+                guard let detailVC = segue.destination as? DetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
                 detailVC.apiContoller = apiController
                 detailVC.pokemon = apiController.pokemonsArray[indexPath.row]
                     
@@ -85,6 +79,4 @@ class PokemonTableViewController: UITableViewController {
         }
         
     }
-  
-
-}
+ 
