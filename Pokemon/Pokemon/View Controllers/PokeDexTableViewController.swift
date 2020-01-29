@@ -49,6 +49,8 @@ class PokeDexTableViewController: UITableViewController {
             guard let path = self.tableView.indexPathForSelectedRow else { return }
             let pokemonSelected = pokemonController.savedPokemon[path.row]
             detailVC.pokemonSent = pokemonSelected
+            detailVC.pokemonController = self.pokemonController
+            detailVC.delegate = self
         }
     }
 }
