@@ -1,24 +1,25 @@
 import Foundation
 
-//// Name Element
-//struct NameElement: Codable {
-//    let name: String
-//}
-//
-//// Abilities Model
-//struct Abilities: Codable {
-//    let ability: NameElement
-//}
-//
-//// Types Model
-//struct Types: Codable {
-//    let type: NameElement
-//}
-
-// Pokemon Model
 struct Pokemon: Codable {
+    let abilities: [Ability]
+    let types: [Type]
     let id: Int
     let name: String
-//    let types: [Types]?
-//    let abilities: [Abilities]?
+    let sprites: Image
+}
+
+struct Ability: Codable {
+    let ability: nameConvention
+}
+
+struct Type: Codable {
+    let type: nameConvention
+}
+
+struct Image: Codable {
+    let front_default: String
+}
+
+struct nameConvention: Codable {
+    let name: String
 }
