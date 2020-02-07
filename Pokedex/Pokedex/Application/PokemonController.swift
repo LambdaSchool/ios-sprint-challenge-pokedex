@@ -54,8 +54,6 @@ class PokemonController {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
                 
-                
-                
             } catch {
                 print("Error decoding pokemon object: \(error)")
                 completion(.failure(.noDecode))

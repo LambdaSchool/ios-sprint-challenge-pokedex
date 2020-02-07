@@ -111,6 +111,5 @@ extension SearchViewController: UISearchBarDelegate {
                 }
             }
         }
-        
     }
 }
