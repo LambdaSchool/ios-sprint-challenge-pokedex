@@ -39,12 +39,13 @@ class PokemonDetailVC: UIViewController {
         pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
         guard  let urlImage = URL(string: (apiController.pokemon.image?.image ?? "")) else { return }
         pokemonImage.load(url:urlImage)
-       
+        guard let type = apiController.pokemon.types[0].type["name"] else { return }
+        pokeTypeLabel.text = "Type: \(type)"
         
     }
    
     @IBAction func saveTapped(_ sender: UIButton) {
-        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, abilities: apiController.pokemon.abilities, image: apiController.pokemon.image))
+        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, image: apiController.pokemon.image,types: apiController.pokemon.types))
         
         navigationController?.popViewController(animated: true)
     }

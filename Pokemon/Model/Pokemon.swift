@@ -11,29 +11,26 @@ import Foundation
 struct Pokemon : Codable {
     let id: Int
     let name: String
-    let abilities: [Abilitiy]
     let image: Sprites?
-   
-    
-    
+    let types: [Type]
+ 
     enum CodingKeys: String,CodingKey {
         case id
         case name
-        case abilities = "abilities"
         case image = "sprites"
-    
+        case types = "types"
     }
     
 }
 
-struct Abilitiy:  Codable {
-    let name: String?
+struct Type: Codable {
+  
+    let type : [String:String]
     
-    enum CodingKeys: String,CodingKey {
-        case name = "name"
-        
-    }
 }
+
+
+
 
 struct Sprites : Codable {
     let image : String?
