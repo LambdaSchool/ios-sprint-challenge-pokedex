@@ -12,9 +12,10 @@ class PokedexTableViewController: UITableViewController {
     
     //MARK: - Variables
     let pokemonController = PokemonController()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -43,7 +44,6 @@ class PokedexTableViewController: UITableViewController {
             let pokemon = self.pokemonController.pokemonList[indexpath.row]
             pokemonDetailVC.pokemonController = self.pokemonController
             pokemonDetailVC.pokemon = pokemon
-            
         } else if segue.identifier == "PokemonSearchSegue" {
             guard let pokemonSearchVC = segue.destination as? PokemonSearchViewController else { return }
             pokemonSearchVC.pokemonController = self.pokemonController

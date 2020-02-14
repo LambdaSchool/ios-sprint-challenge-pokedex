@@ -9,7 +9,7 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
-
+    
     //MARK: - IBOutlet
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -33,19 +33,13 @@ class PokemonDetailViewController: UIViewController {
     
     //MARK: - Functions
     func updateViews() {
-        guard isViewLoaded, let pokemonDetail = pokemon else {
-            title = "Pokemon Search"
-            return
+        if let pokemon = pokemon {
+            updateDetails(with: pokemon)
         }
-        guard let pokemonName = pokemonNameLabel.text else { return }
-        
-        title = pokemonDetail.name.capitalized
-        pokemonNameLabel.text = pokemonName
-        idLabel.text = "ID: \(pokemonDetail.id)"
-        typeLabel.text = "Type: \(pokemonDetail.types)"
-        abilityLabel.text = "Ability: \(pokemonDetail.abilities)"
-        
-        pokemonController?.fetchImage(with: pokemonDetail.sprites.defaultImageURL, completion: { (result) in
+    }
+    
+    func updateDetails(with pokemon: Pokemon) {
+        pokemonController?.fetchImage(with: pokemon.sprites.defaultImageURL, completion: { (result) in
             do {
                 let pokemonImage = try result.get()
                 self.updateImage(with: pokemonImage)
@@ -53,6 +47,14 @@ class PokemonDetailViewController: UIViewController {
                 self.imageView.image = nil
             }
         })
+        
+        // Has to be loaded on the main thread
+        DispatchQueue.main.async {
+            self.pokemonNameLabel.text = pokemon.name.capitalized
+            self.idLabel.text = "ID: \(pokemon.id)"
+            self.typeLabel.text = "Types: \(pokemon.types) "
+            self.abilityLabel.text = "Abilities: \(pokemon.abilities[0].ability.name.capitalized)"
+        }
     }
     
     func updateImage(with image: UIImage) {

@@ -27,7 +27,6 @@ class PokemonSearchViewController: UIViewController {
     @IBAction func savePokemonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon, !pokemonController.pokemonList.contains(pokemon) else { return }
         pokemonController.pokemonList.append(pokemon)
-        
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
         }
@@ -37,12 +36,6 @@ class PokemonSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        if pokemon == nil {
-            searchBar.delegate = self
-        } else {
-            self.searchBar.removeFromSuperview()
-            self.savePokemon.removeFromSuperview()
-        }
     }
     
     //MARK: - Segue Navigation
@@ -60,7 +53,6 @@ class PokemonSearchViewController: UIViewController {
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text?.lowercased() else { return }
-        
         pokemonController.fetchPokemon(name: searchTerm) { (result) in
             do {
                 let pokemon = try result.get()
