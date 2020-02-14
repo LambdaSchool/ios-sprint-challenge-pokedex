@@ -16,7 +16,7 @@ struct Pokemon: Decodable, Equatable {
     var sprites: PokemonSprites
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        return lhs == rhs
+        return lhs.name == rhs.name
     }
 }
 

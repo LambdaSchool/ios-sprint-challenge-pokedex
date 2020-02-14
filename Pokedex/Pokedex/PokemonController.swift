@@ -26,7 +26,7 @@ class PokemonController {
     func findPokemon(called name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let requestURL = baseURL
         .appendingPathComponent("pokemon")
-        .appendingPathComponent(name)
+            .appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue

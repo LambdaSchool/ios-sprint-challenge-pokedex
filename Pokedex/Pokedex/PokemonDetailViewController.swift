@@ -44,7 +44,7 @@ class PokemonDetailViewController: UIViewController {
         
         showOutlets()
         searchBar.isHidden = true
-        pokemonName.text = pokemon.name
+        pokemonName.text = pokemon.name.capitalized
         guard let imageData = try? Data(contentsOf: pokemon.sprites.picture) else { fatalError() }
         pokemonImage.image = UIImage(data: imageData)
         idLabel.text = "ID: \(pokemon.id)"
