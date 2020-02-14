@@ -18,9 +18,37 @@ class PokemonTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.isToolbarHidden = false
+        setUpToolBar()
     }
 
+    func setUpToolBar() {
+        let sortButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortTapped))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItems = [flexSpace,sortButton]
+    }
   
+    @objc func sortTapped() {
+        let ac = UIAlertController(title: "Sort Pokemon", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Sort name alphabetically", style: .default, handler: sortName(action:)))
+         
+        ac.addAction(UIAlertAction(title: "Sort by ID", style: .default, handler: sortID(action:)))
+            
+        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        present(ac, animated: true, completion: nil)
+    }
+    
+    private func sortID(action:UIAlertAction) {
+        apiController.sortId()
+        tableView.reloadData()
+    }
+    
+    
+    
+   private func sortName(action: UIAlertAction) {
+        apiController.sortAlphabetically()
+        tableView.reloadData()
+    }
     
     // MARK: - Table View Data Source
     
@@ -33,6 +61,8 @@ class PokemonTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Helper.cellID, for: indexPath)
         cell.textLabel?.text = apiController.pokemons[indexPath.row].name.capitalizingFirstLetter()
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        cell.detailTextLabel?.text = "ID:\(apiController.pokemons[indexPath.row].id)"
         return cell
     }
     

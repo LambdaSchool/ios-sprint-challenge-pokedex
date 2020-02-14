@@ -130,10 +130,16 @@ class APIController  {
            return documentDirectory?.appendingPathComponent(fileName)
        }
     
+    func sortAlphabetically() {
+          pokemons.sort(by: < )
+          saveToPersistentStore()
+       }
     
-    
-    
-    
-    
+    func sortId() {
+        pokemons.sort { (lhs, rhs) -> Bool in
+            lhs.id < rhs.id
+        }
+        saveToPersistentStore()
+    }
     
 }
