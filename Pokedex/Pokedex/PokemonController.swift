@@ -60,7 +60,7 @@ class PokemonController {
         pokemonList.append(pokemon)
     }
     
-    func delete(called pokemon: Pokemon) {
+    func delete(pokemon: Pokemon) {
         guard let pokemonIndex = pokemonList.firstIndex(of: pokemon) else { return }
         pokemonList.remove(at: pokemonIndex)
     }

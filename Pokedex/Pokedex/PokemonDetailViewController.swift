@@ -19,7 +19,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var savePokemonButton: UIButton!
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? 
 
     override func viewDidLoad() {
         super.viewDidLoad()
