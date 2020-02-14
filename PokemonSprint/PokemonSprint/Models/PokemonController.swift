@@ -10,13 +10,20 @@ import Foundation
 import UIKit
 
 enum HTTPMethod: String {
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
     case get = "GET"
+    case head = "HEAD"
+    case patch = "PATCH"
+    case options = "OPTIONS"
 }
 
 enum NetworkError: Error {
     case otherError
     case badData
     case decodingError
+    case badAuth
 }
 
 class PokemonController {
@@ -33,10 +40,16 @@ class PokemonController {
             var request = URLRequest(url: fetchPokemonUrl)
             request.httpMethod = HTTPMethod.get.rawValue
 
-            URLSession.shared.dataTask(with: request) { data, _, error in
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
                     print("Error receiving pokemon data: \(error)")
                     completion(.failure(.otherError))
+                    return
+                }
+                
+                if let response = response as? HTTPURLResponse,
+                    response.statusCode == 401 {
+                    completion(.failure(.badAuth))
                     return
                 }
 

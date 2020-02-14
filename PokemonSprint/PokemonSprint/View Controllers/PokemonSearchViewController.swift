@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController!
     var pokemonDetailViewController: PokemonDetailViewController?
@@ -41,6 +41,19 @@ class PokemonSearchViewController: UIViewController {
         }
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+           guard let searchTerm = searchBar.text?.lowercased() else { return }
+
+           pokemonController.fetchPokemon(with: searchTerm) { result in
+               do {
+                   let pokemon = try result.get()
+                   self.pokemon = pokemon
+               } catch {
+                   self.pokemon = nil
+               }
+           }
+       }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,19 +75,4 @@ class PokemonSearchViewController: UIViewController {
             pokemonDetailVC.pokemon = self.pokemon
             self.pokemonDetailViewController = pokemonDetailVC
         }
-}
-
-extension PokemonSearchViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text?.lowercased() else { return }
-
-        pokemonController.fetchPokemon(with: searchTerm) { result in
-            do {
-                let pokemon = try result.get()
-                self.pokemon = pokemon
-            } catch {
-                self.pokemon = nil
-            }
-        }
-    }
-}
+ }
