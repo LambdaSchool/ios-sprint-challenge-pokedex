@@ -59,7 +59,7 @@ class PokemonDetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.pokemonNameLabel.text = pokemon.name.capitalized
             self.idLabel.text = "ID: \(pokemon.id)"
-            self.typeLabel.text = "Types: \(types.joined(separator: ",").capitalized)"
+            self.typeLabel.text = "Types: \(types.joined(separator: ", ").capitalized)"
             self.abilityLabel.text = "Abilities: \(pokemon.abilities[0].ability.name.capitalized)"
         }
     }
