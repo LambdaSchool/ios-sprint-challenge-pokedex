@@ -14,6 +14,25 @@ class SearchViewController: UIViewController {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    let apiController = APIController()
+    
+    // MARK: - Methods
+    
+    func updateViews(){
+        guard let pokemon = pokemon else { return }
+        pokemonNameLabel.text = pokemon.name
+        idValueLabel.text = String(pokemon.id)
+        typeLabel.text = pokemon.types.type.name
+        abilitiesLabel.text = pokemon.abilities.ability
+        
+        apiController.fetchSprite(at: pokemon.name) { (result) in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImage.image = image
+                }
+            }
+        }
+    }
     
     // MARK: - Outlets
     
@@ -28,11 +47,14 @@ class SearchViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func saveTapped(_ sender: UIButton) {
+        
+        
     }
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
     }
 }

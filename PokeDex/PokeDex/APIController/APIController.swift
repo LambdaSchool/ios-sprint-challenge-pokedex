@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class APIController{
     
@@ -31,7 +32,7 @@ class APIController{
         var request = URLRequest(url: requestURL)
         request.httpMethod = APIKeys.HTTPMethods.get.rawValue
         
-       URLSession.shared.dataTask(with: request) { (data, _, error) in
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 completion(.failure(.otherError))
                 NSLog("Error receiving Pokemon data: \(error)")
@@ -50,4 +51,36 @@ class APIController{
             }
         }.resume()
     }
+    
+    
+    func fetchSprite(at urlString: String, completion: @escaping (Result<UIImage, NetworkErrors.errors>) -> ()) {
+        guard let imageURL = URL(string: urlString) else {
+            completion(.failure(.badURL))
+            return
+        }
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = APIKeys.HTTPMethods.get.rawValue
+            
+            URLSession.shared.dataTask(with: request) { (data, _, error) in
+                if let _ = error {
+                    completion(.failure(.otherError))
+                    return
+                }
+                guard let data = data else {
+                    completion(.failure(.badData))
+                    return
+                }
+                
+                guard let image = UIImage(data: data) else {
+                    completion(.failure(.badImage))
+                    return
+                }
+                completion(.success(image))
+                
+        }.resume()
+    }
+    
+    
+    
 }

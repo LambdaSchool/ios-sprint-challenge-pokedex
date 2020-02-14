@@ -14,5 +14,6 @@ struct NetworkErrors {
         case badURL
         case otherError
         case badData
+        case badImage
     }
 }

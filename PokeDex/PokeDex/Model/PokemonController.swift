@@ -13,12 +13,13 @@ class PokemonController {
     // MARK: - Properties
     
     var pokeDex: [Pokemon] = []
+    let apiContrllet = APIController()
     
     // MARK: - Methods
     
-    func addPokemon(pokemon: Pokemon) -> Pokemon {
+    func addPokemon(pokemon: Pokemon) {
         let newPokemon = pokemon
         pokeDex.append(newPokemon)
-        return newPokemon
+//        return newPokemon
     }
 }
