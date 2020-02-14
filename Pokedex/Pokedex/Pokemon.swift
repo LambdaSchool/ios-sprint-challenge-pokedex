@@ -32,7 +32,7 @@ enum types {
     
 }
 
-struct Pokemon {
+struct Pokemon: Codable {
     var name: String
     var id: Int
     var abilities: [(String, String)]

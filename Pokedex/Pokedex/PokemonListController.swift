@@ -36,35 +36,77 @@ class PokemonAPIController {
     var bearer: Bearer?
     
     var baseURL: String = "https://pokeapi.co/api/v2/pokemon/"
+
     
     var localPersistanceURL: URL? {
         let fileManager = FileManager()
          guard let pokemonMasterList = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
          return pokemonMasterList.appendingPathComponent("Pokemon.plist")
     }
+    
+    // MARK: - INIT
+    init() {
+        loadFromPersistentStore()
+    }
 
     
-    
-    func searchForPokemon(with name: String, completion: @escaping (Result<[Pokemon], NetworkError>) -> Void) {
-        var searchResults: [Pokemon] = []
+    // MARK: - METHODS
+    func searchForPokemon(with name: String, completion: @escaping (Error?) -> Void) {
         
-        guard let baseURL = URL(string: baseURL)?.appendPathComponent(name) else {
-            print("Error")
-        }
+        searchResults = []
         
-        var request = URLRequest(url: persistance!)
+        guard let baseUrl = URL(string: baseURL)?.appendingPathComponent(name) else {
+                   print("Error establishing URL for API call.")
+                   return
+               }
+        
+        var request = URLRequest(url: baseUrl)
         request.httpMethod = HTTPRequest.get.rawValue
            // This provides authorization credentials to the server.
            // Data here is case sensitve and you must follow the rules exactly.
         request.addValue("Bearer \(bearer!.token)", forHTTPHeaderField: "Authorization")
         
-    
-   
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("Error reaching Pokemon API \(String(describing: error))")
+                completion(error)
+                return
+            }
+            
+            
+            guard let data = data else {
+                print("Error receiving data from PokemonAPI: Bad data")
+                completion(error)
+                return
+            }
+            
+            let jsonDecoder = JSONDecoder()
+            do {
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.searchResults.append(pokemon)
+                completion(nil)
+            } catch {
+                print("Error decoding data from API: \(error)")
+                completion(error)
+            }
+            }.resume()
+        
+    }
+        
+    func loadFromPersistentStore() {
+        let manager = FileManager.default
+        guard let url = localPersistanceURL, manager.fileExists(atPath: url.path) else { return }
+        let decoder = PropertyListDecoder()
+        do{
+            let data = try Data.init(contentsOf: url)
+            let decodedPoke = try decoder.decode([Pokemon].self, from: data)
+            savedPokemon = decodedPoke
+        } catch {
+            print("Error Loading Pokemon Data")
+        }
+    }
 
     
-    init() {
-        loadFromPersistentStore()
-    }
     
     
        // If failure, the bearer token doesn't exist
