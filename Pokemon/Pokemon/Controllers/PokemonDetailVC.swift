@@ -37,10 +37,15 @@ class PokemonDetailVC: UIViewController {
     private func updateViews() {
         nameLabel.text = "\(apiController.pokemon.name.uppercased())"
         pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
+        guard  let urlImage = URL(string: (apiController.pokemon.image?.image ?? "")) else { return }
+        pokemonImage.load(url:urlImage)
+       
+        
     }
    
     @IBAction func saveTapped(_ sender: UIButton) {
-        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name))
+        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, abilities: apiController.pokemon.abilities, image: apiController.pokemon.image))
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -49,9 +54,11 @@ class PokemonDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let pokemon = pokemon {
-            nameLabel.text = "\(pokemon.name)"
+            nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
             pokeIdLabel.text = "ID :\(pokemon.id)"
-            title = "\(pokemon.name.uppercased())"
+            
+        } else {
+            title = "Pokemon Search"
         }
 
         
@@ -59,7 +66,7 @@ class PokemonDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      title = "Pokemon Search"
+   
         
     }
 
@@ -78,5 +85,18 @@ extension PokemonDetailVC : UISearchBarDelegate {
      
         
       
+    }
+}
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }
