@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  PokeDex
+//  Pokedex
 //
-//  Created by Ufuk Türközü on 17.01.20.
+//  Created by Ufuk Türközü on 14.02.20.
 //  Copyright © 2020 Ufuk Türközü. All rights reserved.
 //
 
