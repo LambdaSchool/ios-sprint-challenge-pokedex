@@ -16,35 +16,77 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
-  
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     //MARK: Properties
     
     var pokemonController: PokemonController!
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
    
     //MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
     }
     
    //MARK: Methods
-    func updateViews(with pokemon: Pokemon) {
-            nameLabel.text = pokemon.name
-            idLabel.text = "\(pokemon.id)"
-            typesLabel.text = pokemon.types
-            abilitiesLabel.text = pokemon.abilities
+    func getPokemons() {
+        guard let pokemon = pokemon else { return }
+        
+        pokemonController.fetchImage(at: pokemon.sprites!.frontDefault) { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+        }
     }
-    /*
-    // MARK: - Navigation
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+               guard let imageData = try? Data(contentsOf: URL(string: pokemon.sprites!.frontDefault)!) else { return }
+               nameLabel.text = pokemon.name
+               idLabel.text = "ID: \(String(describing: pokemon.id!))"
+               pokeImage.image = UIImage(data: imageData)
+              
+               
+               var abilities: [String] = []
+               var types: [String] = []
+               
+               for newType in pokemon.types {
+                   types.append(newType.type.name)
+               }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+               for newAbility in pokemon.abilities {
+                   abilities.append(newAbility.ability.name)
+               }
+               
+               typesLabel.text = "Type: \(types.last!)"
+               abilitiesLabel.text = "Ability: \(abilities.last!)"
     }
-    */
 
+    //MARK: Actions
+    
+    @IBAction func saveButton(_ sender: UIButton) {
+    }
+    
+}
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text?.lowercased() else { return }
+       
+        pokemonController.fetchPokemon(for: searchTerm) { result in
+            let pokemon = try? result.get()
+                            
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+
+            }
+        }
+    }
 }

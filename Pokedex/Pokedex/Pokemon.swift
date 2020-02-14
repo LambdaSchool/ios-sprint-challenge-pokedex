@@ -13,7 +13,7 @@ import Foundation
      var name: String?
      var id: Int?
      var abilities: [Ability]
-     var types: [Type]
+     var types: [Types]
      var sprites: Sprite?
      
      struct Ability: Decodable {
@@ -24,7 +24,7 @@ import Foundation
          var name: String
      }
      
-     struct Type: Decodable {
+     struct Types: Decodable {
          var type: TypeName
      }
 
