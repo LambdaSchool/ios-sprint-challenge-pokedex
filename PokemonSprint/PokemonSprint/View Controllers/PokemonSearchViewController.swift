@@ -10,6 +10,13 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar?
+    @IBOutlet weak var savePokemonButton: UIButton?
+    
+    
+    @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

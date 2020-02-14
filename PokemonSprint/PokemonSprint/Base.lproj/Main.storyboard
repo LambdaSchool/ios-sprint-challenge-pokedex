@@ -62,25 +62,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TeN-E4-awO">
+                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search by Name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="TeN-E4-awO">
                                 <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kB-dG-hCh">
-                                <rect key="frame" x="157" y="781" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kB-dG-hCh">
+                                <rect key="frame" x="156" y="817" width="102" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="savePokemonButtonTapped:" destination="h4x-eL-9gX" eventType="touchUpInside" id="DET-DY-jbb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="BD0-si-UPG" firstAttribute="trailing" secondItem="5kB-dG-hCh" secondAttribute="trailing" constant="156" id="52H-ZC-o9Q"/>
+                            <constraint firstItem="BD0-si-UPG" firstAttribute="bottom" secondItem="5kB-dG-hCh" secondAttribute="bottom" constant="15" id="UCB-eU-WR2"/>
+                            <constraint firstItem="5kB-dG-hCh" firstAttribute="leading" secondItem="BD0-si-UPG" secondAttribute="leading" constant="156" id="hd7-DD-PAG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="BD0-si-UPG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="RRD-Cv-vvZ"/>
+                    <connections>
+                        <outlet property="savePokemonButton" destination="5kB-dG-hCh" id="KyM-q1-Kbi"/>
+                        <outlet property="searchBar" destination="TeN-E4-awO" id="KeI-vc-LqY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eaX-QW-l0H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="-402"/>
+            <point key="canvasLocation" x="974" y="-361"/>
         </scene>
         <!--Pokemon Detail View Controller-->
         <scene sceneID="x8x-7H-fmN">
@@ -127,10 +138,17 @@
                         <viewLayoutGuide key="safeArea" id="3HA-pl-vtD"/>
                     </view>
                     <navigationItem key="navigationItem" id="jtg-M7-LcZ"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="TZz-Iw-GWf" id="1Y5-ph-oz3"/>
+                        <outlet property="idLabel" destination="Wfd-fH-aEl" id="Gt8-ww-8CZ"/>
+                        <outlet property="nameLabel" destination="JrW-DU-n6p" id="tcd-xa-JIt"/>
+                        <outlet property="spriteImageView" destination="rqu-Qu-dQs" id="ROS-fn-G48"/>
+                        <outlet property="typesLabel" destination="EBx-B1-3dr" id="ruF-9O-RAx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kg4-9G-BZT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="391"/>
+            <point key="canvasLocation" x="975" y="390"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fBI-ZH-RkP">
