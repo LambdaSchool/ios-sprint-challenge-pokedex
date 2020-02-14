@@ -55,19 +55,25 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jpv-6M-86A">
-                                <rect key="frame" x="32" y="800" width="350" height="30"/>
+                                <rect key="frame" x="32" y="786" width="350" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="wos-se-fm1"/>
+                                </constraints>
                                 <state key="normal" title="Save Pokemon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveTapped:" destination="pQc-D0-ubJ" eventType="touchUpInside" id="lfA-4e-a8k"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6H-ZV-7Od">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON NAME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6H-ZV-7Od">
                                 <rect key="frame" x="16" y="164" width="382" height="60"/>
                                 <color key="backgroundColor" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="75k-bh-jnF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -79,7 +85,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="3us-7R-Cvf">
-                                <rect key="frame" x="16" y="616" width="382" height="152"/>
+                                <rect key="frame" x="16" y="602" width="382" height="152"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43R-d7-WJm">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
@@ -119,13 +125,21 @@
                             <constraint firstItem="5zU-fl-DfO" firstAttribute="top" secondItem="LeF-cM-hPM" secondAttribute="top" id="gWK-nX-eyS"/>
                             <constraint firstItem="3us-7R-Cvf" firstAttribute="leading" secondItem="LeF-cM-hPM" secondAttribute="leading" constant="16" id="l5C-Eq-I8U"/>
                             <constraint firstItem="5zU-fl-DfO" firstAttribute="leading" secondItem="LeF-cM-hPM" secondAttribute="leading" id="rXC-dw-9LJ"/>
-                            <constraint firstItem="LeF-cM-hPM" firstAttribute="bottom" secondItem="Jpv-6M-86A" secondAttribute="bottom" constant="32" id="rre-Zh-dIs"/>
+                            <constraint firstItem="LeF-cM-hPM" firstAttribute="bottom" secondItem="Jpv-6M-86A" secondAttribute="bottom" constant="16" id="rre-Zh-dIs"/>
                             <constraint firstItem="5zU-fl-DfO" firstAttribute="trailing" secondItem="LeF-cM-hPM" secondAttribute="trailing" id="tT1-5T-fts"/>
                             <constraint firstItem="Jpv-6M-86A" firstAttribute="leading" secondItem="LeF-cM-hPM" secondAttribute="leading" constant="32" id="th9-gp-rHd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LeF-cM-hPM"/>
                     </view>
                     <navigationItem key="navigationItem" id="45U-NT-tLq"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="O6H-ZV-7Od" id="Cyz-pI-Be2"/>
+                        <outlet property="pokeAbiLabel" destination="GXZ-bK-hc2" id="exa-f4-Ooi"/>
+                        <outlet property="pokeIdLabel" destination="43R-d7-WJm" id="z2F-Qv-88T"/>
+                        <outlet property="pokeTypeLabel" destination="Hyo-ZI-vwb" id="bwW-Im-frz"/>
+                        <outlet property="pokemonImage" destination="c39-8Z-Eit" id="cXO-xV-YjX"/>
+                        <outlet property="pokemonSearchBar" destination="5zU-fl-DfO" id="Y9u-6T-qhP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bq1-C4-TZy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

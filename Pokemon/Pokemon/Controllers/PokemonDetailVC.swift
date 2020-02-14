@@ -10,6 +10,31 @@ import UIKit
 
 class PokemonDetailVC: UIViewController {
 
+    
+    
+    @IBOutlet weak var pokemonSearchBar: UISearchBar! {
+        didSet {
+            pokemonSearchBar.delegate = self
+            pokemonSearchBar.becomeFirstResponder()
+        }
+    }
+    
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var pokeAbiLabel: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var pokeTypeLabel: UILabel!
+    @IBOutlet weak var pokeIdLabel: UILabel!
+    
+    
+    
+    
+    @IBAction func saveTapped(_ sender: UIButton) {
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -18,3 +43,6 @@ class PokemonDetailVC: UIViewController {
 
 }
 
+extension PokemonDetailVC : UISearchBarDelegate {
+    
+}
