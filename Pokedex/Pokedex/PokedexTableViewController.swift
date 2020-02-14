@@ -21,7 +21,7 @@ class PokedexTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
+        super.viewDidAppear(animated)
     }
 
     // MARK: - Table view data source
@@ -36,7 +36,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         let pokemon = pokemonController.pokemon[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name?.capitalized
         return cell
     }
     

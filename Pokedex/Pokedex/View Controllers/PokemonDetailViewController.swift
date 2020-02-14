@@ -17,6 +17,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     
     //MARK: Properties
@@ -50,7 +51,7 @@ class PokemonDetailViewController: UIViewController {
     func updateViews() {
         guard let pokemon = pokemon else { return }
                guard let imageData = try? Data(contentsOf: URL(string: pokemon.sprites!.frontDefault)!) else { return }
-               nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name?.capitalized
                idLabel.text = "ID: \(String(describing: pokemon.id!))"
                pokeImage.image = UIImage(data: imageData)
               
@@ -73,6 +74,11 @@ class PokemonDetailViewController: UIViewController {
     //MARK: Actions
     
     @IBAction func saveButton(_ sender: UIButton) {
+        guard let pokemon = pokemon,
+            !pokemonController.pokemon.contains(pokemon) else { return }
+        pokemonController.pokemon.append(pokemon)
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)}
     }
     
 }

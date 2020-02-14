@@ -9,7 +9,12 @@
 import Foundation
 
 
- struct Pokemon: Decodable {
+struct Pokemon: Decodable, Equatable {
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        lhs.id == rhs.id
+    }
+    
      var name: String?
      var id: Int?
      var abilities: [Ability]
