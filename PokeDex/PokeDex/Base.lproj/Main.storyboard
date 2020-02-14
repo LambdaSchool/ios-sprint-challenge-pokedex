@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CjC-xf-OPG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ziW-cP-nnq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -52,7 +52,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G55-Lo-jHi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1004.3478260869566" y="148.66071428571428"/>
+            <point key="canvasLocation" x="1914.4927536231885" y="148.66071428571428"/>
         </scene>
         <!--Title-->
         <scene sceneID="T2t-7j-w1e">
@@ -148,12 +148,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GXF-nR-wFP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1889.8550724637682" y="150.66964285714286"/>
+            <point key="canvasLocation" x="2800" y="150.66964285714286"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--My Pokedex-->
         <scene sceneID="Ksz-jq-RDS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CjC-xf-OPG" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Pokedex" id="Jda-Nj-NLg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="81n-la-Aqq">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -165,6 +166,53 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JTV-nI-e7w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1004.3478260869566" y="148.66071428571428"/>
+        </scene>
+        <!--Pokdex-->
+        <scene sceneID="1GF-g5-sJd">
+            <objects>
+                <tableViewController id="Xch-1A-fu9" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MYd-ip-epM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="syx-Iq-Y0z">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="syx-Iq-Y0z" id="DLv-Sk-IND">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Xch-1A-fu9" id="i7U-H1-fvb"/>
+                            <outlet property="delegate" destination="Xch-1A-fu9" id="kFF-W0-kpE"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Pokdex" id="H1N-FZ-rpv"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fFx-wM-5fl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1004" y="922"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="XPF-y9-tPb">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ziW-cP-nnq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8F2-89-01e">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="CjC-xf-OPG" kind="relationship" relationship="viewControllers" id="WYB-Uz-zYf"/>
+                        <segue destination="Xch-1A-fu9" kind="relationship" relationship="viewControllers" id="O5e-pi-7BD"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0qo-q4-dg5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="94.20289855072464" y="148.66071428571428"/>
         </scene>
