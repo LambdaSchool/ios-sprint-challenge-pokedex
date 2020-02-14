@@ -48,15 +48,23 @@ class PokemonDetailViewController: UIViewController {
             }
         })
         
+        // Needed to cycle through the abilities
+        let pokemonDetail = pokemon
+        var types: [String] = []
+        for typeInfo in pokemonDetail.types {
+            types.append(typeInfo.type.name)
+        }
+        
         // Has to be loaded on the main thread
         DispatchQueue.main.async {
             self.pokemonNameLabel.text = pokemon.name.capitalized
             self.idLabel.text = "ID: \(pokemon.id)"
-            self.typeLabel.text = "Types: \(pokemon.types) "
+            self.typeLabel.text = "Types: \(types.joined(separator: ",").capitalized)"
             self.abilityLabel.text = "Abilities: \(pokemon.abilities[0].ability.name.capitalized)"
         }
     }
     
+    // Will be called in updateDetails function to update the image of the Pokemon
     func updateImage(with image: UIImage) {
         DispatchQueue.main.async {
             self.imageView.image = image
