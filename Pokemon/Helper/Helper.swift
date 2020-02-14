@@ -12,6 +12,6 @@ struct Helper
 {
     static let cellID = "PokemonCell"
     static let segueID = "SearchSegue"
-    
+    static let cellSegue = "CellSegue"
     
 }

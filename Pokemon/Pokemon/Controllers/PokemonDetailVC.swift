@@ -9,12 +9,16 @@
 import UIKit
 
 protocol PokemonDetailVCDelegate : AnyObject {
-    func didReceivePokemon(with name: String)
+    func didReceivePokemon(with pokemon: Pokemon)
 }
 
 class PokemonDetailVC: UIViewController {
 
-    let apiController = APIController()
+    @IBOutlet weak var saveButton: UIButton!
+     
+    var pokemon: Pokemon?
+    
+    var apiController = APIController()
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar! {
         didSet {
@@ -29,6 +33,7 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var pokeTypeLabel: UILabel!
     @IBOutlet weak var pokeIdLabel: UILabel!
+    
     private func updateViews() {
         nameLabel.text = "\(apiController.pokemon.name.uppercased())"
         pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
@@ -37,12 +42,26 @@ class PokemonDetailVC: UIViewController {
     
     
     @IBAction func saveTapped(_ sender: UIButton) {
-        delegate?.didReceivePokemon(with: apiController.pokemon.name)
+        
+        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name))
+        navigationController?.popViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let pokemon = pokemon {
+                  nameLabel.text = "\(apiController.pokemon.name.uppercased())"
+                  pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
+                  title = "\(apiController.pokemon.name.uppercased())"
+              }
+              title = "Pokemon Search"
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        
     }
 
 
