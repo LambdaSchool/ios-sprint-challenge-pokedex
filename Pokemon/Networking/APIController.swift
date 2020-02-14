@@ -23,7 +23,7 @@ enum HTTPMethod: String {
 class APIController  {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
-    var pokemon = Pokemon(id: 0, name: "",  image: nil,types: [] )
+    var pokemon = Pokemon(id: 0, name: "",  image: nil,types: [],abilities: [] )
 
     func performSearch(searchTerm: String,completion: @escaping (Error?) -> Void) {
 

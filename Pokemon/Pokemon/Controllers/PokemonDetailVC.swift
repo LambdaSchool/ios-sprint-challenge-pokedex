@@ -17,7 +17,7 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
      
     var pokemon: Pokemon?
-    
+     var abilities = [String]()
     var apiController = APIController()
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar! {
@@ -40,12 +40,19 @@ class PokemonDetailVC: UIViewController {
         guard  let urlImage = URL(string: (apiController.pokemon.image?.image ?? "")) else { return }
         pokemonImage.load(url:urlImage)
         guard let type = apiController.pokemon.types[0].type["name"] else { return }
-        pokeTypeLabel.text = "Type: \(type)"
+        pokeTypeLabel.text = "Type: \(type.capitalizingFirstLetter())"
+        
+        
+        apiController.pokemon.abilities.forEach { (ability) in
+            abilities.append(ability.ability["name"]!)
+            
+        }
+        pokeAbiLabel.text = "Abilities:\( Set(abilities).joined(separator: ",").capitalizingFirstLetter())"
         
     }
    
     @IBAction func saveTapped(_ sender: UIButton) {
-        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, image: apiController.pokemon.image,types: apiController.pokemon.types))
+        delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, image: apiController.pokemon.image,types: apiController.pokemon.types,abilities: apiController.pokemon.abilities))
         
         navigationController?.popViewController(animated: true)
     }
@@ -55,12 +62,21 @@ class PokemonDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let pokemon = pokemon {
+            
             nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
             pokeIdLabel.text = "ID :\(pokemon.id)"
+          
             guard let urlString = pokemon.image?.image else { return }
+            guard let type = pokemon.types[0].type["name"] else { return }
             guard let url = URL(string: urlString) else { return }
             pokemonImage.load(url: url )
-            
+            pokeTypeLabel.text = "Type: \(type.capitalizingFirstLetter())"
+            var abis = [String]()
+            pokemon.abilities.forEach {
+                (ability) in
+                abis.append(ability.ability["name"]!)
+            }
+            pokeAbiLabel.text = "Abilities:\( abis.joined(separator: ",").capitalizingFirstLetter())"
             
         } else {
             title = "Pokemon Search"
