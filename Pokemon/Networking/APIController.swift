@@ -23,8 +23,8 @@ enum HTTPMethod: String {
 class APIController  {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
-   
-    var searchResults = [Pokemon]()
+    var pokemon = Pokemon(id: 0, name: "")
+
     
     func performSearch(searchTerm: String,completion: @escaping (Error?) -> Void) {
 
@@ -54,7 +54,7 @@ class APIController  {
                let jsonDecoder = JSONDecoder()
                do {
                    let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
-                     self.searchResults.append(pokemonSearch)
+                     self.pokemon = pokemonSearch
                    completion(nil)
                } catch let err {
                    NSLog("Can't decode data :\(err.localizedDescription)")
