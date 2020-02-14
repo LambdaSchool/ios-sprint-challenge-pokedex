@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -16,6 +17,7 @@ enum NetworkError: Error {
     case badUrl
     case otherError
     case badData
+    case badRequest
     case noDecode
     case noEncode
     case badImage
@@ -23,14 +25,17 @@ enum NetworkError: Error {
 class PokemonController {
     
     //MARK: Properties
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     var pokemon: [Pokemon] = []
+    var pokemons: Pokemon?
     
-    func fetchPokemon(for pokemonName: String, completion: @escaping(Result<[Pokemon], NetworkError>) -> Void) {
+    // MARK: Methods
+    func fetchPokemon(for pokemonName: String, completion: @escaping(Result<Pokemon, NetworkError>) -> Void) {
         
-       let pokemonUrl = baseURL.appendingPathComponent("animals/\(pokemonName)")
+       let pokemonUrl = baseURL.appendingPathComponent("pokemon/\(pokemonName)")
        var request = URLRequest(url: pokemonUrl)
         request.httpMethod = HTTPMethod.get.rawValue
+        request.setValue("application/json", forHTTPHeaderField:"Content-type")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
@@ -38,13 +43,22 @@ class PokemonController {
                 completion(.failure(.otherError))
                 return
             }
+            if let response = response as? HTTPURLResponse, response.statusCode !=  200 {
+                print(response.statusCode)
+                NSLog("request URL is nil")
+                completion(.failure(.badRequest))
+                return
+                 }
             guard let data = data else {
                 completion(.failure(.badData))
                 return
             }
             let decoder = JSONDecoder()
             do {
-                let pokemonNames = try decoder.decode([Pokemon].self, from: data)
+                let pokemonNames = try decoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemonNames))
+                self.pokemon.append(pokemonNames)
+                self.pokemons = pokemonNames
                 completion(.success(pokemonNames))
             } catch {
                 NSLog("Error decoding pokemon objects: \(error.localizedDescription)")
