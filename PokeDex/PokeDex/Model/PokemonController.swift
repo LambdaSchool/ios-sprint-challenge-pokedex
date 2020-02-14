@@ -20,6 +20,5 @@ class PokemonController {
     func addPokemon(pokemon: Pokemon) {
         let newPokemon = pokemon
         pokeDex.append(newPokemon)
-//        return newPokemon
     }
 }

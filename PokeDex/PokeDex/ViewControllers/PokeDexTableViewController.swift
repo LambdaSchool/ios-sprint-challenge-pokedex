@@ -28,6 +28,7 @@ class PokeDexTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -40,7 +41,8 @@ class PokeDexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellKeys.cellIdentifier.pokeDexTableVCCell.rawValue,
                                                  for: indexPath)
-
+        guard pokemonController.pokeDex.count > 0 else {return UITableViewCell()}
+        cell.textLabel?.text = pokemonController.pokeDex[indexPath.row].name
         return cell
     }
     

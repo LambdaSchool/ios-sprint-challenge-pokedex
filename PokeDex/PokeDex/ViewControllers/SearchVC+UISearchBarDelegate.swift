@@ -14,21 +14,31 @@ extension SearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text,
             !searchTerm.isEmpty else { return }
-        
-        
-        apiController.searchForPokemon(searchTerm: searchTerm) { (_) in
+
+        apiController.searchForPokemon(searchTerm: searchTerm) { (result) in
             DispatchQueue.main.async {
+                do{
+                    self.pokemon = try result.get()
+                } catch{
+                    NSLog("\(error)")
+                }
+        
                 guard let pokemon = self.pokemon,
                     let pokemonController = self.pokemonController else { return }
                 pokemonController.addPokemon(pokemon: pokemon)
-                
             }
-//            apiController.fetchSprite(at: searchTerm) { _ in
-//                DispatchQueue.main.async {
-//                    guard let imageString = pokemon.sprites else { return }
-//
-//                }
-//            }
         }
+        
+        apiController.fetchSprite(searchTerm: searchTerm) { (result) in
+            DispatchQueue.main.async {
+                do{
+                    self.pokemonImage.image = try result.get()
+                } catch {
+                    NSLog("\(error)")
+                }
+            }
+        }
+        
+        
     }
 }

@@ -13,7 +13,11 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet{
+            updateViews()
+        }
+    }
     let apiController = APIController()
     
     // MARK: - Methods
@@ -22,16 +26,25 @@ class SearchViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name
         idValueLabel.text = String(pokemon.id)
-        typeLabel.text = pokemon.types.type.name
-        abilitiesLabel.text = pokemon.abilities.ability
+        typeLabel.text = pokemonTypeString(pokemon: pokemon)
+        abilitiesLabel.text = pokemonAbilityString(pokemon: pokemon)
         
-        apiController.fetchSprite(at: pokemon.name) { (result) in
-            if let image = try? result.get() {
-                DispatchQueue.main.async {
-                    self.pokemonImage.image = image
-                }
-            }
+    }
+    
+    func pokemonAbilityString(pokemon: Pokemon) -> String {
+        var typeString = ""
+        for attribute in pokemon.abilities{
+            typeString += "\(attribute.ability.name)"
         }
+        return typeString
+    }
+    
+    func pokemonTypeString(pokemon: Pokemon) -> String {
+        var typeString = ""
+        for attribute in pokemon.types{
+            typeString += "\(attribute.type.name)"
+        }
+        return typeString
     }
     
     // MARK: - Outlets
@@ -47,7 +60,10 @@ class SearchViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func saveTapped(_ sender: UIButton) {
-        
+        guard let pokemon = pokemon,
+        let pokemonController = pokemonController else { return }
+        pokemonController.addPokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
         
     }
     
