@@ -11,12 +11,12 @@ import Foundation
 import UIKit
 
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     
     var name: String
     var id: Int
     var abilities: [AbilityHolder]
-    var sprite: SpriteHolder
+    var sprites: SpriteHolder
     var type: [TypeHolder]
     var image: Data?
 }
