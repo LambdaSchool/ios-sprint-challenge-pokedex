@@ -9,22 +9,21 @@
 import Foundation
 
 struct Pokemon : Codable {
-    let id: Int
-    let name: String
+    let id: Int?
+    let name: String?
     let abilities: [Abilitiy]
     let image: [Sprites]
     
     enum CodingKeys: String,CodingKey {
         case id
-        case name 
+        case name
         case abilities = "abilities"
         case image = "sprites"
     }
     
 }
 struct Abilitiy:  Codable {
-    let name: String
-    
+    let name: String?
 }
 
 struct Sprites : Codable {
@@ -33,6 +32,10 @@ struct Sprites : Codable {
     enum CodingKeys: String,CodingKey {
         case image = "front_default"
     }
+}
+
+struct Result: Codable {
+    let result : [Pokemon]
 }
 
 

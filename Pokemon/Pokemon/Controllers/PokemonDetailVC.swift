@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonDetailVC: UIViewController {
 
-    
+    let apiController = APIController()
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar! {
         didSet {
@@ -26,14 +26,12 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var pokeTypeLabel: UILabel!
     @IBOutlet weak var pokeIdLabel: UILabel!
     
-    
+   
     
     
     @IBAction func saveTapped(_ sender: UIButton) {
         
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +41,20 @@ class PokemonDetailVC: UIViewController {
 
 }
 
+func updateViews() {
+    
+}
+
 extension PokemonDetailVC : UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+     
+        apiController.performSearch(searchTerm: searchTerm) { (error) in
+            print(error)
+        }
+     
+        
+      
+    }
 }
