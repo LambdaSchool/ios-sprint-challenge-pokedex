@@ -54,4 +54,14 @@ class PokemonController {
             }
         }.resume()
     }
+    
+    func savePokemon(called pokemon: Pokemon) {
+        let pokemon = Pokemon(name: pokemon.name, id: pokemon.id, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
+        pokemonList.append(pokemon)
+    }
+    
+    func pokemon(called pokemon: Pokemon) {
+        guard let pokemonIndex = pokemonList.firstIndex(of: pokemon) else { return }
+        pokemonList.remove(at: pokemonIndex)
+    }
 }

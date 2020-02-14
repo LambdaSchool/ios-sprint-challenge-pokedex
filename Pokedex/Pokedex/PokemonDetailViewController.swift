@@ -9,6 +9,15 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokemonName: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +25,11 @@ class PokemonDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func savePokemon(_ sender: Any) {
+        
     }
-    */
-
+    
+    func updateViews() {
+        guard let pokemon 
+    }
 }
