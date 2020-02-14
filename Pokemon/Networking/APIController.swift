@@ -22,6 +22,7 @@ enum HTTPMethod: String {
    
 class APIController  {
     
+    
      var pokemons = [Pokemon]()
     
     init() {
@@ -86,10 +87,7 @@ class APIController  {
            .resume()
            
        }
-    
-    
-    
-    
+  
     private func loadFromPersistentStore() {
            
            do {

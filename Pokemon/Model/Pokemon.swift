@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon : Equatable,Comparable, Codable {
+struct Pokemon : Equatable,Comparable, Codable, Hashable {
     static func < (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id < rhs.id
     }
@@ -18,7 +18,7 @@ struct Pokemon : Equatable,Comparable, Codable {
     }
     
     let id: Int
-    let name: String
+    var name: String
     let image: Sprites?
     let types: [Type]
     let abilities: [Ability]
@@ -33,18 +33,18 @@ struct Pokemon : Equatable,Comparable, Codable {
     
 }
 
-struct Type: Codable {
+struct Type: Codable, Hashable {
   
     let type : [String:String]
     
 }
 
-struct Ability : Codable {
+struct Ability : Codable, Hashable {
     let ability : [String:String]
 }
 
 
-struct Sprites : Codable {
+struct Sprites : Codable, Hashable {
     let image : String?
     
     enum CodingKeys: String,CodingKey {

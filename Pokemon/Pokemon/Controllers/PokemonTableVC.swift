@@ -8,9 +8,37 @@
 
 import UIKit
 
-class PokemonTableVC: UITableViewController {
+class PokemonTableVC: UITableViewController, UISearchBarDelegate {
     
-  
+   @IBOutlet weak var pokemonSearchBar: UISearchBar! {
+          didSet {
+              pokemonSearchBar.delegate = self
+          }
+      }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        print(searchText)
+//        apiController.pokemons.filter {
+//            $0.name == searchText
+//        }
+//
+//        tableView.reloadData()
+//       }
+//
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+//        for pokemon in apiController.pokemons {
+//            if pokemon.name == searchTerm {
+//                print(pokemon.name)
+//                print(searchTerm)
+//                apiController.pokemons.removeAll()
+//                apiController.pokemons.append(pokemon)
+//                tableView.reloadData()
+//            }
+//        }
+        print(searchTerm)
+    }
+    
     var apiController = APIController()
     
     //MARK: - View Life Cycle
@@ -43,8 +71,6 @@ class PokemonTableVC: UITableViewController {
         tableView.reloadData()
     }
     
-    
-    
    private func sortName(action: UIAlertAction) {
         apiController.sortAlphabetically()
         tableView.reloadData()
@@ -55,9 +81,10 @@ class PokemonTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return apiController.pokemons.count
+ 
     }
     
-    
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Helper.cellID, for: indexPath)
         cell.textLabel?.text = apiController.pokemons[indexPath.row].name.capitalizingFirstLetter()
@@ -102,7 +129,6 @@ extension PokemonTableVC: PokemonDetailVCDelegate {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-      
     }
     
    

@@ -59,8 +59,20 @@ class PokemonDetailVC: UIViewController {
     
     //MARK : - View Life Cycle
     
+   override func viewDidLoad() {
+         super.viewDidLoad()
+    
+         
+     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+    
+            self.navigationController?.setToolbarHidden(false, animated: true)
+        }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(true, animated: true)
         if let pokemon = pokemon {
             
             nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
@@ -84,13 +96,7 @@ class PokemonDetailVC: UIViewController {
 
         
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-   
-        
-    }
-
+ 
 }
 
 extension PokemonDetailVC : UISearchBarDelegate {
@@ -103,9 +109,7 @@ extension PokemonDetailVC : UISearchBarDelegate {
                 self.updateViews()
             }
         }
-     
-        
-      
+    
     }
 }
 extension UIImageView {
