@@ -42,9 +42,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-           guard let searchTerm = searchBar.text?.lowercased() else { return }
+          guard let searchTerm = searchBar.text?.lowercased() else { return }
 
-           pokemonController.fetchPokemon(with: searchTerm) { result in
+        pokemonController.fetchPokemon(with: searchTerm) { result in
                do {
                    let pokemon = try result.get()
                    self.pokemon = pokemon
