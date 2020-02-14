@@ -7,91 +7,53 @@
 //
 
 import Foundation
+import UIKit
 
 
-enum HTTPRequest: String {
+enum HTTPMethod: String {
       case get = "GET"
   }
 
 enum NetworkError: Error {
-       case badUrl
-       case noAuth
-       case badAuth
-       case otherError
-       case badData
-       case noDecode
-       case badImage
-   }
+    case badUrl
+    case noAuth
+    case badAuth
+    case otherError
+    case badData
+    case noDecode
+    case badImage
+    case noData
+}
    
 
 class PokemonAPIController {
     
-    
     // MARK: - API Properties
     
-    var searchResults: [Pokemon]
-    
-    var savedPokemon: [Pokemon]
-    
-    var bearer: Bearer?
-    
-    var baseURL: String = "https://pokeapi.co/api/v2/pokemon/"
+    var pokemons: [Pokemon] = []
 
+    
+    var baseURL: URL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+
+
+    
+    // MARK: - PERSISTENCE
     
     var localPersistanceURL: URL? {
-        let fileManager = FileManager()
-         guard let pokemonMasterList = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-         return pokemonMasterList.appendingPathComponent("Pokemon.plist")
+         let fileManager = FileManager.default
+         guard let directory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+         return directory.appendingPathComponent("Pokemon.plist")
     }
     
-    // MARK: - INIT
-    init() {
-        loadFromPersistentStore()
-    }
-
-    
-    // MARK: - METHODS
-    func searchForPokemon(with name: String, completion: @escaping (Error?) -> Void) {
-        
-        searchResults = []
-        
-        guard let baseUrl = URL(string: baseURL)?.appendingPathComponent(name) else {
-                   print("Error establishing URL for API call.")
-                   return
-               }
-        
-        var request = URLRequest(url: baseUrl)
-        request.httpMethod = HTTPRequest.get.rawValue
-           // This provides authorization credentials to the server.
-           // Data here is case sensitve and you must follow the rules exactly.
-        request.addValue("Bearer \(bearer!.token)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil else {
-                print("Error reaching Pokemon API \(String(describing: error))")
-                completion(error)
-                return
-            }
-            
-            
-            guard let data = data else {
-                print("Error receiving data from PokemonAPI: Bad data")
-                completion(error)
-                return
-            }
-            
-            let jsonDecoder = JSONDecoder()
-            do {
-                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.searchResults.append(pokemon)
-                completion(nil)
-            } catch {
-                print("Error decoding data from API: \(error)")
-                completion(error)
-            }
-            }.resume()
-        
-    }
+    func saveToPersistentStore() {
+        guard let url = localPersistanceURL else { return }
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemons)
+            try data.write(to: url)
+        } catch {
+            print("Error Saving Data: \(error)")
+        }
         
     func loadFromPersistentStore() {
         let manager = FileManager.default
@@ -99,13 +61,109 @@ class PokemonAPIController {
         let decoder = PropertyListDecoder()
         do{
             let data = try Data.init(contentsOf: url)
-            let decodedPoke = try decoder.decode([Pokemon].self, from: data)
-            savedPokemon = decodedPoke
+            let decoded = try decoder.decode([Pokemon].self, from: data)
+            pokemons = decoded
         } catch {
             print("Error Loading Pokemon Data")
         }
     }
+    
+    
+    // MARK: - METHODS
+        
+    func save(pokemon: Pokemon) {
+        if !pokemons.contains(pokemon) {
+            pokemons.append(pokemon)
+        }
+        saveToPersistentStore()
+    }
+    
+    func delete(_ pokemon: Pokemon) {
+        guard let index = pokemons.firstIndex(of: pokemon) else { return }
+            pokemons.remove(at: index)
+            saveToPersistentStore()
+    }
 
+    
+    func fetchImage(for pokemon: Pokemon, completion: @escaping (Result< UIImage, NetworkError>) -> Void) {
+        guard let imageUrl = URL(string: pokemon.sprites.sprite) else {
+            completion(.failure(.badUrl))
+            return
+        }
+    
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+    
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            // check for errors
+            if let error = error {
+                print("Error: \(error)")
+                completion(.failure(.otherError))
+                return
+            }
+        
+            // ensuring data was received
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+                }
+        
+            if let index = self.pokemons.firstIndex(of: pokemon) {
+                self.pokemons[index].image = data
+                }
+            // turning binary image data into a UIImage object
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+                } else {
+                    completion(.failure(.noDecode))
+                    }
+        }.resume()
+    }
+    func searchForPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        
+        let url = baseURL.appendingPathComponent(name)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            // ensure response
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode != 200 {
+                    completion(.failure(.badUrl))
+                }
+            }
+                //Check for errors in API Call
+                if let error = error {
+                    print("Error getting data : \(String(describing: error))")
+                    completion(.failure(.otherError))
+                    return
+                }
+
+                //Check to ensure data has been downloaded from API
+                guard let data = data else {
+                    print("No Data returned")
+                    completion(.failure(.noData))
+                    return
+                }
+
+                //Decode JSON Data
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let decoded = try jsonDecoder.decode(Pokemon.self, from: data)
+                    completion(.success(decoded))
+                } catch {
+                    print("Error decoding data from API: \(error)")
+                    completion(.failure(.noDecode))
+                }
+
+            }.resume()
+            
+        }
+        
+        
     
     
     
@@ -115,34 +173,7 @@ class PokemonAPIController {
        
        
        
-       URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
-               NSLog("Error receiving Pokemon data: \(error)")
-               completion(.failure(.otherError))
-               return
-           }
-           
-           // Specifically, the bearer token is invalid or expired
-           if let response = response as? HTTPURLResponse,
-               response.statusCode == 401 {
-               completion(.failure(.badAuth))
-               return
-           }
-           
-           guard let data = data else {
-               completion(.failure(.badData))
-               return
-           }
-           
-           let decoder = JSONDecoder()
-           do {
-               let gigs = try decoder.decode([Gig].self, from: data)
-                   completion(.success(gigs))
-           } catch {
-               NSLog("Error decoding [gig] objects \(error)")
-               completion(.failure(.noDecode))
-               return
-           }
-           
-       }.resume()
+   
+
 }
 }

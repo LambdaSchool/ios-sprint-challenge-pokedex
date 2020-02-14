@@ -8,33 +8,36 @@
 
 import Foundation
 
+import UIKit
 
-enum types {
-    
-    case normal
-    case poison
-    case flying
-    case psychic
-    case grass
-    case ground
-    case ice
-    case fire
-    case rock
-    case dragon
-    case water
-    case bug
-    case dark
-    case fighting
-    case ghost
-    case steel
-    case electric
-    case fairy
-    
-}
 
 struct Pokemon: Codable {
+    
     var name: String
     var id: Int
-    var abilities: [(String, String)]
-    var type: [types]
+    var abilities: [AbilityHolder]
+    var sprite: SpriteHolder
+    var type: [TypeHolder]
+    var image: Data?
+}
+
+
+struct Ability: Codable, Equatable {
+    var name: String
+}
+
+struct Types: Codable, Equatable {
+    var name: String
+}
+
+struct AbilityHolder: Codable, Equatable {
+    var ability: Ability
+}
+
+struct TypeHolder: Codable, Equatable {
+    var type: Types
+}
+
+struct SpriteHolder: Codable, Equatable {
+    var sprite: String
 }
