@@ -53,7 +53,7 @@ class PokemonDetailVC: UIViewController {
    
     @IBAction func saveTapped(_ sender: UIButton) {
         delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, image: apiController.pokemon.image,types: apiController.pokemon.types,abilities: apiController.pokemon.abilities))
-        
+        apiController.createPokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name, image: apiController.pokemon.image,types: apiController.pokemon.types,abilities: apiController.pokemon.abilities))
         navigationController?.popViewController(animated: true)
     }
     

@@ -22,6 +22,29 @@ enum HTTPMethod: String {
    
 class APIController  {
     
+     var pokemons = [Pokemon]()
+    
+    init() {
+           loadFromPersistentStore()
+       }
+       
+    func createPokemon(with pokemon: Pokemon) {
+        
+        pokemons.append(pokemon)
+        
+        saveToPersistentStore()
+    }
+    
+    func deletePokemon(with pokemon: Pokemon) {
+        guard let index = pokemons.firstIndex(of: pokemon) else { return }
+
+             pokemons.remove(at: index)
+             
+             saveToPersistentStore()
+    }
+    
+    
+    
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     var pokemon = Pokemon(id: 0, name: "",  image: nil,types: [],abilities: [] )
 
@@ -63,4 +86,54 @@ class APIController  {
            .resume()
            
        }
+    
+    
+    
+    
+    private func loadFromPersistentStore() {
+           
+           do {
+               guard let fileURL = pokemonURL else { return }
+               
+               let notebooksData = try Data(contentsOf: fileURL)
+               
+               let plistDecoder = PropertyListDecoder()
+               
+               self.pokemons = try plistDecoder.decode([Pokemon].self, from: notebooksData)
+           } catch {
+               NSLog("Error decoding memories from property list: \(error)")
+           }
+       }
+       
+       private func saveToPersistentStore() {
+           
+           let plistEncoder = PropertyListEncoder()
+           
+           do {
+               let pokemonsData = try plistEncoder.encode(pokemons)
+               
+               guard let fileURL = pokemonURL else { return }
+               
+               try pokemonsData.write(to: fileURL)
+           } catch {
+               NSLog("Error encoding memories to property list: \(error)")
+           }
+       }
+       
+       // MARK: - Properties
+       
+       private var pokemonURL: URL? {
+           let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+           
+           let fileName = "Pokemon.plist"
+           
+           return documentDirectory?.appendingPathComponent(fileName)
+       }
+    
+    
+    
+    
+    
+    
+    
 }

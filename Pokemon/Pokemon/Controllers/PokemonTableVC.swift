@@ -10,7 +10,6 @@ import UIKit
 
 class PokemonTableVC: UITableViewController {
     
-     var pokemons = [Pokemon]()
   
     var apiController = APIController()
     
@@ -27,19 +26,20 @@ class PokemonTableVC: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemons.count
+        return apiController.pokemons.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Helper.cellID, for: indexPath)
-        cell.textLabel?.text = pokemons[indexPath.row].name.capitalizingFirstLetter()
+        cell.textLabel?.text = apiController.pokemons[indexPath.row].name.capitalizingFirstLetter()
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            pokemons.remove(at: indexPath.row)
+            let pokemon = apiController.pokemons[indexPath.row]
+            apiController.deletePokemon(with: pokemon)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -56,7 +56,7 @@ class PokemonTableVC: UITableViewController {
         } else if segue.identifier == Helper.cellSegue {
             if let destVC = segue.destination as? PokemonDetailVC {
                 guard let index = tableView.indexPathForSelectedRow else { return }
-                destVC.pokemon = pokemons[index.row]
+                destVC.pokemon = apiController.pokemons[index.row]
                 destVC.apiController = apiController
             }
         }
@@ -68,8 +68,11 @@ class PokemonTableVC: UITableViewController {
 
 extension PokemonTableVC: PokemonDetailVCDelegate {
     func didReceivePokemon(with pokemon: Pokemon) {
-        pokemons.append(pokemon)
-        tableView.reloadData()
+        apiController.pokemons.append(pokemon)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+      
     }
     
    
