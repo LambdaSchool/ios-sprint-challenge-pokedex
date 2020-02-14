@@ -14,7 +14,11 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -26,7 +30,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         let pokemon = pokemonController.pokemonList[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
         return cell
     }
 
