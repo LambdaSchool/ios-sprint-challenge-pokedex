@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Decodable, Equatable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
     let abilities: [PokemonAbility]
@@ -20,19 +20,19 @@ struct Pokemon: Decodable, Equatable {
     }
 }
 
-struct PokemonAbility: Decodable {
+struct PokemonAbility: Codable {
     let ability: NamedAbility
 }
 
-struct NamedAbility: Decodable {
+struct NamedAbility: Codable {
     let name: String
 }
 
-struct PokemonType: Decodable {
+struct PokemonType: Codable {
     let type: TypeDetail
 }
 
-struct TypeDetail: Decodable {
+struct TypeDetail: Codable {
     let name: String
 }
 
