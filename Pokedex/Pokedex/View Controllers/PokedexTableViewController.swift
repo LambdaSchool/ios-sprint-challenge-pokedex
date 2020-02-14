@@ -18,7 +18,34 @@ class PokedexTableViewController: UITableViewController {
                 searchVC.pokemonController = pokemonController
             }
             
+        } else if segue.identifier == "ShowDetailViewSegue" {
+            if let detailVC = segue.destination as? PokemonDetailViewController {
+                if let selectedIndex = tableView.indexPathForSelectedRow {
+                    detailVC.pokemon = pokemonController.pokemen[selectedIndex.row]
+                    detailVC.pokemonController = pokemonController
+                    detailVC.isButtonHidden = true
+                    
+                }
+            }
+            
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pokemonController.pokemen.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        
+        let pokemon = pokemonController.pokemen[indexPath.row]
+        cell.textLabel?.text = pokemon.name
+        
+        return cell
     }
     
 }

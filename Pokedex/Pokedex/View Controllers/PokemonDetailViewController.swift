@@ -14,11 +14,15 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
     
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
+    var pokemon: Pokemon?
+    var pokemonController: PokemonController?
+    var isButtonHidden = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
     }
     
     func updateViews() {
@@ -37,8 +41,34 @@ class PokemonDetailViewController: UIViewController {
         }
         abilitiesLabel.text = abilityString
         
+        saveButton.isHidden = isButtonHidden
+        
+        fetchImageViewImage()
+        
     }
     
+    func fetchImageViewImage() {
+        guard let pokemon = pokemon,
+        let pokemonController = pokemonController else { return }
+        
+        pokemonController.fetchImage(at: pokemon.sprite.frontDefault) { (result) in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+                
+            }
+        }
+        
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        guard let pokemonController = pokemonController,
+           let pokemon = pokemon else { return }
+        pokemonController.pokemen.append(pokemon)
+        navigationController?.popViewController(animated: true)
+        
+    }
     
     
 }

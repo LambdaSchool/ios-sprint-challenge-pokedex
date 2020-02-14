@@ -57,7 +57,6 @@ class PokemonController {
             let jsonDecoder = JSONDecoder()
             do {
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemen.append(pokemon)
                 completion(.success(pokemon))
             } catch {
                 NSLog("Error Decoding Pokemon: \(error)")

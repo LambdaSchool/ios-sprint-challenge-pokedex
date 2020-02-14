@@ -12,13 +12,13 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var pokemonController: PokemonController!
-    
     var pokemon: Pokemon?
     
     var pokemonDetailViewController: PokemonDetailViewController? {
         didSet {
             if let pokemon = pokemon {
                 pokemonDetailViewController?.pokemon = pokemon
+                pokemonDetailViewController?.pokemonController = pokemonController
             }
             
         }
@@ -33,6 +33,8 @@ class SearchViewController: UIViewController {
         if segue.identifier == "EmbedDetailSegue" {
             if let detailVC = segue.destination as? PokemonDetailViewController {
                 pokemonDetailViewController = detailVC
+                pokemonDetailViewController?.pokemonController = pokemonController
+                pokemonDetailViewController?.isButtonHidden = false
             }
             
         }
@@ -50,14 +52,7 @@ extension SearchViewController: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                     self.pokemonDetailViewController?.pokemon = pokemon
-                }
-                self.pokemonController.fetchImage(at: pokemon.sprite.frontDefault) { (result) in
-                    if let image = try? result.get() {
-                        DispatchQueue.main.async {
-                            self.pokemonDetailViewController?.imageView.image = image
-                        }
-                    }
-                    
+                    self.pokemonDetailViewController?.updateViews()
                 }
                 
             } catch {

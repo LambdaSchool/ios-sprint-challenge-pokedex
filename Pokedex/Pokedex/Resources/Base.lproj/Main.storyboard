@@ -59,24 +59,24 @@
             <objects>
                 <viewController id="79s-ot-XaZ" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AB3-Ng-egP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="666"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOg-AY-YdJ">
-                                <rect key="frame" x="207" y="44" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="140" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UkX-SE-7Xs">
-                                <rect key="frame" x="87" y="104" width="240" height="240"/>
+                                <rect key="frame" x="87" y="200" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="hGX-UU-GqX"/>
                                     <constraint firstAttribute="width" secondItem="UkX-SE-7Xs" secondAttribute="height" multiplier="1:1" id="vv4-o0-OBk"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hBn-Z9-Ql0">
-                                <rect key="frame" x="20" y="454" width="374" height="182"/>
+                                <rect key="frame" x="20" y="550" width="374" height="182"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K3v-0c-IF5">
                                         <rect key="frame" x="0.0" y="0.0" width="83.5" height="50"/>
@@ -132,8 +132,11 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gk-HK-q4A">
-                                <rect key="frame" x="156.5" y="644" width="101" height="30"/>
+                                <rect key="frame" x="156.5" y="740" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="79s-ot-XaZ" eventType="touchUpInside" id="cAa-Oh-vKA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -156,6 +159,7 @@
                         <outlet property="idLabel" destination="XrK-b0-pdE" id="CpM-L1-9Mp"/>
                         <outlet property="imageView" destination="UkX-SE-7Xs" id="TEG-yx-mDk"/>
                         <outlet property="nameLabel" destination="cOg-AY-YdJ" id="wSL-O7-WaB"/>
+                        <outlet property="saveButton" destination="4Gk-HK-q4A" id="xAB-n4-QRV"/>
                         <outlet property="typesLabel" destination="Jt5-cv-GpF" id="kQr-Lv-7wb"/>
                     </connections>
                 </viewController>
@@ -223,6 +227,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="A6k-nd-KIQ"/>
+        <segue reference="Ce7-fs-zZp"/>
     </inferredMetricsTieBreakers>
 </document>
