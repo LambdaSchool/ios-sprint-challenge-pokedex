@@ -38,9 +38,10 @@ class PokedexTableViewController: UITableViewController {
         let pokemon = pokemonController.pokemon[indexPath.row]
         cell.textLabel?.text = pokemon.name?.capitalized
         return cell
+        
     }
     
-    
+      
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.pokemonController.pokemon.remove(at: indexPath.row)

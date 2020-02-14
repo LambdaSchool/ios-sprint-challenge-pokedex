@@ -23,12 +23,14 @@ class PokemonDetailViewController: UIViewController {
     //MARK: Properties
     
     var pokemonController: PokemonController!
+    var pokedexTableViewController: PokedexTableViewController!
     var pokemon: Pokemon? {
         didSet {
             updateViews()
+            
         }
     }
-   
+
     //MARK: Life Cycle
     
     override func viewDidLoad() {
@@ -75,7 +77,7 @@ class PokemonDetailViewController: UIViewController {
     
     @IBAction func saveButton(_ sender: UIButton) {
         guard let pokemon = pokemon,
-            !pokemonController.pokemon.contains(pokemon) else { return }
+            pokemonController.pokemon.contains(pokemon) else { return }
         pokemonController.pokemon.append(pokemon)
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)}
