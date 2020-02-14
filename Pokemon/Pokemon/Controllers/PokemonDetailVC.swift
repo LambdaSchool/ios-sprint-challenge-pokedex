@@ -35,7 +35,7 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var pokeIdLabel: UILabel!
     
     private func updateViews() {
-        nameLabel.text = "\(apiController.pokemon.name.uppercased())"
+        nameLabel.text = "\(apiController.pokemon.name.capitalizingFirstLetter())"
         pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
         guard  let urlImage = URL(string: (apiController.pokemon.image?.image ?? "")) else { return }
         pokemonImage.load(url:urlImage)
@@ -56,6 +56,10 @@ class PokemonDetailVC: UIViewController {
         if let pokemon = pokemon {
             nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
             pokeIdLabel.text = "ID :\(pokemon.id)"
+            guard let urlString = pokemon.image?.image else { return }
+            guard let url = URL(string: urlString) else { return }
+            pokemonImage.load(url: url )
+            
             
         } else {
             title = "Pokemon Search"

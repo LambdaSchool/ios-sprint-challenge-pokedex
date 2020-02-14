@@ -21,8 +21,7 @@ struct Pokemon : Codable {
         case name
         case abilities = "abilities"
         case image = "sprites"
-        
-
+    
     }
     
 }
