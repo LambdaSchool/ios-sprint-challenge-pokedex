@@ -10,7 +10,7 @@ import Foundation
 
 struct SegueIdentifier {
     
-    enum id: String {
+    enum segueName: String {
         case addPokemon = "SearchPokemonSegue"
         case showPokemon = "ShowPokemonSegue"
     }

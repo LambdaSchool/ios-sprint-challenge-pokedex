@@ -12,6 +12,8 @@ class SearchViewController: UIViewController {
 
     // MARK: - Properties
     
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
     
     // MARK: - Outlets
     
@@ -32,7 +34,5 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 }

@@ -10,14 +10,15 @@ import Foundation
 
 class PokemonController {
     
+    // MARK: - Properties
+    
     var pokeDex: [Pokemon] = []
+    
+    // MARK: - Methods
     
     func addPokemon(pokemon: Pokemon) -> Pokemon {
         let newPokemon = pokemon
         pokeDex.append(newPokemon)
         return newPokemon
     }
-    
-//    func addToPokeDex(pokemon: Pokemon)
-    
 }
