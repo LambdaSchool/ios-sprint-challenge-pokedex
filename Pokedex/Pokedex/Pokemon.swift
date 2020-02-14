@@ -12,7 +12,7 @@ struct Pokemon: Codable {
     let id: Int
     let name: String
     let abilities: String
-    let types: [String]
+    let types: String
     let imageURL: String
     
     enum CodingKeys: String, CodingKey {

@@ -9,14 +9,34 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
-
+    //MARK: Outlets
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var pokeImage: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+  
+    
+    //MARK: Properties
+    
+    var pokemonController: PokemonController!
+    var pokemon: Pokemon?
+   
+    //MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
-
+   //MARK: Methods
+    func updateViews(with pokemon: Pokemon) {
+            nameLabel.text = pokemon.name
+            idLabel.text = "\(pokemon.id)"
+            typesLabel.text = pokemon.types
+            abilitiesLabel.text = pokemon.abilities
+    }
     /*
     // MARK: - Navigation
 
