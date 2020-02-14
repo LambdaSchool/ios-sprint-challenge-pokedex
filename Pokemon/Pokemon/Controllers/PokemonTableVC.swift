@@ -9,6 +9,7 @@
 import UIKit
 
 class PokemonTableVC: UITableViewController {
+    
      var pokemons = [Pokemon]()
   
     var apiController = APIController()

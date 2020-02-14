@@ -39,35 +39,31 @@ class PokemonDetailVC: UIViewController {
         pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
     }
    
-    
-    
     @IBAction func saveTapped(_ sender: UIButton) {
-        
         delegate?.didReceivePokemon(with: Pokemon(id: apiController.pokemon.id, name: apiController.pokemon.name))
         navigationController?.popViewController(animated: true)
     }
     
+    //MARK : - View Life Cycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let pokemon = pokemon {
-                  nameLabel.text = "\(apiController.pokemon.name.uppercased())"
-                  pokeIdLabel.text = "ID :\(apiController.pokemon.id)"
-                  title = "\(apiController.pokemon.name.uppercased())"
-              }
-              title = "Pokemon Search"
+            nameLabel.text = "\(pokemon.name)"
+            pokeIdLabel.text = "ID :\(pokemon.id)"
+            title = "\(pokemon.name.uppercased())"
+        }
+
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+      title = "Pokemon Search"
         
     }
 
-
 }
-
-
 
 extension PokemonDetailVC : UISearchBarDelegate {
     
