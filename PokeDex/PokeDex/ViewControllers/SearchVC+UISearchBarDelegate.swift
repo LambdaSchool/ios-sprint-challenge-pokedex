@@ -29,7 +29,8 @@ extension SearchViewController: UISearchBarDelegate{
             }
         }
         
-        apiController.fetchSprite(searchTerm: searchTerm) { (result) in
+        apiController.fetchSprite(urlString: ) { (result) in
+            
             DispatchQueue.main.async {
                 do{
                     self.pokemonImage.image = try result.get()

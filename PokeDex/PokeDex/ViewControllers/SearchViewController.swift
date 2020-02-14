@@ -24,6 +24,7 @@ class SearchViewController: UIViewController {
     
     func updateViews(){
         guard let pokemon = pokemon else { return }
+        print("\(pokemon)")
         pokemonNameLabel.text = pokemon.name
         idValueLabel.text = String(pokemon.id)
         typeLabel.text = pokemonTypeString(pokemon: pokemon)

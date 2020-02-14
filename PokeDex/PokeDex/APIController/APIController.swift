@@ -43,8 +43,8 @@ class APIController{
             let decoder = JSONDecoder()
             
             do{
-                    let newPokemon = try decoder.decode(Pokemon.self, from: data)
-                    print("\(newPokemon.name)")
+                let newPokemon = try decoder.decode(Pokemon.self, from: data)
+                print("\(newPokemon.name)")
                 
                 completion(.success(newPokemon))
             } catch {
@@ -53,14 +53,13 @@ class APIController{
         }.resume()
     }
     
-    func fetchSprite(searchTerm: String, completion: @escaping (Result<UIImage, NetworkErrors.errors>) -> ()) {
-        let lowerCasedSearchTerm = searchTerm.lowercased()
-        let urlString = ("\(baseURL)/\(lowerCasedSearchTerm)/")
+    func fetchSprite(urlString: String, completion: @escaping (Result<UIImage, NetworkErrors.errors>) -> ()) {
+        
         guard let imageURL = URL(string: urlString) else {
             completion(.failure(.badURL))
             return
         }
-
+        
         var request = URLRequest(url: imageURL)
         request.httpMethod = APIKeys.HTTPMethods.get.rawValue
         
@@ -73,10 +72,7 @@ class APIController{
                 completion(.failure(.badData))
                 return
             }
-            guard let image = UIImage(data: data) else {
-                completion(.failure(.badImage))
-                return
-            }
+            guard let image = UIImage(data: data) else { return }
             completion(.success(image))
         }.resume()
     }
