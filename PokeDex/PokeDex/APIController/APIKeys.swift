@@ -10,10 +10,10 @@ import Foundation
 
 struct APIKeys {
     
-    static let baserURL = "https://pokeapi.co/api/v2/pokemon"
+static let baserURL = "https://pokeapi.co/api/v2/pokemon"
     
-    enum HTTPMethods: String {
-        case get = "GET"
-    }
-    
+}
+
+enum HTTPMethods: String {
+    case get = "GET"
 }

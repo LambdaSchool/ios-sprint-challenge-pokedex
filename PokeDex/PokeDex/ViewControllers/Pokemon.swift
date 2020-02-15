@@ -13,7 +13,8 @@ struct Pokemon: Codable {
     let id: Int
     let types: [Types]
     let abilities: [Abilities]
-    let sprites: [Sprites]
+    let sprites: Sprites
+    var imageData: Data?
 }
 
 struct Abilities: Codable {
@@ -35,9 +36,9 @@ struct Name: Codable {
 struct Sprites: Codable {
     let frontDefault: String
     
-    private enum codeKeys: String, CodingKey {
-        case frontDefault = "front_default"
-    }
+//    private enum codeKeys: String, CodingKey {
+//        case frontDefault = "front_default"
+//    }
     
 }
 

@@ -17,7 +17,7 @@ class APIController{
     
     // MARK: -Methods
     
-    func searchForPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkErrors.errors>) -> ()){
+    func searchForPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, APIErrors>) -> ()){
         
         let lowerCasedSearchTerm = searchTerm.lowercased()
         
@@ -25,7 +25,7 @@ class APIController{
         guard let requestURL = URL(string: urlString) else { return }
         
         var request = URLRequest(url: requestURL)
-        request.httpMethod = APIKeys.HTTPMethods.get.rawValue
+        request.httpMethod = HTTPMethods.get.rawValue
         print("\(request)")
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
@@ -41,11 +41,10 @@ class APIController{
             }
             
             let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do{
                 let newPokemon = try decoder.decode(Pokemon.self, from: data)
-                print("\(newPokemon.name)")
-                
                 completion(.success(newPokemon))
             } catch {
                 print("\(error)")
@@ -53,27 +52,42 @@ class APIController{
         }.resume()
     }
     
-    func fetchSprite(urlString: String, completion: @escaping (Result<UIImage, NetworkErrors.errors>) -> ()) {
+    func fetchSprite(pokemon: Pokemon, completion: @escaping (Result<UIImage?, APIErrors>) -> Void) {
         
-        guard let imageURL = URL(string: urlString) else {
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault) else {
+            NSLog("Error creating URL")
             completion(.failure(.badURL))
             return
         }
         
-        var request = URLRequest(url: imageURL)
-        request.httpMethod = APIKeys.HTTPMethods.get.rawValue
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            if let _ = error {
+//        var pokemonURL = baseURL.appendingPathComponent("pokemon")
+//        pokemonURL.appendingPathComponent(search)
+////
+//        guard let imageURL = URL(string: urlString) else {
+//            completion(.failure(.badURL))
+//            return
+//        }
+//
+//        var request = URLRequest(url: imageURL)
+//        request.httpMethod = APIKeys.HTTPMethods.get.rawValue
+//
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching Pokemon Image: \(error)")
                 completion(.failure(.otherError))
                 return
             }
             guard let data = data else {
+                NSLog("No data returned")
                 completion(.failure(.badData))
                 return
             }
-            guard let image = UIImage(data: data) else { return }
+            
+             let image = UIImage(data: data)
+            
+        
             completion(.success(image))
+            return
         }.resume()
     }
 }

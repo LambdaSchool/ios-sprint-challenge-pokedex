@@ -22,24 +22,17 @@ extension SearchViewController: UISearchBarDelegate{
                 } catch{
                     NSLog("\(error)")
                 }
-        
-                guard let pokemon = self.pokemon,
-                    let pokemonController = self.pokemonController else { return }
-                pokemonController.addPokemon(pokemon: pokemon)
-            }
-        }
-        
-        apiController.fetchSprite(urlString: ) { (result) in
-            
-            DispatchQueue.main.async {
-                do{
-                    self.pokemonImage.image = try result.get()
-                } catch {
-                    NSLog("\(error)")
+                guard let pokemon = self.pokemon else { return }
+                self.apiController.fetchSprite(pokemon: pokemon) { (result) in
+                        DispatchQueue.main.async {
+                            do{
+                                self.pokemonImage.image = try result.get()
+                            } catch {
+                                NSLog("\(error)")
+                            }
+                        }
+                    }
                 }
             }
-        }
-        
-        
-    }
+        }     
 }

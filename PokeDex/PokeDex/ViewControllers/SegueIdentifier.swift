@@ -8,11 +8,7 @@
 
 import Foundation
 
-struct SegueIdentifier {
-    
-    enum segueName: String {
-        case addPokemon = "SearchPokemonSegue"
-        case showPokemon = "ShowPokemonSegue"
-    }
-    
+enum SegueName: String {
+    case addPokemon = "SearchPokemonSegue"
+    case showPokemon = "ShowPokemonSegue"
 }

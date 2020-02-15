@@ -8,12 +8,10 @@
 
 import Foundation
 
-struct NetworkErrors {
-    
-    enum errors: Error {
+    enum APIErrors: Error {
         case badURL
         case otherError
         case badData
         case badImage
     }
-}
+

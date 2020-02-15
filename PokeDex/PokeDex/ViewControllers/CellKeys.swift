@@ -8,9 +8,6 @@
 
 import Foundation
 
-struct CellKeys {
-    
-    enum cellIdentifier: String {
-        case pokeDexTableVCCell = "PokemonCell"
-    }
+enum CellIdentifier: String {
+    case pokeDexTableVCCell = "PokemonCell"
 }

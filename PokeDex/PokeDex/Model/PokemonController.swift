@@ -13,7 +13,6 @@ class PokemonController {
     // MARK: - Properties
     
     var pokeDex: [Pokemon] = []
-    let apiContrllet = APIController()
     
     // MARK: - Methods
     

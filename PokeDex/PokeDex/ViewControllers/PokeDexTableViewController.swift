@@ -34,27 +34,33 @@ class PokeDexTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+        return pokemonController.pokeDex.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellKeys.cellIdentifier.pokeDexTableVCCell.rawValue,
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.pokeDexTableVCCell.rawValue,
                                                  for: indexPath)
         guard pokemonController.pokeDex.count > 0 else {return UITableViewCell()}
         cell.textLabel?.text = pokemonController.pokeDex[indexPath.row].name
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.pokeDex.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } 
+    }
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == SegueIdentifier.segueName.addPokemon.rawValue {
+        if segue.identifier == SegueName.addPokemon.rawValue {
             guard let addVC = segue.destination as? SearchViewController else { return }
             addVC.pokemonController = pokemonController
             
-        } else if segue.identifier == SegueIdentifier.segueName.showPokemon.rawValue {
+        } else if segue.identifier == SegueName.showPokemon.rawValue {
             guard let showVC = segue.destination as? SearchViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             showVC.pokemonController = pokemonController
