@@ -8,49 +8,47 @@
 
 import UIKit
 
-class PokemonTableVC: UITableViewController, UISearchBarDelegate {
+class PokemonTableVC: UITableViewController {
+    
+    var apiController = APIController()
+    private var totalPokeNames = [String]()
+    var searching = false
+    var filteredPokemons = [Pokemon]()
     
    @IBOutlet weak var pokemonSearchBar: UISearchBar! {
           didSet {
               pokemonSearchBar.delegate = self
+              
           }
       }
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        print(searchText)
-//        apiController.pokemons.filter {
-//            $0.name == searchText
-//        }
-//
-//        tableView.reloadData()
-//       }
-//
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
-//        for pokemon in apiController.pokemons {
-//            if pokemon.name == searchTerm {
-//                print(pokemon.name)
-//                print(searchTerm)
-//                apiController.pokemons.removeAll()
-//                apiController.pokemons.append(pokemon)
-//                tableView.reloadData()
-//            }
-//        }
-        print(searchTerm)
-    }
-    
-    var apiController = APIController()
-    
+
+ 
     //MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.isToolbarHidden = false
+         setUpNavBar()
         setUpToolBar()
+        apiController.fetchAllNames { (names) in
+            do {
+                let results = try names.get()
+                for pokemon in results.results {
+                    self.totalPokeNames.append(pokemon.name.capitalizingFirstLetter())
+                }
+            } catch let err {
+                print("\(err.localizedDescription)")
+            }
+        }
+  
     }
 
-    func setUpToolBar() {
+   private func setUpNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.isToolbarHidden = false
+    }
+    
+   private func setUpToolBar() {
         let sortButton = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortTapped))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         toolbarItems = [flexSpace,sortButton]
@@ -59,9 +57,7 @@ class PokemonTableVC: UITableViewController, UISearchBarDelegate {
     @objc func sortTapped() {
         let ac = UIAlertController(title: "Sort Pokemon", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Sort name alphabetically", style: .default, handler: sortName(action:)))
-         
         ac.addAction(UIAlertAction(title: "Sort by ID", style: .default, handler: sortID(action:)))
-            
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         present(ac, animated: true, completion: nil)
     }
@@ -80,28 +76,50 @@ class PokemonTableVC: UITableViewController, UISearchBarDelegate {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apiController.pokemons.count
+        if searching {
+            return filteredPokemons.count
+        } else {
+            return apiController.pokemons.count
+        }
  
     }
     
    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Helper.cellID, for: indexPath)
-        cell.textLabel?.text = apiController.pokemons[indexPath.row].name.capitalizingFirstLetter()
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        cell.detailTextLabel?.text = "ID:\(apiController.pokemons[indexPath.row].id)"
+        if searching {
+            cell.textLabel?.text = filteredPokemons[indexPath.row].name.capitalizingFirstLetter()
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            cell.detailTextLabel?.text = "ID:\(filteredPokemons[indexPath.row].id)"
+            
+        } else {
+            cell.textLabel?.text = apiController.pokemons[indexPath.row].name.capitalizingFirstLetter()
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            cell.detailTextLabel?.text = "ID:\(apiController.pokemons[indexPath.row].id)"
+        }
+        
+       
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let pokemon = apiController.pokemons[indexPath.row]
-            apiController.deletePokemon(with: pokemon)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            if searching {
+                let pokemon = filteredPokemons[indexPath.row]
+                let index = filteredPokemons.firstIndex(of: pokemon)
+                filteredPokemons.remove(at: index!)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                
+            } else {
+                let pokemon = apiController.pokemons[indexPath.row]
+                apiController.deletePokemon(with: pokemon)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            
         }
     }
-    
-    
     
     // MARK: - Segue
     
@@ -113,33 +131,21 @@ class PokemonTableVC: UITableViewController, UISearchBarDelegate {
         } else if segue.identifier == Helper.cellSegue {
             if let destVC = segue.destination as? PokemonDetailVC {
                 guard let index = tableView.indexPathForSelectedRow else { return }
-                destVC.pokemon = apiController.pokemons[index.row]
-                destVC.apiController = apiController
+                if searching {
+                    destVC.pokemon = filteredPokemons[index.row]
+                    destVC.apiController = apiController
+                } else {
+                    destVC.pokemon = apiController.pokemons[index.row]
+                    destVC.apiController = apiController
+                }
+                
+                
             }
         }
     }
-    
-    
+ 
 }
 
+// MARK: - Extension
 
-extension PokemonTableVC: PokemonDetailVCDelegate {
-    func didReceivePokemon(with pokemon: Pokemon) {
-        apiController.pokemons.append(pokemon)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
-   
-    
-}
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
 
-    mutating func capitalizeFirstLetter() {
-        self = self.capitalizingFirstLetter()
-    }
-}

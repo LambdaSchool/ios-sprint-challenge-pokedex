@@ -45,7 +45,7 @@ class APIController  {
     }
     
     
-    
+    var pokemonNames = [PokemonName]()
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     var pokemon = Pokemon(id: 0, name: "",  image: nil,types: [],abilities: [] )
 
@@ -82,12 +82,61 @@ class APIController  {
                } catch let err {
                    NSLog("Can't decode data :\(err.localizedDescription)")
                }
-               completion(NetworkError.badURL)
+               completion(nil)
            }
            .resume()
            
        }
+    
+    
+   func fetchAllNames(completion: @escaping (Result<PokemonNames, NetworkError>) -> Void) {
+          
+    var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+    
+    let limitSearch = URLQueryItem(name: "limit", value: "964")
+    urlComponents?.queryItems = [limitSearch]
   
+    guard let requestURL = urlComponents?.url else {
+             NSLog("URL is nil")
+              
+               return
+           }
+    
+    var request = URLRequest(url: requestURL)
+    
+             request.httpMethod = HTTPMethod.get.rawValue
+           
+             URLSession.shared.dataTask(with: request) { (data, response, error) in
+                 if let error = error {
+                     NSLog("Error receiving gigs data: \(error)")
+                    completion(.failure(.Unknown))
+                     return
+                 }
+                 if let response = response as? HTTPURLResponse,
+                     response.statusCode == 401 {
+                    completion(.failure(.requestFailed))
+                     return
+                 }
+                 guard let data = data else {
+                    completion(.failure(.Unknown))
+                     return
+                 }
+                 let decoder = JSONDecoder()
+                
+                 do {
+                    let name = try decoder.decode(PokemonNames.self, from: data)
+                  
+                    completion(.success(name))
+                  
+                 } catch {
+                     NSLog("Error decoding gigs object: \(error)")
+                    completion(.failure(.Unknown))
+                     return
+                 }
+             }.resume()
+         }
+    
+   
     private func loadFromPersistentStore() {
            
            do {

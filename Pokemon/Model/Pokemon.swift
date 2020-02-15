@@ -53,6 +53,23 @@ struct Sprites : Codable, Hashable {
 }
 
 
+struct PokemonNames: Codable {
+    let results: [PokemonName]
+    
+    enum CodingKeys: String, CodingKey {
+        case results = "results"
+    }
+   
+}
+
+struct PokemonName: Codable {
+       let name: String
+       enum CodingKeys: String,CodingKey {
+            case name = "name"
+       }
+          
+   }
+
 
 
 

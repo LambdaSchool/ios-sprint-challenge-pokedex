@@ -14,10 +14,14 @@ protocol PokemonDetailVCDelegate : AnyObject {
 
 class PokemonDetailVC: UIViewController {
 
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton! {
+        didSet {
+            saveButton.layer.cornerRadius = 20
+        }
+    }
      
     var pokemon: Pokemon?
-     var abilities = [String]()
+   private var abilities = [String]()
     var apiController = APIController()
     
     @IBOutlet weak var pokemonSearchBar: UISearchBar! {
@@ -47,7 +51,7 @@ class PokemonDetailVC: UIViewController {
             abilities.append(ability.ability["name"]!)
             
         }
-        pokeAbiLabel.text = "Abilities:\( Set(abilities).joined(separator: ",").capitalizingFirstLetter())"
+        pokeAbiLabel.text = "Abilities:\( Set(abilities).joined(separator: ",").capitalizingFirstLetter())."
         
     }
    
@@ -72,7 +76,9 @@ class PokemonDetailVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.navigationController?.setToolbarHidden(true, animated: true)
+        
         if let pokemon = pokemon {
             
             nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
@@ -88,13 +94,12 @@ class PokemonDetailVC: UIViewController {
                 (ability) in
                 abis.append(ability.ability["name"]!)
             }
-            pokeAbiLabel.text = "Abilities:\( abis.joined(separator: ",").capitalizingFirstLetter())"
+            pokeAbiLabel.text = "Abilities:\( abis.joined(separator: ",").capitalizingFirstLetter())."
             
         } else {
             title = "Pokemon Search"
         }
 
-        
     }
  
 }
@@ -104,8 +109,9 @@ extension PokemonDetailVC : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
      
-        apiController.performSearch(searchTerm: searchTerm) { (error) in
+        apiController.performSearch(searchTerm: searchTerm) { (action) in
             DispatchQueue.main.async {
+              
                 self.updateViews()
             }
         }
