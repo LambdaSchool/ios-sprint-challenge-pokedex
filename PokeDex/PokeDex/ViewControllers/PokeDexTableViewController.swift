@@ -23,7 +23,7 @@ class PokeDexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        pokemonController.loadFromPersistnetStore()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,6 +48,7 @@ class PokeDexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             pokemonController.pokeDex.remove(at: indexPath.row)
+            pokemonController.saveToPersistentStore()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } 
     }
