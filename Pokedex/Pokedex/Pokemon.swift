@@ -17,7 +17,7 @@ struct Pokemon: Codable, Equatable {
     var id: Int
     var abilities: [AbilityHolder]
     var sprites: SpriteHolder
-    var type: [TypeHolder]
+    var types: [TypeHolder]
     var image: Data?
 }
 
@@ -35,9 +35,10 @@ struct AbilityHolder: Codable, Equatable {
 }
 
 struct TypeHolder: Codable, Equatable {
+    
     var type: Types
 }
 
 struct SpriteHolder: Codable, Equatable {
-    var sprite: String
+    var frontDefault: String
 }

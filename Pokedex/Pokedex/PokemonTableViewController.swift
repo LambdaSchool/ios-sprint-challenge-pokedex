@@ -10,18 +10,17 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    let APIController = PokemonAPIController()
+    let pokemonController = PokemonController()
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -33,62 +32,50 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return APIController.pokemons.count
+        return pokemonController.pokemons.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "pokeCell", for: indexPath)
-        cell.textLabel?.text = self.APIController.pokemons[indexPath.row].name
-        cell.detailTextLabel?.text = "#\(self.APIController.pokemons[indexPath.row].id) - Type:  \(self.APIController.pokemons[indexPath.row].type)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath)
+        cell.textLabel?.text = pokemonController.pokemons[indexPath.row].name.capitalized
+        cell.detailTextLabel?.text = "#\(pokemonController.pokemons[indexPath.row].id)"
 
         return cell
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            pokemonController.delete(pokemonController.pokemons[indexPath.row])
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+    
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+   
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "addToDetail" {
+            if let addDetailVC = segue.destination as? PokemonDetailViewController {
+                addDetailVC.pokemonController = pokemonController
+            } else if segue.identifier == "pokemonToDetail" {
+                if let addDetailVC = segue.destination as? PokemonDetailViewController, let indexPath = tableView.indexPathForSelectedRow {
+                    addDetailVC.pokemonController = pokemonController
+                    addDetailVC.pokemon = pokemonController.pokemons[indexPath.row]
+                    
+                }
+            }
+        }
+        
     }
-    */
+    
 
 }

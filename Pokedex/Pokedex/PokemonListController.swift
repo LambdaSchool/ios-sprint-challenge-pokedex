@@ -26,7 +26,7 @@ enum NetworkError: Error {
 }
    
 
-class PokemonAPIController {
+class PokemonController {
     
     // MARK: - API Properties
     
@@ -54,6 +54,7 @@ class PokemonAPIController {
         } catch {
             print("Error Saving Data: \(error)")
         }
+    }
         
     func loadFromPersistentStore() {
         let manager = FileManager.default
@@ -86,7 +87,7 @@ class PokemonAPIController {
 
     
     func fetchImage(for pokemon: Pokemon, completion: @escaping (Result< UIImage, NetworkError>) -> Void) {
-        guard let imageUrl = URL(string: pokemon.sprites.sprite) else {
+        guard let imageUrl = URL(string: pokemon.sprites.frontDefault) else {
             completion(.failure(.badUrl))
             return
         }
@@ -175,5 +176,4 @@ class PokemonAPIController {
        
    
 
-}
 }
