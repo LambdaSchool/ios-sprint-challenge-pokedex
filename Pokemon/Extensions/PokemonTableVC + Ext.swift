@@ -9,16 +9,7 @@
 import UIKit
 
 
-extension PokemonTableVC: PokemonDetailVCDelegate {
-    func didReceivePokemon(with pokemon: Pokemon) {
-        apiController.pokemons.append(pokemon)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
 
-    
-}
 extension PokemonTableVC: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false

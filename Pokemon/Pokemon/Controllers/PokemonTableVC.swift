@@ -106,10 +106,11 @@ class PokemonTableVC: UITableViewController {
         if editingStyle == .delete {
             if searching {
                 let pokemon = filteredPokemons[indexPath.row]
-                let index = filteredPokemons.firstIndex(of: pokemon)
-                filteredPokemons.remove(at: index!)
+                guard let index = filteredPokemons.firstIndex(of: pokemon) else { return }
+                filteredPokemons.remove(at: index)
+                apiController.pokemons.remove(at: index)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-                
+                tableView.reloadData()
                 
             } else {
                 let pokemon = apiController.pokemons[indexPath.row]
@@ -147,5 +148,14 @@ class PokemonTableVC: UITableViewController {
 }
 
 // MARK: - Extension
+extension PokemonTableVC: PokemonDetailVCDelegate {
+    func didReceivePokemon(with pokemon: Pokemon) {
+        apiController.pokemons.append(pokemon)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
+    
+}
 
