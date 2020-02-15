@@ -20,7 +20,7 @@ struct Pokemon: Decodable, Equatable {
      var abilities: [Ability]
      var types: [Types]
      var sprites: Sprite?
-     
+}
      struct Ability: Decodable {
          var ability: AbilityName
      }
@@ -46,4 +46,4 @@ struct Pokemon: Decodable, Equatable {
          var frontDefault: String
      }
      
- }
+

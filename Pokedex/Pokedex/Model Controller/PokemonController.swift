@@ -26,9 +26,14 @@ class PokemonController {
     
     //MARK: Properties
     let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
-    var pokemon: [Pokemon] = []
-    var pokemons: Pokemon?
+    var pokemonArray = [Pokemon]()
     
+    func createPokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+          }
+    
+    var pokemons: Pokemon?
+ 
     // MARK: Methods
     func fetchPokemon(for pokemonName: String, completion: @escaping(Result<Pokemon, NetworkError>) -> Void) {
         
@@ -57,7 +62,7 @@ class PokemonController {
             do {
                 let pokemonNames = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemonNames))
-                self.pokemon.append(pokemonNames)
+                self.pokemonArray.append(pokemonNames)
                 self.pokemons = pokemonNames
                 completion(.success(pokemonNames))
             } catch {
