@@ -135,9 +135,11 @@ class PokemonTableVC: UITableViewController {
                 if searching {
                     destVC.pokemon = filteredPokemons[index.row]
                     destVC.apiController = apiController
+                   
                 } else {
                     destVC.pokemon = apiController.pokemons[index.row]
                     destVC.apiController = apiController
+                   
                 }
                 
                 

@@ -83,7 +83,8 @@ class PokemonDetailVC: UIViewController {
             
             nameLabel.text = "\(pokemon.name.capitalizingFirstLetter())"
             pokeIdLabel.text = "ID :\(pokemon.id)"
-          
+            saveButton.isHidden = true
+            pokemonSearchBar.isHidden = true
             guard let urlString = pokemon.image?.image else { return }
             guard let type = pokemon.types[0].type["name"] else { return }
             guard let url = URL(string: urlString) else { return }
