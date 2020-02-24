@@ -25,10 +25,20 @@ class PokedexTableViewController: UITableViewController {
     }
     
     func setUI() {
-        navigationController?.navigationBar.barTintColor = .top
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.bot]
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.bot]
-        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .top
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        } else {
+            navigationController?.navigationBar.barTintColor = .top
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.bot]
+            navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.bot]
+        }
+        navigationController?.navigationBar.tintColor = .bot
         view.backgroundColor = .bot
     }
 

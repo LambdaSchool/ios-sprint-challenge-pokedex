@@ -17,11 +17,10 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var pokemonImageView: UIImageView!
     @IBOutlet weak var pokemonBackgroundImageView: UIImageView!
+    @IBOutlet weak var pokemonCardImageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var idNumberLabel: UILabel!
     @IBOutlet weak var abilitiesListLabel: UILabel!
-    @IBOutlet weak var type1ImageView: UIImageView!
-    @IBOutlet weak var type2ImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +54,6 @@ class PokemonDetailViewController: UIViewController {
             
             nameLabel.text = pokemon.name
             idNumberLabel.text = "\(pokemon.id)"
-            showTypes(types: pokemon.types)
             abilitiesListLabel.text = getAbilitiesString()
             
             pokemonImageView.image = UIImage(data: pokemon.image)
@@ -66,6 +64,7 @@ class PokemonDetailViewController: UIViewController {
             idLabel.isHidden = true
             idNumberLabel.isHidden = true
             abilitiesListLabel.isHidden = true
+            pokemonCardImageView.image = nil
         }
     }
     
@@ -74,6 +73,7 @@ class PokemonDetailViewController: UIViewController {
         idLabel.isHidden = false
         idNumberLabel.isHidden = false
         abilitiesListLabel.isHidden = false
+        pokemonCardImageView.image = UIImage(named: "card")
     }
     
     func getAbilitiesString() -> String {
@@ -90,15 +90,6 @@ class PokemonDetailViewController: UIViewController {
         return abilities
     }
     
-    func showTypes(types: [Type]) {
-        if types.count == 1 {
-            type2ImageView.image = UIImage(named: types[0].type.name.capitalized)
-        } else {
-            type1ImageView.image = UIImage(named: types[1].type.name.capitalized)
-            type2ImageView.image = UIImage(named: types[0].type.name.capitalized)
-        }
-    }
-    
     func typeColor() -> UIColor? {
         if let pokemon = pokemon {
             var index: Int = 0
@@ -106,16 +97,19 @@ class PokemonDetailViewController: UIViewController {
             if pokemon.types[index].type.name == "bug" {
                 return UIColor(red:0.63, green:0.92, blue:0.00, alpha:1.00)
             } else if pokemon.types[index].type.name == "dark" {
+                pokemonCardImageView.image = UIImage(named: "darkCard")
                 return UIColor(red:0.11, green:0.13, blue:0.12, alpha:1.00)
             } else if pokemon.types[index].type.name == "dragon" {
                 return UIColor(red:0.41, green:0.39, blue:0.20, alpha:1.00)
             } else if pokemon.types[index].type.name == "electric" {
+                pokemonCardImageView.image = UIImage(named: "lightningCard")
                 return UIColor(red:1.00, green:0.89, blue:0.00, alpha:1.00)
             } else if pokemon.types[index].type.name == "fairy" {
                 return UIColor(red:1.00, green:0.22, blue:0.64, alpha:1.00)
             } else if pokemon.types[index].type.name == "fighting" {
                 return UIColor(red:0.87, green:0.47, blue:0.07, alpha:1.00)
             } else if pokemon.types[index].type.name == "fire" {
+                pokemonCardImageView.image = UIImage(named: "fireCard")
                 return UIColor(red:1.00, green:0.23, blue:0.00, alpha:1.00)
             } else if pokemon.types[index].type.name == "flying" {
                 return UIColor(red:0.91, green:0.78, blue:0.87, alpha:1.00)
@@ -138,6 +132,7 @@ class PokemonDetailViewController: UIViewController {
             } else if pokemon.types[index].type.name == "steel" {
                 return UIColor(red:0.90, green:0.87, blue:0.85, alpha:1.00)
             } else if pokemon.types[index].type.name == "water" {
+                pokemonCardImageView.image = UIImage(named: "waterCard")
                 return UIColor(red:0.00, green:0.61, blue:0.87, alpha:1.00)
             } else {
                 return nil
