@@ -32,11 +32,17 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if pokemon == nil {
-            
+        
+        if pokemon != nil {
+            searchBar.isHidden = true
+            saveButton.isHidden = true
         }
     }
 
     @IBAction func saveButtonTapped(_ sender: Any) {
     }
+}
+
+extension DetailViewController: UISearchBarDelegate {
+    
 }
