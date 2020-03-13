@@ -1,5 +1,5 @@
 //
-//  Pokemon.swift
+//  Type.swift
 //  Pokedex
 //
 //  Created by Karen Rodriguez on 3/13/20.
@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct Pokemon: Codable {
-    let name: String
-    let id: String
-    let types: [Type]
-    let abilities: [Ability]
+struct Type: Codable {
+    let typeDetail: TypeDetail
+    
+    struct TypeDetail: Codable {
+        let name: String
+    }
 }
