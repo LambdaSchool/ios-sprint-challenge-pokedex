@@ -9,12 +9,24 @@
 import UIKit
 
 class PokemonSearchViewController: UIViewController {
-
+    
+    // MARK: - IBOutlets
+    
+    @IBOutlet weak var savePokemonButton: UIButton!
+    @IBOutlet weak var pokemonDetailViewContainer: UIView!
+    
+    // MARK: - IBActions
+    
+    @IBAction func savePokemonTapped(_ sender: Any) {
+        guard let pokemon = pokemonDetailVC?.pokemon else { return }
+        pokedex?.pokemon.append(pokemon)
+        navigationController?.popViewController(animated: true)
+    }
     
     // MARK: - Properties
     
     var pokeApiClient: PokeApiClient?
-    
+    var pokedex: Pokedex?
     
     // MARK: - Private
     
@@ -28,6 +40,7 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonDetailViewContainer.layer.opacity = 0
         setupSearchController()
         // Do any additional setup after loading the view.
     }
@@ -37,8 +50,9 @@ class PokemonSearchViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PokemonDetail" {
-            pokemonDetailVC = segue.destination as? PokemonDetailViewController
+        if segue.identifier == "PokemonDetail", let pokemonDetailVC = segue.destination as? PokemonDetailViewController {
+            pokemonDetailVC.pokeApiClient = pokeApiClient
+            self.pokemonDetailVC = pokemonDetailVC
         }
     }
 
@@ -51,7 +65,11 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let pokemon):
+                    self.pokemonDetailViewContainer.layer.opacity = 1
                     self.pokemonDetailVC?.pokemon = pokemon
+                    self.title = pokemon.name.capitalized
+                    self.savePokemonButton.isEnabled = true
+                    self.searchController.dismiss(animated: true)
                 case .failure(let error):
                     NSLog("\(error)")
                 }

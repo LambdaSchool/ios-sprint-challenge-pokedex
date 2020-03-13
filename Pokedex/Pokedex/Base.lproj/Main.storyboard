@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Pokedex-->
         <scene sceneID="bY6-GI-HA5">
             <objects>
                 <tableViewController id="mGt-p4-e4r" customClass="PokedexTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qeZ-aT-L43">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" id="qeZ-aT-L43">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qeZ-aT-L43" id="3Zt-zf-W59">
@@ -33,7 +33,7 @@
                             <outlet property="delegate" destination="mGt-p4-e4r" id="ktm-sx-d7W"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="2Hn-F2-O41">
+                    <navigationItem key="navigationItem" title="Pokedex" id="2Hn-F2-O41">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Jhu-Sx-5Xu">
                             <connections>
                                 <segue destination="Z6M-bU-kTU" kind="show" id="lrV-Vr-LDQ"/>
@@ -45,7 +45,7 @@
             </objects>
             <point key="canvasLocation" x="79" y="3"/>
         </scene>
-        <!--Pokemon Search View Controller-->
+        <!--Search For Pokemon-->
         <scene sceneID="F2T-Iu-blx">
             <objects>
                 <viewController id="Z6M-bU-kTU" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
@@ -54,15 +54,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiV-mC-EZU">
-                                <rect key="frame" x="0.0" y="88" width="414" height="734"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="682"/>
                                 <connections>
                                     <segue destination="ZPl-YJ-5D0" kind="embed" identifier="PokemonDetail" id="56i-zA-bN5"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kbv-aw-oMz">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kbv-aw-oMz">
                                 <rect key="frame" x="139.5" y="832" width="135" height="10"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="savePokemonTapped:" destination="Z6M-bU-kTU" eventType="touchUpInside" id="LJ4-qD-DSn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -77,7 +80,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XYQ-7N-xz5"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Yq6-YR-bP5"/>
+                    <navigationItem key="navigationItem" title="Search For Pokemon" id="Yq6-YR-bP5"/>
+                    <connections>
+                        <outlet property="pokemonDetailViewContainer" destination="iiV-mC-EZU" id="WUL-2X-DWR"/>
+                        <outlet property="savePokemonButton" destination="Kbv-aw-oMz" id="obl-M4-qJh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63V-1z-R9v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -116,29 +123,29 @@
             <objects>
                 <viewController id="ZPl-YJ-5D0" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z9n-nz-kiR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="682"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9q1-II-Jw0">
-                                <rect key="frame" x="20" y="88" width="374" height="374"/>
+                                <rect key="frame" x="20" y="44" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9q1-II-Jw0" secondAttribute="height" multiplier="1:1" id="ohs-HJ-1jQ"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ws9-BW-hjQ">
-                                <rect key="frame" x="20" y="749" width="374" height="26.5"/>
+                                <rect key="frame" x="20" y="569" width="374" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Abilities: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lex-KN-8f0">
-                                <rect key="frame" x="20" y="795.5" width="374" height="26.5"/>
+                                <rect key="frame" x="20" y="615.5" width="374" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uF-Zl-M0i">
-                                <rect key="frame" x="20" y="702.5" width="374" height="26.5"/>
+                                <rect key="frame" x="20" y="522.5" width="374" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -179,8 +186,8 @@
         <scene sceneID="aU0-Qu-MOe">
             <objects>
                 <navigationController id="5ro-DL-StL" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6r6-ZB-rus">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="6r6-ZB-rus">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -193,6 +200,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QWe-IG-bzA"/>
+        <segue reference="56i-zA-bN5"/>
     </inferredMetricsTieBreakers>
 </document>

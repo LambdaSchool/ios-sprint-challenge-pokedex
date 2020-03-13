@@ -6,12 +6,13 @@
 //  Copyright © 2020 Swift Student. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case clientError(Error)
     case noData
     case badData
+    case invalidURL
 }
 
 private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
@@ -52,4 +53,30 @@ class PokeApiClient {
     }
     
     // fetch image for url string
+    func fetchImage(for urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        guard let imageUrl = URL(string: urlString) else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
+            if let error = error {
+                NSLog("Error fetching pokemon: \(error)")
+                completion(.failure(.clientError(error)))
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data when trying to fetch pokemon")
+                completion(.failure(.noData))
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.badData))
+            }
+        }.resume()
+    }
 }

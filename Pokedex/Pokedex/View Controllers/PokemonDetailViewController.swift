@@ -19,16 +19,26 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - Properties
     
+    var pokeApiClient: PokeApiClient?
     var pokemon: Pokemon? { didSet { updateViews() }}
     
     // MARK: - Private
     
     private func updateImageView() {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon, let pokeApiClient = pokeApiClient else { return }
         
-        // pick image
-        // fetch image
-        // display image in callback
+        let imageUrlString = pokemon.sprites.frontDefault
+        
+        pokeApiClient.fetchImage(for: imageUrlString) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let image):
+                    self.imageView.image = image
+                case .failure(let error):
+                    NSLog("\(error)")
+                }
+            }
+        }
     }
     
     private func updateViews() {
@@ -39,6 +49,8 @@ class PokemonDetailViewController: UIViewController {
         typesLabel.text = "Types: \(types)"
         let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         abilitiesLabel.text = "Abilities: \(abilities)"
+        
+        updateImageView()
     }
     
     override func viewDidLoad() {
