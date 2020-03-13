@@ -24,7 +24,9 @@ enum NetworkError: Error {
 
 class PokemonController {
 
+    // MARK: - Properites
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
     private let backupBaseUrl = URL(string: "https://lambdapokeapi.herokuapp.com/")!
-    
+ 
+    var pokemon: [Pokemon] = []
 }
