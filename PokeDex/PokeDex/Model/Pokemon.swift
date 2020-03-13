@@ -11,7 +11,7 @@ import Foundation
 struct Pokemon: Codable {
     var name: String
     var id: Int
-    var ability: String
+    var ability: [Abilities]
     var types: String
 //    let image: UIImage! {
 //        UIImage(named: "front_default")
@@ -24,7 +24,9 @@ struct Pokemon: Codable {
 //        case name = "front_default"
 //    }
     
-
+struct Abilities: Codable {
+    var name: String
+}
 
 struct PokemonSearchResults: Codable {
     var pokemonSearchResults: [Pokemon]

@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchPokemonBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
@@ -20,25 +20,31 @@ class PokemonDetailViewController: UIViewController {
         // MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon!
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
+        searchPokemonBar.delegate = self
         updateViews()
 
     }
     
     private func updateViews() {
-        if pokemon != nil {
-        title = pokemon?.name
-        nameLabel.text = pokemon?.name
-        idLabel.text = "ID: \(String(describing: pokemon?.id))"
-        abilitiesLabel.text = pokemon?.ability
-        } else {
-            self.title = "Pokemon Search"
+//        if pokemon != nil {
+        guard let pokemon = pokemon else { return }
+            title = pokemon.name
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(String(describing: pokemon.id))"
+        abilitiesLabel.text = "\(pokemon.ability)"
+//        } else {
+//            self.title = "Pokemon Search"
         }
-    }
+//        return
+    
     
     @IBAction func savePokemonTapped(_ sender: Any) {
 //        guard let name = nameLabel.text,
@@ -67,7 +73,7 @@ class PokemonDetailViewController: UIViewController {
 }
 
 extension PokemonDetailViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController?.pokemonSearch(searchTerm: searchTerm, completion: { error in

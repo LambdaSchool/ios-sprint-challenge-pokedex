@@ -14,10 +14,10 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/{id or name}")!
     
     var pokemons: [Pokemon] = []
-//    var pokemon: Pokemon?
+    var pokemon: Pokemon?
     
-    func addPokemon(withName name: String, id: Int, ability: String, types: String) {
-        let pokemon = Pokemon(name: name, id: id, ability: ability, types: types)
+    func addPokemon(withName name: String, id: Int, ability: Abilities, types: String) {
+        let pokemon = Pokemon(name: name, id: id, ability: [ability], types: types)
         pokemons.append(pokemon)
     }
     
