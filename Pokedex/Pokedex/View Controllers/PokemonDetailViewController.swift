@@ -27,7 +27,7 @@ class PokemonDetailViewController: UIViewController {
     // MARK: - Private
     
     private var imageCounter = 0
-    
+    private var imageTimer: Timer?
     
     private func updateImageView() {
         guard let pokemon = pokemon, let pokeApiClient = pokeApiClient else { return }
@@ -54,20 +54,28 @@ class PokemonDetailViewController: UIViewController {
         imageCounter += 1
     }
     
+    private func setupImageTimer() {
+        imageTimer?.invalidate()
+        imageCounter = 0
+        imageTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { _ in
+            self.updateImageView()
+        })
+        imageTimer?.fire()
+    }
+    
     private func updateViews() {
         guard let pokemon = pokemon, isViewLoaded else { return }
+        
         title = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
+        
         let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
         typesLabel.text = "Types: \(types)"
+        
         let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
         abilitiesLabel.text = "Abilities: \(abilities)"
         
-        updateImageView()
-        
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { _ in
-            self.updateImageView()
-        })
+        setupImageTimer()
     }
     
     

@@ -13,7 +13,7 @@ class PokemonSearchViewController: UIViewController {
     // MARK: - IBOutlets
     
     @IBOutlet weak var savePokemonButton: UIButton!
-    @IBOutlet weak var pokemonDetailViewContainer: UIView!
+    @IBOutlet weak var pokemonDetailContainerView: UIView!
     
     
     // MARK: - IBActions
@@ -41,9 +41,12 @@ class PokemonSearchViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokemonDetailViewContainer.layer.opacity = 0
+        pokemonDetailContainerView.layer.opacity = 0
         setupSearchController()
     }
     
@@ -69,7 +72,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let pokemon):
-                    self.pokemonDetailViewContainer.layer.opacity = 1
+                    self.pokemonDetailContainerView.layer.opacity = 1
                     self.pokemonDetailVC?.pokemon = pokemon
                     self.title = pokemon.name.capitalized
                     self.savePokemonButton.isEnabled = true

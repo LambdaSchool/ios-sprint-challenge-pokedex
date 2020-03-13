@@ -19,10 +19,6 @@ private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
 
 class PokeApiClient {
     
-    // fetch all names
-    //func fetchAllPokemonNames
-    
-    // fetch pokemon by name
     func fetchPokemon(withName name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         var pokemonURL = baseURL.appendingPathComponent("pokemon")
         pokemonURL.appendPathComponent(name.lowercased())
@@ -52,7 +48,6 @@ class PokeApiClient {
         }.resume()
     }
     
-    // fetch image for url string
     func fetchImage(for urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
             completion(.failure(.invalidURL))
@@ -61,13 +56,13 @@ class PokeApiClient {
         
         URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
             if let error = error {
-                NSLog("Error fetching pokemon: \(error)")
+                NSLog("Error fetching image: \(error)")
                 completion(.failure(.clientError(error)))
                 return
             }
             
             guard let data = data else {
-                NSLog("No data when trying to fetch pokemon")
+                NSLog("No data when trying to fetch image")
                 completion(.failure(.noData))
                 return
             }
@@ -75,6 +70,7 @@ class PokeApiClient {
             if let image = UIImage(data: data) {
                 completion(.success(image))
             } else {
+                NSLog("Unable to produce image from data")
                 completion(.failure(.badData))
             }
         }.resume()
