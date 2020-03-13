@@ -52,11 +52,11 @@ class SearchViewController: UIViewController {
             updateViews()
             
             if viewing {
-                saveButtonLabel.removeFromSuperview()
+                saveButtonLabel.isHidden = true
                 // FIXME:
                 //searchBar.removeFromSuperview()
             } else {
-                saveButtonLabel.addSubview(saveButtonLabel)
+                saveButtonLabel.isHidden = false
             }
         }
     }
@@ -121,11 +121,37 @@ class SearchViewController: UIViewController {
             !searchTerm.isEmpty else { return }
 
         viewing = false
+        pokemon = nil
+        updateViews()
         
         pokemonController?.findPokemon(named: searchTerm) { result in
-            if let foundPokemon = try? result.get() {
+            do {
+                let foundPokemon = try result.get()
                 DispatchQueue.main.async {
                     self.pokemon = foundPokemon
+                }
+            } catch {
+                var message = ""
+                if let error = error as? NetworkError {
+                    switch error {
+                    case .noAuth:
+                        message = "No bearer token exists"
+                    case .badAuth:
+                        message = "Bearer token invalid"
+                    case .otherNetworkError:
+                        message = "Other error occurred, see log"
+                    case .badData:
+                        message = "No data received, or data corrupted"
+                    case .noDecode:
+                        message = "JSON could not be decoded"
+                    case .badUrl:
+                        message = "URL invalid"
+                    }
+                    NSLog(message)
+                }
+                // TODO: Necessary to dispatch it?
+                DispatchQueue.main.async {
+                    self.nameLabel?.text = message
                 }
             }
         }
