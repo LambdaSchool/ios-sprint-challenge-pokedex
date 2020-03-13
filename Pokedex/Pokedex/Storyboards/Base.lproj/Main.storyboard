@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="p0L-TY-lE2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="qv6-kf-0Bl">
             <objects>
-                <tableViewController id="LNg-ga-qDD" sceneMemberID="viewController">
+                <tableViewController id="LNg-ga-qDD" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2le-IZ-Enn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,17 +43,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" id="vty-Wk-thf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="mGS-E1-N79"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="mGS-E1-N79">
+                            <connections>
+                                <segue destination="682-mR-QnF" kind="show" id="BzM-Zd-6nI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLG-EL-df1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="711.59420289855075" y="31.473214285714285"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Detail View Controller-->
         <scene sceneID="cGU-yP-uk6">
             <objects>
-                <viewController id="682-mR-QnF" sceneMemberID="viewController">
+                <viewController id="682-mR-QnF" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bfc-UN-ZHR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,6 +109,12 @@
                         <viewLayoutGuide key="safeArea" id="y3g-bG-Q3I"/>
                     </view>
                     <navigationItem key="navigationItem" id="xcw-bD-tDy"/>
+                    <connections>
+                        <outlet property="idLabel" destination="Zbm-AE-DSX" id="0ww-gn-SpL"/>
+                        <outlet property="pokemonImage" destination="TME-An-3Dj" id="sgZ-1I-AsP"/>
+                        <outlet property="pokemonName" destination="HTw-Q9-2nd" id="Dsf-ci-T48"/>
+                        <outlet property="searchBar" destination="6KJ-UP-P9K" id="k0g-AI-ZZa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gym-zD-jCY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,4 +139,7 @@
             <point key="canvasLocation" x="-198.55072463768118" y="31.473214285714285"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xYu-xR-idM"/>
+    </inferredMetricsTieBreakers>
 </document>
