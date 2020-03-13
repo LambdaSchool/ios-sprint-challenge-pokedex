@@ -28,13 +28,16 @@ class DetailViewController: UIViewController {
     var pokedex: Pokedex!
     var pokemon: Pokemon? {
         didSet {
-            DispatchQueue.main.async {
-                self.titleLabel.text = self.pokemon?.name
-                self.idLabel.text = String(self.pokemon!.id)
-                self.typesLabel.text = self.pokemon?.types[0].type.name
-                self.abilitiesLabel.text = self.pokemon?.abilities[0].ability.name
+            titleLabel.text = pokemon?.name.capitalized
+            idLabel.text = String(pokemon!.id)
+            typesLabel.text = "Types: "
+            for type in pokemon!.types {
+                typesLabel.text! += "\(type.type.name) "
             }
-            
+            abilitiesLabel.text = "Abilities: "
+            for ability in pokemon!.abilities {
+                abilitiesLabel.text! += "\(ability.ability.name) "
+            }
         }
     }
 
@@ -50,6 +53,9 @@ class DetailViewController: UIViewController {
     }
 
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokedex.pokemon.append(pokemon)
+        print("pokemon saved.")
     }
 }
 
@@ -64,13 +70,15 @@ extension DetailViewController: UISearchBarDelegate {
         print("Past the guard text: \(search)")
         pokedex.getPokemon(for: search) { result in
             if let pokemon = try? result.get() {
-                self.pokemon = pokemon
-                print("Set pokemon")
-            }
-            self.pokedex.fetchImage(at: self.pokemon!.sprites.frontDefault) { result in
-                if let image = try? result.get() {
-                    DispatchQueue.main.async {
-                        self.imageView.image = image
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                    print("Set pokemon")
+                }
+                self.pokedex.fetchImage(at: pokemon.sprites.frontDefault) { result in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                        }
                     }
                 }
             }
