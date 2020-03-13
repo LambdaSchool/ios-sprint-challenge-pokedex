@@ -10,24 +10,33 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    // MARK: - Outlets
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
+    // MARK: - Properties
+    
     var pokedex: Pokedex!
     var pokemon: Pokemon?
 
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if pokemon == nil {
+            
+        }
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveButtonTapped(_ sender: Any) {
     }
-    */
-
 }
