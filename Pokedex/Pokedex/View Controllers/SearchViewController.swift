@@ -48,7 +48,8 @@ class SearchViewController: UIViewController {
             
             if viewing {
                 saveButtonLabel.removeFromSuperview()
-                searchBar.removeFromSuperview()
+                // FIXME:
+                //searchBar.removeFromSuperview()
             }
         }
     }
@@ -67,15 +68,34 @@ class SearchViewController: UIViewController {
         abilityLabel?.text = "Abilities: \(pokemon.id)"
 
         // Load the Pokemon pic
-//        if pokemonImageView.image == nil {
-//            self.pokemonController?.fetchImage(for: pokemon., completion: { result in
-//                if let image = try? result.get() {
-//                    DispatchQueue.main.async {
-//                        self.pokemonImageView.image = image
-//                    }
-//                }
-//            })
-//        }
+        let hack = "https://user-images.githubusercontent.com/16965587/57208109-357e8000-6f8f-11e9-911d-9ec9b245d35f.jpg"
+        if pokemonImageView?.image == nil {
+            self.pokemonController?.fetchImage(for: hack, completion: { result in
+                do {
+                    let image = try result.get()
+                    DispatchQueue.main.async {
+                        self.pokemonImageView.image = image
+                    }
+                } catch {
+                    if let error = error as? NetworkError {
+                        switch error {
+                        case .noAuth:
+                            NSLog("No bearer token exists")
+                        case .badAuth:
+                            NSLog("Bearer token invalid")
+                        case .otherNetworkError:
+                            NSLog("Other error occurred, see log")
+                        case .badData:
+                            NSLog("No data received, or data corrupted")
+                        case .noDecode:
+                            NSLog("JSON could not be decoded")
+                        case .badUrl:
+                            NSLog("URL invalid")
+                        }
+                    }
+                }
+            })
+        }
     }
 
     func performSearch() {

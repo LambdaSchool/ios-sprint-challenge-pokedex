@@ -90,12 +90,14 @@ class MainTableViewController: UITableViewController {
         if segue.identifier == "Search" {
             if let searchVC = segue.destination as? SearchViewController {
                 searchVC.viewing = false
+                searchVC.pokemonController = pokemonController
             }
         } else if segue.identifier == "View" {
             if let searchVC = segue.destination as? SearchViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 searchVC.viewing = true
                 searchVC.pokemon = pokemonController.pokemon[indexPath.row]
+                searchVC.pokemonController = pokemonController
             }
         }
     }
