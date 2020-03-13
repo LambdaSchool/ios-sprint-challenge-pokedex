@@ -93,9 +93,9 @@ class SearchViewController: UIViewController {
             }
             
             // Load the Pokemon pic
-            let hack = "https://user-images.githubusercontent.com/16965587/57208109-357e8000-6f8f-11e9-911d-9ec9b245d35f.jpg"
             if pokemonImageView?.image == nil {
-                self.pokemonController?.fetchImage(for: hack, completion: { result in
+                self.pokemonController?.fetchImage(for: pokemon.sprites.front_shiny,
+                                                   completion: { result in
                     do {
                         let image = try result.get()
                         DispatchQueue.main.async {
