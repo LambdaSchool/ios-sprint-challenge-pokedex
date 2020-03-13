@@ -11,6 +11,9 @@ import UIKit
 class PokeDetailsViewController: UIViewController {
     
     // MARK: - Properties
+    let pokeController: PokeController?
+    let pokemon: Pokemon
+    var delegate: UISearchBarDelegate
     
     
     // MARK: - IBOutlets
@@ -19,10 +22,12 @@ class PokeDetailsViewController: UIViewController {
     @IBOutlet var pokeTypesLabel: UILabel!
     @IBOutlet var pokeAbilitiesLabel: UILabel!
     @IBOutlet var saveButton: UIButton!
+    @IBOutlet var searchBar: UISearchBar!
     
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        
     }
     
     

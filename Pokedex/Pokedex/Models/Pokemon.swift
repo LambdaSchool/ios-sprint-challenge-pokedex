@@ -6,11 +6,12 @@
 //  Copyright © 2020 DeVitoC. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Pokemon: Codable {
     let id: Int
     let name: String
     let abilities: [Ability]
     let types: [Type]
+    let sprites: [String : String]
 }

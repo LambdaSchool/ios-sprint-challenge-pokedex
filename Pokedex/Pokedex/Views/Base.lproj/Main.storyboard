@@ -7,36 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search Pokemon-->
-        <scene sceneID="wqv-sX-Pb2">
-            <objects>
-                <viewController id="tWh-tv-G1n" customClass="SearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zxz-uF-0ND">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="PfT-Hy-VvF">
-                                <rect key="frame" x="0.0" y="160" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="leading" secondItem="caY-54-xgr" secondAttribute="leading" id="SrO-5r-tQ9"/>
-                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="top" secondItem="caY-54-xgr" secondAttribute="top" constant="20" id="czg-Jl-vmO"/>
-                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="trailing" secondItem="caY-54-xgr" secondAttribute="trailing" id="gJu-ut-o7u"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="caY-54-xgr"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Search Pokemon" id="ZEI-6W-olm"/>
-                    <connections>
-                        <outlet property="searchBar" destination="PfT-Hy-VvF" id="9Ks-Kh-u2D"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W4C-Gw-EJU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1190" y="-601"/>
-        </scene>
         <!--Pokedex-->
         <scene sceneID="w74-lG-aHB">
             <objects>
@@ -63,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Ahb-sB-uNo" kind="show" id="BnP-FI-8Ku"/>
+                                    <segue destination="Ahb-sB-uNo" kind="show" identifier="PokeDetailSegue" id="BnP-FI-8Ku"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -75,7 +45,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="S5D-Mz-9jQ">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="LPS-dU-UrC">
                             <connections>
-                                <segue destination="tWh-tv-G1n" kind="show" identifier="SearchPokeSegue" id="O3h-Ow-M4A"/>
+                                <segue destination="Ahb-sB-uNo" kind="show" identifier="SearchPokeSegue" id="w3s-Kn-oyh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -93,13 +63,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ozz-av-nS3">
-                                <rect key="frame" x="20" y="160" width="374" height="374"/>
+                                <rect key="frame" x="20" y="236" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ozz-av-nS3" secondAttribute="height" multiplier="1:1" id="Rhu-cV-pp2"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uiu-sH-Iq2">
-                                <rect key="frame" x="20" y="554" width="374" height="127.5"/>
+                                <rect key="frame" x="20" y="630" width="374" height="127.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6N-l2-mkE">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
@@ -128,14 +98,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="PfT-Hy-VvF">
+                                <rect key="frame" x="0.0" y="160" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="trailing" secondItem="x4c-JW-I7X" secondAttribute="trailing" id="7Ab-v0-muL"/>
                             <constraint firstItem="x4c-JW-I7X" firstAttribute="trailing" secondItem="Ozz-av-nS3" secondAttribute="trailing" constant="20" id="9bm-C2-XRG"/>
                             <constraint firstItem="Uiu-sH-Iq2" firstAttribute="leading" secondItem="x4c-JW-I7X" secondAttribute="leading" constant="20" id="F0x-Wj-UCc"/>
-                            <constraint firstItem="Ozz-av-nS3" firstAttribute="top" secondItem="x4c-JW-I7X" secondAttribute="top" constant="20" id="KzK-7E-lsl"/>
+                            <constraint firstItem="Ozz-av-nS3" firstAttribute="top" secondItem="PfT-Hy-VvF" secondAttribute="bottom" constant="20" id="IO4-v3-SKg"/>
                             <constraint firstItem="x4c-JW-I7X" firstAttribute="trailing" secondItem="Uiu-sH-Iq2" secondAttribute="trailing" constant="20" id="X9D-vi-1bi"/>
                             <constraint firstItem="Uiu-sH-Iq2" firstAttribute="top" secondItem="Ozz-av-nS3" secondAttribute="bottom" constant="20" id="gtm-lC-U22"/>
+                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="leading" secondItem="x4c-JW-I7X" secondAttribute="leading" id="mud-QE-laf"/>
+                            <constraint firstItem="PfT-Hy-VvF" firstAttribute="top" secondItem="x4c-JW-I7X" secondAttribute="top" constant="20" id="qPZ-6s-JgD"/>
                             <constraint firstItem="Ozz-av-nS3" firstAttribute="leading" secondItem="x4c-JW-I7X" secondAttribute="leading" constant="20" id="zOf-cv-yYd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="x4c-JW-I7X"/>
@@ -147,6 +124,7 @@
                         <outlet property="pokeImageView" destination="Ozz-av-nS3" id="3zd-O3-6tk"/>
                         <outlet property="pokeTypesLabel" destination="ZYW-2c-Aox" id="naT-ry-GNn"/>
                         <outlet property="saveButton" destination="0Oj-vc-9DO" id="CyW-Xs-wi7"/>
+                        <outlet property="searchBar" destination="PfT-Hy-VvF" id="7IU-70-pYs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GW0-mW-lRk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -170,4 +148,7 @@
             <point key="canvasLocation" x="-519" y="95"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="w3s-Kn-oyh"/>
+    </inferredMetricsTieBreakers>
 </document>
