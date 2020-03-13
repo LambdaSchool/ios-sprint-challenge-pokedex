@@ -22,13 +22,14 @@ class PokemonDetailViewController: UIViewController {
     var pokeApiClient: PokeApiClient?
     var pokemon: Pokemon? { didSet { updateViews() }}
     
+    
     // MARK: - Private
     
     private func updateImageView() {
         guard let pokemon = pokemon, let pokeApiClient = pokeApiClient else { return }
         
-        let imageUrlString = pokemon.sprites.frontDefault
-        
+        guard let imageUrlString = pokemon.sprites.frontDefault else { return }
+    
         pokeApiClient.fetchImage(for: imageUrlString) { (result) in
             DispatchQueue.main.async {
                 switch result {
@@ -43,7 +44,7 @@ class PokemonDetailViewController: UIViewController {
     
     private func updateViews() {
         guard let pokemon = pokemon, isViewLoaded else { return }
-        title = pokemon.name
+        title = pokemon.name.capitalized
         idLabel.text = "ID: \(pokemon.id)"
         let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
         typesLabel.text = "Types: \(types)"
@@ -53,21 +54,12 @@ class PokemonDetailViewController: UIViewController {
         updateImageView()
     }
     
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

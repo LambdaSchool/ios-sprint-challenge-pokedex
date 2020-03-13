@@ -17,14 +17,14 @@ struct Pokemon: Codable {
 }
 
 struct PokemonSprites: Codable {
-    let frontDefault: String
-    let frontShiny: String
-    let frontFemale: String
-    let frontShinyFemale: String
-    let backDefault: String
-    let backShiny: String
-    let backFemale: String
-    let backShinyFemale: String
+    let frontDefault: String?
+    let frontShiny: String?
+    let frontFemale: String?
+    let frontShinyFemale: String?
+    let backDefault: String?
+    let backShiny: String?
+    let backFemale: String?
+    let backShinyFemale: String?
     
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
