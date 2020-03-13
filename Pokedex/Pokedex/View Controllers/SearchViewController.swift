@@ -73,8 +73,8 @@ class SearchViewController: UIViewController {
             }
             nameLabel?.text = pokemon.name
             idLabel?.text = "ID: \(pokemon.id)"
-            typeLabel?.text = "Types: \(pokemon.id)"
-            abilityLabel?.text = "Abilities: \(pokemon.id)"
+            typeLabel?.text = "Types: \(pokemon.generation.name)"
+            abilityLabel?.text = "Abilities: \(pokemon.effect_changes[0].version_group.name)"
 
             if !viewing {
                 saveButtonLabel?.isHidden = false
