@@ -25,10 +25,19 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - Private
     
+    private var imageCounter = 0
+    
+    
     private func updateImageView() {
         guard let pokemon = pokemon, let pokeApiClient = pokeApiClient else { return }
         
-        guard let imageUrlString = pokemon.sprites.frontDefault else { return }
+        let bestPics = pokemon.sprites.bestPics
+        let index = imageCounter % bestPics.count
+        
+        guard let imageUrlString: String = bestPics[index] else {
+            imageCounter += 1
+            return
+        }
     
         pokeApiClient.fetchImage(for: imageUrlString) { (result) in
             DispatchQueue.main.async {
@@ -40,6 +49,8 @@ class PokemonDetailViewController: UIViewController {
                 }
             }
         }
+        
+        imageCounter += 1
     }
     
     private func updateViews() {
@@ -52,6 +63,10 @@ class PokemonDetailViewController: UIViewController {
         abilitiesLabel.text = "Abilities: \(abilities)"
         
         updateImageView()
+        
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { _ in
+            self.updateImageView()
+        })
     }
     
     

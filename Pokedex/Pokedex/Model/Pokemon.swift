@@ -36,6 +36,10 @@ struct PokemonSprites: Codable {
         case backFemale = "back_female"
         case backShinyFemale = "back_shiny_female"
     }
+    
+    var bestPics: [String?] {
+        [frontDefault, backDefault, frontShiny, backShiny]
+    }
 }
 
 struct PokemonTypeWrapper: Codable {
