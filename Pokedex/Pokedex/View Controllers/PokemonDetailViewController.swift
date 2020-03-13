@@ -17,6 +17,7 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    
     // MARK: - Properties
     
     var pokeApiClient: PokeApiClient?
@@ -75,6 +76,5 @@ class PokemonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        // Do any additional setup after loading the view.
     }
 }

@@ -15,6 +15,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var savePokemonButton: UIButton!
     @IBOutlet weak var pokemonDetailViewContainer: UIView!
     
+    
     // MARK: - IBActions
     
     @IBAction func savePokemonTapped(_ sender: Any) {
@@ -23,10 +24,12 @@ class PokemonSearchViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    
     // MARK: - Properties
     
     var pokeApiClient: PokeApiClient?
     var pokedex: Pokedex?
+    
     
     // MARK: - Private
     
@@ -42,13 +45,11 @@ class PokemonSearchViewController: UIViewController {
         super.viewDidLoad()
         pokemonDetailViewContainer.layer.opacity = 0
         setupSearchController()
-        // Do any additional setup after loading the view.
     }
     
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PokemonDetail", let pokemonDetailVC = segue.destination as? PokemonDetailViewController {
             pokemonDetailVC.pokeApiClient = pokeApiClient
@@ -57,6 +58,9 @@ class PokemonSearchViewController: UIViewController {
     }
 
 }
+
+
+// MARK: - UISearchBarDelegate
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

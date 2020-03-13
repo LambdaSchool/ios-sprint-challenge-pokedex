@@ -12,21 +12,19 @@ class PokedexTableViewController: UITableViewController {
 
     
     // MARK: - Private
+    
     private let pokeApiClient = PokeApiClient()
     private let pokedex = Pokedex()
     
-    // MARK: - View Lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    // MARK: - View Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -43,10 +41,8 @@ class PokedexTableViewController: UITableViewController {
         return cell
     }
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
             pokedex.pokemon.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } 
