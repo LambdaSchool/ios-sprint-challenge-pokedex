@@ -13,6 +13,7 @@ enum NetworkError: Error {
     case otherError
     case notFound
     case badData
+    case badUrl
 }
 
 enum HTTPMethod: String {
@@ -64,5 +65,34 @@ class Pokedex {
     // MARK: - Save Pokemon
     
     // MARK: - Convert image URL to Data
-    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        guard let imageUrl = URL(string: urlString) else {
+            completion(.failure(.badUrl))
+            return
+        }
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                NSLog("Error receiving animal name data: \(error)")
+                completion(.failure(.otherError))
+            }
+            
+            
+            guard let data = data else {
+                NSLog("Github responded with no image data")
+                completion(.failure(.badData))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {
+                completion(.failure(.badData))
+                return
+            }
+            completion(.success(image))
+        }.resume()
+    }
 }

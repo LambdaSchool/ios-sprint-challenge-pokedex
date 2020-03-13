@@ -54,15 +54,25 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         print("Search triggered")
         guard let search = searchBar.text?.lowercased(),
             !search.isEmpty else { return }
+        
         print("Past the guard text: \(search)")
         pokedex.getPokemon(for: search) { result in
             if let pokemon = try? result.get() {
                 self.pokemon = pokemon
                 print("Set pokemon")
+            }
+            self.pokedex.fetchImage(at: self.pokemon!.sprites.frontDefault) { result in
+                if let image = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
+                }
             }
         }
     }
