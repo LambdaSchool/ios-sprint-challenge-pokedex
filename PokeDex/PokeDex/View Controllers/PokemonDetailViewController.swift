@@ -24,28 +24,35 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        updateViews()
 
-        // Do any additional setup after loading the view.
     }
     
-    private func getDetails() {
-        guard let pokemon = pokemon else { return }
-        
-        pokemonController?.pokemonSearch(searchTerm: <#T##String#>, completion: <#T##(Error?) -> Void#>)
-    }
-    
-    private func updateViews(with pokemon: Pokemon) {
-        title = pokemon.name
-        nameLabel.text = pokemon.name
-        idLabel.text = "ID: \(pokemon.id)"
-        
-        pokemonImage = pokemon.sprite
-                
+    private func updateViews() {
+        if pokemon != nil {
+        title = pokemon?.name
+        nameLabel.text = pokemon?.name
+        idLabel.text = "ID: \(String(describing: pokemon?.id))"
+        abilitiesLabel.text = pokemon?.ability
+        } else {
+            self.title = "Pokemon Search"
+        }
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        
-    }
+        guard let name = nameLabel.text,
+            let id = "ID: \(String(describing: pokemon?.id))",
+            let ability = abilitiesLabel.text,
+            let types = typeslabel.text,
+            name != ""  else { retur }
+            
+            
+        if let pokemon = pokemon {
+            pokemonController?.addPokemon(withName: name, id: id, ability: ability, types: types)
+        }
+            self.navigationController?.popViewController(animated: true)
+        }
     
     /*
     // MARK: - Navigation
@@ -61,6 +68,14 @@ class PokemonDetailViewController: UIViewController {
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchButtonClicked(_searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
         
+        pokemonController?.pokemonSearch(searchTerm: searchTerm, completion: { error in
+            if let error = error {
+                NSLog("Error in search: \(error)")
+            } else {
+                self.updateViews()
+            }
+        })
     }
 }

@@ -24,7 +24,7 @@ struct Pokemon: Codable {
 //        case name = "front_default"
 //    }
     
-}
+
 
 struct PokemonSearchResults: Codable {
     let pokemonSearchResults: [Pokemon]

@@ -16,6 +16,18 @@ class PokemonController {
     var pokemons: [Pokemon] = []
 //    let pokemon: Pokemon?
     
+    func addPokemon(withName name: String, id: Int, ability: String, types: String) {
+        let pokemon = Pokemon(name: name, id: id, ability: ability, types: types)
+        pokemons.append(pokemon)
+    }
+    
+    func update(pokemon: Pokemon, withName name: String) {
+        
+        var addedPokemon = pokemon
+        addedPokemon.name 
+        
+    }
+    
        func pokemonSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
            let searchTermQueryItem = URLQueryItem(name: "name", value: searchTerm)
