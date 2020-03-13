@@ -9,5 +9,10 @@
 import Foundation
 
 class Pokedex {
+    var pokemon: [Pokemon] = []
+    let baseURL = URL(string: "https://pokeapi.co/api/v2")
+    
+    // MARK: - Get pokemon
+    // MARK: - Save Pokemon
     
 }
