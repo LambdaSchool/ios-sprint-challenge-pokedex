@@ -12,9 +12,10 @@ struct Pokemon: Codable {
     var name: String
     var id: Int
     var ability: [Abilities]
-    var types: String
-//    let image: UIImage! {
-//        UIImage(named: "front_default")
+    var type: [Type]
+    var image: Image
+    
+
 }
 
 //struct PokemonSprite: Codable {
@@ -23,9 +24,21 @@ struct Pokemon: Codable {
 //    enum CodingKeys: String, CodingKey {
 //        case name = "front_default"
 //    }
-    
+struct Type: Codable {
+    var name: String
+}
+
 struct Abilities: Codable {
     var name: String
+}
+
+struct Image: Codable {
+    var defaultImage: String
+    var url: String = "http://pokeapi.co/media/sprites/pokemon/\(Pokemon.id).png"
+    
+    enum CodingKeys: String, CodingKey {
+        case defaultImage = "front_default"
+    }
 }
 
 struct PokemonSearchResults: Codable {
