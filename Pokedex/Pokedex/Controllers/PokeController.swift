@@ -32,12 +32,13 @@ class PokeController {
         
     }
     
-    func fetchPokemon(pokemon: String, completion: @escaping (Result<[Pokemon], NetworkError>) -> ()) {
+    func fetchPokemon(pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> ()) {
         
         let fetchPokemonURL = baseURL.appendingPathComponent("\(pokemon)")
         
         var request = URLRequest(url: fetchPokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -54,7 +55,7 @@ class PokeController {
             
             let decoder = JSONDecoder()
             do {
-                let pokeData = try decoder.decode([Pokemon].self, from: data)
+                let pokeData = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokeData))
             } catch {
                 NSLog("Error decoding Pokemon object: \(error)")
@@ -64,7 +65,7 @@ class PokeController {
         }.resume()
     }
     /*
-    func fetchGigs(completion: @escaping (Result<[Gig], NetworkError>) -> ()) {
+    func fetchPokeImage(completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
         
         guard let bearer = bearer else {
             completion(.failure(.noBearer))

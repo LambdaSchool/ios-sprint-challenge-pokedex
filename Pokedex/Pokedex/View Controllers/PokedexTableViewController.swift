@@ -39,27 +39,15 @@ class PokedexTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchPokeSegue" {
-            guard let searchVC = segue.destination as? SearchViewController else { return }
-            searchVC.delegate = self
-            
+            guard let searchVC = segue.destination as? PokeDetailsViewController else { return }
+            searchVC.pokeController = pokeController
         } else if segue.identifier == "PokeDetailSegue" {
             guard let pokeDetailVC = segue.destination as? PokeDetailsViewController else { return }
             pokeDetailVC.pokeController = pokeController
-            pokeDetailVC.pokemon
+            guard let index = tableView.indexPathForSelectedRow?.row else { return }
+            pokeDetailVC.pokemon = pokeController.pokemons[index]
         }
     }
 
 }
 
-extension PokedexTableViewController: UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if let pokemon = searchBar.text,
-            !pokemon.isEmpty {
-            pokeController.fetchPokemon(pokemon: pokemon) { result in
-                
-            }
-            
-        }
-        navigationController?.popToRootViewController(animated: true)
-    }
-}

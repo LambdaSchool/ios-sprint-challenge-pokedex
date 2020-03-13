@@ -11,9 +11,8 @@ import UIKit
 class PokeDetailsViewController: UIViewController {
     
     // MARK: - Properties
-    let pokeController: PokeController?
-    let pokemon: Pokemon
-    var delegate: UISearchBarDelegate
+    var pokeController: PokeController?
+    var pokemon: Pokemon?
     
     
     // MARK: - IBOutlets
@@ -34,19 +33,40 @@ class PokeDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        updateViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateViews() {
+        if let pokemon = pokemon {
+            title = pokemon.name
+            pokeIDLabel.text = "ID: \(pokemon.id)"
+            pokeTypesLabel.text = "Types: \(pokemon.types)"
+            pokeAbilitiesLabel.text = "Abilities: \(pokemon.abilities)"
+            
+        }
     }
-    */
 
+}
+
+extension PokeDetailsViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let pokemon = searchBar.text,
+            !pokemon.isEmpty {
+            pokeController?.fetchPokemon(pokemon: pokemon) { result in
+                if let pokemon = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.pokeController?.pokemons.append(pokemon)
+                        self.updateViews()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.title = "Error"
+                    }
+                }
+            }
+            
+        }
+    }
 }

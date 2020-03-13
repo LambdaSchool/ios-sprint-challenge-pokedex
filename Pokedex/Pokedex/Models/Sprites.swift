@@ -1,5 +1,5 @@
 //
-//  Type.swift
+//  Sprites.swift
 //  Pokedex
 //
 //  Created by Lambda_School_Loaner_259 on 3/13/20.
@@ -8,6 +8,9 @@
 
 import Foundation
 
-struct Type: Codable {
-    let name: Species
+struct Sprite {
+    let backDefault: String
+    let backShiny: String
+    let frontDefault: String
+    let frontShiny: String
 }
