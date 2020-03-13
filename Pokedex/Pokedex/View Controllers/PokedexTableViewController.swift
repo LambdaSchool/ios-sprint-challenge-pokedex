@@ -17,6 +17,11 @@ class PokedexTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -29,10 +34,17 @@ class PokedexTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
         let pokemon = pokeController.pokemons[indexPath.row]
         
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
         
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokeController.pokemons.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 
     // MARK: - Navigation

@@ -56,7 +56,7 @@ class PokeController {
             let decoder = JSONDecoder()
             do {
                 let pokeData = try decoder.decode(Pokemon.self, from: data)
-                self.pokemons.append(pokeData)
+                //self.pokemons.append(pokeData)
                 completion(.success(pokeData))
             } catch {
                 NSLog("Error decoding Pokemon object: \(error)")
@@ -65,51 +65,4 @@ class PokeController {
             }
         }.resume()
     }
-    /*
-    func fetchPokeImage(completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
-        
-        guard let bearer = bearer else {
-            completion(.failure(.noBearer))
-            return
-        }
-        
-        let fetchGigsURL = baseURL.appendingPathComponent("gigs")
-        
-        var request = URLRequest(url: fetchGigsURL)
-        request.httpMethod = HTTPMethod.get.rawValue
-        request.setValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                NSLog("Error receiving gig data. \(error)")
-                completion(.failure(.otherError))
-                return
-            }
-            
-            if let response = response as? HTTPURLResponse,
-            response.statusCode == 401 {
-                NSLog("Received 401 response - User not authorized")
-                completion(.failure(.badBearer))
-                return
-            }
-            
-            guard let data = data else {
-                NSLog("No data to decode")
-                completion(.failure(.noData))
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            do {
-                let gigsData = try decoder.decode([Gig].self, from: data)
-                completion(.success(gigsData))
-            } catch {
-                NSLog("Error decoding animal object: \(error)")
-                completion(.failure(.badData))
-                return
-            }
-        }.resume()
-    }
-    */
 }
