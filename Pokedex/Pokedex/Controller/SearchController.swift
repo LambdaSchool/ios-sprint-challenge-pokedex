@@ -22,9 +22,9 @@ enum NetworkError: Error {
 
 class SearchController {
     
-    private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
+    var allPokemon: [Pokemon] = []
     
-    var pokemon: Pokemon?
+    private let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
     
     func fetchPokemon(for pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
@@ -32,8 +32,6 @@ class SearchController {
         
         var request = URLRequest(url: animalUrl)
         request.httpMethod = HTTPMethod.get.rawValue
-        
-        print("THIS IS THE REQUEST: \(request)")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -58,6 +56,10 @@ class SearchController {
                 completion(.failure(.noDecode))
             }
         }.resume()
+    }
+    
+    func addPokemon(_ pokemon: Pokemon) {
+        allPokemon.append(pokemon)
     }
     
 }

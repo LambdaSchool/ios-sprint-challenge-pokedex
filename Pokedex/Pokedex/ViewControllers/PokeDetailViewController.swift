@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AddPokemonDelegate {
+func pokemonWasAdded(_ item: Pokemon)
+}
+
 class PokeDetailViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
@@ -18,6 +22,9 @@ class PokeDetailViewController: UIViewController {
     @IBOutlet var pokeTypes: UILabel!
     @IBOutlet var pokeAbilities: UILabel!
     
+    @IBOutlet var pokeButton: UIButton!
+    
+    var delegate: AddPokemonDelegate?
     var searchController: SearchController?
     var pokemon: Pokemon?
     
@@ -25,21 +32,27 @@ class PokeDetailViewController: UIViewController {
         super.viewDidLoad()
 
         searchBar.delegate = self
+        
+        if let pokemon = pokemon {
+            updateView(pokemon: pokemon)
+            searchBar.isHidden = true
+            
+        }
+        
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func addTapped(_ sender: Any) {
+        
+        guard let newPokemon = pokemon else {return}
+        delegate?.pokemonWasAdded(newPokemon)
+        navigationController?.popViewController(animated: true)
     }
-    */
+    
     
     func updateView(pokemon: Pokemon) {
+        
+        self.pokemon = pokemon
         
         if let nameIndex = pokemon.forms.first {
             pokeName.text = nameIndex.name.capitalizingFirstLetter()
@@ -106,16 +119,13 @@ extension PokeDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else {return}
         
-        print("OK SO IT IS BEING CLICKED")
-        
         if searchText != "" {
-            
-            print("it's not nothing")
             
         searchController?.fetchPokemon(for: searchText) { result in
                   if let newPokemon = try? result.get() {
                       DispatchQueue.main.async {
                         self.updateView(pokemon: newPokemon)
+                        self.pokeButton.isHidden = false
                       }
             }
             }
