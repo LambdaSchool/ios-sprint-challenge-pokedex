@@ -23,6 +23,11 @@ class SearchViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func saveButton(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        
+        pokemonController?.pokemon.append(pokemon)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Properites
@@ -44,9 +49,6 @@ class SearchViewController: UIViewController {
         if pokemon == nil {
             // Hide pokemon stack view
         } else {
-            // Show pokemon stack view
-            view.addSubview(pokemonStackView)
-            
             updateViews()
             
             if viewing {
@@ -60,7 +62,7 @@ class SearchViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        print("viewWillAppear")
+        updateViews()
     }
     
     /// Load the Pokemon object into the view
@@ -71,6 +73,10 @@ class SearchViewController: UIViewController {
             typeLabel?.text = "Types: \(pokemon.id)"
             abilityLabel?.text = "Abilities: \(pokemon.id)"
 
+            if !viewing {
+                saveButtonLabel?.isHidden = false
+            }
+            
             // Load the Pokemon pic
             let hack = "https://user-images.githubusercontent.com/16965587/57208109-357e8000-6f8f-11e9-911d-9ec9b245d35f.jpg"
             if pokemonImageView?.image == nil {
@@ -102,16 +108,20 @@ class SearchViewController: UIViewController {
             }
         } else {
             nameLabel?.text = ""
-            idLabel?.text = "ID:"
-            typeLabel?.text = "Types:"
-            abilityLabel?.text = "Abilities:"
+            idLabel?.text = ""
+            typeLabel?.text = ""
+            abilityLabel?.text = ""
             pokemonImageView?.image = nil
+            saveButtonLabel.isHidden = true
         }
     }
 
     func performSearch() {
-        guard let searchTerm = searchBar.text else { return }
+        guard let searchTerm = searchBar.text,
+            !searchTerm.isEmpty else { return }
 
+        viewing = false
+        
         pokemonController?.findPokemon(named: searchTerm) { result in
             if let foundPokemon = try? result.get() {
                 DispatchQueue.main.async {
