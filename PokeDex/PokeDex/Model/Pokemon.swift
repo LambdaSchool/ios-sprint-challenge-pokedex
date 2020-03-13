@@ -15,6 +15,7 @@ struct Pokemon: Codable {
     let types: String
 }
 
+
 struct PokemonSearchResults: Codable {
     let pokemonSearchResults: [Pokemon]
 }

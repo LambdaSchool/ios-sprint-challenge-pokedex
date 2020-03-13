@@ -10,9 +10,10 @@ import Foundation
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-    var pokemon: [Pokemon] = []
+    var pokemons: [Pokemon] = []
+//    let pokemon: Pokemon?
     
        func pokemonSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
@@ -22,6 +23,8 @@ class PokemonController {
                NSLog("request URL is nil")
                return
            }
+        
+//        let pokemonNameURL = baseURL.appendingPathComponent("\(pokemon?.name)")
            var request = URLRequest(url: requestURL)
            request.httpMethod = "GET"
            
@@ -41,7 +44,7 @@ class PokemonController {
                let jsonDecoder = JSONDecoder()
                do {
                    let pokemonSearch = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                   self.pokemon.append(contentsOf: pokemonSearch.pokemonSearchResults)
+                   self.pokemons.append(contentsOf: pokemonSearch.pokemonSearchResults)
                    completion(nil)
                    
                } catch {
@@ -50,4 +53,6 @@ class PokemonController {
                }
          }.resume()
        }
+    
+    
 }

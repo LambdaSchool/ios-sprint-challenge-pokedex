@@ -9,14 +9,42 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
-
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeslabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+        // MARK: - Properties
+    
+    var pokemonController: PokemonController?
+    var pokemonName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    private func getDetails() {
+        guard let pokemonName = pokemonName else { return }
+        
+        pokemonController?.pokemonSearch(searchTerm: pokemonName, completion: { result in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+            }
+        })
+        
+    }
+    
+    @IBAction func savePokemonTapped(_ sender: Any) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 
