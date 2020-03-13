@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit // For image fetching
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -32,7 +33,10 @@ class PokemonController {
 
     // MARK: - Methods
     
-    // create function to fetch animal details
+    /// Fetch a Pokemon
+    /// - Parameters:
+    ///   - name: The name or id (as a string) of the Pokemon to find.
+    ///   - completion: Use the new Swift Result to get the results of this call.
     func findPokemon(named name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
         let apiUrl = baseUrl.appendingPathComponent("ability/\(name)")
@@ -69,5 +73,44 @@ class PokemonController {
                 completion(.failure(.noDecode))
             }
             
+        }.resume()
+    }
+    
+    
+    /// Grab an image from a URL
+    /// - Parameters:
+    ///   - urlString: Fully qualified URL to image
+    ///   - completion: Use the new Swift Result to get the results of this call.
+    func fetchImage(for urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        guard let imageUrl = URL(string: urlString) else {
+            completion(.failure(.badUrl))
+            return
+        }
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                NSLog("Error receiving image data: \(error)")
+                completion(.failure(.otherNetworkError))
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("Website responded with no image data.")
+                completion(.failure(.badData))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {
+                NSLog("Image data is incomplete or corrupt.")
+                completion(.failure(.badData))
+                return
+            }
+
+            completion(.success(image))
+
         }.resume()
     }}
