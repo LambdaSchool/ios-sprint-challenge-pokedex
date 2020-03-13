@@ -9,10 +9,10 @@
 import Foundation
  
 struct Pokemon: Codable {
-    let name: String
-    let id: Int
-    let ability: String
-    let types: String
+    var name: String
+    var id: Int
+    var ability: String
+    var types: String
 //    let image: UIImage! {
 //        UIImage(named: "front_default")
 }
@@ -27,5 +27,5 @@ struct Pokemon: Codable {
 
 
 struct PokemonSearchResults: Codable {
-    let pokemonSearchResults: [Pokemon]
+    var pokemonSearchResults: [Pokemon]
 }

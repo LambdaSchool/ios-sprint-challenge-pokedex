@@ -20,7 +20,7 @@ class PokemonDetailViewController: UIViewController {
         // MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon?
+    var pokemon: Pokemon!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +41,15 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        guard let name = nameLabel.text,
-            let id = "ID: \(String(describing: pokemon?.id))",
-            let ability = abilitiesLabel.text,
-            let types = typeslabel.text,
-            name != ""  else { retur }
-            
+//        guard let name = nameLabel.text,
+//            let id = idLabel.text,
+//            let ability = abilitiesLabel.text,
+//            let types = typeslabel.text,
+//            name != ""  else { return }
             
         if let pokemon = pokemon {
-            pokemonController?.addPokemon(withName: name, id: id, ability: ability, types: types)
+            pokemonController?.pokemons.append(pokemon)
+//            pokemonController?.addPokemon(withName: name, id: id, ability: ability, types: types)
         }
             self.navigationController?.popViewController(animated: true)
         }
@@ -67,7 +67,7 @@ class PokemonDetailViewController: UIViewController {
 }
 
 extension PokemonDetailViewController: UISearchBarDelegate {
-    func searchButtonClicked(_searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController?.pokemonSearch(searchTerm: searchTerm, completion: { error in
