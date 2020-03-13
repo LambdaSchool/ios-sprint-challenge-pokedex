@@ -53,10 +53,10 @@ class SearchViewController: UIViewController {
             
             if viewing {
                 saveButtonLabel.isHidden = true
-                // FIXME:
-                //searchBar.removeFromSuperview()
+                searchBar.isHidden = true
             } else {
                 saveButtonLabel.isHidden = false
+                searchBar.isHidden = false
             }
         }
     }
@@ -68,6 +68,9 @@ class SearchViewController: UIViewController {
     /// Load the Pokemon object into the view
     func updateViews() {
         if let pokemon = pokemon {
+            if viewing {
+                title = pokemon.name
+            }
             nameLabel?.text = pokemon.name
             idLabel?.text = "ID: \(pokemon.id)"
             typeLabel?.text = "Types: \(pokemon.id)"
