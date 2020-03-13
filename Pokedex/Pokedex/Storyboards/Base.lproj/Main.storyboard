@@ -23,6 +23,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vIW-Fh-UIa" kind="show" identifier="View" id="b0b-4J-nbH"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,7 +36,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="urK-yD-9lK">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="GAP-rf-Mz3">
                             <connections>
-                                <segue destination="vIW-Fh-UIa" kind="show" id="gWC-Y2-n9x"/>
+                                <segue destination="vIW-Fh-UIa" kind="show" identifier="Seach" id="gWC-Y2-n9x"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -75,7 +78,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Titles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y55-68-XKW">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y55-68-XKW">
                                         <rect key="frame" x="0.0" y="356.5" width="374" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -90,6 +93,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9d-sc-k5N">
                                         <rect key="frame" x="136.5" y="427.5" width="101" height="30"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="saveButton:" destination="vIW-Fh-UIa" eventType="touchUpInside" id="XKc-Mf-7Nj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -115,7 +121,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="MOY-NP-zsF"/>
                     <connections>
+                        <outlet property="abilityLabel" destination="Ybx-fd-O8Y" id="ieA-U9-bOB"/>
+                        <outlet property="idLabel" destination="MrF-5R-DMd" id="c7r-iw-hgG"/>
+                        <outlet property="nameLabel" destination="0af-uf-HCH" id="lBI-qF-jvY"/>
+                        <outlet property="pokemonImageView" destination="QMc-fp-8ed" id="xf7-mP-a8M"/>
+                        <outlet property="pokemonStackView" destination="Y1p-uv-bUM" id="DP8-fe-zOG"/>
+                        <outlet property="saveButtonLabel" destination="f9d-sc-k5N" id="UP1-32-544"/>
                         <outlet property="searchBar" destination="Rxp-cC-3o4" id="UeS-dT-VK4"/>
+                        <outlet property="typeLabel" destination="Y55-68-XKW" id="pyx-4y-8HT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="API-0K-nEM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -139,4 +152,7 @@
             <point key="canvasLocation" x="-890" y="91"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="b0b-4J-nbH"/>
+    </inferredMetricsTieBreakers>
 </document>
