@@ -26,20 +26,7 @@ class DetailViewController: UIViewController {
     // MARK: - Properties
     
     var pokedex: Pokedex!
-    var pokemon: Pokemon? {
-        didSet {
-            titleLabel.text = pokemon?.name.capitalized
-            idLabel.text = String(pokemon!.id)
-            typesLabel.text = "Types: "
-            for type in pokemon!.types {
-                typesLabel.text! += "\(type.type.name) "
-            }
-            abilitiesLabel.text = "Abilities: "
-            for ability in pokemon!.abilities {
-                abilitiesLabel.text! += "\(ability.ability.name) "
-            }
-        }
-    }
+    var pokemon: Pokemon?
 
     // MARK: - Methods
     
@@ -49,6 +36,28 @@ class DetailViewController: UIViewController {
         if pokemon != nil {
             searchBar.isHidden = true
             saveButton.isHidden = true
+            updateViews()
+        }
+    }
+    
+    func updateViews() {
+            guard let pokemon = pokemon else { return }
+            titleLabel.text = pokemon.name
+            idLabel.text = "ID: " + String(pokemon.id)
+            typesLabel.text = "Types: "
+            for type in pokemon.types {
+                typesLabel.text! += "\(type.type.name) "
+            }
+            abilitiesLabel.text = "Abilities: "
+            for ability in pokemon.abilities {
+                abilitiesLabel.text! += "\(ability.ability.name) "
+        }
+        pokedex.fetchImage(at: pokemon.sprites.frontDefault) { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            }
         }
     }
 
@@ -73,13 +82,7 @@ extension DetailViewController: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                     print("Set pokemon")
-                }
-                self.pokedex.fetchImage(at: pokemon.sprites.frontDefault) { result in
-                    if let image = try? result.get() {
-                        DispatchQueue.main.async {
-                            self.imageView.image = image
-                        }
-                    }
+                    self.updateViews()
                 }
             }
         }
