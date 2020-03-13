@@ -38,6 +38,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchBar.delegate = self
+
         // Do any additional setup after loading the view.
         if pokemon == nil {
             // Hide pokemon stack view
@@ -74,7 +76,7 @@ class SearchViewController: UIViewController {
                 do {
                     let image = try result.get()
                     DispatchQueue.main.async {
-                        self.pokemonImageView.image = image
+                        self.pokemonImageView?.image = image
                     }
                 } catch {
                     if let error = error as? NetworkError {
