@@ -74,7 +74,7 @@ class SearchViewController: UIViewController {
             nameLabel?.text = pokemon.name
             idLabel?.text = "ID: \(pokemon.id)"
             typeLabel?.text = "Types: \(pokemon.generation.name)"
-            abilityLabel?.text = "Abilities: \(pokemon.effect_changes[0].version_group.name)"
+            abilityLabel?.text = "Abilities: \(pokemon.flavor_text_entries[0].flavor_text)"
 
             if !viewing {
                 saveButtonLabel?.isHidden = false
@@ -120,7 +120,7 @@ class SearchViewController: UIViewController {
     }
 
     func performSearch() {
-        guard let searchTerm = searchBar.text,
+        guard let searchTerm = searchBar.text?.lowercased(),
             !searchTerm.isEmpty else { return }
 
         viewing = false
