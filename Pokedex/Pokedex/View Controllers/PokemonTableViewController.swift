@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
 
+    let pokemonController = PokemonController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,14 +79,19 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowPokemonSearch" {
+            /*
+            guard let PokemonSearchVC = segue.destination as? PokemonSearchViewController else { return }
+             
+            PokemonSearchVC.pokemonController = pokemonController
+            */
+        } else if segue.identifier == "" {
+            #warning("add second segue")
+        }
     }
-    */
 
 }

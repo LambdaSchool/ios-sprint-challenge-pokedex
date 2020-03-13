@@ -11,7 +11,11 @@ import Foundation
 struct Pokemon: Codable {
     let name: String
     let id: Int
-    //sprite
+    let sprites: Sprite
     //types
     //abilities
+}
+
+struct Sprite: Codable {
+    let back_default: String
 }
