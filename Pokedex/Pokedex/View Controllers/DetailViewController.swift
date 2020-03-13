@@ -32,6 +32,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        clearLabels()
         searchBar.delegate = self
         if pokemon != nil {
             searchBar.isHidden = true
@@ -59,6 +60,13 @@ class DetailViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func clearLabels() {
+        titleLabel.text = ""
+        idLabel.text = ""
+        abilitiesLabel.text = ""
+        typesLabel.text = ""
     }
 
     @IBAction func saveButtonTapped(_ sender: Any) {
