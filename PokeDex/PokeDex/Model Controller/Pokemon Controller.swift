@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
@@ -26,7 +27,7 @@ class PokemonController {
         
 //        let pokemonNameURL = baseURL.appendingPathComponent("\(pokemon?.name)")
            var request = URLRequest(url: requestURL)
-           request.httpMethod = "GET"
+        request.httpMethod = "GET"
            
            URLSession.shared.dataTask(with: request) { (data, _, error) in
                if let error = error {

@@ -13,8 +13,18 @@ struct Pokemon: Codable {
     let id: Int
     let ability: String
     let types: String
+//    let image: UIImage! {
+//        UIImage(named: "front_default")
 }
 
+//struct PokemonSprite: Codable {
+//    let name: String
+//
+//    enum CodingKeys: String, CodingKey {
+//        case name = "front_default"
+//    }
+    
+}
 
 struct PokemonSearchResults: Codable {
     let pokemonSearchResults: [Pokemon]

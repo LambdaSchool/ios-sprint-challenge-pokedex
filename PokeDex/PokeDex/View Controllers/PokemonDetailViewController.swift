@@ -20,7 +20,7 @@ class PokemonDetailViewController: UIViewController {
         // MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemonName: String?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +29,18 @@ class PokemonDetailViewController: UIViewController {
     }
     
     private func getDetails() {
-        guard let pokemonName = pokemonName else { return }
+        guard let pokemon = pokemon else { return }
         
-        pokemonController?.pokemonSearch(searchTerm: pokemonName, completion: { result in
-            if let pokemon = try? result.get() {
-                DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
-                }
-            }
-        })
+        pokemonController?.pokemonSearch(searchTerm: <#T##String#>, completion: <#T##(Error?) -> Void#>)
+    }
+    
+    private func updateViews(with pokemon: Pokemon) {
+        title = pokemon.name
+        nameLabel.text = pokemon.name
+        idLabel.text = "ID: \(pokemon.id)"
         
+        pokemonImage = pokemon.sprite
+                
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
@@ -55,4 +57,10 @@ class PokemonDetailViewController: UIViewController {
     }
     */
 
+}
+
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchButtonClicked(_searchBar: UISearchBar) {
+        
+    }
 }
