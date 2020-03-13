@@ -39,7 +39,7 @@ class PokemonController {
     ///   - completion: Use the new Swift Result to get the results of this call.
     func findPokemon(named name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        let apiUrl = baseUrl.appendingPathComponent("ability/\(name)")
+        let apiUrl = baseUrl.appendingPathComponent("pokemon/\(name)")
         
         var request = URLRequest(url: apiUrl)
         request.httpMethod = HTTPMethod.get.rawValue
