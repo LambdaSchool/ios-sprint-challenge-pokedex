@@ -20,13 +20,21 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
     }
     
+    func updateViews() {
+        
+    }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        
     }
-    
+}
 
+extension PokemonSearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let search = searchBar.text else { return }
+        print(search)
+    }
 }

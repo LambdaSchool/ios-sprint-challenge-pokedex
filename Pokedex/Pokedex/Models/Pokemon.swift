@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct Pokemon {
-    
+struct Pokemon: Codable {
+    let name: String
+    let id: Int
+    //sprite
+    //types
+    //abilities
 }
