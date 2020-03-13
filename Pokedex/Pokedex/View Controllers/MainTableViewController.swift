@@ -21,6 +21,14 @@ class MainTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        pokemonController.findPokemon(named: "1") { result in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonController.pokemon.append(pokemon)
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
 
     // MARK: - Table view data source
