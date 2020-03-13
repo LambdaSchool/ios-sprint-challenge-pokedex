@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Sprite: Codable {
+struct Sprite: Codable, Equatable {
     let frontDefault: String
     
     enum CodingKeys: String, CodingKey {

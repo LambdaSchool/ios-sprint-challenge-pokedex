@@ -145,9 +145,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="u4c-tS-pjd"/>
                     </view>
-                    <navigationItem key="navigationItem" id="5wm-PU-qr6"/>
+                    <navigationItem key="navigationItem" id="5wm-PU-qr6">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="trash" id="CwX-wE-4Mv">
+                            <connections>
+                                <action selector="deleteButtonTapped:" destination="nXH-4Z-tj1" id="csN-GW-9ro"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="abilitiesLabel" destination="IvT-QP-A6G" id="rfZ-Tw-eoU"/>
+                        <outlet property="deleteButton" destination="CwX-wE-4Mv" id="lGB-60-x3S"/>
                         <outlet property="idLabel" destination="GQs-AV-gFQ" id="dJK-26-3TB"/>
                         <outlet property="imageView" destination="a7l-4G-70S" id="LJL-fI-DXu"/>
                         <outlet property="saveButton" destination="ZiR-R3-CGM" id="y5I-h3-qS2"/>

@@ -11,6 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     // MARK: - Outlets
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -35,6 +36,7 @@ class DetailViewController: UIViewController {
         clearLabels()
         searchBar.delegate = self
         if pokemon != nil {
+            deleteButton.isEnabled = true
             searchBar.isHidden = true
             saveButton.isHidden = true
             updateViews()
@@ -74,6 +76,15 @@ class DetailViewController: UIViewController {
         pokedex.pokemon.append(pokemon)
         print("pokemon saved.")
     }
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        if let deleteIndex = pokedex.pokemon.firstIndex(where: { $0 == pokemon }) {
+            pokedex.pokemon.remove(at: deleteIndex)
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
 }
 
 extension DetailViewController: UISearchBarDelegate {

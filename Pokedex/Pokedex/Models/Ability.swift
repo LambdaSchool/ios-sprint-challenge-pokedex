@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Ability: Codable {
+struct Ability: Codable, Equatable {
     let ability: AbilityDetail
     
-    struct AbilityDetail: Codable {
+    struct AbilityDetail: Codable, Equatable {
         let name: String
     }
 }
