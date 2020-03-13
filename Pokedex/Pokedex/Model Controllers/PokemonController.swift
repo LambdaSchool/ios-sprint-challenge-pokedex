@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case generic
     case statusCode
     case noData
     case decodeError
+    case badImageUrl
 }
 
 enum HTTPMethod: String {
@@ -58,6 +60,40 @@ class PokemonController {
             } catch {
                 completion(.failure(.decodeError))
             }
+            
+        }.resume()
+    }
+    
+    func getImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        guard let imageUrl = URL(string: urlString) else {
+            completion(.failure(.badImageUrl))
+            return
+        }
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                NSLog("Error receiving pokemon image data: \(error)")
+                completion(.failure(.generic))
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("GitHub responded with no image data") // Optional to print if you want
+                completion(.failure(.noData))
+                return
+            }
+            
+            guard let image = UIImage(data: data) else {
+                NSLog("Image data is incomplete or currupted.")
+                completion(.failure(.noData))
+                return
+            }
+            
+            completion(.success(image))
             
         }.resume()
     }

@@ -18,8 +18,11 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
-    let pokemonController = PokemonController()
-    #warning("--Why can't I pass this forward from TableView--")
+    var pokemonController: PokemonController? {
+        didSet {
+            print("yep")
+        }
+    }
     
     var pokemon: Pokemon? {
         didSet {
@@ -43,6 +46,7 @@ class PokemonSearchViewController: UIViewController {
         if pokemon.types.count > 1 {
             for item in pokemon.types {
                 types += "\(item.type.name), "
+                #warning("--fix extra comma--")
             }
         } else {
             types = pokemon.types[0].type.name
@@ -63,7 +67,8 @@ class PokemonSearchViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let pokemon = pokemon else { return }
-        pokemonController.pokedex.append(pokemon)
+        pokemonController?.pokedex.append(pokemon)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -71,12 +76,20 @@ extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let search = searchBar.text else { return }
         
-        pokemonController.searchPokemon(with: search.lowercased()) { (result) in
+        pokemonController?.searchPokemon(with: search.lowercased()) { (result) in
             do {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                 }
+                
+                self.pokemonController?.getImage(at: pokemon.sprites.front_default, completion: { (result) in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                        }
+                    }
+                })
             } catch {
                 if let error = error as? NetworkError {
                     switch error {
@@ -88,6 +101,8 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                         NSLog("No data received")
                     case .decodeError:
                         NSLog("Data could not be decoded")
+                    case .badImageUrl:
+                        NSLog("No image")
                     }
                 }
             }

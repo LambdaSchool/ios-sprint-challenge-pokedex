@@ -17,7 +17,7 @@ struct Pokemon: Codable {
 }
 
 struct Sprite: Codable {
-    let back_default: String
+    let front_default: String
 }
 
 struct arrayOfTypes: Codable {
