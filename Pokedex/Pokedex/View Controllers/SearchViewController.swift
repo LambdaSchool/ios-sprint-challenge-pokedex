@@ -43,15 +43,18 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
         if pokemon == nil {
             // Hide pokemon stack view
-            pokemonStackView.removeFromSuperview()
         } else {
             // Show pokemon stack view
+            view.addSubview(pokemonStackView)
+            
             updateViews()
             
             if viewing {
                 saveButtonLabel.removeFromSuperview()
                 // FIXME:
                 //searchBar.removeFromSuperview()
+            } else {
+                saveButtonLabel.addSubview(saveButtonLabel)
             }
         }
     }
@@ -62,41 +65,47 @@ class SearchViewController: UIViewController {
     
     /// Load the Pokemon object into the view
     func updateViews() {
-        guard let pokemon = pokemon else { return }
-        
-        nameLabel?.text = pokemon.name
-        idLabel?.text = "ID: \(pokemon.id)"
-        typeLabel?.text = "Types: \(pokemon.id)"
-        abilityLabel?.text = "Abilities: \(pokemon.id)"
+        if let pokemon = pokemon {
+            nameLabel?.text = pokemon.name
+            idLabel?.text = "ID: \(pokemon.id)"
+            typeLabel?.text = "Types: \(pokemon.id)"
+            abilityLabel?.text = "Abilities: \(pokemon.id)"
 
-        // Load the Pokemon pic
-        let hack = "https://user-images.githubusercontent.com/16965587/57208109-357e8000-6f8f-11e9-911d-9ec9b245d35f.jpg"
-        if pokemonImageView?.image == nil {
-            self.pokemonController?.fetchImage(for: hack, completion: { result in
-                do {
-                    let image = try result.get()
-                    DispatchQueue.main.async {
-                        self.pokemonImageView?.image = image
-                    }
-                } catch {
-                    if let error = error as? NetworkError {
-                        switch error {
-                        case .noAuth:
-                            NSLog("No bearer token exists")
-                        case .badAuth:
-                            NSLog("Bearer token invalid")
-                        case .otherNetworkError:
-                            NSLog("Other error occurred, see log")
-                        case .badData:
-                            NSLog("No data received, or data corrupted")
-                        case .noDecode:
-                            NSLog("JSON could not be decoded")
-                        case .badUrl:
-                            NSLog("URL invalid")
+            // Load the Pokemon pic
+            let hack = "https://user-images.githubusercontent.com/16965587/57208109-357e8000-6f8f-11e9-911d-9ec9b245d35f.jpg"
+            if pokemonImageView?.image == nil {
+                self.pokemonController?.fetchImage(for: hack, completion: { result in
+                    do {
+                        let image = try result.get()
+                        DispatchQueue.main.async {
+                            self.pokemonImageView?.image = image
+                        }
+                    } catch {
+                        if let error = error as? NetworkError {
+                            switch error {
+                            case .noAuth:
+                                NSLog("No bearer token exists")
+                            case .badAuth:
+                                NSLog("Bearer token invalid")
+                            case .otherNetworkError:
+                                NSLog("Other error occurred, see log")
+                            case .badData:
+                                NSLog("No data received, or data corrupted")
+                            case .noDecode:
+                                NSLog("JSON could not be decoded")
+                            case .badUrl:
+                                NSLog("URL invalid")
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
+        } else {
+            nameLabel?.text = ""
+            idLabel?.text = "ID:"
+            typeLabel?.text = "Types:"
+            abilityLabel?.text = "Abilities:"
+            pokemonImageView?.image = nil
         }
     }
 
