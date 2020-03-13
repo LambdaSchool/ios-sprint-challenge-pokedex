@@ -10,6 +10,13 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    // MARK: - Outlets
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    
+    // MARK: - Actions
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
