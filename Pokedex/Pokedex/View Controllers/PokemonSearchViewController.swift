@@ -37,7 +37,28 @@ class PokemonSearchViewController: UIViewController {
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
         
-        print(pokemon.sprites.back_default)
+        var types: String = ""
+        var abilities: String = ""
+        
+        if pokemon.types.count > 1 {
+            for item in pokemon.types {
+                types += "\(item.type.name), "
+            }
+        } else {
+            types = pokemon.types[0].type.name
+        }
+        
+        if pokemon.abilities.count > 1 {
+            for item in pokemon.abilities {
+                abilities += "\(item.ability.name), "
+                #warning("--fix extra comma--")
+            }
+        } else {
+            abilities = pokemon.abilities[0].ability.name
+        }
+        
+        typesLabel.text = "Types: \(types)"
+        abilitiesLabel.text = "Abilities: \(abilities)"
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
