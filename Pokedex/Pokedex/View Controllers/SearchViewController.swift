@@ -26,6 +26,7 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Properites
+    var viewing = false
     var pokemon: Pokemon? {
         didSet {
             updateViews()
@@ -39,9 +40,14 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
         if pokemon == nil {
             // Hide pokemon stack view
+            pokemonStackView.removeFromSuperview()
         } else {
             // Show pokemon stack view
             updateViews()
+            
+            if viewing {
+                saveButtonLabel.removeFromSuperview()
+            }
         }
     }
 
@@ -51,6 +57,13 @@ class SearchViewController: UIViewController {
     
     /// Load the Pokemon object into the view
     func updateViews() {
+        guard let pokemon = pokemon else { return }
         
+        nameLabel.text = pokemon.name
+        // FIXME:
+        //pokemonImageView: UIIm
+        idLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Types: \(pokemon.id)"
+        abilityLabel.text = "Abilities: \(pokemon.id)"
     }
 }

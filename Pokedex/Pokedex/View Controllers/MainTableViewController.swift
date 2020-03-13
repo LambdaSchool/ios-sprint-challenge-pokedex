@@ -73,14 +73,22 @@ class MainTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "Search" {
+            if let searchVC = segue.destination as? SearchViewController {
+                searchVC.viewing = false
+            }
+        } else if segue.identifier == "View" {
+            if let searchVC = segue.destination as? SearchViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                searchVC.viewing = true
+                searchVC.pokemon = pokemonController.pokemon[indexPath.row]
+            }
+        }
     }
-    */
-
 }
