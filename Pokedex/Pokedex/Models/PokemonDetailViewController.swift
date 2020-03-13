@@ -10,25 +10,58 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    var pokemonController: PokemonController?
+    
+    var pokemon: Pokemon?  {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    @IBOutlet weak var abilities: UILabel!
+    @IBOutlet weak var types: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var pokemonName: UILabel!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+getDetails()
+        updateViews()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateViews() {
+        getDetails()
+        if let pokemon = pokemon {
+            addingPokemon(with: pokemon)
+        }
     }
-    */
+   private func getDetails() {
+        guard let pokemon = pokemon else { return }
+        
+        // call the apiController's get details method
+                // fetch the image
+    self.pokemonController?.fetchImage(at: pokemon.sprites.defaultSpriteUrl, completion: { result in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.pokemonImage.image = image
+        self.addingPokemon(with: pokemon)
+                        }
+                    }
+                })
+            }
+        private func addingPokemon(with pokemon: Pokemon) {
+            pokemonName.text = pokemon.name
+           idLabel.text = "ID: " + String(pokemon.id)
+           types.text = "Types: \(pokemon.types)"
+            abilities.text = "Abilities: \(pokemon.ability)"
+           
+        }
+    
+
 
 }
+

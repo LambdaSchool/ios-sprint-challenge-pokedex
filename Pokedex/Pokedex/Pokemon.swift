@@ -8,20 +8,38 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+         lhs.name == rhs.name
+    }
+    
     let id: Int
     let name: String
-    let ability: [Abilities]
-    let types: [Types]
-     let imageURL: String
+    let ability: Abilities
+    let types: Types
+    let sprites: Sprites
+    
+   
 }
 
-struct Abilities: Codable {
+struct Abilities: Codable, Equatable {
     let is_hidden: Bool
     let slot: Int
     let name: String
     
 }
-struct Types: Codable {
+
+struct Sprites: Codable, Equatable {
+    let defaultSpriteUrl: String
+    enum CodingKeys: String, CodingKey {
+        case defaultSpriteUrl = "front_default"
+    }
+}
+
+struct Types: Codable, Equatable {
     let name: String
+}
+
+struct SearchResults: Codable, Equatable {
+    let results: [Pokemon]
 }
