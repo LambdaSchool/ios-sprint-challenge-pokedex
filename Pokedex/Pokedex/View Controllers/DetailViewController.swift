@@ -9,6 +9,9 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    var pokedex: Pokedex!
+    var pokemon: Pokemon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
