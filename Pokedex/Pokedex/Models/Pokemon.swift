@@ -74,13 +74,15 @@ struct Ability: Codable {
     var pokemon: [PokemonObj]
 }
 
+struct AbilityV2: Codable {
+    var name: String // tinted-lens
+    var url: String // https://pokeapi.co/api/v2/ability/110/
+}
+
 struct Abilities: Codable {
     var is_hidden: Bool // true
     var slot: Int       // 3
-//    var ability": {
-//      "name": "tinted-lens",
-//      "url": "https://pokeapi.co/api/v2/ability/110/"
-//    }
+    var ability: AbilityV2
 }
 
 struct Type : Codable {
