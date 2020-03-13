@@ -27,6 +27,10 @@ class PokemonController {
 
     let baseUrl = URL(string: "https://pokeapi.co/api/v2")!
     
+    func delete(at index: Int) {
+        pokedex.remove(at: index)
+    }
+    
     func searchPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
         let searchUrl = baseUrl.appendingPathComponent("pokemon/\(searchTerm)")

@@ -30,24 +30,25 @@ class PokemonTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        cell.textLabel?.text = pokemonController.pokedex[indexPath.row].name
+        
+        let pokemon = pokemonController.pokedex[indexPath.row].name
+        var name = pokemon
+        name = name.prefix(1).uppercased() + name.lowercased().dropFirst()
+        cell.textLabel?.text = name
 
         return cell
     }
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            pokemonController.delete(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            tableView.reloadData()
+        }
     }
-    */
 
 
     // MARK: - Navigation
@@ -58,7 +59,7 @@ class PokemonTableViewController: UITableViewController {
                 PokemonSearchVC.pokemonController = pokemonController
             }
         } else if segue.identifier == "ShowPokemonDetail" {
-            guard let PokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
+            guard let PokemonDetailVC = segue.destination as? PokemonSearchViewController else { return }
             guard let selected = tableView.indexPathForSelectedRow else { return }
             PokemonDetailVC.pokemon = pokemonController.pokedex[selected.row]
         }

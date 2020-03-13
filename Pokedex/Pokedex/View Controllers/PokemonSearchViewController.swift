@@ -18,51 +18,67 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
-    var pokemonController: PokemonController? {
-        didSet {
-            print("yep")
-        }
-    }
-    
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        nameLabel.isHidden = true
+        imageView.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
+        idLabel.isHidden = true
+        saveButton.isHidden = true
+        updateViews()
     }
+
     
     func updateViews() {
         guard let pokemon = pokemon else { return }
-        nameLabel.text = pokemon.name
-        idLabel.text = "ID: \(pokemon.id)"
         
+        pokemonController?.getImage(at: pokemon.sprites.front_default, completion: { (result) in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            }
+        })
+                        
+        var name = pokemon.name
+        name = name.prefix(1).uppercased() + name.lowercased().dropFirst()
+        nameLabel.text = name
+        idLabel.text = "ID: \(pokemon.id)"
+            
         var types: String = ""
         var abilities: String = ""
         
-        if pokemon.types.count > 1 {
-            for item in pokemon.types {
-                types += "\(item.type.name), "
-                #warning("--fix extra comma--")
+            if pokemon.types.count > 1 {
+                for item in pokemon.types {
+                    types += "\(item.type.name), "
+                }
+            } else {
+                types = pokemon.types[0].type.name
             }
-        } else {
-            types = pokemon.types[0].type.name
-        }
-        
-        if pokemon.abilities.count > 1 {
-            for item in pokemon.abilities {
-                abilities += "\(item.ability.name), "
-                #warning("--fix extra comma--")
+            
+            if pokemon.abilities.count > 1 {
+                for item in pokemon.abilities {
+                    abilities += "\(item.ability.name), "
+                    #warning("--fix extra comma--")
+                }
+            } else {
+                abilities = pokemon.abilities[0].ability.name
             }
-        } else {
-            abilities = pokemon.abilities[0].ability.name
-        }
-        
+            
         typesLabel.text = "Types: \(types)"
         abilitiesLabel.text = "Abilities: \(abilities)"
+            
+            nameLabel.isHidden = false
+            imageView.isHidden = false
+            typesLabel.isHidden = false
+            abilitiesLabel.isHidden = false
+            idLabel.isHidden = false
+            saveButton.isHidden = false
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -81,12 +97,14 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                 let pokemon = try result.get()
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
+                    self.updateViews()
                 }
                 
                 self.pokemonController?.getImage(at: pokemon.sprites.front_default, completion: { (result) in
                     if let image = try? result.get() {
                         DispatchQueue.main.async {
                             self.imageView.image = image
+                            self.updateViews()
                         }
                     }
                 })
