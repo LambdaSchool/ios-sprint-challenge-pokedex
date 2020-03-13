@@ -29,5 +29,5 @@ struct Abilities: Codable {
 }
 
 struct PokemonSearchResults: Codable {
-    var pokemonSearchResults: [Pokemon]
+    var results: [Pokemon]
 }

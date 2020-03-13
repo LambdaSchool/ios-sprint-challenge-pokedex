@@ -20,11 +20,7 @@ class PokemonDetailViewController: UIViewController {
         // MARK: - Properties
     
     var pokemonController: PokemonController?
-    var pokemon: Pokemon? {
-        didSet {
-            updateViews()
-        }
-    }
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +29,14 @@ class PokemonDetailViewController: UIViewController {
 
     }
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        pokemonController?.pokemonSearch(searchTerm: searchTerm, completion: { error in
+//            do {
+//                let pokemonsListed = try searchTerm.get()
+//            }
+//        })
+//    }
     private func updateViews() {
 //        if pokemon != nil {
         guard let pokemon = pokemon else { return }
@@ -59,16 +63,6 @@ class PokemonDetailViewController: UIViewController {
         }
             self.navigationController?.popViewController(animated: true)
         }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
