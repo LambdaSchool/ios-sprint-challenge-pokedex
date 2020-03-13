@@ -19,7 +19,7 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - Properties
     
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? { didSet { updateViews() }}
     
     // MARK: - Private
     
@@ -32,11 +32,13 @@ class PokemonDetailViewController: UIViewController {
     }
     
     private func updateViews() {
-        guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon, isViewLoaded else { return }
         title = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = pokemon.types.map { $0.name }.joined(separator: ", ")
-        abilitiesLabel.text = pokemon.abilities.map { $0.name }.joined(separator: ", ")
+        let types = pokemon.types.map { $0.type.name }.joined(separator: ", ")
+        typesLabel.text = "Types: \(types)"
+        let abilities = pokemon.abilities.map { $0.ability.name }.joined(separator: ", ")
+        abilitiesLabel.text = "Abilities: \(abilities)"
     }
     
     override func viewDidLoad() {

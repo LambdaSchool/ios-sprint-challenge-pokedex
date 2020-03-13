@@ -11,9 +11,9 @@ import Foundation
 struct Pokemon: Codable {
     let id: Int
     let name: String
-    let abilities: [PokemonAbility]
+    let abilities: [PokemonAbilityWrapper]
     let sprites: PokemonSprites
-    let types: [PokemonType]
+    let types: [PokemonTypeWrapper]
 }
 
 struct PokemonSprites: Codable {
@@ -38,8 +38,15 @@ struct PokemonSprites: Codable {
     }
 }
 
+struct PokemonTypeWrapper: Codable {
+    let type: PokemonType
+}
 struct PokemonType: Codable {
     let name: String
+}
+
+struct PokemonAbilityWrapper: Codable {
+    let ability: PokemonAbility
 }
 
 struct PokemonAbility: Codable {
