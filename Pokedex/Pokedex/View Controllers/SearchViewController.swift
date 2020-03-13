@@ -26,13 +26,14 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Properites
+    var pokemonController: PokemonController? // TODO: Eliminate
     var viewing = false
     var pokemon: Pokemon? {
         didSet {
             updateViews()
         }
     }
-    
+
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,7 @@ class SearchViewController: UIViewController {
             
             if viewing {
                 saveButtonLabel.removeFromSuperview()
+                searchBar.removeFromSuperview()
             }
         }
     }
@@ -59,11 +61,39 @@ class SearchViewController: UIViewController {
     func updateViews() {
         guard let pokemon = pokemon else { return }
         
-        nameLabel.text = pokemon.name
-        // FIXME:
-        //pokemonImageView: UIIm
-        idLabel.text = "ID: \(pokemon.id)"
-        typeLabel.text = "Types: \(pokemon.id)"
-        abilityLabel.text = "Abilities: \(pokemon.id)"
+        nameLabel?.text = pokemon.name
+        idLabel?.text = "ID: \(pokemon.id)"
+        typeLabel?.text = "Types: \(pokemon.id)"
+        abilityLabel?.text = "Abilities: \(pokemon.id)"
+
+        // Load the Pokemon pic
+//        if pokemonImageView.image == nil {
+//            self.pokemonController?.fetchImage(for: pokemon., completion: { result in
+//                if let image = try? result.get() {
+//                    DispatchQueue.main.async {
+//                        self.pokemonImageView.image = image
+//                    }
+//                }
+//            })
+//        }
+    }
+
+    func performSearch() {
+        guard let searchTerm = searchBar.text else { return }
+
+        pokemonController?.findPokemon(named: searchTerm) { result in
+            if let foundPokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemon = foundPokemon
+                }
+            }
+        }
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        performSearch()
     }
 }
