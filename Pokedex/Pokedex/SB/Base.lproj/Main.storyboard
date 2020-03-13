@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="NZP-i4-fub">
             <objects>
-                <tableViewController id="Uxp-1S-YV8" sceneMemberID="viewController">
+                <tableViewController id="Uxp-1S-YV8" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TXU-Ge-w4j">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,7 +36,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="aUU-Sm-ELj">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="5Bj-G8-2Ec">
                             <connections>
-                                <segue destination="LyG-0U-39R" kind="show" identifier="SearchSegue" id="rMs-e2-BaR"/>
+                                <segue destination="LyG-0U-39R" kind="show" identifier="AddSegue" id="rMs-e2-BaR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -74,7 +74,7 @@
                                 <rect key="frame" x="156.5" y="812" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
-                                    <action selector="saveTapped:" destination="LyG-0U-39R" eventType="touchUpInside" id="puK-CT-dRc"/>
+                                    <action selector="saveTapped:" destination="LyG-0U-39R" eventType="touchUpInside" id="AG2-wl-k5E"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4RQ-fY-V5w">
@@ -151,12 +151,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="mgv-64-od2"/>
                     <connections>
-                        <outlet property="ability" destination="Cth-3r-lPD" id="9MN-1c-wUf"/>
-                        <outlet property="id" destination="Fq8-o7-nF7" id="7bC-0G-9et"/>
-                        <outlet property="image" destination="hWM-t6-Rol" id="Nsx-bA-8rf"/>
-                        <outlet property="name" destination="Z8u-nZ-LxC" id="Stj-Ni-p07"/>
-                        <outlet property="searchBar" destination="fi6-Lw-S0R" id="GFx-9O-PZh"/>
-                        <outlet property="type" destination="UEf-ih-2r6" id="57i-P8-60c"/>
+                        <outlet property="ability" destination="Cth-3r-lPD" id="0Om-23-zdQ"/>
+                        <outlet property="id" destination="Fq8-o7-nF7" id="O1h-PX-3VF"/>
+                        <outlet property="image" destination="hWM-t6-Rol" id="990-0x-dX0"/>
+                        <outlet property="name" destination="Z8u-nZ-LxC" id="eI7-MO-a6S"/>
+                        <outlet property="saveButton" destination="Wys-d0-Hyh" id="Daj-WF-7On"/>
+                        <outlet property="searchBar" destination="fi6-Lw-S0R" id="eqF-68-0Uv"/>
+                        <outlet property="type" destination="UEf-ih-2r6" id="5Ng-JG-hdX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jod-g6-EXe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -186,6 +187,6 @@
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1Sd-0b-loc"/>
+        <segue reference="rMs-e2-BaR"/>
     </inferredMetricsTieBreakers>
 </document>

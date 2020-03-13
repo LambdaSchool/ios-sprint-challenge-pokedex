@@ -11,7 +11,11 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
-    
+//    func mer() {
+//        pokemonController.fetchPokemon(name: "eevee") {result in
+//            
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -26,7 +30,7 @@ class PokemonTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokeCell", for: indexPath)
         let pokemon = pokemonController.pokemonArray[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
 
@@ -44,7 +48,7 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showSegue" {
+        if segue.identifier == "ShowSegue" {
             guard let detailVC = segue.destination as? AddViewController, let indexpath = tableView.indexPathForSelectedRow else {
                 return
             }

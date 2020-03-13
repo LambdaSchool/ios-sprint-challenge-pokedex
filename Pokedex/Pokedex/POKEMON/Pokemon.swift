@@ -23,7 +23,7 @@ struct Types: Codable {
     let type: Type
 }
 struct Type: Codable {
-    let typeName: String
+    let name: String
 }
 
 
@@ -33,12 +33,12 @@ struct Abilities: Codable {
     let ability: Ability
 }
 struct Ability: Codable {
-    let abilityName: String
+    let name: String
 }
 
 
 
 struct Sprites: Codable {
-    let url: String
+    let front_default: String
     
 }
