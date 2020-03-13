@@ -9,5 +9,5 @@
 import Foundation
 
 struct Type: Codable {
-    let name: Species
+    let type: Species
 }

@@ -13,5 +13,5 @@ struct Pokemon: Codable {
     let name: String
     let abilities: [Ability]
     let types: [Type]
-    let sprites: [String : String]
+    let sprites: Sprite
 }

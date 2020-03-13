@@ -8,9 +8,17 @@
 
 import Foundation
 
-struct Sprite {
+struct Sprite: Codable {
     let backDefault: String
     let backShiny: String
     let frontDefault: String
     let frontShiny: String
+    
+    enum CodingKeys: String, CodingKey {
+        case backDefault = "back_default"
+        case backShiny = "back_shiny"
+        case frontDefault = "front_default"
+        case frontShiny = "front_shiny"
+    }
 }
+

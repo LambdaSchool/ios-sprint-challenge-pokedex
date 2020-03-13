@@ -9,5 +9,5 @@
 import Foundation
 
 struct Ability: Codable {
-    let Ability: Species
+    let ability: Species
 }

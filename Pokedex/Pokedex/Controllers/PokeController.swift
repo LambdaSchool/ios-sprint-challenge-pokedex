@@ -26,7 +26,7 @@ class PokeController {
     
     
     // MARK: - Methods
-    func createPokemon(name: String, id: Int, abilities: [Ability], types: [Type], sprites: [String : String]) {
+    func createPokemon(name: String, id: Int, abilities: [Ability], types: [Type], sprites: Sprite) {
         let pokemon = Pokemon(id: id, name: name, abilities: abilities, types: types, sprites: sprites)
         pokemons.append(pokemon)
         
@@ -34,7 +34,7 @@ class PokeController {
     
     func fetchPokemon(pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> ()) {
         
-        let fetchPokemonURL = baseURL.appendingPathComponent("\(pokemon)")
+        let fetchPokemonURL = baseURL.appendingPathComponent("\(pokemon.lowercased())")
         
         var request = URLRequest(url: fetchPokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -56,6 +56,7 @@ class PokeController {
             let decoder = JSONDecoder()
             do {
                 let pokeData = try decoder.decode(Pokemon.self, from: data)
+                self.pokemons.append(pokeData)
                 completion(.success(pokeData))
             } catch {
                 NSLog("Error decoding Pokemon object: \(error)")
