@@ -25,7 +25,7 @@ struct Names: Codable {
 
 struct EffectEntries: Codable {
     var effect: String  // "This Pokémon's damaging moves have a 10% chance to make the target [flinch]{mechanic:flinch} with each hit if they do not already cause flinching as a secondary effect.\n\nThis ability does not stack with a held item.\n\nOverworld: The wild encounter rate is halved while this Pokémon is first in the party.",
-    var short_effect: String // Has a 10% chance of making target Pokémon [flinch]{mechanic:flinch} with each hit.",
+    var short_effect: String? // Has a 10% chance of making target Pokémon [flinch]{mechanic:flinch} with each hit.",
     var language: Language
 }
 
@@ -71,5 +71,5 @@ struct Pokemon: Codable {
 
     var flavor_text_entries: [FlavorTextEntries]
 
-    var pokemon: [PokemonImg]
+    var pokemon: [PokemonObj]
 }
