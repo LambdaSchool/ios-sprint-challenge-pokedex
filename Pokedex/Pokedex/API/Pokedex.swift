@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 enum NetworkError: Error {
-    
+    case otherError
+    case notFound
+    case badData
 }
 
 enum HTTPMethod: String {
@@ -31,11 +34,35 @@ class Pokedex {
         
         // MARK: - Out into the world
         URLSession.shared.dataTask(with: request) { data, response, error in
-            <#code#>
+            if let _ = error {
+                completion(.failure(.otherError))
+            }
+            
+            if let response = response as? HTTPURLResponse,
+            response.statusCode != 200 {
+                completion(.failure(.notFound))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            // MARK: - Unwrap data
+            let jsonDecoder = JSONDecoder()
+            do {
+                let pokemonData = try jsonDecoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemonData))
+            } catch {
+                NSLog("Couldn't decode pokemon data: \(error)")
+            }
         }.resume()
         
     }
     
     // MARK: - Save Pokemon
+    
+    // MARK: - Convert image URL to Data
     
 }

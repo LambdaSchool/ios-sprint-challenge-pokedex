@@ -9,7 +9,7 @@
 import Foundation
 
 struct Type: Codable {
-    let typeDetail: TypeDetail
+    let type: TypeDetail
     
     struct TypeDetail: Codable {
         let name: String
