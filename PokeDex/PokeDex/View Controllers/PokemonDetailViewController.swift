@@ -43,7 +43,7 @@ class PokemonDetailViewController: UIViewController {
             title = pokemon.name
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(String(describing: pokemon.id))"
-        abilitiesLabel.text = "\(pokemon.ability)"
+        abilitiesLabel.text = "\(pokemon.abilities)"
         } else {
             self.title = "Pokemon Search"
         }
@@ -52,14 +52,14 @@ class PokemonDetailViewController: UIViewController {
     @IBAction func savePokemonTapped(_ sender: Any) {
         guard let name = nameLabel.text,
             let id = Int(idLabel.text ?? ""),
-            let ability = abilitiesLabel.text,
-            let type = typeslabel.text,
-            let image = pokemonImage.image,
+            let abilities = [pokemonController?.pokemon.abilities?.ability.name.append(abilitiesLabel?.text ?? "")],
+            let types = typeslabel.text,
+            let sprites = pokemonImage.image,
             name != ""  else { return }
             
         if let pokemon = pokemon {
             pokemonController?.pokemons.append(pokemon)
-            pokemonController?.addPokemon(withName: name, id: id, ability: ability, type: [type], image: image)
+            pokemonController?.addPokemon(withName: name, id: id, abilities: abilities, types: types, sprites: sprites)
         }
             self.navigationController?.popViewController(animated: true)
         }
@@ -79,13 +79,13 @@ extension PokemonDetailViewController: UISearchBarDelegate {
             }
         })
         
-        pokemonController?.pokemonImage(at: pokemon?.image?.url ?? "", completion: { result in
-            if let image = try? result.get() {
-                DispatchQueue.main.async {
-                    self.pokemonImage.image = image
-                }
-            }
-        })
+//        pokemonController?.pokemonImage(at: pokemon?.sprites.url ?? "", completion: { result in
+//            if let image = try? result.get() {
+//                DispatchQueue.main.async {
+//                    self.pokemonImage.image = image
+//                }
+//            }
+//        })
     }
 }
 

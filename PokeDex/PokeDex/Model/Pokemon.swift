@@ -11,35 +11,42 @@ import Foundation
 struct Pokemon: Codable {
     var name: String
     var id: Int?
-    var ability: Abilities?
-    var type: Type?
-    var image: Image?
+    var abilities: Abilities?
+    var types: Types?
+    var sprites: PokemonSprite
     
 
 }
 
-//struct PokemonSprite: Codable {
-//    let name: String
-//
-//    enum CodingKeys: String, CodingKey {
-//        case name = "front_default"
-//    }
-struct Type: Codable {
+struct PokemonSprite: Codable {
+    let name: String
+
+    enum CodingKeys: String, CodingKey {
+        case name = "front_default"
+    }
+}
+
+struct Types: Codable {
     var name: [String] = []
 }
 
 struct Abilities: Codable {
-    var name: [String] = []
-}
-
-struct Image: Codable {
-    var defaultImage: String
-    var url: String = "http://pokeapi.co/media/sprites/pokemon/"
+    var isHidden: Bool
+    var slot: Int
+    var ability: Ability
     
     enum CodingKeys: String, CodingKey {
-        case defaultImage = "front_default"
+        case isHidden = "is_hidden"
+        case slot = "slot"
+        case ability = "ability"
     }
 }
+
+struct Ability: Codable {
+    var name: [String]
+    var url: String
+}
+
 
 struct PokemonSearchResults: Codable {
     var results: Pokemon
