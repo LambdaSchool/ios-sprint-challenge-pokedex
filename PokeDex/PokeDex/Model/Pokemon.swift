@@ -34,7 +34,7 @@ struct Abilities: Codable {
 
 struct Image: Codable {
     var defaultImage: String
-    var url: String = "http://pokeapi.co/media/sprites/pokemon/\(Pokemon.id).png"
+    var url: String = "http://pokeapi.co/media/sprites/pokemon/"
     
     enum CodingKeys: String, CodingKey {
         case defaultImage = "front_default"

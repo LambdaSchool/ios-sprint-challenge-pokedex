@@ -77,5 +77,13 @@ extension PokemonDetailViewController: UISearchBarDelegate {
                 self.updateViews()
             }
         })
+        
+        pokemonController?.pokemonImage(at: pokemon?.image.url ?? "", completion: { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImage.image = image
+                }
+            }
+        })
     }
 }
