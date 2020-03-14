@@ -25,7 +25,7 @@ class PokemonController {
     var pokemon: Pokemon!
     
     func addPokemon(withName name: String, id: Int, ability: Abilities, type: Type, image: Image) {
-        let pokemon = Pokemon(name: name, id: id, ability: [ability], type: [type], image: image)
+        let pokemon = Pokemon(name: name, id: id, ability: ability, type: type, image: image)
         pokemons.append(pokemon)
     }
     

@@ -10,10 +10,10 @@ import Foundation
  
 struct Pokemon: Codable {
     var name: String
-    var id: Int
-    var ability: [Abilities]
-    var type: [Type]
-    var image: Image
+    var id: Int?
+    var ability: Abilities?
+    var type: Type?
+    var image: Image?
     
 
 }
@@ -25,11 +25,11 @@ struct Pokemon: Codable {
 //        case name = "front_default"
 //    }
 struct Type: Codable {
-    var name: String
+    var name: [String] = []
 }
 
 struct Abilities: Codable {
-    var name: String
+    var name: [String] = []
 }
 
 struct Image: Codable {
@@ -42,5 +42,5 @@ struct Image: Codable {
 }
 
 struct PokemonSearchResults: Codable {
-    var results: [Pokemon]
+    var results: Pokemon
 }
