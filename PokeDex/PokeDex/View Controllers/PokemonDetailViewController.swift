@@ -42,7 +42,7 @@ class PokemonDetailViewController: UIViewController {
         guard let pokemon = pokemon else { return }
             title = pokemon.name
         nameLabel.text = pokemon.name
-        idLabel.text = "ID: \(String(describing: pokemon.id))"
+        idLabel.text = "ID: \(pokemon.id)"
         abilitiesLabel.text = "\(pokemon.abilities)"
         } else {
             self.title = "Pokemon Search"
@@ -73,9 +73,9 @@ class PokemonDetailViewController: UIViewController {
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
+//        guard let searchTerm = searchBar.text else { return }
         
-        pokemonController?.pokemonSearch(searchTerm: searchTerm, completion: { error in
+        pokemonController?.pokemonSearch(completion: { error in
             if let error = error {
                 NSLog("Error in search: \(error)")
             } else {
@@ -83,13 +83,13 @@ extension PokemonDetailViewController: UISearchBarDelegate {
             }
         })
         
-//        pokemonController?.pokemonImage(at: pokemon?.sprites.url ?? "", completion: { result in
-//            if let image = try? result.get() {
-//                DispatchQueue.main.async {
-//                    self.pokemonImage.image = image
-//                }
-//            }
-//        })
+        pokemonController?.pokemonImage(at: pokemon?.sprites.name ?? "", completion: { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImage.image = image
+                }
+            }
+        })
     }
 }
 

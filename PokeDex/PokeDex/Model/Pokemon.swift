@@ -27,13 +27,13 @@ struct PokemonSprite: Codable {
 }
 
 struct Types: Codable {
-    var name: [String] = []
+    var name: [String]
 }
 
 struct Abilities: Codable {
     var isHidden: Bool
     var slot: Int
-    var ability: Ability
+    var ability = [Ability]()
     
     enum CodingKeys: String, CodingKey {
         case isHidden = "is_hidden"
@@ -43,11 +43,11 @@ struct Abilities: Codable {
 }
 
 struct Ability: Codable {
-    var name: [String]
+    var name: String
     var url: String
 }
 
-
 struct PokemonSearchResults: Codable {
     var results: Pokemon
+
 }

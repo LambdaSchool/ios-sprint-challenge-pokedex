@@ -18,15 +18,16 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/name/")!
     private let imageURL = URL(string: "http://pokeapi.co/media/sprites/pokemon")!
     
-    var pokemons: [Pokemon] = []
+    var pokemons = [Pokemon]()
     var pokemon: Pokemon!
     
     func addPokemonToList(with pokemonName: Pokemon) {
         let newPokemon = pokemonName
-        pokemons.append(newPokemon)
+//        pokemons.append(newPokemon)
+        print(newPokemon)
         
     }
 //    func addPokemon(withName name: String, id: Int, abilities: Abilities, types: Types, sprites: PokemonSprite) {
@@ -34,9 +35,9 @@ class PokemonController {
 //        pokemons.append(pokemon)
 //    }
     
-    func pokemonSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
+    func pokemonSearch(completion: @escaping (Error?) -> Void) {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "name", value: searchTerm)
+        let searchTermQueryItem = URLQueryItem(name: "name", value: "")
         urlComponents?.queryItems = [searchTermQueryItem]
         guard let requestURL = urlComponents?.url else {
             NSLog("request URL is nil")
@@ -62,6 +63,7 @@ class PokemonController {
             let jsonDecoder = JSONDecoder()
             do {
                 let pokemonSearch = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
+                print(pokemonSearch)
                 self.pokemons.append(pokemonSearch.results)
                 
             } catch {
@@ -71,41 +73,41 @@ class PokemonController {
         }.resume()
     }
     
-//    func pokemonImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-//        
-//        //        let imageUrl = baseURL.appendingPathComponent("\(pokemon.id).png")
-//        if pokemon != nil {
-//            guard let imageUrl = URL(string: "\(urlString)\(pokemon.id).png") else {
-//                completion(.failure(.badUrl))
-//                return
-//            }
-//            
-//            var request = URLRequest(url: imageUrl)
-//            request.httpMethod = "GET"
-//            
-//            URLSession.shared.dataTask(with: request) { data, response, error in
-//                if let error = error {
-//                    NSLog("Error receiving pokemon image data: \(error)")
-//                    completion(.failure(.otherError))
-//                    return
-//                }
-//                
-//                guard let data = data else {
-//                    NSLog("GitHub responded with no image data.")
-//                    completion(.failure(.badData))
-//                    return
-//                }
-//                
-//                guard let image = UIImage(data: data) else {
-//                    NSLog("Image data is incomplete or corrupted.")
-//                    completion(.failure(.badData))
-//                    return
-//                }
-//                
-//                completion(.success(image))
-//            }.resume()
-//        }
-//    }
+    func pokemonImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        //        let imageUrl = baseURL.appendingPathComponent("\(pokemon.id).png")
+        if pokemon != nil {
+            guard let imageUrl = URL(string: "\(urlString)\(pokemon.id).png") else {
+                completion(.failure(.badUrl))
+                return
+            }
+            
+            var request = URLRequest(url: imageUrl)
+            request.httpMethod = "GET"
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    NSLog("Error receiving pokemon image data: \(error)")
+                    completion(.failure(.otherError))
+                    return
+                }
+                
+                guard let data = data else {
+                    NSLog("GitHub responded with no image data.")
+                    completion(.failure(.badData))
+                    return
+                }
+                
+                guard let image = UIImage(data: data) else {
+                    NSLog("Image data is incomplete or corrupted.")
+                    completion(.failure(.badData))
+                    return
+                }
+                
+                completion(.success(image))
+            }.resume()
+        }
+    }
 }
 
 
