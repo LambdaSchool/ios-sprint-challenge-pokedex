@@ -7,47 +7,50 @@
 //
 
 import Foundation
- 
+
 struct Pokemon: Codable {
-    var name: String
-    var id: Int?
-    var abilities: [Abilities]?
-    var types: Types?
-    var sprites: PokemonSprite
-    
-
-}
-
-struct PokemonSprite: Codable {
     let name: String
-
-    enum CodingKeys: String, CodingKey {
-        case name = "front_default"
-    }
-}
-
-struct Types: Codable {
-    var name: [String]
-}
-
-struct Abilities: Codable {
-    var isHidden: Bool
-    var slot: Int
-    var ability = [Ability]()
+    let id: Int
+    let abilities: [Abilities]
+    let types: [Types]
+    let sprites: PokemonSprite
     
-    enum CodingKeys: String, CodingKey {
-        case isHidden = "is_hidden"
-        case slot = "slot"
-        case ability = "ability"
+    struct PokemonSprite: Codable {
+        let name: String
+        
+        enum CodingKeys: String, CodingKey {
+            case name = "front_default"
+        }
     }
-}
-
-struct Ability: Codable {
-    var name: String
-    var url: String
+    
+    struct Types: Codable {
+        let slot: Int
+        let type: TypeElements
+        
+        struct TypeElements: Codable {
+            let name: String
+            let url: String
+        }
+    }
+    
+    struct Abilities: Codable {
+        let isHidden: Bool
+        let slot: Int
+        let ability: Ability
+        
+        enum CodingKeys: String, CodingKey {
+            case isHidden = "is_hidden"
+            case slot = "slot"
+            case ability = "ability"
+        }
+        struct Ability: Codable {
+            let name: String
+            let url: String
+        }
+    }
 }
 
 struct PokemonSearchResults: Codable {
-    var results: Pokemon
-
+    let results: Pokemon
 }
+

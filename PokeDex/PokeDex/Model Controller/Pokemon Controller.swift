@@ -63,7 +63,7 @@ class PokemonController {
             let jsonDecoder = JSONDecoder()
             do {
                 let pokemonSearch = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                print(pokemonSearch)
+//                print(pokemonSearch)
                 self.pokemons.append(pokemonSearch.results)
                 
             } catch {
