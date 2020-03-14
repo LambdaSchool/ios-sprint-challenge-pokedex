@@ -9,13 +9,13 @@
 import Foundation
 
 struct Pokemon: Codable {
-    let name: String
-    let id: Int
-    let abilities: [Abilities]
-    let types: [Types]
-    let sprites: PokemonSprite
+    let name: String?
+    let id: Int?
+    let abilities: [Abilities]?
+    let types: [Types]?
+    let sprites: Sprites?
     
-    struct PokemonSprite: Codable {
+    struct Sprites: Codable {
         let name: String
         
         enum CodingKeys: String, CodingKey {
@@ -25,9 +25,9 @@ struct Pokemon: Codable {
     
     struct Types: Codable {
         let slot: Int
-        let type: TypeElements
+        let type: Type
         
-        struct TypeElements: Codable {
+        struct `Type`: Codable {
             let name: String
             let url: String
         }

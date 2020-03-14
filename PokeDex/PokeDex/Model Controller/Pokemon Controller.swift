@@ -22,7 +22,7 @@ class PokemonController {
     private let imageURL = URL(string: "http://pokeapi.co/media/sprites/pokemon")!
     
     var pokemons = [Pokemon]()
-    var pokemon: Pokemon!
+    var pokemon: Pokemon?
     
     func addPokemonToList(with pokemonName: Pokemon) {
         let newPokemon = pokemonName
@@ -37,7 +37,7 @@ class PokemonController {
     
     func pokemonSearch(completion: @escaping (Error?) -> Void) {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "name", value: "")
+        let searchTermQueryItem = URLQueryItem(name: " ", value: " ")
         urlComponents?.queryItems = [searchTermQueryItem]
         guard let requestURL = urlComponents?.url else {
             NSLog("request URL is nil")
@@ -62,9 +62,9 @@ class PokemonController {
             
             let jsonDecoder = JSONDecoder()
             do {
-                let pokemonSearch = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-//                print(pokemonSearch)
-                self.pokemons.append(pokemonSearch.results)
+                let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
+                print(pokemonSearch)
+                self.pokemons.append(pokemonSearch)
                 
             } catch {
                 NSLog("Unable to decode data into object of type [Pokemon]: \(error)")
@@ -77,7 +77,7 @@ class PokemonController {
         
         //        let imageUrl = baseURL.appendingPathComponent("\(pokemon.id).png")
         if pokemon != nil {
-            guard let imageUrl = URL(string: "\(urlString)\(pokemon.id).png") else {
+            guard let imageUrl = URL(string: "\(urlString)\(pokemon?.id).png") else {
                 completion(.failure(.badUrl))
                 return
             }
