@@ -24,14 +24,19 @@ class PokemonController {
     var pokemons: [Pokemon] = []
     var pokemon: Pokemon!
     
-    func addPokemon(withName name: String, id: Int, abilities: Abilities, types: Types, sprites: PokemonSprite) {
-        let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
-        pokemons.append(pokemon)
+    func addPokemonToList(with pokemonName: Pokemon) {
+        let newPokemon = pokemonName
+        pokemons.append(newPokemon)
+        
     }
+//    func addPokemon(withName name: String, id: Int, abilities: Abilities, types: Types, sprites: PokemonSprite) {
+//        let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
+//        pokemons.append(pokemon)
+//    }
     
     func pokemonSearch(searchTerm: String, completion: @escaping (Error?) -> Void) {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "name", value: pokemon.name)
+        let searchTermQueryItem = URLQueryItem(name: "name", value: searchTerm)
         urlComponents?.queryItems = [searchTermQueryItem]
         guard let requestURL = urlComponents?.url else {
             NSLog("request URL is nil")

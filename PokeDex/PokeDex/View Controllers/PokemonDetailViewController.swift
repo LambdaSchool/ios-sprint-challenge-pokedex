@@ -50,16 +50,20 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        guard let name = nameLabel.text,
-            let id = Int(idLabel.text ?? ""),
-            let abilities = [pokemonController?.pokemon.abilities?.ability.name.append(abilitiesLabel?.text ?? "")],
-            let types = typeslabel.text,
-            let sprites = pokemonImage.image,
-            name != ""  else { return }
+//        var abilitiesArray: [String] = []
+//        abilitiesArray.append(abilitiesLabel.text ?? "")
+//        var joinedArray = abilitiesArray.joined(separator: ", ")
+//
+//        guard let name = nameLabel.text,
+//            let id = Int(idLabel.text ?? ""),
+//            let abilities = joinedArray,
+//            let types = typeslabel.text,
+//            let sprites = pokemonImage.image,
+//            name != ""  else { return }
             
         if let pokemon = pokemon {
             pokemonController?.pokemons.append(pokemon)
-            pokemonController?.addPokemon(withName: name, id: id, abilities: abilities, types: types, sprites: sprites)
+            pokemonController?.addPokemonToList(with: pokemon)
         }
             self.navigationController?.popViewController(animated: true)
         }
