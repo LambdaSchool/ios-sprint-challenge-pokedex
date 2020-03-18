@@ -9,14 +9,14 @@
 import Foundation
 
 struct Pokemon: Codable {
-    let name: String
-    let id: Int
-    let abilities: [Abilities]
-    let types: [Types]
-    let sprites: Sprites
+    var name: String
+    var id: Int
+    var abilities: [Abilities]
+    var types: [Types]
+    var sprites: Sprites
     
     struct Sprites: Codable {
-        let name: String
+        var name: String
         
         enum CodingKeys: String, CodingKey {
             case name = "front_default"
@@ -24,28 +24,28 @@ struct Pokemon: Codable {
     }
     
     struct Types: Codable {
-        let slot: Int
+//        let slot: Int
         let type: Type
         
         struct `Type`: Codable {
             let name: String
-            let url: String
+//            let url: String
         }
     }
     
     struct Abilities: Codable {
-        let isHidden: Bool
-        let slot: Int
+//        let isHidden: Bool
+//        let slot: Int
         let ability: Ability
         
         enum CodingKeys: String, CodingKey {
-            case isHidden = "is_hidden"
-            case slot = "slot"
+//            case isHidden = "is_hidden"
+//            case slot = "slot"
             case ability = "ability"
         }
         struct Ability: Codable {
             let name: String
-            let url: String
+//            let url: String
         }
     }
 }

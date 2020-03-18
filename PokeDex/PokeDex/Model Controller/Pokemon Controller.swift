@@ -18,8 +18,9 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/name/")!
-    private let imageURL = URL(string: "http://pokeapi.co/media/sprites/pokemon")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    private let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon")!
+    private var searchBar = UISearchBar()
     
     var pokemons = [Pokemon]()
     var pokemon: Pokemon?
@@ -30,22 +31,13 @@ class PokemonController {
         print(newPokemon)
         
     }
-//    func addPokemon(withName name: String, id: Int, abilities: Abilities, types: Types, sprites: PokemonSprite) {
-//        let pokemon = Pokemon(name: name, id: id, abilities: abilities, types: types, sprites: sprites)
-//        pokemons.append(pokemon)
-//    }
+
     
-    func pokemonSearch(completion: @escaping (Error?) -> Void) {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: " ", value: " ")
-        urlComponents?.queryItems = [searchTermQueryItem]
-        guard let requestURL = urlComponents?.url else {
-            NSLog("request URL is nil")
-            return
-        }
+    func pokemonSearch(for searchTerm: String, completion: @escaping (Error?) -> Void) {
+        let searchTerm = searchBar.text?.lowercased() ?? ""
         
-        //        let pokemonNameURL = baseURL.appendingPathComponent("\(pokemon.name)")
-        var request = URLRequest(url: requestURL)
+        let pokemonNameURL = baseURL.appendingPathComponent(searchTerm)
+        var request = URLRequest(url: pokemonNameURL)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
@@ -75,9 +67,9 @@ class PokemonController {
     
     func pokemonImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         
-        //        let imageUrl = baseURL.appendingPathComponent("\(pokemon.id).png")
+        let urlString = baseURL.appendingPathComponent("\(pokemon?.id).png")
         if pokemon != nil {
-            guard let imageUrl = URL(string: "\(urlString)\(pokemon?.id).png") else {
+            guard let imageUrl = URL(string: "\(urlString)") else {
                 completion(.failure(.badUrl))
                 return
             }
