@@ -18,11 +18,11 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     private let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon")!
     private var searchBar = UISearchBar()
     
-    var pokemons = [Pokemon]()
+    var pokemons: [Pokemon] = []
     var pokemon: Pokemon?
     
     func addPokemonToList(with pokemonName: Pokemon) {
@@ -54,9 +54,8 @@ class PokemonController {
             
             let jsonDecoder = JSONDecoder()
             do {
-                let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
-                print(pokemonSearch)
-                self.pokemons.append(pokemonSearch)
+                let pokemonSearch = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
+                self.pokemons.append(pokemonSearch.results)
                 
             } catch {
                 NSLog("Unable to decode data into object of type [Pokemon]: \(error)")
@@ -67,7 +66,8 @@ class PokemonController {
     
     func pokemonImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         
-        let urlString = baseURL.appendingPathComponent("\(pokemon?.id).png")
+        let pokemonId = "\(pokemon?.id).png"
+        let urlString = baseURL.appendingPathComponent(pokemonId)
         if pokemon != nil {
             guard let imageUrl = URL(string: "\(urlString)") else {
                 completion(.failure(.badUrl))

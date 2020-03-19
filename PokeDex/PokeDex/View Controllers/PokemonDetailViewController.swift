@@ -71,7 +71,7 @@ class PokemonDetailViewController: UIViewController {
     
     func fetchImage() {
         if pokemon != nil {
-            pokemonController?.pokemonImage(at: pokemon.sprites.name, completion: { result in
+            pokemonController?.pokemonImage(at: pokemon?.sprites?.name ?? "", completion: { result in
                 if let image = try? result.get() {
                     DispatchQueue.main.async {
                         self.pokemonImage.image = image

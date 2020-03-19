@@ -9,11 +9,11 @@
 import Foundation
 
 struct Pokemon: Codable {
-    var name: String
-    var id: Int
-    var abilities: [Abilities]
-    var types: [Types]
-    var sprites: Sprites
+    var name: String?
+    var id: Int?
+    var abilities: [Abilities]?
+    var types: [Types]?
+    var sprites: Sprites?
     
     struct Sprites: Codable {
         var name: String
