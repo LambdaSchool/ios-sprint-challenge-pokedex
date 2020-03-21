@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="O4k-M4-3Uu" style="IBUITableViewCellStyleDefault" id="lmF-ZX-TpO">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="O4k-M4-3Uu" style="IBUITableViewCellStyleDefault" id="lmF-ZX-TpO">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lmF-ZX-TpO" id="0pC-tv-l9a">
@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ael-eH-YNq" kind="show" identifier="showClickedPokemon" id="is4-lY-hkR"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -138,18 +141,18 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="g4a-cs-oq7"/>
                     <connections>
-                        <outlet property="PokemonView" destination="tcw-wM-hH2" id="eMb-Hl-Eae"/>
+                        <outlet property="PokemonView" destination="TIb-CK-dpB" id="8Jg-jP-msB"/>
                         <outlet property="pokemonAbilitiesLabel" destination="c7I-rp-7ed" id="nhz-bO-WYj"/>
                         <outlet property="pokemonIDLabel" destination="ZqH-Aj-G13" id="55a-5P-9NA"/>
                         <outlet property="pokemonImage" destination="1us-y9-eb4" id="esh-d2-X4z"/>
-                        <outlet property="pokemonLabel" destination="tcw-wM-hH2" id="zvF-kH-Dwt"/>
+                        <outlet property="pokemonLabel" destination="TIb-CK-dpB" id="ViG-Ns-TCV"/>
                         <outlet property="pokemonSearchBar" destination="zQJ-so-gnP" id="zRf-k0-Lcw"/>
                         <outlet property="pokemonTypeLabel" destination="BuI-nr-I28" id="thR-dP-Zf9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygR-fX-PpI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="917.39130434782612" y="59.598214285714285"/>
+            <point key="canvasLocation" x="1178" y="65"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1BX-H7-ac2">
@@ -168,4 +171,7 @@
             <point key="canvasLocation" x="-465" y="65"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="is4-lY-hkR"/>
+    </inferredMetricsTieBreakers>
 </document>

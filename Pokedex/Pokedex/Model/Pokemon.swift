@@ -34,7 +34,7 @@ struct Pokemon: Codable {
     }
     
     struct Image: Codable {
-        let defaultImageURL: String
+        let defaultImageURL: URL
         
         enum CodingKeys: String, CodingKey {
             case defaultImageURL = "front_default"
