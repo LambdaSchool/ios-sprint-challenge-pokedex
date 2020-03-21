@@ -9,9 +9,24 @@
 import Foundation
 
 struct Pokemon: Codable {
-    var id: Int
-    var name: String
-    var ability: String
-    var type: String
+    let abilities: [AbilityElement]
+    let name: String
+    let id: String
+    let types: [TypeElement]
+
+    struct AbilityElement: Codable {
+        let ability: Ability
+      
+        struct Ability: Codable {
+            let name: String
+        }
+    }
     
+    struct TypeElement: Codable {
+        let type: TypeName
+        
+        struct TypeName: Codable {
+            let name: String
+        }
+    }
 }
