@@ -17,6 +17,8 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonTypeLabel: UILabel!
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
     
+    // MARK: - Properties
+    var pokemonController: PokemonController!
     
 
     override func viewDidLoad() {

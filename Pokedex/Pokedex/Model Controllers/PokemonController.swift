@@ -24,24 +24,26 @@ enum NetworkError: Error {
 class PokemonController {
     
     // MARK: - Private Properties
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     // MARK: - Public Properites
     var pokemonList: [Pokemon] = []
     
     // MARK: - Private Methods
     
-    func fetchPokemon(for searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+//        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+//
+//        let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
+//
+//        urlComponents?.queryItems = [searchTermQueryItem]
         
-        let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
+//        guard let requestUrl = urlComponents?.url else { return }
         
-        urlComponents?.queryItems = [searchTermQueryItem]
+        let pokemonUrl = baseURL.appendingPathComponent(name.lowercased())
         
-        guard let requestUrl = urlComponents?.url else { return }
-        
-        var request = URLRequest(url: requestUrl)
+        var request = URLRequest(url: pokemonUrl)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
