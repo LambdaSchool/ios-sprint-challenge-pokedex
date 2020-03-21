@@ -17,6 +17,10 @@ class PokedexTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.reloadData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -37,9 +41,11 @@ class PokedexTableViewController: UITableViewController {
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let pokemon = pokemonController.savedPokemon[indexPath.row]
         if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            pokemonController.delete(pokemon: pokemon)
         }
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 
 

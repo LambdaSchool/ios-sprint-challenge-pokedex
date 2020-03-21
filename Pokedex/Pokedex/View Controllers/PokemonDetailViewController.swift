@@ -10,6 +10,7 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    
     // MARK: - Properties
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
@@ -36,6 +37,11 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
+        if let pokemonController = pokemonController,
+            let pokemon = pokemon {
+            pokemonController.save(pokemon: pokemon)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     // MARK: - Functions
@@ -47,7 +53,6 @@ class PokemonDetailViewController: UIViewController {
         }
         
         showUIView()
-        pokemonSearchBar.isHidden = true
         pokemonLabel.text = pokemon.name.capitalized
         guard let imageData = try? Data(contentsOf: pokemon.sprites.defaultImageURL) else { fatalError() }
         pokemonImage.image = UIImage(data: imageData)
@@ -69,10 +74,16 @@ class PokemonDetailViewController: UIViewController {
     }
     
     func hideUIView() {
-        
+        PokemonView.isHidden = true
+        pokemonIDLabel.isHidden = true
+        pokemonTypeLabel.isHidden = true
+        pokemonAbilitiesLabel.isHidden = true
     }
     func showUIView() {
-        
+        PokemonView?.isHidden = false
+        pokemonIDLabel?.isHidden = false
+        pokemonTypeLabel?.isHidden = false
+        pokemonAbilitiesLabel?.isHidden = false
     }
 }
 
