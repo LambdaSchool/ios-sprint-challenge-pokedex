@@ -17,18 +17,21 @@ struct Pokemon: Codable {
 }
 struct Ability: Codable {
     let ability: Ability
+    
     struct Ability: Codable {
         let name: String
     }
 }
 struct PokeType: Codable {
     let type: PokeType
+    
     struct PokeType: Codable {
         let name: String
     }
 }
 struct Sprite: Codable {
     let imageURL: String
+    
     enum CodingKeys: String, CodingKey {
         case imageURL = "front_shiny"
     }

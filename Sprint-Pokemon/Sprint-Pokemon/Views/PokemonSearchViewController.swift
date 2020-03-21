@@ -31,33 +31,40 @@ class PokemonSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateViews(pokemon: pokemon)
         searchBar.delegate = self
     }
     
     func updateViews(pokemon: Pokemon?) {
         if let pokemon = pokemon {
+            self.title = pokemon.name
             spriteNameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
-//            typeLabel.text = pokemon.types
-//            abilitiesLabel.text = pokemon.abilities
+            typeLabel.text = "\(pokemon.types)"
+            abilitiesLabel.text = "\(pokemon.abilities)"
+          
             
         }
-        
     }
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        pokemonController.performSearch(searchTerm: searchTerm) { (error) in
-            if let error = error {
-                print(error)
-                return
-            }
+        pokemonController.performSearch(searchTerm: searchTerm) { (result) in
+            
+            guard let pokemon = try? result.get() else { return }
             
             DispatchQueue.main.async {
-                self.updateViews(pokemon: self.pokemon)
+                self.updateViews(pokemon: pokemon)
+            }
+            self.pokemonController.fetchImage(at: pokemon.sprites.imageURL) { (result) in
+                guard let image = try? result.get() else { return }
+                
+                DispatchQueue.main.async {
+                    self.spriteImage.image = image
             }
         }
+    }
     }
 }
