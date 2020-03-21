@@ -15,14 +15,22 @@ class SearchViewController: UIViewController {
     private var pokemonVC: PokemonViewController!
 
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hideViews(true)
     }    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let pokemonVC = segue.destination as? PokemonViewController else { return }
         self.pokemonVC = pokemonVC
+    }
+    
+    private func hideViews(_ hidden: Bool) {
+        pokemonVC.view.isHidden = hidden
+        saveButton.isHidden = hidden
     }
     
     @IBAction func saveButtonWasPressed(_ sender: Any) {
@@ -40,6 +48,7 @@ extension SearchViewController: UISearchBarDelegate {
             case .success(let pokemon):
                 DispatchQueue.main.async {
                     self.pokemonVC.pokemon = pokemon
+                    self.hideViews(false)
                 }
             case .failure(let networkError):
                 print("network error: \(networkError)")
