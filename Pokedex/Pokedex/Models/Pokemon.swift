@@ -13,6 +13,11 @@ struct Pokemon: Codable {
     let id: Int
 //    let abilities: [PokemonAbility]
 //    let types: [PokemonType]
+    let sprites: Sprites
+}
+
+struct Sprites: Codable {
+    let front_default: String
 }
 
 struct PokemonAbility: Codable {

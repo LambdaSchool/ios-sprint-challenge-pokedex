@@ -20,7 +20,7 @@ class APIController {
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
     
     func getPokemon(_ query: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let url = baseUrl.appendingPathComponent("pokemon/\(query)")
+        let url = baseUrl.appendingPathComponent("pokemon/\(query.lowercased())")
         print(url)
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -42,6 +42,27 @@ class APIController {
             } catch {
                 completion(.failure(.decodeFailed))
             }
+        }.resume()
+    }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageUrl = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = "GET"
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            guard error == nil else {
+                completion(.failure(.otherError(error!)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
         }.resume()
     }
 }

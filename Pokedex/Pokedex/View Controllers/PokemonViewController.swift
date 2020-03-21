@@ -15,7 +15,7 @@ class PokemonViewController: UIViewController {
             updateViews()
         }
     }
-    var apiController: APIController!
+    var apiController = APIController() // TODO: pass this in
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -37,6 +37,13 @@ class PokemonViewController: UIViewController {
     }
     
     private func getImage() {
-        
+        guard let pokemon = pokemon else { return }
+        self.apiController.fetchImage(at: pokemon.sprites.front_default) { result in
+            guard let image = try? result.get() else { return }
+            
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
 }
