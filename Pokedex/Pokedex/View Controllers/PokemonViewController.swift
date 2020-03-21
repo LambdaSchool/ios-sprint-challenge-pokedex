@@ -12,10 +12,10 @@ class PokemonViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
-            updateViews()
+            if isViewLoaded { updateViews() }
         }
     }
-    var apiController = APIController() // TODO: pass this in
+    var apiController: APIController?
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -25,20 +25,24 @@ class PokemonViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
+        
+        navigationItem.title = pokemon.name.capitalized
         nameLabel.text = pokemon.name.capitalized
-        getImage()
+        setImage()
         idLabel.text = "\(pokemon.id)"
-        //typesLabel.text = String(describing: pokemon.types)
-        //abilitiesLabel.text = String(describing: pokemon.abilities)
+        typesLabel.text = pokemon.types.map { $0.type.name.capitalized }.joined(separator: ", ")
+        abilitiesLabel.text = pokemon.abilities.map { $0.ability.name.capitalized }.joined(separator: ", ")
     }
     
-    private func getImage() {
+    private func setImage() {
         guard let pokemon = pokemon else { return }
-        self.apiController.fetchImage(at: pokemon.sprites.front_default) { result in
+        
+        self.apiController?.fetchImage(at: pokemon.sprites.front_default) { result in
             guard let image = try? result.get() else { return }
             
             DispatchQueue.main.async {
