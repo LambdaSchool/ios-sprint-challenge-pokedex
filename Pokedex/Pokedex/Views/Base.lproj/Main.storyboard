@@ -33,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="slk-dP-tko" kind="show" id="1jg-Uw-Xi1"/>
+                                    <segue destination="slk-dP-tko" kind="show" identifier="PokemonDetailSegue" id="1jg-Uw-Xi1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="xME-rx-fn4">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="dKv-9Y-LD9">
                             <connections>
-                                <segue destination="yXM-1J-gik" kind="show" id="WxZ-8n-1dK"/>
+                                <segue destination="yXM-1J-gik" kind="show" identifier="SearchPokemonSegue" id="WxZ-8n-1dK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -144,6 +144,13 @@
                         <viewLayoutGuide key="safeArea" id="qNV-53-KyQ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Name" id="Ev5-6i-oXi"/>
+                    <connections>
+                        <outlet property="pokemonAbilitiesLabel" destination="tcW-X4-Pky" id="eaJ-OY-CHj"/>
+                        <outlet property="pokemonIdNumber" destination="gkP-GC-1rd" id="gCA-6b-uG4"/>
+                        <outlet property="pokemonImage" destination="pc1-A7-Oqg" id="GpW-dd-hwE"/>
+                        <outlet property="pokemonNameLabel" destination="BXk-bT-Qxy" id="IQm-fc-TXm"/>
+                        <outlet property="pokemonTypeLabel" destination="Sca-YN-jDQ" id="nZV-ps-meT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ekb-wp-Awc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -233,6 +240,9 @@
                                 <rect key="frame" x="153.5" y="764.5" width="107" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="yXM-1J-gik" eventType="touchUpInside" id="Me6-Pc-CmI"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -253,6 +263,14 @@
                         <viewLayoutGuide key="safeArea" id="zEG-0N-Pq1"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="SfP-HW-kcj"/>
+                    <connections>
+                        <outlet property="pokemonAbilitiesLabel" destination="38M-gL-grk" id="OMR-Oh-aGM"/>
+                        <outlet property="pokemonIdNumber" destination="He3-Ke-FWJ" id="L24-YK-xu9"/>
+                        <outlet property="pokemonImage" destination="wWY-jx-HEc" id="RsR-zz-HtI"/>
+                        <outlet property="pokemonNameLabel" destination="sBa-pQ-LHz" id="wNC-s7-NTJ"/>
+                        <outlet property="pokemonTypeLabel" destination="IQl-Bq-ccd" id="kmX-K0-gz5"/>
+                        <outlet property="searchBar" destination="rKv-d6-Jke" id="PjJ-uu-jmd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xo8-7B-OAY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

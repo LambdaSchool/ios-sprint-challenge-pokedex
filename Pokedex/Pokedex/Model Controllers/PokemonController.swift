@@ -27,7 +27,7 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     // MARK: - Public Properites
-    var pokemonResult: [Pokemon] = []
+    var pokemonList: [Pokemon] = []
     
     // MARK: - Private Methods
     
@@ -35,10 +35,9 @@ class PokemonController {
         
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         
-        let parameter: [String: String] = ["term": searchTerm]
-        let queryItem = parameter.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
+        let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
         
-        urlComponents?.queryItems = queryItem
+        urlComponents?.queryItems = [searchTermQueryItem]
         
         guard let requestUrl = urlComponents?.url else { return }
         
@@ -60,8 +59,8 @@ class PokemonController {
             
             let jsonDecoder = JSONDecoder()
             do {
-                let searchResult = try jsonDecoder.decode(Pokemon.self, from: data)
-                completion(.success(searchResult))
+                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemon))
             } catch {
                 print("Error decoding Pokemon object: \(error)")
                 completion(.failure(.decodeFailed))
