@@ -29,7 +29,7 @@ class PokemonViewController: UIViewController {
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
-        nameLabel.text = pokemon.name
+        nameLabel.text = pokemon.name.capitalized
         getImage()
         idLabel.text = "\(pokemon.id)"
         //typesLabel.text = String(describing: pokemon.types)
