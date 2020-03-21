@@ -11,8 +11,8 @@ import Foundation
 struct Pokemon: Codable {
     let name: String
     let id: Int
-    let abilities: [PokemonAbility]
-    let types: [PokemonType]
+//    let abilities: [PokemonAbility]
+//    let types: [PokemonType]
 }
 
 struct PokemonAbility: Codable {

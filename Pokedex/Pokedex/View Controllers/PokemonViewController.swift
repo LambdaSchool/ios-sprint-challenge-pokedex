@@ -10,7 +10,11 @@ import UIKit
 
 class PokemonViewController: UIViewController {
     
-    var pokemon: Pokemon!
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     var apiController: APIController!
 
     @IBOutlet weak var nameLabel: UILabel!
@@ -21,16 +25,15 @@ class PokemonViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        updateViews()
-        getImage()
     }
     
     private func updateViews() {
+        guard let pokemon = pokemon else { return }
         nameLabel.text = pokemon.name
+        getImage()
         idLabel.text = "\(pokemon.id)"
-        typesLabel.text = String(describing: pokemon.types)
-        abilitiesLabel.text = String(describing: pokemon.abilities)
+        //typesLabel.text = String(describing: pokemon.types)
+        //abilitiesLabel.text = String(describing: pokemon.abilities)
     }
     
     private func getImage() {

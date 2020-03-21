@@ -9,15 +9,41 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+    
+    var apiController: APIController!
+    
+    private var pokemonVC: PokemonViewController!
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }    
 
-    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let pokemonVC = segue.destination as? PokemonViewController else { return }
+        self.pokemonVC = pokemonVC
     }
-    */
+    
+    @IBAction func saveButtonWasPressed(_ sender: Any) {
+        
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text else { return }
+        
+        apiController.getPokemon(query) { result in
+            switch result {
+            case .success(let pokemon):
+                DispatchQueue.main.async {
+                    self.pokemonVC.pokemon = pokemon
+                }
+            case .failure(let networkError):
+                print("network error: \(networkError)")
+            }
+        }
+    }
 }

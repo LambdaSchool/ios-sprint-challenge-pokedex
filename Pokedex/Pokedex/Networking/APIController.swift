@@ -20,7 +20,9 @@ class APIController {
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
     
     func getPokemon(_ query: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        var request = URLRequest(url: baseUrl.appendingPathComponent("pokemon/\(query)"))
+        let url = baseUrl.appendingPathComponent("pokemon/\(query)")
+        print(url)
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, _, error in
@@ -40,6 +42,6 @@ class APIController {
             } catch {
                 completion(.failure(.decodeFailed))
             }
-        }
+        }.resume()
     }
 }
