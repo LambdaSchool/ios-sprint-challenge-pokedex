@@ -16,21 +16,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" textLabel="F36-DB-vxX" style="IBUITableViewCellStyleDefault" id="qas-JH-hbW">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Pokemoncell" id="qas-JH-hbW">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qas-JH-hbW" id="f2Q-UH-d1t">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F36-DB-vxX">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSX-1O-r8M">
+                                            <rect key="frame" x="40" y="11.5" width="45" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="DSX-1O-r8M" firstAttribute="centerY" secondItem="f2Q-UH-d1t" secondAttribute="centerY" id="5KV-pa-2iB"/>
+                                        <constraint firstItem="DSX-1O-r8M" firstAttribute="leading" secondItem="f2Q-UH-d1t" secondAttribute="leadingMargin" constant="20" id="M18-UM-XhL"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="Whv-tp-L3h" kind="show" identifier="ShowDetailSegue" id="8su-ly-f0l"/>
@@ -166,6 +169,7 @@
                         <outlet property="abilitiesLabel" destination="zRc-EP-APa" id="Qhq-dk-uSM"/>
                         <outlet property="idLabel" destination="mP4-9q-gPZ" id="bhI-CB-Eiq"/>
                         <outlet property="searchBar" destination="CUS-uf-TV8" id="9ap-BS-tcI"/>
+                        <outlet property="spriteImage" destination="hx5-Hg-9ep" id="cXw-cO-bhw"/>
                         <outlet property="spriteNameLabel" destination="0rC-Gu-XvJ" id="47O-bE-RVd"/>
                         <outlet property="typeLabel" destination="N6v-0a-gtg" id="HU3-Pn-28D"/>
                     </connections>
@@ -194,6 +198,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8su-ly-f0l"/>
+        <segue reference="shH-XS-tJ6"/>
     </inferredMetricsTieBreakers>
 </document>

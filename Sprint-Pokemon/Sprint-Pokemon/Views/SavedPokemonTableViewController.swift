@@ -38,4 +38,17 @@ class SavedPokemonTableViewController: UITableViewController {
 
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if segue.identifier == "ShowDetailSegue",
+             let detailVC = segue.destination as? PokemonSearchViewController,
+             let selectedIndexPath = tableView.indexPathForSelectedRow {
+             detailVC.pokemonController = pokemonController
+             detailVC.pokemon = pokemons[selectedIndexPath.row]
+         } else if segue.identifier == "SearchSegue",
+             let addVC = segue.destination as? PokemonSearchViewController {
+             addVC.pokemonController = pokemonController
+         }
+     }
 }
+
