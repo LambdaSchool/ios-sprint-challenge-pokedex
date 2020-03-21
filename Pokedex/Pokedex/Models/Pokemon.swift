@@ -8,31 +8,30 @@
 
 import Foundation
 
-struct Pokemon {
+struct Pokemon: Codable {
     let name: String
     let id: Int
     let abilities: [PokemonAbility]
     let types: [PokemonType]
-    
 }
 
-struct PokemonAbility {
+struct PokemonAbility: Codable {
     let is_hidden: Bool
     let slot: Int
     let ability: Ability
 }
 
-struct Ability {
+struct Ability: Codable {
     let name: String
     let url: String
 }
 
-struct PokemonType {
+struct PokemonType: Codable {
     let slot: Int
     let type: Type
 }
 
-struct Type {
+struct Type: Codable {
     let id: Int
     let name: String
 }
