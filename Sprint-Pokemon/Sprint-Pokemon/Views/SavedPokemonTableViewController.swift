@@ -11,7 +11,7 @@ import UIKit
 class SavedPokemonTableViewController: UITableViewController {
     
     // MARK: - Properties
-    let pokemonController = PokemonController()
+    let pokemonController = APIController()
     var pokemons: [Pokemon] = [] {
         didSet {
             tableView.reloadData()

@@ -12,8 +12,17 @@ class PokemonSearchViewController: UIViewController {
     
     // MARK: - Properties
     
-    var pokemon: Pokemon?
-    var pokemonController: PokemonController!
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews(pokemon: pokemon)
+        }
+    }
+    
+    var pokemonController: APIController? {
+        didSet {
+            updateViews(pokemon: pokemon)
+        }
+    }
     
     // MARK: - IBOutlets
     @IBOutlet weak var spriteNameLabel: UILabel!
@@ -25,6 +34,13 @@ class PokemonSearchViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.addPokemon(pokemon: pokemon)
+            DispatchQueue.main.async {
+        self.navigationController?.popToRootViewController(animated: true)
+                
+            
+        }
     }
     
     
@@ -40,10 +56,12 @@ class PokemonSearchViewController: UIViewController {
             self.title = pokemon.name
             spriteNameLabel.text = pokemon.name
             idLabel.text = String(pokemon.id)
-            typeLabel.text = "\(pokemon.types)"
-            abilitiesLabel.text = "\(pokemon.abilities)"
-          
-            
+            var types: [String] = []
+            for typeInfo in pokemon.types {
+                types.append(typeInfo.type.name)
+            }
+            typeLabel.text = "\(types.joined(separator: ", "))"
+            abilitiesLabel.text = "\(pokemon.abilities[0].ability.name)"
         }
     }
 }
@@ -51,20 +69,20 @@ class PokemonSearchViewController: UIViewController {
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        pokemonController.performSearch(searchTerm: searchTerm) { (result) in
+        pokemonController!.performSearch(searchTerm: searchTerm) { (result) in
             
             guard let pokemon = try? result.get() else { return }
             
             DispatchQueue.main.async {
                 self.updateViews(pokemon: pokemon)
             }
-            self.pokemonController.fetchImage(at: pokemon.sprites.imageURL) { (result) in
+            self.pokemonController!.fetchImage(at: pokemon.sprites.imageURL) { (result) in
                 guard let image = try? result.get() else { return }
                 
                 DispatchQueue.main.async {
                     self.spriteImage.image = image
+                }
             }
         }
-    }
     }
 }

@@ -23,7 +23,7 @@ enum NetworkError: Error {
     case noDecode
     case noData
 }
-class PokemonController {
+class APIController {
     
     var pokemon: Pokemon?
     var pokemons: [Pokemon] = []
@@ -86,5 +86,13 @@ func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, Net
           }
       }.resume()
   }
-
+    
+    func addPokemon(pokemon: Pokemon) {
+        pokemons.append(pokemon)
+    }
+    
+    func deletePokemon(pokemon: Pokemon) {
+        guard let index = pokemons.firstIndex(of: pokemon) else { return }
+        pokemons.remove(at: index)
+    }
 }

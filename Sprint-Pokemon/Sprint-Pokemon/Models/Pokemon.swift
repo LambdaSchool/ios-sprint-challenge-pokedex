@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
     let name: String
     let id: Int
     let abilities: [Ability]
@@ -37,22 +41,3 @@ struct Sprite: Codable {
     }
 }
 
-//struct Pokemon: Codable {
-//    var name: String
-//    var id: Int
-//    var type: String
-//    var ability: String
-//    var imageURL: String
-//
-//    enum CodingKeys: String, CodingKey {
-//        case name
-//        case id
-//        case type
-//        case ability
-//        case imageURL = "front_shiny_female"
-//    }
-//}
-//
-//struct SearchResults: Codable {
-//    let results: [Pokemon]
-//}
