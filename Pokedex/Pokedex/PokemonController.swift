@@ -22,16 +22,9 @@ class PokemonController {
            case delete = "DELETE"
        }
        
-       func searchPokemon(searchTerm: String, completion: @escaping () -> Void) {
-           var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-           let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
-           urlComponents?.queryItems = [searchTermQueryItem]
-           
-           guard let requestURL = urlComponents?.url else {
-               print("Error: Request URL is nil!")
-               completion()
-               return
-           }
+       func searchPokemonName(searchTerm: String, completion: @escaping () -> Void) {
+       let requestURL = baseURL.appendingPathComponent("/\(searchTerm)")
+         
            
            var request = URLRequest(url: requestURL)
            request.httpMethod = HTTPMethod.get.rawValue
@@ -53,7 +46,7 @@ class PokemonController {
                
                do {
                    let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemon = [pokemonSearch]
+                self.pokemon = 
                } catch {
                    print("Unable to decode data into object of type [Pokemon]: \(error)")
                }

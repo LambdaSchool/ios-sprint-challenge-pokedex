@@ -1,16 +1,21 @@
 //
-//  SearchViewController.swift
+//  SavedPokemonViewController.swift
 //  Pokedex
 //
-//  Created by Morgan Smith on 1/27/20.
+//  Created by Morgan Smith on 3/22/20.
 //  Copyright © 2020 Morgan Smith. All rights reserved.
 //
 
-
 import UIKit
 
-class SearchViewController: UIViewController {
+class SavedPokemonViewController: UIViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var abilityLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
