@@ -17,22 +17,58 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonAbilitiesTextView: UITextView!
     @IBOutlet weak var pokemonImageView: UIImageView!
     
+    var apiController: APIController?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateViews() {
+        guard isViewLoaded else { return }
+        
+        guard let pokemon = pokemon else {
+            title = "Pokemon Search"
+            
+            pokemonNameLabel.text = ""
+            idLabel.text = ""
+            pokemonAbilitiesTextView.text = ""
+            pokemonTypeLabel.text = ""
+            
+            return
+        }
+        
+        title = pokemon.name.capitalized
+        
+        pokemonNameLabel.text = pokemon.name.capitalized
+        idLabel.text = " \(pokemon.id)"
+        
+        pokemonAbilitiesTextView.text = "Abilities: " + pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")
+        
+        pokemonTypeLabel.text = " " + pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
+        
+        self.apiController?.fetchImage(at: pokemon.sprites.imageURL, completion: { (image) in
+            do {
+                let image = try image.get()
+                self.updateImage(with: image)
+            } catch {
+                self.pokemonImageView.image = nil
+            }
+        })
+        
     }
-    */
+    
+    func updateImage(with image: UIImage) {
+        DispatchQueue.main.async {
+            self.pokemonImageView.image = image
+        }
+    }
+
 
 }

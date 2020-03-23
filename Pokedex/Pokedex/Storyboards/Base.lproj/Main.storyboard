@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="Utf-2B-0Fo">
             <objects>
-                <tableViewController id="qca-8S-kzH" sceneMemberID="viewController">
+                <tableViewController id="qca-8S-kzH" customClass="PokedexTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="J2a-VH-w7c">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="nA7-ji-Fch" kind="show" id="7eb-BD-k41"/>
+                                    <segue destination="nA7-ji-Fch" kind="show" identifier="PokemonDetailSegue" id="7eb-BD-k41"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -175,16 +175,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="G5G-k0-Qxh">
-                                <rect key="frame" x="20" y="700.5" width="114.5" height="20.5"/>
+                                <rect key="frame" x="20" y="704" width="126.5" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mk6-T0-v6b">
-                                        <rect key="frame" x="0.0" y="0.0" width="51" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="63" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fht-G9-N8L">
-                                        <rect key="frame" x="59" y="0.0" width="55.5" height="20.5"/>
+                                        <rect key="frame" x="71" y="0.0" width="55.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -192,28 +192,31 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Abilities:" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q8b-Vx-iUi">
-                                <rect key="frame" x="20" y="736" width="374" height="60"/>
+                                <rect key="frame" x="20" y="743" width="374" height="53"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxk-j0-bYe">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxk-j0-bYe">
                                 <rect key="frame" x="142.5" y="811" width="129" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="qIP-xe-5zg" eventType="touchUpInside" id="1cp-hG-I69"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="DJu-uR-ebh">
-                                <rect key="frame" x="20" y="665" width="59.5" height="20.5"/>
+                                <rect key="frame" x="20" y="665" width="64.5" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RZ-FF-wqa">
-                                        <rect key="frame" x="0.0" y="0.0" width="21" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="26" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INr-MZ-g4K">
-                                        <rect key="frame" x="39" y="0.0" width="20.5" height="20.5"/>
+                                        <rect key="frame" x="44" y="0.0" width="20.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -251,6 +254,7 @@
                         <outlet property="pokemonImageView" destination="gSh-9B-G2d" id="H5V-2K-lAj"/>
                         <outlet property="pokemonLabel" destination="gb5-eJ-4MV" id="UqE-Ze-vVX"/>
                         <outlet property="pokemonTypeLabel" destination="Fht-G9-N8L" id="5yP-2X-b56"/>
+                        <outlet property="saveButton" destination="pxk-j0-bYe" id="kQy-86-WMG"/>
                         <outlet property="searchBar" destination="lqr-O4-jQr" id="UIA-d6-GPY"/>
                     </connections>
                 </viewController>
