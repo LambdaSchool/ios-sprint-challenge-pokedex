@@ -27,7 +27,7 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        updateViews()
+        searchBar.becomeFirstResponder()
         searchBar.delegate = self
     }
     
