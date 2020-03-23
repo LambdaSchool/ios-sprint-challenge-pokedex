@@ -23,6 +23,11 @@ enum NetworkError: Error {
     case decodeFailure
 }
 
+enum SortOption: Int {
+    case name
+    case id
+}
+
 class PokemonController {
     
     init() {
@@ -73,11 +78,11 @@ class PokemonController {
     }
     
     private var persistentFileURL: URL? {
-      let fileManager = FileManager.default
-      guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-        else { return nil }
-       
-      return documents.appendingPathComponent("pokemon.plist")
+        let fileManager = FileManager.default
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+            else { return nil }
+        
+        return documents.appendingPathComponent("pokemon.plist")
     }
     
     func saveToPersistentStore() {
@@ -108,5 +113,14 @@ class PokemonController {
             print("error loading stars data: \(error)")
         }
     }
-
+    
+    func sorter(sortedBy sorter: SortOption) -> [Pokemon] {
+        
+        switch sorter {
+        case .name:
+            return pokemonArray.sorted { $0.name < $1.name }
+        case .id:
+            return pokemonArray.sorted { $0.id < $1.id }
+        }
+    }
 }

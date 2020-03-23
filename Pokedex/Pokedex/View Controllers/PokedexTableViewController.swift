@@ -11,7 +11,8 @@ import UIKit
 class PokedexTableViewController: UITableViewController {
     
     var pokemonController = PokemonController()
-
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -24,6 +25,18 @@ class PokedexTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    @IBAction func segmentedControl(_ sender: Any) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            pokemonController.pokemonArray = pokemonController.sorter(sortedBy: .name)
+            tableView.reloadData()
+        case 1:
+            pokemonController.pokemonArray = pokemonController.sorter(sortedBy: .id)
+            tableView.reloadData()
+        default:
+            break
+        }
+    }
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,6 +47,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = pokemonController.pokemonArray[indexPath.row].name
+        cell.detailTextLabel?.text = String(pokemonController.pokemonArray[indexPath.row].id)
 
         return cell
     }
