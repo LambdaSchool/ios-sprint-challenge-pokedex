@@ -58,13 +58,14 @@ class PokedexTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
-            let searchVC = segue.destination as? DetailViewController
+            let searchVC = segue.destination as? SearchViewController
             searchVC?.pokemonController = pokemonController
         } else if segue.identifier == "DetailSegue" {
             if let pokemonIndex = tableView.indexPathForSelectedRow {
                 let detailVC = segue.destination as? DetailViewController
                 detailVC?.pokemonController = pokemonController
                 detailVC?.pokemon = pokemonController.pokemonArray[pokemonIndex.row]
+                print(pokemonController.pokemonArray[pokemonIndex.row])
             }
         }
     }
