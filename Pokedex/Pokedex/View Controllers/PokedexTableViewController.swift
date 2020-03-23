@@ -45,9 +45,9 @@ class PokedexTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = pokemonController.pokemonArray[indexPath.row].name
-        cell.detailTextLabel?.text = String(pokemonController.pokemonArray[indexPath.row].id)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PokemonTableViewCell
+        let pokemon = pokemonController.pokemonArray[indexPath.row]
+        cell.pokemon = pokemon
 
         return cell
     }
