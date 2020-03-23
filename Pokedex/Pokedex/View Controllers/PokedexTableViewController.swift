@@ -9,38 +9,35 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
+    
+    var pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemonArray.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = pokemonController.pokemonArray[indexPath.row].name
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -61,30 +58,19 @@ class PokedexTableViewController: UITableViewController {
         }    
     }
     */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SearchSegue" {
+            let searchVC = segue.destination as? DetailViewController
+            searchVC?.pokemonController = pokemonController
+        } else if segue.identifier == "DetailSegue" {
+            if let pokemonIndex = tableView.indexPathForSelectedRow {
+                let detailVC = segue.destination as? DetailViewController
+                detailVC?.pokemonController = pokemonController
+                detailVC?.pokemon = pokemonController.pokemonArray[pokemonIndex.row]
+            }
+        }
     }
-    */
+
 
 }

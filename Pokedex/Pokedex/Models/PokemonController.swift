@@ -25,7 +25,7 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    private var pokemonArray: [Pokemon] = []
+    var pokemonArray: [Pokemon] = []
     
     let baseURL: URL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
@@ -60,5 +60,10 @@ class PokemonController {
                 completion(.failure(.decodeFailure))
             }
         }.resume()
+    }
+    
+    func savePokemon(pokemon: Pokemon) {
+        let savedPokemon = Pokemon(name: pokemon.name, id: pokemon.id, types: pokemon.types, abilities: pokemon.abilities, sprites: pokemon.sprites)
+        pokemonArray.append(savedPokemon)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    let pokemonController = PokemonController()
+    var pokemonController: PokemonController? = nil
     var pokemon: Pokemon? {
         didSet {
             updateViews()
@@ -27,14 +27,19 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+//        updateViews()
         searchBar.delegate = self
     }
     
     @IBAction func saveBtnPressed(_ sender: Any) {
+        if let pokemon = pokemon {
+            pokemonController?.savePokemon(pokemon: pokemon)
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     func updateViews() {
+        
         var types = ""
         pokemon?.types.forEach { pokemon in
             types.append("\(pokemon.type.name) ")
@@ -72,6 +77,7 @@ extension DetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchTerm = searchBar.text,
         !searchTerm.isEmpty {
+            guard let pokemonController = pokemonController else { print("controller nil"); return }
             pokemonController.searchPokemon(for: searchTerm) { result in
                 do {
                     let pokemon = try result.get()
