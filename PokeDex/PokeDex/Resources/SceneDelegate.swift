@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  PokeDex
+//  Pokedex
 //
-//  Created by Lambda_School_loaner_226 on 3/21/20.
+//  Created by Lambda_School_loaner_226 on 3/23/20.
 //  Copyright © 2020 Lambda. All rights reserved.
 //
 
