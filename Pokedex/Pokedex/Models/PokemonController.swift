@@ -25,6 +25,10 @@ enum NetworkError: Error {
 
 class PokemonController {
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
     var pokemonArray: [Pokemon] = []
     
     let baseURL: URL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
@@ -65,5 +69,44 @@ class PokemonController {
     func savePokemon(pokemon: Pokemon) {
         let savedPokemon = Pokemon(name: pokemon.name, id: pokemon.id, types: pokemon.types, abilities: pokemon.abilities, sprites: pokemon.sprites)
         pokemonArray.append(savedPokemon)
+        saveToPersistentStore()
     }
+    
+    private var persistentFileURL: URL? {
+      let fileManager = FileManager.default
+      guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        else { return nil }
+       
+      return documents.appendingPathComponent("pokemon.plist")
+    }
+    
+    func saveToPersistentStore() {
+        
+        // Stars -> Data -> Plist
+        guard let url = persistentFileURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemonArray)
+            try data.write(to: url)
+        } catch {
+            print("Error saving stars data: \(error)")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        
+        // Plist -> Data -> Stars
+        let fileManager = FileManager.default
+        guard let url = persistentFileURL, fileManager.fileExists(atPath: url.path) else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            pokemonArray = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            print("error loading stars data: \(error)")
+        }
+    }
+
 }
