@@ -15,8 +15,8 @@ class PokedexTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.dataSource = self
         tableView.reloadData()
     }
     
@@ -66,6 +66,7 @@ class PokedexTableViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
+            pokemonController.saveToPersistentStore()
         }
     }
     
