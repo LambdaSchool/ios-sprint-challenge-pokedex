@@ -18,7 +18,7 @@ class PokemonSearchViewController: UIViewController {
         }
     }
     
-    var pokemonController: APIController? {
+    var pokemonController: PokemonController? {
         didSet {
             updateViews(pokemon: pokemon)
         }
@@ -34,15 +34,13 @@ class PokemonSearchViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
-        guard let pokemon = pokemon else { return }
-        pokemonController?.addPokemon(pokemon: pokemon)
+            guard let pokemon = pokemon else { return }
+        
+            pokemonController?.addPokemon(pokemon: pokemon)
             DispatchQueue.main.async {
-        self.navigationController?.popToRootViewController(animated: true)
-                
-            
+           self.navigationController?.popToRootViewController(animated: true)
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +72,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             guard let pokemon = try? result.get() else { return }
             
             DispatchQueue.main.async {
-                self.updateViews(pokemon: pokemon)
+                self.pokemon = pokemon
             }
             self.pokemonController!.fetchImage(at: pokemon.sprites.imageURL) { (result) in
                 guard let image = try? result.get() else { return }

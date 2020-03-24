@@ -11,7 +11,12 @@ import UIKit
 class SavedPokemonTableViewController: UITableViewController {
     
     // MARK: - Properties
-    let pokemonController = APIController()
+    var pokemon: Pokemon? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    let pokemonController = PokemonController()
     var pokemons: [Pokemon] = [] {
         didSet {
             tableView.reloadData()
@@ -21,7 +26,12 @@ class SavedPokemonTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        pokemonController.loadFromPersistentStore()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -33,11 +43,18 @@ class SavedPokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-
+        
         cell.textLabel?.text = pokemons[indexPath.row].name
 
         return cell
     }
+    
+        override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            if editingStyle == .delete {
+                pokemonController.deletePokemon(pokemon: pokemon!)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if segue.identifier == "ShowDetailSegue",
