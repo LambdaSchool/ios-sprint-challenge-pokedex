@@ -31,7 +31,7 @@ class PokemonController {
     init() {
         loadFromPersistentStore()
     }
-   
+    
     private var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
     func performSearch(searchTerm: String, completion: @escaping (Result<Pokemon,NetworkError>) -> Void) {
@@ -65,28 +65,28 @@ class PokemonController {
             }
         }.resume()
     }
-
-func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-      let imageURL = URL(string: urlString)!
-      var request = URLRequest(url: imageURL)
-      request.httpMethod = HTTPMethod.get.rawValue
-      URLSession.shared.dataTask(with: request) { data, _, error in
-          if let error = error {
-              print("Error fetching image: \(error)")
-              completion(.failure(.otherError))
-              return
-          }
-          guard let data = data else  {
-              completion(.failure(.noData))
-              return
-          }
-          if let image = UIImage(data: data) {
-              completion(.success(image))
-          } else {
-              completion(.failure(.noDecode))
-          }
-      }.resume()
-  }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageURL = URL(string: urlString)!
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error fetching image: \(error)")
+                completion(.failure(.otherError))
+                return
+            }
+            guard let data = data else  {
+                completion(.failure(.noData))
+                return
+            }
+            if let image = UIImage(data: data) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.noDecode))
+            }
+        }.resume()
+    }
     
     func addPokemon(pokemon: Pokemon) {
         pokemons.append(pokemon)
@@ -98,7 +98,7 @@ func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, Net
         pokemons.remove(at: index)
         saveToPersistentStore()
     }
-     
+    
     // MARK: - Persistence
     private var persistentFileURL: URL? {
         let fileManager = FileManager.default

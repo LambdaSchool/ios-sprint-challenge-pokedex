@@ -31,11 +31,11 @@ class PokemonSearchViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
-            guard let pokemon = pokemon else { return }
+        guard let pokemon = pokemon else { return }
         
-            pokemonController?.addPokemon(pokemon: pokemon)
-            DispatchQueue.main.async {
-           self.navigationController?.popToRootViewController(animated: true)
+        pokemonController?.addPokemon(pokemon: pokemon)
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
@@ -45,21 +45,28 @@ class PokemonSearchViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        updateViews()
-    }
     
     func updateViews() {
-        if let pokemon = pokemon {
-            self.title = pokemon.name
-            spriteNameLabel.text = pokemon.name
-            idLabel.text = String("ID: \(pokemon.id)")
-            self.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
-            self.typeLabel.text = "Types: " + pokemon.types.map({$0.type.name}).joined(separator: ", ")
-        } else {
+        
+        guard isViewLoaded else { return }
+        guard let pokemon = pokemon else {
             self.title = "Add New Pokemon"
             saveButton.setTitle("Save", for: .normal)
+            return
+        }
+        
+        self.title = pokemon.name
+        self.spriteNameLabel.text = pokemon.name
+        self.idLabel.text = String("ID: \(pokemon.id)")
+        self.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+        self.typeLabel.text = "Types: " + pokemon.types.map({$0.type.name}).joined(separator: ", ")
+        
+        self.pokemonController!.fetchImage(at: pokemon.sprites.imageURL) { (result) in
+            guard let image = try? result.get() else { return }
+            
+            DispatchQueue.main.async {
+                self.spriteImage.image = image
+            }
         }
     }
 }
