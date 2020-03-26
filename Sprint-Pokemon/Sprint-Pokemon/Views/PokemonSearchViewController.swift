@@ -14,15 +14,11 @@ class PokemonSearchViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
-            updateViews(pokemon: pokemon)
+            updateViews()
         }
     }
     
-    var pokemonController: PokemonController? {
-        didSet {
-            updateViews(pokemon: pokemon)
-        }
-    }
+    var pokemonController: PokemonController?
     
     // MARK: - IBOutlets
     @IBOutlet weak var spriteNameLabel: UILabel!
@@ -31,6 +27,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var spriteImage: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -44,22 +41,25 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        updateViews(pokemon: pokemon)
+        updateViews()
         searchBar.delegate = self
     }
     
-    func updateViews(pokemon: Pokemon?) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        updateViews()
+    }
+    
+    func updateViews() {
         if let pokemon = pokemon {
             self.title = pokemon.name
             spriteNameLabel.text = pokemon.name
-            idLabel.text = String(pokemon.id)
-            var types: [String] = []
-            for typeInfo in pokemon.types {
-                types.append(typeInfo.type.name)
-            }
-            typeLabel.text = "\(types.joined(separator: ", "))"
-            abilitiesLabel.text = "\(pokemon.abilities[0].ability.name)"
+            idLabel.text = String("ID: \(pokemon.id)")
+            self.abilitiesLabel.text = "Abilities: " + pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+            self.typeLabel.text = "Types: " + pokemon.types.map({$0.type.name}).joined(separator: ", ")
+        } else {
+            self.title = "Add New Pokemon"
+            saveButton.setTitle("Save", for: .normal)
         }
     }
 }
