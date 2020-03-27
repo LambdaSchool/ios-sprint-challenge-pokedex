@@ -12,21 +12,22 @@ class PokemonTableViewController: UITableViewController {
     
     // MARK: - Properites
     private let pokemonController = PokemonController()
-    private var pokemonList: [Pokemon] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonList.count
+        return pokemonController.pokemonList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,7 +55,7 @@ class PokemonTableViewController: UITableViewController {
             let detailVC = segue.destination as? PokemonDetailViewController,
             let selectedIndexPath = tableView.indexPathForSelectedRow {
             detailVC.pokemonController = pokemonController
-            detailVC.title = "\(pokemonList[selectedIndexPath.row])"
+            detailVC.title = "\(pokemonController.pokemonList[selectedIndexPath.row])"
         }
     }
 }

@@ -20,12 +20,18 @@ class PokemonSearchViewController: UIViewController {
     
     // MARK: - Properites
     var pokemonController: PokemonController!
-    private var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     
     // MARK: - IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let pokemon = pokemon else { return}
+        print("\(pokemon)")
+        
         pokemonController.pokemonList.append(pokemon)
         
         DispatchQueue.main.async {
@@ -43,13 +49,6 @@ class PokemonSearchViewController: UIViewController {
     
 
 
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
-
-
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
@@ -60,7 +59,8 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             guard let pokemon = try? result.get() else { return }
             
             DispatchQueue.main.async {
-                self.updateViews(with: pokemon)
+                self.pokemon = pokemon
+                self.updateViews()
             }
             
             self.pokemonController.fetchImage(at: pokemon.sprites.front_default) { (result) in
@@ -71,22 +71,18 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                 }
             }
         }
-//        
-//        DispatchQueue.main.async {
-//            self.title = self.pokemon?.name.capitalized
-//            self.pokemonNameLabel.text = self.pokemon?.name
-//            self.pokemonIdNumber.text = "\(self.pokemon?.id)"
-//            self.pokemonTypeLabel.text = "\(self.pokemon?.types)"
-//            self.pokemonAbilitiesLabel.text = "\(self.pokemon?.abilities)"
-//        }
     }
     
-    private func updateViews(with pokemon: Pokemon) {
-        title = pokemon.name
-        pokemonNameLabel.text = pokemon.name
-        pokemonIdNumber.text = String(pokemon.id)
-        pokemonTypeLabel.text = "\(pokemon.types)"
-        pokemonAbilitiesLabel.text = "\(pokemon.abilities)"
+    private func updateViews() {
        
+        if let pokemon = pokemon {
+        title = pokemon.name
+        pokemonNameLabel.text = "\(pokemon.name)"
+        pokemonIdNumber.text = "ID: \(String(pokemon.id))"
+        pokemonTypeLabel.text = "Types: " + pokemon.types.map({$0.type.name}).joined(separator: ", ")
+        pokemonAbilitiesLabel.text = "Abilities: " + pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+        } else {
+            title = "Pokemon Search"
+        }
     }
 }
