@@ -33,8 +33,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
 
-        let pokemon = pokemonController.pokemonList[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemonController.pokemonList[indexPath.row].name
 
         return cell
     }
@@ -42,6 +41,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.deleteRows(at: [indexPath], with: .fade)
+            pokemonController.saveToPersistentStore()
         }
     }
 
@@ -52,10 +52,12 @@ class PokemonTableViewController: UITableViewController {
             let searchVC = segue.destination as? PokemonSearchViewController {
             searchVC.pokemonController = pokemonController
         } else if segue.identifier == "PokemonDetailSegue",
-            let detailVC = segue.destination as? PokemonDetailViewController,
+            let detailVC = segue.destination as? PokemonSearchViewController,
             let selectedIndexPath = tableView.indexPathForSelectedRow {
             detailVC.pokemonController = pokemonController
             detailVC.title = "\(pokemonController.pokemonList[selectedIndexPath.row])"
+            detailVC.pokemon = pokemonController.pokemonList[selectedIndexPath.row]
+            print("\(pokemonController.pokemonList[selectedIndexPath.row])")
         }
     }
 }
