@@ -94,5 +94,10 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                 }
             }
         }
+        func searchBarShouldReturn(_ searchBar: UISearchBar) -> Bool {
+            searchBar.resignFirstResponder()
+            return true
+        }
+        searchBarShouldReturn(searchBar)
     }
 }
