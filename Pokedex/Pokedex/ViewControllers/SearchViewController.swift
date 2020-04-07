@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
-
+class SearchViewController: UIViewController {
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var pokemonIDLabel: UILabel!
@@ -31,11 +31,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
         self.updateViews()
     }
-
+    
     func updateViews() {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "\(pokemon.id)"
     }
-    
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        pokemonController?.fetchPokemon(named: searchTerm, completion: { (pokemon, error) in
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+            }
+        })
+    }
 }

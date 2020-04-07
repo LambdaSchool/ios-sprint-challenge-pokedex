@@ -26,8 +26,16 @@ class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
+    func savePokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+    }
+    
+    func deletePokemon(index: Int) {
+        pokemonArray.remove(at: index)
+    }
+    
     func fetchPokemon(named name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let url = baseURL.appendingPathComponent(name)
+        let url = baseURL.appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
