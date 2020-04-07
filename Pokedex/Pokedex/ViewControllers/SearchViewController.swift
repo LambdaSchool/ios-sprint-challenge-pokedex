@@ -37,14 +37,24 @@ class SearchViewController: UIViewController {
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "\(pokemon.id)"
     }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        pokemonController?.fetchPokemon(named: searchTerm, completion: { (pokemon, error) in
-            DispatchQueue.main.async {
-                self.pokemon = pokemon
+        pokemonController?.fetchPokemon(name: searchTerm, completion: { (result) in
+            if let pokemonSearchResult = try? result.get() {
+                self.pokemon = pokemonSearchResult
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
             }
         })
     }

@@ -53,10 +53,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uJb-ti-nVc">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="IyT-ql-n2p">
                                 <rect key="frame" x="20" y="752" width="115" height="20.5"/>
                                 <subviews>
@@ -111,15 +107,28 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHa-jq-H2H">
                                 <rect key="frame" x="20" y="260" width="374" height="377"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZa-ml-RZd">
-                                <rect key="frame" x="8" y="177" width="398" height="46"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZa-ml-RZd">
+                                <rect key="frame" x="8" y="216" width="398" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8C-8J-2sI">
+                                <rect key="frame" x="156.5" y="788" width="101" height="30"/>
+                                <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="lu8-Ag-0pJ" eventType="touchUpInside" id="8rY-KS-I7y"/>
+                                </connections>
+                            </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uJb-ti-nVc">
+                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="E8C-8J-2sI" firstAttribute="top" secondItem="IyT-ql-n2p" secondAttribute="bottom" constant="15.5" id="111-RK-smA"/>
+                            <constraint firstItem="uJb-ti-nVc" firstAttribute="top" secondItem="AsM-Df-1Kv" secondAttribute="top" id="3T0-JB-18b"/>
                             <constraint firstItem="AsM-Df-1Kv" firstAttribute="trailing" secondItem="rZa-ml-RZd" secondAttribute="trailing" constant="8" id="5ie-pW-2cN"/>
                             <constraint firstItem="IHa-jq-H2H" firstAttribute="leading" secondItem="AsM-Df-1Kv" secondAttribute="leading" constant="20" id="8d2-IY-nmA"/>
                             <constraint firstItem="rZa-ml-RZd" firstAttribute="centerX" secondItem="AsM-Df-1Kv" secondAttribute="centerX" id="DVw-SM-Zyn"/>
@@ -134,6 +143,7 @@
                             <constraint firstItem="AsM-Df-1Kv" firstAttribute="trailing" secondItem="uJb-ti-nVc" secondAttribute="trailing" id="qwj-ut-kpg"/>
                             <constraint firstItem="rZa-ml-RZd" firstAttribute="top" secondItem="uJb-ti-nVc" secondAttribute="bottom" constant="20" id="u72-0N-ycc"/>
                             <constraint firstItem="uJb-ti-nVc" firstAttribute="leading" secondItem="AsM-Df-1Kv" secondAttribute="leading" id="vQx-me-ZWb"/>
+                            <constraint firstItem="E8C-8J-2sI" firstAttribute="centerX" secondItem="AsM-Df-1Kv" secondAttribute="centerX" id="w18-2m-IWS"/>
                             <constraint firstItem="g4J-a8-Hfe" firstAttribute="leading" secondItem="AsM-Df-1Kv" secondAttribute="leading" constant="20" id="xU3-ed-zjq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AsM-Df-1Kv"/>
@@ -157,7 +167,7 @@
             <objects>
                 <navigationController id="ggr-6W-EYr" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="1uN-ho-UPE">
-                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
