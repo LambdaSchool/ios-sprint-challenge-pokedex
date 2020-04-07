@@ -22,6 +22,8 @@ class PokemonController {
         case decodeFailed
     }
     
+    var pokemonArray: [Pokemon] = []
+    
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     func fetchPokemon(named name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
