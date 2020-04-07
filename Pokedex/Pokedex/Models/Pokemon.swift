@@ -8,9 +8,30 @@
 
 import Foundation
 
-struct Pokemon: Decodable {
+struct Pokemon: Codable {
     var name: String
     var id: Int
-    var type: String
-    var abilities: [String]
+    var abilities: [Ability]
+    var types: [Types]
+    let sprites: Sprites
+}
+
+struct Ability: Codable {
+    let ability: AbilityName
+}
+
+struct AbilityName: Codable {
+    let name: String
+}
+
+struct Types: Codable {
+    let type: TypeName
+}
+
+struct TypeName: Codable {
+    let name: String
+}
+
+struct Sprites: Codable {
+    let frontDefault: String
 }
