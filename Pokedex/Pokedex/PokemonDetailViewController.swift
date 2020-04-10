@@ -18,21 +18,55 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitesLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     
+    // MARK: - Properties
+    
+    var pokemon: Pokemon?
+    
+    private let viewModel = PokemonDetailViewModel()
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        guard let pokemon = pokemon else { return }
+        getPokemonSprite(for: pokemon)
     }
-    */
-
+    
+    func updateViews(for pokemon: Pokemon) {
+        self.title = pokemon.name.uppercased()
+        nameLabel.text = pokemon.name.uppercased()
+        idLabel.text = String("ID: \(pokemon.id)")
+        
+        var abilitesStringArray = [String]()
+        for ability in pokemon.abilities {
+            abilitesStringArray.append(ability.ability.name)
+        }
+        abilitesLabel.text =  "Abilites: \(abilitesStringArray.joined(separator: ", "))"
+        
+        var typesStringArray = [String]()
+        for type in pokemon.types {
+            typesStringArray.append(type.type.name)
+        }
+        typesLabel.text = "Types: \(typesStringArray.joined(separator: ", "))"
+    }
+    
+    func getPokemonSprite(for pokemon: Pokemon) {
+        viewModel.getPokemon(with: pokemon.name) { result in
+            switch result {
+            case .successfulWithPokemon(let pokemon):
+                self.updateViews(for: pokemon)
+            case .successfulWithSprite(let sprite):
+                self.spriteImage.image = sprite
+            case .failure(let message):
+                print(message)
+            }
+        }
+    }
 }

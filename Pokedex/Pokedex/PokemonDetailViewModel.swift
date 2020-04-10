@@ -19,6 +19,8 @@ final class PokemonDetailViewModel {
         case failure(String)
     }
     
+    static var pokemon = [Pokemon]()
+    
     private let pokemonController: PokemonController
     
     init(pokemonController: PokemonController = PokemonController()) {

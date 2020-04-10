@@ -23,6 +23,7 @@ class SearchPokemonViewController: UIViewController {
     // MARK: - Properties
     
     private lazy var viewModel = PokemonDetailViewModel()
+    var pokemon: Pokemon?
     
     // MARK: - View Lifecycle
     
@@ -52,7 +53,7 @@ class SearchPokemonViewController: UIViewController {
         abilitiesLabel.isHidden = false
         typesLabel.isHidden = false
         saveButton.isHidden = false
-        
+                
         self.title = pokemon.name.uppercased()
         nameLabel.text = pokemon.name.uppercased()
         idLabel.text = String("ID: \(pokemon.id)")
@@ -61,20 +62,22 @@ class SearchPokemonViewController: UIViewController {
         for ability in pokemon.abilities {
             abilitesStringArray.append(ability.ability.name)
         }
-        abilitiesLabel.text =  "Abilites: \(abilitesStringArray.joined(separator: ","))"
+        abilitiesLabel.text =  "Abilites: \(abilitesStringArray.joined(separator: ", "))"
         
         var typesStringArray = [String]()
         for type in pokemon.types {
             typesStringArray.append(type.type.name)
         }
-        typesLabel.text = "Types: \(typesStringArray.joined(separator: ","))"
-        
-        
+        typesLabel.text = "Types: \(typesStringArray.joined(separator: ", "))"
     }
     
     // MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        
+        PokemonDetailViewModel.pokemon.append(pokemon)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -85,6 +88,7 @@ extension SearchPokemonViewController: UISearchBarDelegate {
         viewModel.getPokemon(with: searchTerm) { result in
             switch result {
             case .successfulWithPokemon(let pokemon):
+                self.pokemon = pokemon
                 self.updateViews(with: pokemon)
             case .successfulWithSprite(let sprite):
                 self.spriteImage.image = sprite

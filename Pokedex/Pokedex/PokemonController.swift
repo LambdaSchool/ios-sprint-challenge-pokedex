@@ -59,7 +59,7 @@ final class PokemonController {
         }
         .resume()
     }
-    
+        
     func fetchPokemonSprite(spriteURLString: String, completion: @escaping (GetImageCompletion) -> Void) {
         guard let spriteURL = URL(string: spriteURLString) else {
             return completion(.failure(.badURL))
