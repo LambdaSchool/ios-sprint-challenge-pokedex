@@ -22,15 +22,15 @@ struct Pokemon: Codable {
         self.types = types
         self.sprites = sprites
     }
-    
+
     struct NestedString: Codable {
-        let nestedString: String?
+        let name: String?
     }
     
     struct Ability: Codable {
         let ability: NestedString?
     }
-    
+
     struct Types: Codable {
         let type: NestedString?
     }

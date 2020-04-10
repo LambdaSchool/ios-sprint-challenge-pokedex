@@ -21,8 +21,11 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     var searchedPokemon: Pokemon?
-    
     var pokemonList = [Pokemon]()
+    
+    func savePokemon(_ pokemon: Pokemon) {
+        pokemonList.append(pokemon)
+    }
     
     func searchPokemon(searchTerm: String, completion: @escaping (NetworkError?) -> Void) {
         
