@@ -2,55 +2,41 @@
 //  Pokemon.swift
 //  PokeDex
 //
-//  Created by Nichole Davidson on 3/13/20.
+//  Created by Nichole Davidson on 4/10/20.
 //  Copyright © 2020 Nichole Davidson. All rights reserved.
 //
 
 import Foundation
 
 struct Pokemon: Codable {
-    var name: String?
-    var id: Int?
-    var abilities: [Abilities]?
-    var types: [Types]?
-    var sprites: Sprites?
+    let name: String
+    let id: Int
+    let abilities: [Ability]
+    let types: [TypeElement]
     
-    struct Sprites: Codable {
-        var name: String
-        
-        enum CodingKeys: String, CodingKey {
-            case name = "front_default"
-        }
+    enum CodingKeys: String, CodingKey {
+        case abilities
+        case baseExperience
+        case forms
+        case gameIndices
+        case height
+        case heldItems
+        case id
+        case isDefault
+        case locationAreaEncounters
+        case moves, name, order, species, sprites, stats, types, weight
     }
     
-    struct Types: Codable {
-//        let slot: Int
-        let type: Type
-        
-        struct `Type`: Codable {
-            let name: String
-//            let url: String
-        }
-    }
-    
-    struct Abilities: Codable {
-//        let isHidden: Bool
-//        let slot: Int
-        let ability: Ability
-        
-        enum CodingKeys: String, CodingKey {
-//            case isHidden = "is_hidden"
-//            case slot = "slot"
-            case ability = "ability"
-        }
-        struct Ability: Codable {
-            let name: String
-//            let url: String
-        }
+    init(from decoder: Decoder) throws {
+        <#code#>
     }
 }
 
-struct PokemonSearchResults: Codable {
-    let results: Pokemon
+struct Ability: Codable {
+   
+    
 }
 
+struct TypeElement: Codable {
+    
+}
