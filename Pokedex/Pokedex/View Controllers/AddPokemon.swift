@@ -39,7 +39,7 @@ class AddPokemon: UIViewController {
             // above: add button should actually be invisible an non-functional in this case
             return
         } else {
-            userPokemonBrain.userAddedPokemon.append(self.selectedUserPokemon!)
+            UserPokemon.userAddedPokemon.append(self.selectedUserPokemon!)
 //            userPokemonBrain.addPokemonToUserAddedPokemon(pokemon: self.selectedUserPokemon!)
             navigationController?.popViewController(animated: true)
             return

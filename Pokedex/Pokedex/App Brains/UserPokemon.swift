@@ -12,7 +12,7 @@ class UserPokemon {
     
     // MARK: - User pokemon list
     
-    var userAddedPokemon = [Pokemon]()
+    static var userAddedPokemon = [Pokemon]()
     
     // MARK: - Methods
     

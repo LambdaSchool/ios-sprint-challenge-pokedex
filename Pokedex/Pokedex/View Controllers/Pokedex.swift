@@ -24,18 +24,18 @@ class Pokedex: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userPokemonBrain.userAddedPokemon.count
+        return UserPokemon.userAddedPokemon.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserPokemonCell", for: indexPath)
-        cell.textLabel?.text = userPokemonBrain.userAddedPokemon[indexPath.row].name.capitalized
+        cell.textLabel?.text = UserPokemon.userAddedPokemon[indexPath.row].name.capitalized
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            userPokemonBrain.userAddedPokemon.remove(at: indexPath.row)
+            UserPokemon.userAddedPokemon.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -47,7 +47,7 @@ class Pokedex: UITableViewController {
         } else if segue.identifier == "ShowPokemonDetails" {
             guard let addPokemonViewController = segue.destination as? AddPokemon else { return }
             guard let index = tableView.indexPathForSelectedRow?.row else { return }
-            addPokemonViewController.selectedUserPokemon = userPokemonBrain.userAddedPokemon[index]
+            addPokemonViewController.selectedUserPokemon = UserPokemon.userAddedPokemon[index]
         }
     }
     
