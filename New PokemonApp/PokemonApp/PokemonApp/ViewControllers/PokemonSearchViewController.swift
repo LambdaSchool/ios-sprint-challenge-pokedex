@@ -24,6 +24,8 @@ class PokemonSearchViewController: UIViewController {
     var newPokemon: Pokemon?
     private var pokemonController: PokemonController!
     var delegate: SearchDelegate?
+    private var pokemonDetailVC: PokemonDetailViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBarAction.searchTextField.becomeFirstResponder()
@@ -41,12 +43,16 @@ class PokemonSearchViewController: UIViewController {
         guard let pokemon = newPokemon else { return }
         
         navigationItem.title = pokemon.name.capitalized
-        pokemonName.text = pokemon.name.capitalized
-        setImage()
-        PokemonID.text = "\(pokemon.id)"
-        pokemonTypes.text = pokemon.types.
-        abilitiesLabel.text = pokemon.abilities.map { $0.ability.name.capitalized }.joined(separator: ", ")
+        
+        
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           if segue.identifier == "PokemonDetail", let pokemonDetailVC = segue.destination as? PokemonDetailViewController {
+               pokemonDetailVC.pokemonController = pokemonController
+               self.pokemonDetailVC = pokemonDetailVC
+           }
+       }
     
 //    private func hideViews(_ hidden: Bool) {
 //         saveButton.isHidden = hidden
