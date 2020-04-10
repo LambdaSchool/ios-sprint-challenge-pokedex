@@ -65,38 +65,10 @@ class PokemonController {
                    }
                    }.resume()
     }
-    
-    func fetchImage(urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-        guard let imageUrl = URL(string: urlString) else {
-            completion(.failure(.otherError))
-            return
-        }
-
-        var request = URLRequest(url: imageUrl)
-        request.httpMethod = HTTPMethod.get.rawValue
-
-        URLSession.shared.dataTask(with: request) { data, _, error in
-            guard error == nil else {
-                completion(.failure(.otherError))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(.noAuth))
-                return
-            }
-
-            guard let image = UIImage(data: data) else {
-                completion(.failure(.noDecode))
-                return
-            }
-
-            completion(.success(image))
-        }.resume()
-    }
-    
-    
-    
 }
+    
+    
+    
+
 
 
