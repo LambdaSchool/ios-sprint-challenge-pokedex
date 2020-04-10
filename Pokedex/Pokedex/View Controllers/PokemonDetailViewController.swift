@@ -10,6 +10,9 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    var pokemon: Pokemon?
+    var pokemonController: PokemonController!
+    
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
