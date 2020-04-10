@@ -23,8 +23,8 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    private let pokemonController = PokemonController()
-    private var pokemon: Pokemon!
+    var pokemonController = PokemonController()
+    var pokemon: Pokemon!
     var delegate: PokemonSavedDelegate?
    
     
