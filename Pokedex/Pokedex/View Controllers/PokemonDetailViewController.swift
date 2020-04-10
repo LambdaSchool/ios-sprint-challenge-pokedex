@@ -25,21 +25,24 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
-       //  unwrap pokemon
+        // Unwrap Pokemon
         // call pokemoncontroller function
-        // poptoView
         self.navigationController?.popViewController(animated: true)
     }
     
     func updateViews() {
         if let pokemon = pokemon {
             pokemonNameLabel.text = pokemon.name
+            idLabel.text = "ID: \(pokemon.id)"
+            
             var stringType = ""
             for type in pokemon.types {
-                stringType.append("\(type.type.name) ")
+                stringType.append("Types: \(type.type.name) ")
             }
             typesLabel.text = stringType
-            // abilities
+            for ability in pokemon.abilities {
+                stringType.append("Abilities: \(ability.ability.name)")
+            }
         }
     }
 }
