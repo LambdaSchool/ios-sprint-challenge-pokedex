@@ -29,6 +29,7 @@ class AddPokemon: UIViewController {
         super.viewDidLoad()
         searchBar.delegate = self
         updateViews()
+        addButton.alpha = 0
     }
     
     // MARK: - Add button action
@@ -94,6 +95,7 @@ extension AddPokemon: UISearchBarDelegate {
                     DispatchQueue.main.async {
                         self.selectedUserPokemon = fetchedPokemon
                         self.updateViews()
+                        self.addButton.alpha = 1
                     }
                 }
             }
