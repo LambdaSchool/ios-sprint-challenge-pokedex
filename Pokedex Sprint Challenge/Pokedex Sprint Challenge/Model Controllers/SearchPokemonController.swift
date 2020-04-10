@@ -29,9 +29,9 @@ class SearchPokemonController {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         let parameter: [String: String] = ["term": searchTerm]
         
-        //        let queryItems = parameter.compactMapValues(<#T##transform: (String) throws -> T?##(String) throws -> T?#>)
+        let queryItems = parameter.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
         
-        //        urlComponents?.queryItems = queryItems
+        urlComponents?.queryItems = queryItems
         
         guard let requestURL = urlComponents?.url else { return }
         
