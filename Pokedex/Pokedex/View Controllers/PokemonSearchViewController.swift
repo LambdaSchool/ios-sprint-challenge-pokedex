@@ -9,7 +9,19 @@
 import UIKit
 
 class PokemonSearchViewController: UIViewController {
-
+    
+    @IBOutlet weak var pokemonSearchBar: UISearchBar!
+    @IBOutlet weak var pokemonNameLabel: UILabel!
+    @IBOutlet weak var pokemonSpriteImage: UIImageView!
+    @IBOutlet weak var pokemonIDLabel: UILabel!
+    @IBOutlet weak var pokemonTypesLabel: UILabel!
+    @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
+    @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
+    }
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
