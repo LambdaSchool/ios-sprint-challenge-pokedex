@@ -16,8 +16,8 @@ class UserPokemon {
     
     // MARK: - Methods
     
-    func addPokemonToUserAddedPokemon(pokemon: Pokemon) {
-        userAddedPokemon.append(pokemon)
-    }
+//    func addPokemonToUserAddedPokemon(pokemon: Pokemon) {
+//        userAddedPokemon.append(Pokemon(id: pokemon.id, name: pokemon.name, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites))
+//    }
     
 }

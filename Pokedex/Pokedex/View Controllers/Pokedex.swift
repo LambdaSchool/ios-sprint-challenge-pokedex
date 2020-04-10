@@ -42,15 +42,15 @@ class Pokedex: UITableViewController {
     
     // MARK: - Navigation
     
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if segue.identifier == "ShowAddPokemon" {
-    //            guard let AddPokemonViewController = segue.destination as? AddPokemon else { return }
-    //            // FIXME: - Pass the selected object to the new view controller.
-    //        } else if segue.identifier == "ShowPokemonDetails" {
-    //            guard let AddPokemonViewController = segue.destination as? AddPokemon else { return }
-    //            // FIXME: - Pass the selected object to the new view controller.
-    //        }
-    //    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowAddPokemon" {
+        } else if segue.identifier == "ShowPokemonDetails" {
+            guard let addPokemonViewController = segue.destination as? AddPokemon else { return }
+            guard let index = tableView.indexPathForSelectedRow?.row else { return }
+            addPokemonViewController.selectedUserPokemon = userPokemonBrain.userAddedPokemon[index]
+        }
+    }
+    
     
     // MARK: - App Brains
     let userPokemonBrain = UserPokemon()
