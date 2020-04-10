@@ -29,7 +29,7 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
   
 
-    func fetchAllPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError?>) -> Void) {
+    func fetchAllPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let allPokemonURL = baseURL.appendingPathComponent("pokemon")
         
         var request = URLRequest(url: allPokemonURL)
@@ -38,28 +38,29 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
                    if let response = response as? HTTPURLResponse,
                        response.statusCode == 401 {
-                       completion(.badAuth)
+                    completion(.failure(.otherError))
                        return
                    }
                    
                    if let error = error {
+                    NSLog("Error getting request \(error)")
                     completion(.failure(.otherError))
                        return
                    }
                    
                    guard let data = data else {
-                       completion(.badData)
+                    completion(.failure(.noDecode))
                        return
                    }
 
                    let decoder = JSONDecoder()
                    decoder.dateDecodingStrategy = .iso8601
                    do {
-                       self.pokemon = try decoder.decode([Pokemon].self, from: data)
-                       completion(nil)
+                       let pokemon = try decoder.decode(Pokemon.self, from: data)
+                    completion(.success(pokemon))
                    } catch {
                        print("Error decoding Pokemon objects: \(error)")
-                       completion(.noDecode)
+                    completion(.failure(.noDecode))
                        return
                    }
                    }.resume()
