@@ -23,7 +23,9 @@ class PokemonSearchViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func savePokemon(_ sender: Any) {
+    }
+    
     /*
     // MARK: - Navigation
 
