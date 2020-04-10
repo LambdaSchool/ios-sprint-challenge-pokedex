@@ -27,7 +27,7 @@ class PokemonSearchViewController: UIViewController {
     }
     
     var pokemonController: PokemonController?
-    var searchedPokemon: Pokemon? {
+    var displayPokemon: Pokemon? {
         didSet {
             DispatchQueue.main.async {
                 self.updateViews()
@@ -50,7 +50,7 @@ class PokemonSearchViewController: UIViewController {
     
     func updateViews() {
         print("in update views")
-        guard let unwrappedPokemon = pokemonController?.searchedPokemon else { return }
+        guard let unwrappedPokemon = displayPokemon else { return }
         
         guard let urlPath = unwrappedPokemon.sprites["front_default"],
             let imageURL = urlPath else {
@@ -109,10 +109,6 @@ extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
-        
-        //        guard let pokemonController = pokemonController else { return }
-        
-        
         self.pokemonController?.searchPokemon(searchTerm: searchTerm) { (error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -120,6 +116,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             }
             print("should be updateViews")
             DispatchQueue.main.async {
+                self.displayPokemon = self.pokemonController?.searchedPokemon
                 self.updateViews()
             }
         }

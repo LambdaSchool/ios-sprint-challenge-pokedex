@@ -8,7 +8,12 @@
 
 import Foundation
 
+protocol PokeDelegate {
+    func currentPokemon(_ pokemon: Pokemon)
+}
 class PokemonController {
+    
+    var delegate: PokeDelegate?
     
     enum HTTPmethod: String {
         case get = "GET"
@@ -25,6 +30,10 @@ class PokemonController {
     
     func savePokemon(_ pokemon: Pokemon) {
         pokemonList.append(pokemon)
+    }
+    
+    func deletePokemon(index: Int) {
+        pokemonList.remove(at: index)
     }
     
     func searchPokemon(searchTerm: String, completion: @escaping (NetworkError?) -> Void) {
