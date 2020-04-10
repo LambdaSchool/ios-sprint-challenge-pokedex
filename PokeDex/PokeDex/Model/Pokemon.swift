@@ -8,35 +8,35 @@
 
 import Foundation
 
-struct Pokemon {
-    let name: String
-    let id: Int
-    let abilities: [Ability]
-    let types: [TypeElement]
-    let sprites: Sprites
+struct Pokemon: Codable {
+    var name: String?
+    var id: Int?
+    var abilities: [Ability]?
+    var types: [TypeElement]?
+    var sprites: Sprites?
     
     enum CodingKeys: String, CodingKey {
         case abilities
-        case baseExperience
-        case forms
-        case gameIndices
-        case height
-        case heldItems
         case id
-        case isDefault
-        case locationAreaEncounters
-        case moves, name, order, species, sprites, stats, types, weight
+        case name
+//        case baseExperience
+//        case forms
+//        case gameIndices
+//        case height
+//        case heldItems
+//        case isDefault
+//        case locationAreaEncounters
+//        case moves, name, order, species, sprites, stats, types, weight
     }
-     
 }
 
-struct Ability {
+struct Ability: Codable {
     let ability: NamedResource
-
+    
     enum CodingKeys: String, CodingKey {
         case ability
-        case isHidden
-        case slot
+//        case isHidden
+//        case slot
     }
 }
 
@@ -52,7 +52,7 @@ struct TypeElement: Codable {
 
 struct Sprites {
     let frontDefault: String
-
+    
     enum CodingKeys: String, CodingKey {
         case backDefault
         case backFemale
@@ -65,6 +65,6 @@ struct Sprites {
     }
 }
 
-struct PokemonSearchResults: Codable {
+struct PokemonSearchResults: Decodable {
     let results: Pokemon
 }
