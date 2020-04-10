@@ -43,7 +43,6 @@ class SearchViewController: UIViewController {
         pokemonController?.savePokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
-    
 }
 
 extension SearchViewController: UISearchBarDelegate {

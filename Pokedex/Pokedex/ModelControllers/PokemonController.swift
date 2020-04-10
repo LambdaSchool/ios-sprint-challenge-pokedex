@@ -36,8 +36,9 @@ class PokemonController {
     
     func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         let url = baseURL.appendingPathComponent(name.lowercased())
-        
+           
         var request = URLRequest(url: url)
+        print("This is the request: \(request)")
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { data, response, error in
