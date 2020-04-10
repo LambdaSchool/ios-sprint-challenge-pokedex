@@ -29,7 +29,7 @@ class Pokedex: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserPokemonCell", for: indexPath)
-        cell.textLabel?.text = userPokemonBrain.userAddedPokemon[indexPath.row].capitalized
+        cell.textLabel?.text = userPokemonBrain.userAddedPokemon[indexPath.row].name.capitalized
         return cell
     }
     

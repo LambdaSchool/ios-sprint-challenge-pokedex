@@ -32,16 +32,18 @@ class AddPokemon: UIViewController {
     // MARK: - Add button action
     
     @IBAction func addPokemon(_ sender: Any) {
-        if selectedUserPokemon != nil {
+        if self.selectedUserPokemon != nil {
             navigationController?.popViewController(animated: true)
             // above: add button should actually be invisible an non-functional in this case
             return
         } else {
-            UserPokemon.addPokemonToUserAddedPokemon(selectedUserPokemon)
+            userPokemonBrain.addPokemonToUserAddedPokemon(pokemon: self.selectedUserPokemon!)
             navigationController?.popViewController(animated: true)
         }
     }
     
-    
+    // MARK: - App Brains
+    let userPokemonBrain = UserPokemon()
+    let networkingBrain = Networking()
     
 }
