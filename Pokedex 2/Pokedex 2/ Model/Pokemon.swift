@@ -43,7 +43,6 @@ struct Abilities: Codable {
         let container = try decoder.container(keyedBy: AbilityCodingKeys.self)
         self.ability = try container.decode(String.self, forKey: .ability)
         
-        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilityCodingKeys.AbilityNameCodingKeys.self, forKey: ., forKey: .)
+        let abilitiesContainer = try container.nestedContainer(keyedBy: AbilityCodingKeys.AbilityNameCodingKeys.self, forKey: .)
     }
 }
-
