@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon {
     let name: String
     let id: Int
     let abilities: [Ability]
     let types: [TypeElement]
+    let sprites: Sprites
     
     enum CodingKeys: String, CodingKey {
         case abilities
@@ -26,17 +27,44 @@ struct Pokemon: Codable {
         case locationAreaEncounters
         case moves, name, order, species, sprites, stats, types, weight
     }
-    
-    init(from decoder: Decoder) throws {
-        <#code#>
+     
+}
+
+struct Ability {
+    let ability: NamedResource
+
+    enum CodingKeys: String, CodingKey {
+        case ability
+        case isHidden
+        case slot
     }
 }
 
-struct Ability: Codable {
-   
-    
+struct NamedResource: Codable {
+    let name: String
+    let url: String
 }
 
 struct TypeElement: Codable {
-    
+    let slot: Int
+    let type: NamedResource
+}
+
+struct Sprites {
+    let frontDefault: String
+
+    enum CodingKeys: String, CodingKey {
+        case backDefault
+        case backFemale
+        case backShiny
+        case backShinyFemale
+        case frontDefault = "front_default"
+        case frontFemale
+        case frontShiny
+        case frontShinyFemale
+    }
+}
+
+struct PokemonSearchResults: Codable {
+    let results: Pokemon
 }
