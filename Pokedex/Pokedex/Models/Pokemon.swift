@@ -24,19 +24,15 @@ struct Pokemon: Codable {
     }
     
     struct NestedString: Codable {
-        let nestedString: String
+        let nestedString: String?
     }
     
     struct Ability: Codable {
-        let ability: NestedString
+        let ability: NestedString?
     }
     
     struct Types: Codable {
-        let type: NestedString
+        let type: NestedString?
     }
     
-}
-
-struct PokemonSearch: Decodable {
-    let results: [Pokemon]
 }

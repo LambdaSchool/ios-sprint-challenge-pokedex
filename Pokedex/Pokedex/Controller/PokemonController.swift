@@ -20,7 +20,9 @@ class PokemonController {
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
+    var searchedPokemon: Pokemon?
     
+    var pokemonList = [Pokemon]()
     
     func searchPokemon(searchTerm: String, completion: @escaping (NetworkError?) -> Void) {
         
@@ -31,29 +33,32 @@ class PokemonController {
         
         request.httpMethod = HTTPmethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+        URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 print("Error fetching data: \(error.localizedDescription)")
+                completion(.failedFetch)
                 return
             }
             
-            guard let self = self else { return }
-            
             guard let data = data else {
                 print("No data returned from dataTask")
+                completion(.noData)
                 return
             }
             
             let jsonDecoder = JSONDecoder()
             
             do {
-                let pokemonSearch = try jsonDecoder.decode(PokemonSearch.self, from: data)
-                self.pokemon = pokemonSearch.results
+                let fetchedPokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                self.searchedPokemon = fetchedPokemon
+                print(fetchedPokemon.name)
+                completion(nil)
             } catch {
-                print
+                print("No pokemon fetched")
+                completion(.failedFetch)
+                return
             }
-        }
-        
+        }.resume()
     }
     
     
