@@ -28,7 +28,6 @@ class PokemonTableViewController: UITableViewController {
         return pokemonController.pokemon.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
@@ -46,16 +45,15 @@ class PokemonTableViewController: UITableViewController {
         }
     }
     
-    
     // MARK: - Navigation
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "pokemonViewSegue" {
+        if segue.identifier == "PokemonViewSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             destination.pokemonController = pokemonController
-        } else if segue.identifier == "searchPokemonSegue" {
+        } else if segue.identifier == "SearchPokemonSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             

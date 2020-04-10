@@ -13,6 +13,7 @@ class PokemonDetailViewController: UIViewController {
     var pokemon: Pokemon?
     var pokemonController: PokemonController!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
@@ -21,6 +22,8 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
     }
     
@@ -32,6 +35,7 @@ class PokemonDetailViewController: UIViewController {
     
     
     func updateViews() {
+        
         
     }
 
