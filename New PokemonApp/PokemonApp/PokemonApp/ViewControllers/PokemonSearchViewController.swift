@@ -19,33 +19,30 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     
-    @IBOutlet weak var searchBarAction: UISearchBar!
-    
     var newPokemon: Pokemon?
-    private var pokemonController: PokemonController!
+    var pokemonController: PokemonController!
     var delegate: SearchDelegate?
     private var pokemonDetailVC: PokemonDetailViewController?
-    
+    private let searchController = UISearchController(searchResultsController: nil)
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBarAction.searchTextField.becomeFirstResponder()
+        
+        setupSearchController()
         
     }
     
+    private func setupSearchController() {
+         navigationItem.searchController = searchController
+         searchController.searchBar.delegate = self
+     }
+    
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        guard let pokemon = newPokemon else { return }
+        guard let pokemon = pokemonDetailVC?.pokemon else { return }
              delegate?.save(pokemon)
              navigationController?.popViewController(animated: true)
     }
     
-    private func updateViews() {
-        guard let pokemon = newPokemon else { return }
-        
-        navigationItem.title = pokemon.name.capitalized
-        
-        
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
            if segue.identifier == "PokemonDetail", let pokemonDetailVC = segue.destination as? PokemonDetailViewController {
@@ -54,9 +51,9 @@ class PokemonSearchViewController: UIViewController {
            }
        }
     
-//    private func hideViews(_ hidden: Bool) {
-//         saveButton.isHidden = hidden
-//     }
+    private func hideViews(_ hidden: Bool) {
+         saveButton.isHidden = hidden
+     }
     
    
 
@@ -74,7 +71,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                    self.pokemonDetailVC?.pokemon = pokemon
                    self.title = pokemon.name.capitalized
                    self.saveButton.isEnabled = true
-                    self.searchBarAction.searchTextField.resignFirstResponder()
+                    self.searchController.dismiss(animated: true)
                 }
             case .failure(let networkError):
                 print("network error: \(networkError)")

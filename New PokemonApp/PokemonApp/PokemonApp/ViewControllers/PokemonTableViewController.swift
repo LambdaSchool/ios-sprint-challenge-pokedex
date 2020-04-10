@@ -11,31 +11,32 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
 
     var pokemonController = PokemonController()
-  private lazy var modelView = PokemonDetailViewModel()
+  
+    private var pokemon: [Pokemon] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
         tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+   
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.pokemon.count
+        return pokemon.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-        let pokemon = pokemonController.pokemon[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+         cell.textLabel?.text = pokemon[indexPath.row].name.capitalized
         // Configure the cell...
 
         return cell
@@ -50,17 +51,12 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            pokemonController.pokemon.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -77,15 +73,29 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+   if let searchVC = segue.destination as? PokemonSearchViewController {
+        searchVC.pokemonController = pokemonController
+        searchVC.delegate = self
+    } else if let pokemonVC = segue.destination as? PokemonDetailViewController {
+        guard let index = tableView.indexPathForSelectedRow?.row else { return }
+        pokemonVC.pokemonController = pokemonController
+        pokemonVC.pokemon = pokemon[index]
     }
-    */
 
+        
+    }
+    
+
+}
+
+extension PokemonTableViewController: SearchDelegate {
+    func save(_ pokemon: Pokemon) {
+        self.pokemon.append(pokemon)
+    }
 }
 
