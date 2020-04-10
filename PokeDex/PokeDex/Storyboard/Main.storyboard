@@ -104,7 +104,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8k-op-l2s">
-                                <rect key="frame" x="20" y="609" width="374" height="0.0"/>
+                                <rect key="frame" x="20" y="609" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="f4d-6t-16E"/>
                                 </constraints>
@@ -113,7 +113,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EYP-7s-Uqs" userLabel="AbilitiesLabel">
-                                <rect key="frame" x="20" y="617" width="374" height="50"/>
+                                <rect key="frame" x="20" y="667" width="374" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mpt-P0-w2p"/>
                                 </constraints>
@@ -122,14 +122,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAl-sH-XYr">
-                                <rect key="frame" x="148" y="712" width="134" height="30"/>
+                                <rect key="frame" x="157" y="812" width="101" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="iIY-ZJ-doi"/>
                                 </constraints>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
                                     <action selector="saveButtonTapped:" destination="dvL-rS-aF6" eventType="touchUpInside" id="2sm-mD-h5j"/>
-                                    <action selector="savePokemonTapped:" destination="dvL-rS-aF6" eventType="touchUpInside" id="Qhc-Sc-jlG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -141,19 +140,19 @@
                             <constraint firstItem="EYP-7s-Uqs" firstAttribute="top" secondItem="N8k-op-l2s" secondAttribute="bottom" constant="8" id="CQX-KJ-MqK"/>
                             <constraint firstItem="4LN-zY-pce" firstAttribute="top" secondItem="7f2-V5-jG7" secondAttribute="bottom" constant="30" id="ETz-fr-KLV"/>
                             <constraint firstItem="4LN-zY-pce" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" constant="42" id="LgH-yG-qC5"/>
-                            <constraint firstItem="QAl-sH-XYr" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" constant="148" id="Ofa-G6-naZ"/>
                             <constraint firstItem="N8k-op-l2s" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" constant="20" id="YxD-Yd-UDw"/>
                             <constraint firstItem="7f2-V5-jG7" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" id="aRP-AJ-w4f"/>
                             <constraint firstItem="Vbe-RS-cD9" firstAttribute="trailing" secondItem="EYP-7s-Uqs" secondAttribute="trailing" constant="20" id="c7y-3C-YQQ"/>
-                            <constraint firstItem="QAl-sH-XYr" firstAttribute="top" secondItem="EYP-7s-Uqs" secondAttribute="bottom" constant="45" id="dcS-pB-JcV"/>
+                            <constraint firstItem="QAl-sH-XYr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="EYP-7s-Uqs" secondAttribute="bottom" constant="45" id="dcS-pB-JcV"/>
                             <constraint firstItem="7f2-V5-jG7" firstAttribute="trailing" secondItem="Vbe-RS-cD9" secondAttribute="trailing" id="dsd-Hh-zE9"/>
+                            <constraint firstItem="QAl-sH-XYr" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" constant="157" id="eK8-R0-vTp"/>
                             <constraint firstItem="415-Fo-UIc" firstAttribute="leading" secondItem="Vbe-RS-cD9" secondAttribute="leading" constant="20" id="i1S-T1-HsL"/>
                             <constraint firstItem="Vbe-RS-cD9" firstAttribute="trailing" secondItem="415-Fo-UIc" secondAttribute="trailing" constant="20" id="i3U-cs-OY3"/>
                             <constraint firstItem="415-Fo-UIc" firstAttribute="top" secondItem="4LN-zY-pce" secondAttribute="bottom" constant="28" id="iBZ-JN-ivm"/>
                             <constraint firstItem="Vbe-RS-cD9" firstAttribute="bottom" secondItem="QAl-sH-XYr" secondAttribute="bottom" constant="20" id="jJc-XC-89P"/>
                             <constraint firstItem="Vbe-RS-cD9" firstAttribute="trailing" secondItem="N8k-op-l2s" secondAttribute="trailing" constant="20" id="pMD-aT-FKW"/>
+                            <constraint firstItem="Vbe-RS-cD9" firstAttribute="trailing" secondItem="QAl-sH-XYr" secondAttribute="trailing" constant="156" id="t4A-Wt-V0f"/>
                             <constraint firstItem="7f2-V5-jG7" firstAttribute="top" secondItem="Vbe-RS-cD9" secondAttribute="top" id="w0M-r7-h7N"/>
-                            <constraint firstItem="Vbe-RS-cD9" firstAttribute="trailing" secondItem="QAl-sH-XYr" secondAttribute="trailing" constant="132" id="yry-WO-ulr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Vbe-RS-cD9"/>
                     </view>
@@ -161,13 +160,10 @@
                     <connections>
                         <outlet property="abilitiesLabel" destination="EYP-7s-Uqs" id="xsK-QL-8KR"/>
                         <outlet property="idLabel" destination="415-Fo-UIc" id="sMz-PP-fV4"/>
-                        <outlet property="nameLabel" destination="3rD-WS-Ynv" id="K1g-QN-xsz"/>
                         <outlet property="pokemonImage" destination="0SY-s9-V5M" id="fan-OG-hgF"/>
                         <outlet property="pokemonNameLabel" destination="3rD-WS-Ynv" id="eJm-3k-JxU"/>
                         <outlet property="pokemonSearchBar" destination="7f2-V5-jG7" id="t81-DB-N4m"/>
-                        <outlet property="searchPokemonBar" destination="7f2-V5-jG7" id="fDq-1D-lRy"/>
                         <outlet property="typesLabel" destination="N8k-op-l2s" id="QCR-5q-a58"/>
-                        <outlet property="typeslabel" destination="N8k-op-l2s" id="vmd-Id-qh1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oER-bg-OAW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

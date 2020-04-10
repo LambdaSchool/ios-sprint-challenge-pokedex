@@ -22,56 +22,55 @@ class PokemonController {
     
     var pokemon = Pokemon()
     var pokemons: [Pokemon] = []
+    private let searchBar = UISearchBar()
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    private let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon")!
     private var task: URLSessionTask?
     
-    private lazy var jsonDecoder = JSONDecoder()
     
-    
-    func searchForPokemon(searchTerm: String, completion: @escaping () -> Void) {
+    func searchForPokemon(for searchTerm: String, completion: @escaping () -> Void) {
         task?.cancel()
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let searchQueryItem = URLQueryItem(name: "search", value: searchTerm)
-        urlComponents?.queryItems = [searchQueryItem]
+        let searchTerm = searchBar.text?.lowercased() ?? ""
         
-        guard let requestURL = urlComponents?.url else {
-            print("Request URL is nil")
-            completion()
-            return
-        }
-        
-        var request = URLRequest(url: requestURL)
+        let pokemonNameURL = baseURL.appendingPathComponent("/\(searchTerm)")
+        var request = URLRequest(url: pokemonNameURL)
         request.httpMethod = "GET"
         
         task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
-                   if let error = error {
-                       print("Error fetching data: \(error.localizedDescription)")
-                       return
-                   }
-                   
-                   guard let self = self else { return }
-                   
-                   guard let data = data else {
-                       print("No data returned from dataTask")
-                       return
-                   }
-                   
-                   do {
-                    let pokemonSearchResults = try self.jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                       self.pokemon = pokemonSearchResults.results
-                   } catch {
-                       print("Unable to decode data into instance of PokemonSearch: \(error.localizedDescription)")
-                   }
-                   
-                   completion()
-               }
-               
-               task?.resume()
-           }
+            if let error = error {
+                print("Error fetching data: \(error.localizedDescription)")
+                return completion()
+            }
+            
+            guard let self = self else { return }
+            
+            guard let data = data else {
+                print("No data returned from dataTask")
+                return completion()
+            }
+            
+            let jsonDecoder = JSONDecoder()
+            
+            do {
+                let pokemonSearchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
+                self.pokemon = pokemonSearchResults.results
+                
+            } catch {
+                print("Unable to decode data into instance of PokemonSearchResults: \(error)")
+                completion()
+            }
+            
+        }
+        task?.resume()
+        
+    }
     
     func fetchImage(at urlString: String, completion: @escaping GetImageCompletion) {
-        guard let imageURL = URL(string: urlString) else {
+        let pokemonId = "\(pokemon.id).png"
+        let urlString = imageURL.appendingPathComponent(pokemonId)
+        
+        guard let imageURL = URL(string: "\(urlString)") else {
             return completion(.failure(.badURL))
         }
         
@@ -91,14 +90,14 @@ class PokemonController {
             guard let data = data,
                 let image = UIImage(data: data)
                 else {
-                return completion(.failure(.badData))
+                    return completion(.failure(.badData))
             }
             
             completion(.success(image))
-        }
-            
-        .resume()
+        }.resume()
+        
     }
+    
     
 }
 

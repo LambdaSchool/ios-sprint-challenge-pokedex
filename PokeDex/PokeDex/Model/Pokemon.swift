@@ -11,60 +11,40 @@ import Foundation
 struct Pokemon: Codable {
     var name: String?
     var id: Int?
-    var abilities: [Ability]?
-    var types: [TypeElement]?
-    var sprites: Sprites?
+    var abilities: [PokemonAbility]?
+    var types: [PokemonType]?
+    var sprites: PokemonSprites?
     
-    enum CodingKeys: String, CodingKey {
-        case abilities
-        case id
-        case name
-//        case baseExperience
-//        case forms
-//        case gameIndices
-//        case height
-//        case heldItems
-//        case isDefault
-//        case locationAreaEncounters
-//        case moves, name, order, species, sprites, stats, types, weight
+    struct PokemonSprites: Codable {
+        var frontDefault: String
+        
+        enum CodingKeys: String, CodingKey {
+            case frontDefault = "front_default"
+        }
+    }
+    
+    struct PokemonAbility: Codable {
+        var ability: NamedAPIResource
+        
+        enum CodingKeys: String, CodingKey {
+            case ability
+        }
+    }
+    
+    struct NamedAPIResource: Codable {
+        var name: String
+    }
+    
+    struct PokemonType: Codable {
+        var type: NamedAPIResource
+        
+        enum CodingKeys: String, CodingKey {
+            case type
+        }
     }
 }
 
-struct Ability: Codable {
-    let ability: NamedResource
-    
-    enum CodingKeys: String, CodingKey {
-        case ability
-//        case isHidden
-//        case slot
-    }
-}
-
-struct NamedResource: Codable {
-    let name: String
-    let url: String
-}
-
-struct TypeElement: Codable {
-    let slot: Int
-    let type: NamedResource
-}
-
-struct Sprites {
-    let frontDefault: String
-    
-    enum CodingKeys: String, CodingKey {
-        case backDefault
-        case backFemale
-        case backShiny
-        case backShinyFemale
-        case frontDefault = "front_default"
-        case frontFemale
-        case frontShiny
-        case frontShinyFemale
-    }
-}
 
 struct PokemonSearchResults: Decodable {
-    let results: Pokemon
+    var results: Pokemon
 }
