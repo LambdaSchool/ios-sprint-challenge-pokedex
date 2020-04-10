@@ -58,17 +58,7 @@ class PokemonSearchViewController: UIViewController {
 //         saveButton.isHidden = hidden
 //     }
     
-    private func setImage() {
-        guard let pokemon = newPokemon else { return }
-        
-        self.pokemonController?.fetchImage(at: pokemon.sprites) { result in
-            guard let image = try? result.get() else { return }
-            
-            DispatchQueue.main.async {
-                self.pokemonImageView.image = image
-            }
-        }
-    }
+   
 
 }
 
@@ -81,7 +71,9 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             switch result {
             case .success(let pokemon):
                 DispatchQueue.main.async {
-                    self.pokemon = pokemon
+                   self.pokemonDetailVC?.pokemon = pokemon
+                   self.title = pokemon.name.capitalized
+                   self.saveButton.isEnabled = true
                     self.searchBarAction.searchTextField.resignFirstResponder()
                 }
             case .failure(let networkError):

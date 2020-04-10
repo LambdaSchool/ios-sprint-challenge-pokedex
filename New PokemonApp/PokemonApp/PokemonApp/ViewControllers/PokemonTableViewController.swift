@@ -12,10 +12,11 @@ class PokemonTableViewController: UITableViewController {
 
     var pokemonController = PokemonController()
   private lazy var modelView = PokemonDetailViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
          self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source

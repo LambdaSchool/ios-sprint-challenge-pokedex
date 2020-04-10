@@ -42,7 +42,9 @@ final class PokemonDetailViewModel {
         }
     }
     private func getImage(for pokemon: Pokemon, completion: @escaping (GetPokemonResult) -> Void) {
-        pokemonController.fetchImage(at: pokemon.sprites) { result in
+        
+        guard let pokemonImage = pokemon.sprites.frontDefault else { return }
+        pokemonController.fetchImage(at: pokemonImage) { result in
             DispatchQueue.main.async {
             do {
                 let image = try result.get()

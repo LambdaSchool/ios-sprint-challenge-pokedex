@@ -27,7 +27,7 @@ struct Pokemon: Codable {
     let name: String
     let abilities: [Abilities]
     let types: [Types]
-    let sprites: Sprites
+    var sprites: Sprites
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PokemonCodingKeys.self)
@@ -38,14 +38,10 @@ struct Pokemon: Codable {
         let newTypes = try container.decodeIfPresent([Types].self, forKey: .types)
         self.types = newTypes ?? []
         
-       
-        
-        let spritesContainer = try container.nestedUnkeyedContainer(forKey: .sprites)
-        while !spritesContainer.isAtEnd {
             var spriteContainer = try container.nestedContainer(keyedBy: PokemonCodingKeys.SpriteCodingKeys.self, forKey: .sprites)
-            self.sprites = try spriteContainer.decode(Sprites.self, forKey: .frontDefault)
-            
-        }
+            self.sprites =  try spriteContainer.decode(Sprites.self, forKey: .frontDefault)
+  
+        
     }
     
     struct Ability: Codable {
