@@ -42,7 +42,17 @@ class PokemonSearchViewController: UIViewController {
     
     func updateViews() {
         print("in update views")
-        pokemonNameLabel.text = pokemonController?.searchedPokemon?.name
+        guard let unwrappedPokemon = pokemonController?.searchedPokemon else { return }
+        pokemonNameLabel.text = unwrappedPokemon.name.capitalized
+        pokemonIDLabel.text = "ID: " + String(unwrappedPokemon.id)
+        
+        guard let urlPath = unwrappedPokemon.sprites["front_default"],
+            let imageURL = urlPath else {
+                print("Error, no imageURL found")
+                return
+        }
+        pokemonSpriteImage.load(url: imageURL)
+        
     }
 }
 
@@ -51,7 +61,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
         
-//        guard let pokemonController = pokemonController else { return }
+        //        guard let pokemonController = pokemonController else { return }
         
         
         self.pokemonController?.searchPokemon(searchTerm: searchTerm) { (error) in
@@ -64,7 +74,21 @@ extension PokemonSearchViewController: UISearchBarDelegate {
                 self.updateViews()
             }
         }
+        
+    }
     
 }
 
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }
