@@ -56,10 +56,6 @@ class PokemonTableViewController: UITableViewController {
                 destination.selectedRow = row
                 destination.displayedPokemon = pokemonController.pokemonAdded[row]
             }
-
         }
-        
     }
-    
-
 }

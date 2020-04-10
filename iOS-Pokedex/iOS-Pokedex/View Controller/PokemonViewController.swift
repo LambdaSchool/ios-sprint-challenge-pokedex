@@ -52,14 +52,40 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     //Functions
     func updateViews() {
+        getImage()
         guard let displayedPokemon = displayedPokemon else { return }
         
         //Update: name, id, type, abilities, sprite
+        title = displayedPokemon.name
         nameLabel.text = displayedPokemon.name
-        idLabel.text = String(displayedPokemon.id)
-        typeLabel.text = displayedPokemon.types[0].type.name
+        idLabel.text = "ID: " + String(displayedPokemon.id)
+        typeLabel.text = "Type: " + displayedPokemon.types[0].type.name
         
+        var abilities = "Abilities: "
+        for i in 0...displayedPokemon.abilities.count - 1 {
+            if i == displayedPokemon.abilities.count - 1 {
+                abilities += "\(displayedPokemon.abilities[i].ability.name)"
+            } else {
+                abilities += "\(displayedPokemon.abilities[i].ability.name), "
+            }
+        }
+        abilitiesLabel.text = abilities
     }
+    
+    
+    //Grabs the image for the pokemon
+    func getImage() {
+        guard let pokemonController = pokemonController else { return }
+        pokemonController.pokemon = displayedPokemon
+        guard let pokemon = pokemonController.pokemon else { return }
+        guard let url = URL(string: pokemon.sprites.frontDefault) else { return }
+        pokemonController.convertImage(url: url) {
+            DispatchQueue.main.async {
+                self.imageView.image = pokemonController.currentImage
+            }
+        }
+    }
+
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
@@ -71,30 +97,4 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
-    /*
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let pokemonController = pokemonController else { return }
-        guard let pokemon = pokemonController.pokemon else { return }
-        
-        //Search for contact
-        for i in pokemon.results {
-            if searchText.contains(i.name) {
-                nameLabel.text = i.name
-                displayedPokemon = Pokemon1(name: i.name, url: i.url)
-                break
-            }
-        }
-    }*/
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

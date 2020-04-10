@@ -8,19 +8,6 @@
 
 import Foundation
 
-
-struct Pokemon: Codable {
-    //let count: Int
-    //let next: String
-    let results: [Result]
-}
-
-struct Result: Codable {
-    let name: String
-    let url: String
-}
-
-
 //Testing
 struct PokemonTesting: Codable {
     let abilities: [Ability]
@@ -42,10 +29,10 @@ struct Species: Codable {
 
 struct Sprites: Codable {
     enum CodingKeys: String, CodingKey {
-        case backDefault = "back_default"
+        case frontDefault = "front_default"
     }
     
-    let backDefault: String
+    let frontDefault: String
 }
 
 struct TypeElement: Codable {
