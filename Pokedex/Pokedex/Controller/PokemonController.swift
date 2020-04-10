@@ -30,10 +30,10 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     
     
-    func fetchAllPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let allPokemonURL = baseURL.appendingPathComponent("pokemon")
+    func fetchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let pokemonURL = baseURL.appendingPathComponent("pokemon/\(name)")
         
-        var request = URLRequest(url: allPokemonURL)
+        var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
         
@@ -65,6 +65,10 @@ class PokemonController {
                 return
             }
         }.resume()
+    }
+    
+    func save(pokemon: Pokemon) {
+        // append pokemon to pokemon array 
     }
 }
 

@@ -22,45 +22,41 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-
     }
     
-    
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
-        guard let pokemonName = pokemonNameLabel.text,
-            let id = idLabel.text,
-            let type = typesLabel.text,
-            let abilities = abilitiesLabel.text,
-            let image = imageView.image
-            else { return }
-        
-        let pokemon = Pokemon(id: id, name: pokemonName, types: type, abilities: abilities)
-        
-        pokemonController.fetchAllPokemon(with: pokemon) { result in
-            switch result {
-            case .success(_):
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            case .failure(_):
-                print("Error saving pokemon")
-            }
-        }
-}
-    
+       //  unwrap pokemon
+        // call pokemoncontroller function
+        // poptoView
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func updateViews() {
         if let pokemon = pokemon {
-            self.idLabel = pokemon.id
-            typesLabel.text = pokemon.types
-            abilitiesLabel.text = pokemon.abilities
-            imageView.image = pokemon.image
+            pokemonNameLabel.text = pokemon.name
+            var stringType = ""
+            for type in pokemon.types {
+                stringType.append("\(type.type.name) ")
+            }
+            typesLabel.text = stringType
+            // abilities
         }
-        
     }
+}
 
-
-
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // unrwap
+        guard let searchBarText = searchBar.text else { return }
+        pokemonController.fetchPokemon(with: searchBarText) { (result) in
+            switch result {
+            case .success(let pokemon):
+                self.pokemon = pokemon
+                self.updateViews()
+            case .failure(let error):
+                print(error)
+            
+            }
+        }
+    }
 }
