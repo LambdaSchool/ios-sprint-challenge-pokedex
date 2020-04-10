@@ -10,21 +10,22 @@ import UIKit
 
 class AddPokemon: UIViewController {
 
+    // MARK: - Outlets
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var idTextView: UITextView!
+    @IBOutlet weak var nameTextView: UITextView!
+    @IBOutlet weak var abilitiesTextView: UITextView!
+    @IBOutlet weak var addButton: UIButton!
+    
+    // MARK: - Load
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func addPokemon(_ sender: Any) {
     }
-    */
+  
+    
 
 }
