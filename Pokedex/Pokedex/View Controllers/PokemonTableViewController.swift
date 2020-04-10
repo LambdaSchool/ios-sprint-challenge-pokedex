@@ -9,36 +9,50 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
-
+    let pokemonController = PokemonController()
+    
+    var pokemon: Pokemon? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemon.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        
+        let addedPokemon = pokemonController.pokemon[indexPath.row]
+        
+        cell.textLabel?.text = addedPokemon.name
+        
         return cell
     }
-   
-
     
-   
-    // MARK: - Navigation
-
-   
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.pokemon.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
-   
-
+    
+    
+    // MARK: - Navigation
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
+    
+    
 }

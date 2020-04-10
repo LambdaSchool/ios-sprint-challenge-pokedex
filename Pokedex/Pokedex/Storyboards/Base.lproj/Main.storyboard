@@ -10,13 +10,13 @@
         <!--Pokedex-->
         <scene sceneID="lP6-n1-OMw">
             <objects>
-                <tableViewController id="2UF-T5-lgz" sceneMemberID="viewController">
+                <tableViewController id="2UF-T5-lgz" customClass="PokemonTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="c2t-it-ti8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="53" id="Bfg-uS-78q">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" rowHeight="53" id="Bfg-uS-78q">
                                 <rect key="frame" x="0.0" y="28" width="414" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bfg-uS-78q" id="wR7-Lg-o0U">
@@ -43,7 +43,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" id="LeD-bg-k9c">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="hPn-iV-54n"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="hPn-iV-54n">
+                            <connections>
+                                <segue destination="cTM-b8-H3H" kind="show" identifier="searchSegue" id="D7o-0a-OFk"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOy-u2-uU1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -53,7 +57,7 @@
         <!--Pokemon Search-->
         <scene sceneID="Jmq-h7-oaY">
             <objects>
-                <viewController id="cTM-b8-H3H" sceneMemberID="viewController">
+                <viewController id="cTM-b8-H3H" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sHP-KY-zyD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,7 +130,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9x-3k-Y5d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20.289855072463769" y="56.919642857142854"/>
+            <point key="canvasLocation" x="159" y="57"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="D7o-0a-OFk"/>
+    </inferredMetricsTieBreakers>
 </document>
