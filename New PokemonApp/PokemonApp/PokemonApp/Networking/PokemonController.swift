@@ -14,11 +14,18 @@ enum NetworkError: Error {
     case decodeFailed
 }
 
-class APIController {
+
+class PokemonController {
+    
+ 
+    
+    var pokemon: [Pokemon] = []
+    typealias GetPokemonCompletion = (Result<Pokemon, NetworkError>) -> Void
+    typealias GetImageCompletion = (Result<UIImage, NetworkError>) -> Void
     
     private let baseUrl = URL(string: "https://pokeapi.co/api/v2/")!
     
-    func getPokemon(_ query: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func getPokemon(_ query: String, completion: @escaping GetPokemonCompletion) {
         let url = baseUrl.appendingPathComponent("pokemon/\(query.lowercased())")
         print(url)
         var request = URLRequest(url: url)
@@ -44,7 +51,7 @@ class APIController {
         }.resume()
     }
     
-    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func fetchImage(at urlString: String, completion: @escaping GetImageCompletion) {
         let imageUrl = URL(string: urlString)!
         
         var request = URLRequest(url: imageUrl)
