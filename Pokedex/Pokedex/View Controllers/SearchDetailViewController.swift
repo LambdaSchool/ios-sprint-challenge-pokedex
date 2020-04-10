@@ -31,7 +31,6 @@ class SearchDetailViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
     
 
     override func viewDidLoad() {
@@ -55,61 +54,65 @@ class SearchDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func deleteButtonTapped(_ sender: Any) {
-        guard let pokemon = pokemon else { return }
-        apiController?.deletePokemon(pokemon: pokemon)
-        navigationController?.popViewController(animated: true)
-    }
-    
     func updateViews() {
-            guard isViewLoaded else {return}
-            guard let pokemonObject = pokemon else {
-                title = "Pokemon Search"
-                print("Labels not updated")
-                return
-            }
-
-            print("\(pokemonObject.name) set in detail view")
-            title = pokemonObject.name.capitalized
-            pokemonNameLabel.text = pokemon?.name
-            idLabel.text = "ID: \(pokemonObject.id)"
-
-            var types: [String] = []
-            for typeInfo in pokemonObject.types {
-                types.append(typeInfo.type.name)
-            }
-
-            typeLabel.text = "\(types.joined(separator: ", "))"
-            abilityLabel.text = "\(pokemonObject.abilities[0].ability.name)"
-
-            apiController?.fetchImage(from: pokemonObject.sprites.imageUrl, completion: { (pokemonImage) in
-                DispatchQueue.main.async {
-                    self.imageView.image = pokemonImage
+        if let pokemon = pokemon {
+            title = pokemon.name.capitalized
+            idLabel.text = "ID: \(pokemon.id)"
+            
+            var typesText: String = "\(pokemon.types[0].type.name.capitalized)"
+            if pokemon.types.count > 1 {
+                for i in 1..<pokemon.types.count {
+                    typesText.append(", \(pokemon.types[i].type.name.capitalized)")
                 }
-            })
+            }
+            
+            typeLabel.text = "Types: \(typesText)"
+            
+            var abilitiesText: String = "\(pokemon.abilities[0].ability.name.capitalized)"
+                if pokemon.abilities.count > 1 {
+                    for i in 1..<pokemon.abilities.count {
+                        abilitiesText.append(", \(pokemon.abilities[i].ability.name.capitalized)")
+                    }
+                }
+                abilityLabel.text = "Abilities: \(abilitiesText)"
+
+            guard let imageURL = URL(string: pokemon.sprites.imageUrl) else { return }
+                imageView.load(url: imageURL)
+            } else {
+                title = "Search Pokemon"
         }
     
 
 }
+}
 
 extension SearchDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text else { return }
-        
-        apiController?.fetchPokemon(pokemonName: searchTerm) { (pokemonObject) in
-            
-            guard let pokemon = try? pokemonObject.get() else { return }
-            
-            DispatchQueue.main.async {
-                self.pokemon = pokemon
+        if let pokemon = searchBar.text,
+        !pokemon.isEmpty {
+            apiController?.fetchPokemon(pokemonName: pokemon) { result in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemon = pokemon
+                        self.updateViews()
+                    }
+                }
             }
         }
-        
-        guard let pokemonImgURL = pokemon?.sprites.imageUrl else { return }
-        apiController?.fetchImage(from: pokemonImgURL, completion: { (pokemonImage) in
-            DispatchQueue.main.async {
-                self.imageView.image = pokemonImage
+    }
+}
+
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
             }
-        })
+        }
     }
 }
