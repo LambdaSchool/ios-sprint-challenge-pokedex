@@ -35,6 +35,7 @@ class PokemonController {
         var request = URLRequest(url: allPokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
+        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
                    if let response = response as? HTTPURLResponse,
                        response.statusCode == 401 {
@@ -49,7 +50,7 @@ class PokemonController {
                    }
                    
                    guard let data = data else {
-                    completion(.failure(.noDecode))
+                    completion(.failure(.badAuth))
                        return
                    }
 
