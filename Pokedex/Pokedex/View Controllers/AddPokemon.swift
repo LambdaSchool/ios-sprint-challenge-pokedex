@@ -11,6 +11,7 @@ import UIKit
 class AddPokemon: UIViewController {
 
     // MARK: - Outlets
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var idTextView: UITextView!
@@ -19,9 +20,12 @@ class AddPokemon: UIViewController {
     @IBOutlet weak var addButton: UIButton!
     
     // MARK: - Load
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    // MARK: - Add button action
     
     @IBAction func addPokemon(_ sender: Any) {
     }

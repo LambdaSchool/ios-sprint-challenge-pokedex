@@ -11,9 +11,11 @@ import Foundation
 class Networking {
    
     // MARK: - URL's
+    
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     // MARK: - Methods
+    
     func fetchPokemonByName() {
         
     }
