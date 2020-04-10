@@ -55,7 +55,6 @@ class PokemonController {
                    }
 
                    let decoder = JSONDecoder()
-                   decoder.dateDecodingStrategy = .iso8601
                    do {
                        let pokemon = try decoder.decode(Pokemon.self, from: data)
                     completion(.success(pokemon))
