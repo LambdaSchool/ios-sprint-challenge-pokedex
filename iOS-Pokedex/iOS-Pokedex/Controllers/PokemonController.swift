@@ -15,6 +15,68 @@ protocol PokemonControllerDelegate {
 class PokemonController {
     
     //Variables
+    var url = URL(string: "https://pokeapi.co/api/v2/pokemon/")
+    var pokemon: PokemonTesting?
+    var pokemonAdded: [PokemonTesting] = []
+    
+    //Functions
+    func getPokemon(name: String, completion: @escaping ()-> Void) {
+        
+        let newURL = url?.appendingPathComponent(name)
+        
+        guard let myURL = newURL else {
+            completion()
+            return
+        }
+        
+        //Fetch Json information
+        URLSession.shared.dataTask(with: myURL) { (data, response, error) in
+            
+            //Error Checking
+            if let error = error {
+                print("Error fetching JSON in getJSON: \(error.localizedDescription)")
+                completion()
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                print("Error Bad Reponse Code")
+                completion()
+                return
+            }
+            
+            //Parse JSON
+            guard let data = data else {
+                print("Error Bad Data")
+                completion()
+                return
+            }
+            
+            self.parseJSON(data: data)
+            completion()
+        }.resume()
+    }
+        
+    func parseJSON(data: Data) {
+        let decoder = JSONDecoder()
+        
+        do {
+            let decoded = try decoder.decode(PokemonTesting.self, from: data)
+            self.pokemon = decoded
+            print(decoded)
+        } catch {
+            print("Error Decoding JSON: \(error.localizedDescription)")
+        }
+    }
+}
+
+
+
+
+/*
+class PokemonController {
+    
+    //Variables
     var url = URL(string: "https://pokeapi.co/api/v2/pokemon-species")
     var pokemon: Pokemon?
     var pokemonAdded: [Pokemon1] = []
@@ -108,4 +170,4 @@ class PokemonController {
            
        }*/
     
-}
+} */

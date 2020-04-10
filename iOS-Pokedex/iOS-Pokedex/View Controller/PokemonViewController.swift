@@ -22,17 +22,13 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        if let displayedPokemon = displayedPokemon {
-            nameLabel.text = displayedPokemon.name
-            searchBar.text = displayedPokemon.name
-        }
-    
+        updateViews()
     }
     
     //Variables
     var delegate: PokemonTableViewController?
     var pokemonController: PokemonController?
-    var displayedPokemon: Pokemon1?
+    var displayedPokemon: PokemonTesting?
     var selectedRow: Int?
 
     
@@ -52,7 +48,31 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             navigationController?.popViewController(animated: true)
         }
     }
+    
+    
+    //Functions
+    func updateViews() {
+        guard let displayedPokemon = displayedPokemon else { return }
+        
+        //Update: name, id, type, abilities, sprite
+        nameLabel.text = displayedPokemon.name
+        idLabel.text = String(displayedPokemon.id)
+        typeLabel.text = displayedPokemon.types[0].type.name
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        guard let pokemonController = pokemonController else { return }
+        pokemonController.getPokemon(name: text) {
+            DispatchQueue.main.async {
+                self.displayedPokemon = self.pokemonController?.pokemon
+                self.updateViews()
+            }
+        }
+    }
 
+    /*
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let pokemonController = pokemonController else { return }
         guard let pokemon = pokemonController.pokemon else { return }
@@ -65,7 +85,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
                 break
             }
         }
-    }
+    }*/
     
     /*
     // MARK: - Navigation

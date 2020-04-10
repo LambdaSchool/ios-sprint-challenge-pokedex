@@ -21,13 +21,6 @@ struct Result: Codable {
 }
 
 
-struct Pokemon1 {
-    let name: String
-    let url: String
-}
-
-
-
 //Testing
 struct PokemonTesting: Codable {
     let abilities: [Ability]
@@ -35,6 +28,7 @@ struct PokemonTesting: Codable {
     let id: Int
     let name: String
     let sprites: Sprites
+    let types: [TypeElement]
 }
 
 struct Ability: Codable {
@@ -53,3 +47,9 @@ struct Sprites: Codable {
     
     let backDefault: String
 }
+
+struct TypeElement: Codable {
+    let slot: Int
+    let type: Species
+}
+
