@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class UserPokemon {
+    
+    // MARK: - User pokemon list
+    var userAddedPokemon = [Pokemon]()
+    
+    // MARK: - Methods
+    func addPokemonToUserAddedPokemon() {
+        
+    }
+    
+}
