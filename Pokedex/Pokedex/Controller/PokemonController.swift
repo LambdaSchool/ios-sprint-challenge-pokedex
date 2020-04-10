@@ -66,7 +66,7 @@ class PokemonController {
                    }.resume()
     }
     
-    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func fetchImage(urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
             completion(.failure(.otherError))
             return
