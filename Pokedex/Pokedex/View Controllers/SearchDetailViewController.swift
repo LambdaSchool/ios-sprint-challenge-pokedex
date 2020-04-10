@@ -37,9 +37,13 @@ class SearchDetailViewController: UIViewController {
         super.viewDidLoad()
         
         updateViews()
-        
         searchBar.delegate = self
     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
     }
     
     func hideKeyboard() {
@@ -55,8 +59,9 @@ class SearchDetailViewController: UIViewController {
     }
     
     func updateViews() {
-        if let pokemon = pokemon {
+        if let pokemon = pokemon, isViewLoaded {
             title = pokemon.name.capitalized
+            pokemonNameLabel.text = pokemon.name.capitalized
             idLabel.text = "ID: \(pokemon.id)"
             
             var typesText: String = "\(pokemon.types[0].type.name.capitalized)"
@@ -69,21 +74,36 @@ class SearchDetailViewController: UIViewController {
             typeLabel.text = "Types: \(typesText)"
             
             var abilitiesText: String = "\(pokemon.abilities[0].ability.name.capitalized)"
-                if pokemon.abilities.count > 1 {
-                    for i in 1..<pokemon.abilities.count {
-                        abilitiesText.append(", \(pokemon.abilities[i].ability.name.capitalized)")
-                    }
+            if pokemon.abilities.count > 1 {
+                for i in 1..<pokemon.abilities.count {
+                    abilitiesText.append(", \(pokemon.abilities[i].ability.name.capitalized)")
                 }
-                abilityLabel.text = "Abilities: \(abilitiesText)"
-
+            }
+            abilityLabel.text = "Abilities: \(abilitiesText)"
+            
             guard let imageURL = URL(string: pokemon.sprites.imageUrl) else { return }
-                imageView.load(url: imageURL)
-            } else {
-                title = "Search Pokemon"
+            imageView.load(url: imageURL)
+            unhideLabel()
+        } else {
+            title = "Search Pokemon"
         }
+    }
     
-
-}
+    func unhideLabel(){
+        if pokemon != nil, isViewLoaded {
+            pokemonNameLabel.isHidden = false
+            idLabel.isHidden = false
+            typeLabel.isHidden = false
+            abilityLabel.isHidden = false
+            saveButton.isHidden = false
+        } else {
+            pokemonNameLabel.isHidden = true
+            idLabel.isHidden = true
+            typeLabel.isHidden = true
+            abilityLabel.isHidden = true
+            saveButton.isHidden = true
+        }
+    }
 }
 
 extension SearchDetailViewController: UISearchBarDelegate {
