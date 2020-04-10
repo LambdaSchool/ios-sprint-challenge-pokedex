@@ -17,9 +17,10 @@ enum HTTPMethod: String {
 
 enum NetworkError: Error {
     case noAuth
-    case badAuth
-    case otherError
+    case badURL
+    case badData
     case noDecode
+    case failedFetch
 }
 
 class PokemonController {
@@ -39,18 +40,18 @@ class PokemonController {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
-                completion(.failure(.otherError)
+                completion(.failure(.failedFetch))
                 return
             }
             
             if let error = error {
                 NSLog("Error getting request \(error)")
-                completion(.failure(.otherError))
+                completion(.failure(.failedFetch))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.noDecode))
+                completion(.failure(.badData))
                 return
             }
             
