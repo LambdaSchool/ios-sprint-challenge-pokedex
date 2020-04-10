@@ -35,6 +35,8 @@ class SearchPokemonViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        searchBar.delegate = self
+        
         nameLabel.isHidden = true
         spriteImage.isHidden = true
         idLabel.isHidden = true
@@ -51,10 +53,23 @@ class SearchPokemonViewController: UIViewController {
         typesLabel.isHidden = false
         saveButton.isHidden = false
         
-        self.title = pokemon.name
-        nameLabel.text = pokemon.name
-        idLabel.text = String(pokemon.id)
-        abilitiesLabel.text = pokemon.abilities.ability
+        self.title = pokemon.name.uppercased()
+        nameLabel.text = pokemon.name.uppercased()
+        idLabel.text = String("ID: \(pokemon.id)")
+        
+        var abilitesStringArray = [String]()
+        for ability in pokemon.abilities {
+            abilitesStringArray.append(ability.ability.name)
+        }
+        abilitiesLabel.text =  "Abilites: \(abilitesStringArray.joined(separator: ","))"
+        
+        var typesStringArray = [String]()
+        for type in pokemon.types {
+            typesStringArray.append(type.type.name)
+        }
+        typesLabel.text = "Types: \(typesStringArray.joined(separator: ","))"
+        
+        
     }
     
     // MARK: - Actions
