@@ -22,6 +22,8 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
+        searchBar.delegate = self
     }
     
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
@@ -43,6 +45,10 @@ class PokemonDetailViewController: UIViewController {
             for ability in pokemon.abilities {
                 stringType.append("Abilities: \(ability.ability.name)")
             }
+            
+            
+            
+            
         }
     }
 }

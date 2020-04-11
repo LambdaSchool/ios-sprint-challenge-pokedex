@@ -67,7 +67,7 @@ class PokemonController {
         }.resume()
     }
     
-    func fetchImage(from imageURL: String, completion: @escaping (UIImage?) -> Void){
+    func fetchImage(with imageURL: String, completion: @escaping (UIImage?) -> Void){
         
         guard let imageURL = URL(string: imageURL) else {
             completion(nil)
