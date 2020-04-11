@@ -14,8 +14,6 @@ protocol PokemonSavedDelegate {
 
 class PokemonDetailViewController: UIViewController {
     
-    
-    
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
@@ -29,9 +27,12 @@ class PokemonDetailViewController: UIViewController {
     
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pokemonSearchBar.delegate = self
+        updateViews()
+        saveButtonTapped(self)
         
     }
     
@@ -64,8 +65,9 @@ class PokemonDetailViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         
-        let name = pokemonNameLabel.text
-        let pokemon = try! Pokemon(from: name as! Decoder)
+
+//        let pokemon = pokemonNameLabel.text
+        if pokemon != nil {
         
         delegate?.pokemonWasSaved(pokemon: pokemon)
         dismiss(animated: true)
@@ -82,14 +84,16 @@ class PokemonDetailViewController: UIViewController {
      */
     
 }
+}
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
         searchBar.resignFirstResponder()
    
-        pokemonController.searchForPokemon(for: searchTerm) {
+        pokemonController.searchForPokemon(for: searchTerm) {_ in
             self.updateViews()
         }
+        updateViews()
     }
 }

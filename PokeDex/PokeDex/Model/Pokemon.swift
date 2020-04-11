@@ -8,43 +8,68 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Decodable {
     var name: String?
     var id: Int?
     var abilities: [PokemonAbility]?
     var types: [PokemonType]?
     var sprites: PokemonSprites?
     
-    struct PokemonSprites: Codable {
+    struct PokemonSprites: Decodable {
         var frontDefault: String
         
         enum CodingKeys: String, CodingKey {
             case frontDefault = "front_default"
         }
     }
-    
-    struct PokemonAbility: Codable {
+
+    struct PokemonAbility: Decodable {
         var ability: NamedAPIResource
         
         enum CodingKeys: String, CodingKey {
             case ability
         }
+        struct NamedAPIResource: Decodable {
+            var name: String
+        }
     }
-    
-    struct NamedAPIResource: Codable {
-        var name: String
-    }
-    
-    struct PokemonType: Codable {
+
+    struct PokemonType: Decodable {
         var type: NamedAPIResource
         
         enum CodingKeys: String, CodingKey {
             case type
         }
+        struct NamedAPIResource: Decodable {
+            var name: String
+        }
     }
+    
+//    enum CodingKeys: String, CodingKey {
+//        case name
+//        case id
+//        case abilities
+//        case types
+//        case sprites
+//    }
+//
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//
+//        name = try container.decode(String.self, forKey: .name)
+//        id = try container.decode(Int.self, forKey: .id)
+//        abilities = try container.decode([PokemonAbility].self, forKey: .abilities)
+//        types = try container.decode([PokemonType].self, forKey: .types)
+//        sprites = try container.decode(PokemonSprites.self, forKey: .sprites)
+//
+//    }
+    
 }
 
 
+
+
 struct PokemonSearchResults: Decodable {
-    var results: Pokemon
+    var result: Pokemon
+    
 }

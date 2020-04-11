@@ -12,6 +12,7 @@ import UIKit
 class PokemonController {
     
     typealias GetImageCompletion = (Result<UIImage, NetworkError>) -> Void
+    typealias GetPokemonCompletion = (Result<Pokemon, NetworkError>) -> Void
     
     enum NetworkError: Error {
         case failedFetch
@@ -20,45 +21,48 @@ class PokemonController {
         case badURL
     }
     
-    var pokemon = Pokemon()
+    var pokemon: Pokemon?
     var pokemons: [Pokemon] = []
     private let searchBar = UISearchBar()
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     private let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon")!
     private var task: URLSessionTask?
     
     
-    func searchForPokemon(for searchTerm: String, completion: @escaping () -> Void) {
+    func searchForPokemon(for searchTerm: String, completion: @escaping GetPokemonCompletion) {
         task?.cancel()
         let searchTerm = searchBar.text?.lowercased() ?? ""
         
-        let pokemonNameURL = baseURL.appendingPathComponent("/\(searchTerm)")
+        
+        let pokemonNameURL = baseURL.appendingPathComponent("/pokemon/\(searchTerm)")
         var request = URLRequest(url: pokemonNameURL)
         request.httpMethod = "GET"
         
         task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             if let error = error {
                 print("Error fetching data: \(error.localizedDescription)")
-                return completion()
+                return completion(.failure(.failedFetch))
             }
             
             guard let self = self else { return }
             
             guard let data = data else {
                 print("No data returned from dataTask")
-                return completion()
+                return completion(.failure(.badData))
             }
             
             let jsonDecoder = JSONDecoder()
             
             do {
-                let pokemonSearchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                self.pokemon = pokemonSearchResults.results
+                self.pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+//                self.pokemon = pokemonSearchResults.result
+                completion(.success(self.pokemon!))
+                print(self.pokemon)                
                 
             } catch {
-                print("Unable to decode data into instance of PokemonSearchResults: \(error)")
-                completion()
+                print("Unable to decode data into instance of Pokemon: \(error)")
+                completion(.failure(.noDecode))
             }
             
         }
@@ -67,9 +71,10 @@ class PokemonController {
     }
     
     func fetchImage(at urlString: String, completion: @escaping GetImageCompletion) {
-        let pokemonId = "\(pokemon.id).png"
+        let pokemonId = "/\(pokemon?.id).png"
         let urlString = imageURL.appendingPathComponent(pokemonId)
         
+//        if pokemon != nil {
         guard let imageURL = URL(string: "\(urlString)") else {
             return completion(.failure(.badURL))
         }
@@ -95,7 +100,7 @@ class PokemonController {
             
             completion(.success(image))
         }.resume()
-        
+     
     }
     
     
