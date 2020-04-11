@@ -20,9 +20,7 @@ class SearchViewController: UIViewController {
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
-            DispatchQueue.main.async { // Is this redundant given line 54?
-                self.updateViews()
-            }
+            self.updateViews()
         }
     }
     
@@ -34,10 +32,19 @@ class SearchViewController: UIViewController {
     
     func updateViews() {
         guard let pokemon = pokemon else { return }
+        print(pokemon.sprites.frontDefault)
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "\(pokemon.id)"
         pokemonAbilitiesLabel.text = pokemon.abilities.first?.ability.name
         pokemonTypesLabel.text = pokemon.types.first?.type.name
+        // Set the image to the pokemon sprite
+        pokemonController?.fetchImage(urlString: pokemon.sprites.frontDefault, completion: { (result) in
+            if let pokemonSearchResult = try? result.get() {
+                DispatchQueue.main.async {
+                    self.pokemonImageView.image = pokemonSearchResult
+                }
+            }
+        })
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -52,9 +59,9 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text else { return }
         pokemonController?.fetchPokemon(name: searchTerm, completion: { (result) in
             if let pokemonSearchResult = try? result.get() {
-                self.pokemon = pokemonSearchResult
                 DispatchQueue.main.async {
-                    self.updateViews()
+                    self.pokemon = pokemonSearchResult
+                    print(self.pokemon)
                 }
             }
         })

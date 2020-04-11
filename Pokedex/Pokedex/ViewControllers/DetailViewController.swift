@@ -18,9 +18,7 @@ class DetailViewController: UIViewController {
     
     var pokemon: Pokemon? {
         didSet {
-            DispatchQueue.main.async {
                 self.updateViews()
-            }
         }
     }
     

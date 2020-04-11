@@ -21,7 +21,14 @@ class PokedexTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        print("viewDidLoad was called.")
         super.viewDidLoad()
+        title = "Pokedex"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear was called.")
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
 
