@@ -25,13 +25,13 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonController.pokemon.count
+        return pokemonController.pokemonArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
-        let addedPokemon = pokemonController.pokemon[indexPath.row]
+        let addedPokemon = pokemonController.pokemonArray[indexPath.row]
         
         cell.textLabel?.text = addedPokemon.name
         
@@ -40,13 +40,13 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            pokemonController.pokemon.remove(at: indexPath.row)
+            pokemonController.pokemonArray.remove(at: indexPath.row)
         }
     }
     
     // MARK: - Navigation
     
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PokemonViewSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController,
@@ -56,7 +56,7 @@ class PokemonTableViewController: UITableViewController {
             guard let destination = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             
-            let pokemon = pokemonController.pokemon[indexPath.row]
+            let pokemon = pokemonController.pokemonArray[indexPath.row]
             
             destination.pokemonController = pokemonController
             destination.pokemon = pokemon

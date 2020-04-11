@@ -25,9 +25,9 @@ enum NetworkError: Error {
 
 class PokemonController {
     
-    var pokemon: [Pokemon] = []
+    var pokemonArray: [Pokemon] = []
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     
     func fetchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
@@ -67,11 +67,37 @@ class PokemonController {
         }.resume()
     }
     
+    func fetchImage(from imageURL: String, completion: @escaping (UIImage?) -> Void){
+        
+        guard let imageURL = URL(string: imageURL) else {
+            completion(nil)
+            return }
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (imageData, _, error) in
+            if let error = error {
+                print("Error fetching image: \(error)")
+                return
+            }
+            
+            guard let data = imageData else {
+                print("No data for image: \(imageURL)")
+                completion(nil)
+                return
+            }
+            
+            let image = UIImage(data: data)
+            
+            completion(image)
+        }.resume()
+    }
+    
     func save(pokemon: Pokemon) {
-        // append pokemon to pokemon array 
+        pokemonArray.append(pokemon)
     }
 }
-
 
 
 

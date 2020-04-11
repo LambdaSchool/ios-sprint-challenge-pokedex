@@ -25,8 +25,8 @@ class PokemonDetailViewController: UIViewController {
     }
     
     @IBAction func savePokemonButtonTapped(_ sender: Any) {
-        // Unwrap Pokemon
-        // call pokemoncontroller function
+        guard let pokemon = pokemon else { return }
+        pokemonController.save(pokemon: pokemon)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -49,7 +49,6 @@ class PokemonDetailViewController: UIViewController {
 
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // unrwap
         guard let searchBarText = searchBar.text else { return }
         pokemonController.fetchPokemon(with: searchBarText) { (result) in
             switch result {
