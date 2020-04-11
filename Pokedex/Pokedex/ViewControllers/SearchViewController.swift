@@ -20,7 +20,7 @@ class SearchViewController: UIViewController {
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { // Is this redundant given line 54?
                 self.updateViews()
             }
         }
@@ -36,6 +36,8 @@ class SearchViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "\(pokemon.id)"
+        pokemonAbilitiesLabel.text = pokemon.abilities.first?.ability.name
+        pokemonTypesLabel.text = pokemon.types.first?.type.name
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
