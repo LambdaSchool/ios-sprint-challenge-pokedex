@@ -13,22 +13,20 @@ struct Pokemon: Codable, Equatable {
     let name: String
     let abilities: [Abilities]
     let types: [Types]
-    let sprites: Sprites
+    let sprites: Image
 
 
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
-        lhs.id == rhs.id
+       return lhs.name == rhs.name
     }
 }
+
 struct Types: Codable {
     let type: Type
 }
 struct Type: Codable {
     let name: String
 }
-
-
-
 
 struct Abilities: Codable {
     let ability: Ability
@@ -37,9 +35,10 @@ struct Ability: Codable {
     let name: String
 }
 
-
-
-struct Sprites: Codable {
-    let front_default: String
-
+struct Image: Codable {
+    let defaultImageURL: URL
+    
+    enum CodingKeys: String, CodingKey {
+        case defaultImageURL = "front_default"
+    }
 }
