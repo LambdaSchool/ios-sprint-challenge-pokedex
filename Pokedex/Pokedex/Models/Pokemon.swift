@@ -13,7 +13,7 @@ struct Pokemon: Codable, Equatable {
     let name: String
     let abilities: [Abilities]
     let types: [Types]
-    let sprites: Image
+    let sprites: Sprites
 
 
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
@@ -35,10 +35,8 @@ struct Ability: Codable {
     let name: String
 }
 
-struct Image: Codable {
-    let defaultImageURL: URL
-    
-    enum CodingKeys: String, CodingKey {
-        case defaultImageURL = "front_default"
-    }
+struct Sprites: Codable {
+    let url: String
+    let front_default: String
+
 }
