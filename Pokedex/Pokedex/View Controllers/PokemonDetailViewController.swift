@@ -47,9 +47,12 @@ class PokemonDetailViewController: UIViewController {
                 stringType.append("Types: \(type.type.name.capitalized) ")
             }
             typesLabel.text = stringType
+            
+            var stringAbility = ""
             for ability in pokemon.abilities {
-                stringType.append("Abilities: \(ability.ability.name)")
+                stringAbility.append("Abilities: \(ability.ability.name)")
             }
+            abilitiesLabel.text = stringAbility
             
             let image = pokemon.sprites.front_default
             
