@@ -38,7 +38,7 @@ class PokemonTableViewController: UITableViewController {
         
         let addedPokemon = pokemonController.pokemonArray[indexPath.row]
         
-        cell.textLabel?.text = addedPokemon.name
+        cell.textLabel?.text = addedPokemon.name.capitalized
         
         return cell
     }
@@ -46,6 +46,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             pokemonController.pokemonArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
@@ -55,11 +56,11 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "PokemonViewSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
-            let pokemon = pokemonController.pokemonArray[indexPath.row]
+            destination.pokemon = pokemonController.pokemonArray[indexPath.row]
             destination.pokemonController = pokemonController
         } else if segue.identifier == "SearchPokemonSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController else { return }
-            destination.pokemonController = pokemonController
+            destination.pokemonController = self.pokemonController
         }
     }
 }
