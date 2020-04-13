@@ -10,7 +10,12 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
-    var pokemon: Pokemon?
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
+    
     var pokemonController: PokemonController!
     
     @IBOutlet weak var searchBar: UISearchBar!
