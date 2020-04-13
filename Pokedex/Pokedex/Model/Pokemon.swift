@@ -33,6 +33,5 @@ struct Ability: Codable {
 }
 
 struct Sprite: Codable {
-    // url
     var front_default: String
 }

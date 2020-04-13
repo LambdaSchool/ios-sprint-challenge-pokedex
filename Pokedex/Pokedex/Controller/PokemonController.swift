@@ -30,7 +30,7 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
     func fetchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURL = baseURL.appendingPathComponent("pokemon/\(name)")
+        let pokemonURL = baseURL.appendingPathComponent("\(name.lowercased())")
         
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -74,6 +74,7 @@ class PokemonController {
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
+                NSLog("Error getting request \(error)")
                 completion(.failure(.failedFetch))
                 return
             }
