@@ -13,7 +13,7 @@ struct Pokemon: Codable {
     let name: String
     let types: [TypeRoot]
     let abilities: [AbilitiesRoot]
-    let sprite: Sprite
+    let sprites: Sprite
 }
 
 struct TypeRoot: Codable {

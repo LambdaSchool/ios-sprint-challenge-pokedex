@@ -51,7 +51,7 @@ class PokemonDetailViewController: UIViewController {
                 stringType.append("Abilities: \(ability.ability.name)")
             }
             
-            let image = pokemon.sprite.front_default
+            let image = pokemon.sprites.front_default
             
             pokemonController.fetchImage(with: image) { (result) in
                 DispatchQueue.main.async {
