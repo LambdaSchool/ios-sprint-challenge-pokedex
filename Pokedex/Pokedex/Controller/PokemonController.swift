@@ -53,9 +53,12 @@ class PokemonController {
             }
             
             let decoder = JSONDecoder()
-            do {
+            do { // dispatch
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                completion(.success(pokemon))
+                DispatchQueue.main.async {
+                    completion(.success(pokemon))
+                }
+                
             } catch {
                 print("Error decoding Pokemon objects: \(error)")
                 completion(.failure(.noDecode))
@@ -85,7 +88,12 @@ class PokemonController {
             }
             
             let image = UIImage(data: data)!
-            completion(.success(image))
+            
+            DispatchQueue.main.async {
+                 completion(.success(image))
+            }
+           
+            //dispatch
         } .resume()
     }
     

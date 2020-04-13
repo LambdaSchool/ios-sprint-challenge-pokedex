@@ -44,7 +44,7 @@ class PokemonDetailViewController: UIViewController {
             
             var stringType = ""
             for type in pokemon.types {
-                stringType.append("Types: \(type.type.name) ")
+                stringType.append("Types: \(type.type.name.capitalized) ")
             }
             typesLabel.text = stringType
             for ability in pokemon.abilities {
