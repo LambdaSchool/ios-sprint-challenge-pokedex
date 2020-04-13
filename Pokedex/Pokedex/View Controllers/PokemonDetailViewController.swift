@@ -63,8 +63,6 @@ class PokemonDetailViewController: UIViewController {
                     }
                 }
             }
-            
-            
         }
     }
 }
