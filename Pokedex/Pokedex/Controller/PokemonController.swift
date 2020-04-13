@@ -67,31 +67,28 @@ class PokemonController {
         }.resume()
     }
     
-    func fetchImage(with imageURL: String, completion: @escaping (UIImage?) -> Void){
+    func fetchImage(with imageURL: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         
-        guard let imageURL = URL(string: imageURL) else {
-            completion(nil)
-            return }
+        let imageURL = URL(string: imageURL)!
         
         var request = URLRequest(url: imageURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { (imageData, _, error) in
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
-                print("Error fetching image: \(error)")
+                completion(.failure(.failedFetch))
                 return
             }
             
-            guard let data = imageData else {
+            guard let data = data else {
                 print("No data for image: \(imageURL)")
-                completion(nil)
+                completion(.failure(.badData))
                 return
             }
             
-            let image = UIImage(data: data)
-            
-            completion(image)
-        }.resume()
+            let image = UIImage(data: data)!
+            completion(.success(image))
+        } .resume()
     }
     
     func save(pokemon: Pokemon) {

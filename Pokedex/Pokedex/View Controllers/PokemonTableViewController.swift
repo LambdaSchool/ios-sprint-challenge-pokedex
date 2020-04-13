@@ -46,20 +46,16 @@ class PokemonTableViewController: UITableViewController {
     
     // MARK: - Navigation
     
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PokemonViewSegue" {
             guard let destination = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
+            let pokemon = pokemonController.pokemonArray[indexPath.row]
             destination.pokemonController = pokemonController
         } else if segue.identifier == "SearchPokemonSegue" {
-            guard let destination = segue.destination as? PokemonDetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow else { return }
-            
-            let pokemon = pokemonController.pokemonArray[indexPath.row]
-            
+            guard let destination = segue.destination as? PokemonDetailViewController else { return }
             destination.pokemonController = pokemonController
-            destination.pokemon = pokemon
         }
     }
 }
