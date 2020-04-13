@@ -37,7 +37,9 @@ class PokemonDetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    
     func updateViews() {
+        guard isViewLoaded else { return }
         if let pokemon = pokemon {
             pokemonNameLabel.text = pokemon.name
             idLabel.text = "ID: \(pokemon.id)"
