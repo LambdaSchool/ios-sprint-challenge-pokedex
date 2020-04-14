@@ -41,9 +41,14 @@ class PokemonDetailViewController: UIViewController {
             print("error loading image \(error) \(error.localizedDescription)")
         }
         
-        typesLabel.text = pokemon?.types.joined(separator: " ")
+        var typeNames: [String] = []
         
+        for type in pokemon?.types.count {
+            typeNames.append(pokemon?.types[type].type.name)
+        }
         
+        var typesString = typeNames.joined(separator: ", ")
+        typesLabel.text = typesString
         
     }
 
