@@ -12,6 +12,11 @@ class PokedexTableViewCell: UITableViewCell {
 
     @IBOutlet weak var pokemonNameLabel: UILabel?
     
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,4 +29,8 @@ class PokedexTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func updateViews() {
+        guard let unwrappedPokemon = pokemon else { return }
+        pokemonNameLabel?.text = unwrappedPokemon.name
+    }
 }

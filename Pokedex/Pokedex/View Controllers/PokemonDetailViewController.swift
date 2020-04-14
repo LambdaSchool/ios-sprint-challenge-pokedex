@@ -16,23 +16,35 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //call updateViews
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+   
+    func updateViews() {
+        nameLabel.text = pokemon?.name
+        idLabel.text = String("\(pokemon?.id)")
+        
+        var imageURL: URL?
+        if let imageURLString = pokemon?.sprites.front_default {
+            imageURL = URL(string: imageURLString)!
+        }
+            
+        do {
+            let imageData = try Data(contentsOf: imageURL!)
+            let image = UIImage(data: imageData)
+            imageView.image = image
+        } catch {
+            print("error loading image \(error) \(error.localizedDescription)")
+        }
+        
+        typesLabel.text = pokemon?.types.joined(separator: " ")
+        
+        
+        
     }
-    */
 
 }

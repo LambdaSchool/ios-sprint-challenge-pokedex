@@ -9,56 +9,31 @@
 import Foundation
 
 struct Pokemon: Codable {
-    enum CodingKeys: String, CodingKey {
-        case name, id, types, abilities
-        case image = "sprites"
-        
-        enum TypeCodingKeys: CodingKey {
-            case name
-        }
-        
-        enum AbilityCodingKeys: CodingKey {
-            case name
-        }
-        
-        enum ImageCodingKeys: CodingKey {
-            case front_default
-        }
-        
-    }
     
     var name: String
-    var id: String
-    var types: [Type]
-    var abilities: [Ability]
-    var image: URL
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.id = try container.decode(String.self, forKey: .id)
-        
-        let typeContainer = try container.nestedContainer(keyedBy: CodingKeys.TypeCodingKeys.self, forKey: .name)
-        self.types = try typeContainer // LEFT OFF HERE OUT OF TIME
-        
-        
-        
-    }
+    var id: Int
+    var types: [TypeRoot]
+    var abilities: [AbilityRoot]
+    var sprites: Sprites
     
 }
 
-struct Type: Codable {
-    enum CodingKeys: CodingKey {
-        case name
-    }
-    
+struct TypeRoot: Codable {
+    var type: Types
+}
+
+struct AbilityRoot: Codable {
+    var ability: Ability
+}
+
+struct Sprites: Codable {
+    var front_default: String
+}
+
+struct Types: Codable {
     var name: String
 }
 
 struct Ability: Codable {
-    enum CodingKeys: CodingKey {
-        case name
-    }
-    
     var name: String
 }

@@ -16,14 +16,21 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.delegate = self
         // Do any additional setup after loading the view.
+        print("hello world")
     }
     
     @IBAction func savePokemon(_ sender: Any) {
+        guard let unwrappedPokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: unwrappedPokemon)
+        
+        navigationController?.popToRootViewController(animated: true)
     }
     
     /*
@@ -36,4 +43,32 @@ class PokemonSearchViewController: UIViewController {
     }
     */
 
+    func updateViews() {
+        //unwrap pokemon object
+        
+        // give values to IBOutlets to the values of the pokemon object
+        
+        
+    }
+    
+}
+
+extension PokemonSearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Hello again")
+        guard let text = searchBar.text else {
+            print("error")
+            return }
+        print(text)
+        pokemonController?.getPokemon(for: text, completion: { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let pokemon):
+                print(pokemon)
+                self.pokemon = pokemon
+                //call updateViews() in the main thread (GDOT)
+            }
+        })
+    }
 }
