@@ -33,33 +33,45 @@ class PokemonSearchViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     func updateViews() {
         //unwrap pokemon object
+        guard let pokemon = pokemon else { return }
         
         // give values to IBOutlets to the values of the pokemon object
+        nameLabel.text = pokemon.name
+        idLabel.text = String("\(pokemon.id)")
         
         
+        let imageURLString = pokemon.sprites.front_default
+        guard let imageURL = URL(string: imageURLString) else { return }
+        do {
+            let imageData = try Data(contentsOf: imageURL)
+            let image = UIImage(data: imageData)
+            imageView.image = image
+        } catch {
+            print("error loading image \(error) \(error.localizedDescription)")
+        }
+        
+        var typeNames: [String] = []
+        for type in pokemon.types {
+            typeNames.append(type.type.name)
+        }
+        let typesString = typeNames.joined(separator: ", ")
+        typesLabel.text = typesString
+        
+        var abilityNames: [String] = []
+        for ability in pokemon.abilities {
+            abilityNames.append(ability.ability.name)
+        }
+        let abilitiesString = abilityNames.joined(separator: ", ")
+        abilitiesLabel.text = abilitiesString
     }
-    
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Hello again")
-        guard let text = searchBar.text else {
-            print("error")
-            return }
-        print(text)
+        guard let text = searchBar.text else { return }
         pokemonController?.getPokemon(for: text, completion: { (result) in
             switch result {
             case .failure(let error):
@@ -67,7 +79,10 @@ extension PokemonSearchViewController: UISearchBarDelegate {
             case .success(let pokemon):
                 print(pokemon)
                 self.pokemon = pokemon
-                //call updateViews() in the main thread (GDOT)
+                
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
             }
         })
     }

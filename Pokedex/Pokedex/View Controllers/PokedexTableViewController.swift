@@ -10,18 +10,23 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
+    
+    
     var pokemonController = PokemonController()
+    
+   
+    // MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokedex.count
@@ -29,7 +34,7 @@ class PokedexTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as? PokedexTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokedexItemCell", for: indexPath) as? PokedexTableViewCell else { return UITableViewCell() }
         let pokemon = pokemonController.pokedex[indexPath.row]
         cell.pokemon = pokemon
         return cell
@@ -39,11 +44,9 @@ class PokedexTableViewController: UITableViewController {
    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SearchSegue" {
-            guard let destinationVC = segue.destination as? PokemonSearchViewController else { print("nosegue")
-                return }
+            guard let destinationVC = segue.destination as? PokemonSearchViewController else { return }
             destinationVC.pokemonController = pokemonController
         }
         
@@ -53,6 +56,4 @@ class PokedexTableViewController: UITableViewController {
             destinationVC.pokemon = pokemonController.pokedex[indexPath.row]
         }
     }
-   
-
 }

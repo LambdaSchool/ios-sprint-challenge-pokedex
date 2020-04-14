@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokedexItemCell" id="gny-EW-bU7">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokedexItemCell" id="gny-EW-bU7" customClass="PokedexTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gny-EW-bU7" id="Pus-JN-aWe" customClass="PokedexTableViewCell" customModule="Pokedex" customModuleProvider="target">
@@ -34,12 +34,10 @@
                                         <constraint firstItem="yxE-FM-yaa" firstAttribute="centerY" secondItem="Pus-JN-aWe" secondAttribute="centerY" id="1ma-Be-i6x"/>
                                         <constraint firstItem="yxE-FM-yaa" firstAttribute="leading" secondItem="Pus-JN-aWe" secondAttribute="leading" constant="8" id="rld-I2-g2k"/>
                                     </constraints>
-                                    <connections>
-                                        <outlet property="pokemonNameLabel" destination="yxE-FM-yaa" id="7Rn-1s-DSI"/>
-                                    </connections>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="52l-0C-OuA" kind="show" identifier="detailSegue" id="GGz-pe-EPt"/>
+                                    <outlet property="pokemonNameLabel" destination="yxE-FM-yaa" id="qWX-HS-KwK"/>
+                                    <segue destination="52l-0C-OuA" kind="show" identifier="DetailSegue" id="GGz-pe-EPt"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

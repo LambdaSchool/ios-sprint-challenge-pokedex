@@ -20,21 +20,20 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //call updateViews
+        updateViews()
     }
    
     func updateViews() {
-        nameLabel.text = pokemon?.name
-        idLabel.text = String("\(pokemon?.id)")
+        guard let pokemon = pokemon else { return }
+        print(pokemon)
         
-        var imageURL: URL?
-        if let imageURLString = pokemon?.sprites.front_default {
-            imageURL = URL(string: imageURLString)!
-        }
-            
+        nameLabel.text = pokemon.name
+        idLabel.text = String("\(pokemon.id)")
+        
+        let imageURLString = pokemon.sprites.front_default
+        guard let imageURL = URL(string: imageURLString) else { return }
         do {
-            let imageData = try Data(contentsOf: imageURL!)
+            let imageData = try Data(contentsOf: imageURL)
             let image = UIImage(data: imageData)
             imageView.image = image
         } catch {
@@ -42,14 +41,17 @@ class PokemonDetailViewController: UIViewController {
         }
         
         var typeNames: [String] = []
-        
-        for type in pokemon?.types.count {
-            typeNames.append(pokemon?.types[type].type.name)
+        for type in pokemon.types {
+            typeNames.append(type.type.name)
         }
-        
-        var typesString = typeNames.joined(separator: ", ")
+        let typesString = typeNames.joined(separator: ", ")
         typesLabel.text = typesString
         
+        var abilityNames: [String] = []
+        for ability in pokemon.abilities {
+            abilityNames.append(ability.ability.name)
+        }
+        let abilitiesString = abilityNames.joined(separator: ", ")
+        abilitiesLabel.text = abilitiesString
     }
-
 }
