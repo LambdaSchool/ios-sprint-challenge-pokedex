@@ -14,7 +14,7 @@ struct Pokemon: Decodable {
     var abilities: String?
     var types: String?
     var sprites: String?
-    
+     
     enum CodingKeys: String, CodingKey {
         case id
         case abilities
@@ -28,7 +28,7 @@ struct Pokemon: Decodable {
     }
     
     enum AbilitiesCodingKeys: String, CodingKey {
-        case ability
+        case abilityIndex
     }
     
     enum AbilityCodingKeys: String, CodingKey {
@@ -59,12 +59,14 @@ struct Pokemon: Decodable {
         
         // Abilities
         var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
-        let abilityContainer = try abilitiesContainer.nestedContainer(keyedBy: AbilityCodingKeys.self)
+        
 //        self.abilities = try abilityContainer.decode(String.self, forKey: .name)
         
         var abilityNames: [String] = []
         
         while !abilitiesContainer.isAtEnd {
+            let abilityIndexContainer = try abilitiesContainer.nestedContainer(keyedBy: AbilitiesCodingKeys.self)
+            let abilityContainer = try abilityIndexContainer.nestedContainer(keyedBy: AbilityCodingKeys.self, forKey: .abilityIndex)
             let ability = try abilityContainer.decode(String.self, forKey: .name)
             abilityNames.append(ability)
         }
