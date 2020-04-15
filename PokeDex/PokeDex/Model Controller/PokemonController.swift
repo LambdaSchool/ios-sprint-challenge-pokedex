@@ -21,7 +21,7 @@ class PokemonController {
         case badURL
     }
     
-    var pokemon: Pokemon?
+    var pokemon: Pokemon!
     var pokemons: [Pokemon] = []
     private let searchBar = UISearchBar()
     
@@ -57,8 +57,8 @@ class PokemonController {
             do {
                 self.pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
 //                self.pokemon = pokemonSearchResults.result
-                completion(.success(self.pokemon!))
-                print(self.pokemon)                
+                completion(.success(self.pokemon))
+//                print(self.pokemon)
                 
             } catch {
                 print("Unable to decode data into instance of Pokemon: \(error)")
@@ -71,7 +71,7 @@ class PokemonController {
     }
     
     func fetchImage(at urlString: String, completion: @escaping GetImageCompletion) {
-        let pokemonId = "/\(pokemon?.id).png"
+        let pokemonId = "/\(pokemon.id ?? 0).png"
         let urlString = imageURL.appendingPathComponent(pokemonId)
         
 //        if pokemon != nil {

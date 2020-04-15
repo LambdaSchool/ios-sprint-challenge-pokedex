@@ -49,7 +49,7 @@ class PokemonDetailViewController: UIViewController {
             guard let pokemon = pokemon else { return }
             title = pokemon.name
             pokemonNameLabel.text = pokemon.name
-            idLabel.text = "ID: \(String(describing: pokemon.id))"
+            idLabel.text = "ID: \(String(describing: pokemon.id ?? 0))"
             typesLabel.text = "Types: \(String(describing: pokemon.types))"
             abilitiesLabel?.text = "Abilities: \(String(describing: pokemon.abilities))"
             
