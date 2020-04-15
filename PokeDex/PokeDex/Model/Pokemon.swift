@@ -10,7 +10,7 @@ import Foundation
 
 struct Pokemon: Decodable {
     var name: String?
-    var id: Int?
+    var id: Int
     var abilities: String?
     var types: String?
     var sprites: String?
@@ -18,9 +18,9 @@ struct Pokemon: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case abilities
-        case types
-        case species
-        case sprites
+        case type
+        case name
+        case frontDefault
     }
     
     enum SpeciesCodingKeys: String, CodingKey {
@@ -51,10 +51,10 @@ struct Pokemon: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         // ID
-        id = try container.decode(Int.self, forKey: .id)
+        self.id = try container.decode(Int.self, forKey: .id)
         
         // Name
-        let nameContainer = try container.nestedContainer(keyedBy: SpeciesCodingKeys.self, forKey: .species)
+        let nameContainer = try container.nestedContainer(keyedBy: SpeciesCodingKeys.self, forKey: .name)
         self.name = try nameContainer.decode(String.self, forKey: .name)
         
         // Abilities
@@ -70,7 +70,7 @@ struct Pokemon: Decodable {
         }
         
         // Types
-        var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
+        var typesContainer = try container.nestedUnkeyedContainer(forKey: .type)
         let typeContainer = try typesContainer.nestedContainer(keyedBy: TypeCodingKeys.self)
 //        self.types = try typeContainer.decode(String.self, forKey: .name)
         
@@ -82,7 +82,7 @@ struct Pokemon: Decodable {
         }
         
         // Sprites
-        let spriteContainer = try container.nestedContainer(keyedBy: SpritesCodingKeys.self, forKey: .sprites)
+        let spriteContainer = try container.nestedContainer(keyedBy: SpritesCodingKeys.self, forKey: .frontDefault)
         self.sprites = try spriteContainer.decode(String.self, forKey: .frontDefault)
         
 
