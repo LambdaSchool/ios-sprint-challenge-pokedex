@@ -53,7 +53,7 @@ class PokemonDetailViewController: UIViewController {
             typesLabel.text = "Types: \(String(describing: pokemon.types))"
             abilitiesLabel?.text = "Abilities: \(String(describing: pokemon.abilities))"
             
-            pokemonController.fetchImage(at: pokemon.sprites ?? "", completion: { result in  ////// not sure if this will work
+            pokemonController.fetchImage(at: pokemon.sprites!, completion: { result in  ////// not sure if this will work
                 if let image = try? result.get() {
                     DispatchQueue.main.async {
                         self.pokemonImage.image = image

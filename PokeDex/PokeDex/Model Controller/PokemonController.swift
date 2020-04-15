@@ -70,7 +70,7 @@ class PokemonController {
         
     }
     
-    func fetchImage(at urlString: String, completion: @escaping GetImageCompletion) {
+    func fetchImage(at url: URL, completion: @escaping GetImageCompletion) {
         let pokemonId = "/\(pokemon.id ?? 0).png"
         let urlString = imageURL.appendingPathComponent(pokemonId)
         
