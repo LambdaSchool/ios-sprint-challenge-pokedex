@@ -27,9 +27,6 @@ class SearchViewController: UIViewController {
     }
     
     
-    
-    
-    
     func updateViews() {
         guard let pokemon = pokemon else { return }
         titleLabel.text = pokemon.name
@@ -62,7 +59,10 @@ class SearchViewController: UIViewController {
                         
                         let image = UIImage(data: imageData)
                         
-                        self.imageView.image = image
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                            
+                        }
                         
                     } else {
                         
@@ -74,9 +74,6 @@ class SearchViewController: UIViewController {
         
         getImageFromURL.resume()
     }
-    
-    
-    
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         // unwrap pokemon
@@ -92,9 +89,6 @@ class SearchViewController: UIViewController {
         
     }
 }
-
-
-
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
