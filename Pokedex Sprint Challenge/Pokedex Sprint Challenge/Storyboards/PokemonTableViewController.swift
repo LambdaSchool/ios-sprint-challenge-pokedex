@@ -18,7 +18,11 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -38,17 +42,20 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailSegue" {
-            guard let destination = segue.destination as? DetailPokemonViewController,  let indexPath = tableView.indexPathForSelectedRow else { return }
-            
-            let pokemon = searchPokemonController.pokemons[indexPath.row]
-            destination.searchPokemonController = searchPokemonController
-            
-        } else if segue.identifier == "SearchSegue" {
+        if segue.identifier == "SearchSegue" {
             guard let destination = segue.destination as? SearchViewController else {return}
             destination.searchPokemonController = searchPokemonController
             
+//        } else {
+//            if segue.identifier == "DetailSegue" {
+//                guard let destination = segue.destination as? DetailViewController else { return }
+//            }
         }
     }
+    
+    @IBAction func searchButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "SearchSegue", sender: self)
+        
+    }
+    
 }
-

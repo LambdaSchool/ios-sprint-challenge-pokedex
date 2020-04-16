@@ -8,9 +8,10 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController {
     
-    var searchPokemonController = SearchPokemonController()
+    var searchPokemonController: SearchPokemonController?
+    var pokemon: Pokemon?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -19,27 +20,101 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         
-        // Do any additional setup after loading the view.
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text,
-            searchTerm != "" else { return }
+    
+    
+    
+    
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        titleLabel.text = pokemon.name
+        idLabel.text = "\(pokemon.id)"
+        var pokeAbilites = ""
+        for abilityRoot in pokemon.abilities {
+            pokeAbilites += abilityRoot.ability.name + " "
+        }
+        abilitiesLabel.text = pokeAbilites
         
-        //        searchPokemonController.performSearch(for: searchTerm, completion: ){
-        //            DispatchQueue.main.async {
-        ////                self.tableView.reloadData()
-        //            }
-        //        }
+        var pokeTypes = ""
+        for typeRoot in pokemon.types {
+            pokeTypes += typeRoot.type.name + " "
+        }
+        typesLabel.text = pokeTypes
+        
+        let URLImage = URL(string: pokemon.sprites.front_default)
+        let session = URLSession(configuration: .default)
+        let getImageFromURL = session.dataTask(with: URLImage!) { (data, response, error) in
+            
+            if let error = error {
+                
+                print("\(error)")
+                
+            } else {
+                
+                if(response as? HTTPURLResponse) != nil {
+                    
+                    if let imageData = data {
+                        
+                        let image = UIImage(data: imageData)
+                        
+                        self.imageView.image = image
+                        
+                    } else {
+                        
+                        print("No image found.")
+                    }
+                }
+            }
+        }
+        
+        getImageFromURL.resume()
     }
+    
+    
+    
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        // unwrap pokemon
+        guard let pokemon = pokemon else { return }
+        
+        // save pokemon to array in pokemon controller
+        searchPokemonController?.save(pokemon: pokemon)
+        
+        
+        //pop to root view controller
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        
     }
 }
+
+
+
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        searchPokemonController?.performSearch(for: text, completion: { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let pokemon):
+                self.pokemon = pokemon
+                print(pokemon)
+            }
+            
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+            
+        })
+        
+    }
+}
+
+

@@ -15,47 +15,55 @@ enum HTTPMethod: String {
 
 enum NetworkError: Error {
     case otherError
-    case badData
+    case noData
     case noDecode
+    case failedFetch
 }
 
 class SearchPokemonController {
     var pokemons: [Pokemon] = []
     
+    
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-    func performSearch(for searchTerm: String, completion: @escaping () -> Void) {
+    func performSearch(for searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        let parameter: [String: String] = ["term": searchTerm]
+        let pokemonURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         
-        let queryItems = parameter.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
+        print(pokemonURL)
         
-        urlComponents?.queryItems = queryItems
-        
-        guard let requestURL = urlComponents?.url else { return }
-        
-        var request = URLRequest(url: requestURL)
+        var request = URLRequest(url: pokemonURL)
         
         request.httpMethod = HTTPMethod.get.rawValue
         
         let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
             
-            if let error = error { NSLog("Error fetching data: \(error)") }
-            guard let data = data else { completion(); return }
+            if let error = error {
+                NSLog("Error fetching data: \(error)")
+                completion(.failure(.failedFetch))
+                return
+            }
+            
+            guard let data = data else { completion(.failure(.noData)); return }
             
             let jsonDecoder = JSONDecoder()
             
             do {
-                let searchResults = try jsonDecoder.decode(PokemonSearchResults.self, from: data)
-                self.pokemons = searchResults.results
+                let searchResults = try jsonDecoder.decode(Pokemon.self, from: data)
+                completion(.success(searchResults))
             } catch {
-                print("Unable to decode data into object of type [SearchResult]: \(error)")
+                print("Unable to decode data into object of type: \(error)")
+                completion(.failure(.noDecode))
             }
-            
-            completion()
         }
+        
         dataTask.resume()
+    }
+    
+    // save
+    
+    func save(pokemon: Pokemon) {
+        pokemons.append(pokemon)
     }
 }
 
