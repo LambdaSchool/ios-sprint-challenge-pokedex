@@ -9,8 +9,10 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    
-    var searchPokemonController: SearchPokemonController?
+ 
+    // MARK: - Properties
+
+    var searchPokemonController: SearchPokemonController!
     var pokemon: Pokemon?
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,13 +20,16 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+  
     
+    // MARK: - View Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewdidload")
         updateViews()
 
     }
-    
     
     func updateViews() {
         guard let pokemon = pokemon else { return }
