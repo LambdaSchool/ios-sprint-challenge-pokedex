@@ -103,12 +103,6 @@
                                     <constraint firstAttribute="height" constant="317" id="qQU-pJ-rfw"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pokemon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G59-oA-2bc">
-                                <rect key="frame" x="122" y="195" width="170" height="41"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9aw-dB-4ZO">
                                 <rect key="frame" x="39" y="628" width="110" height="47"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -140,42 +134,68 @@
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                             </button>
+                            <searchBar contentMode="redraw" placeholder="search by name or ID:" translatesAutoresizingMaskIntoConstraints="NO" id="Okp-9e-KGx">
+                                <rect key="frame" x="0.0" y="154" width="411" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="srp-Db-vr5" id="eTa-uY-SrR"/>
+                                </connections>
+                            </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="pokemon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G59-oA-2bc">
+                                <rect key="frame" x="119" y="215" width="177" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="HXW-qP-O5C"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="iET-iw-0Np" firstAttribute="centerX" secondItem="V9F-n5-yRf" secondAttribute="centerX" id="0rd-8o-bEb"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="9aw-dB-4ZO" secondAttribute="trailing" constant="265" id="1Yn-b4-ste"/>
                             <constraint firstItem="iET-iw-0Np" firstAttribute="top" secondItem="vdl-Lv-IDp" secondAttribute="top" id="9KU-pf-2mI"/>
-                            <constraint firstItem="pZR-tz-xNS" firstAttribute="leading" secondItem="G59-oA-2bc" secondAttribute="leading" id="9QE-jc-1Xr"/>
                             <constraint firstItem="nkh-DR-4xB" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" constant="39" id="AOX-NY-QOJ"/>
-                            <constraint firstItem="G59-oA-2bc" firstAttribute="centerX" secondItem="iET-iw-0Np" secondAttribute="centerX" id="BgF-DR-pvf"/>
+                            <constraint firstItem="G59-oA-2bc" firstAttribute="top" secondItem="Okp-9e-KGx" secondAttribute="bottom" constant="17" id="CjO-hN-ieN"/>
                             <constraint firstItem="pZR-tz-xNS" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" constant="122" id="F4q-Kf-3JA"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="nkh-DR-4xB" secondAttribute="trailing" constant="44" id="HCW-4c-PHt"/>
                             <constraint firstItem="pZR-tz-xNS" firstAttribute="top" secondItem="niX-Xp-yga" secondAttribute="bottom" constant="8" id="I7X-CW-EGK"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="bottom" secondItem="iET-iw-0Np" secondAttribute="bottom" constant="708" id="Ifx-Yr-QvF"/>
                             <constraint firstItem="niX-Xp-yga" firstAttribute="leading" secondItem="Hf8-bS-nYH" secondAttribute="leading" id="M02-a2-L2b"/>
-                            <constraint firstItem="G59-oA-2bc" firstAttribute="top" secondItem="iET-iw-0Np" secondAttribute="bottom" constant="41" id="R0b-OD-gwz"/>
-                            <constraint firstItem="pZR-tz-xNS" firstAttribute="trailing" secondItem="G59-oA-2bc" secondAttribute="trailing" id="SjW-fM-juS"/>
+                            <constraint firstItem="G59-oA-2bc" firstAttribute="centerX" secondItem="iET-iw-0Np" secondAttribute="centerX" id="SOq-ly-VeV"/>
+                            <constraint firstItem="G59-oA-2bc" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" constant="119" id="Sob-kZ-Dfh"/>
+                            <constraint firstItem="Okp-9e-KGx" firstAttribute="leading" secondItem="iET-iw-0Np" secondAttribute="leading" id="Wxy-aK-WD9"/>
                             <constraint firstItem="niX-Xp-yga" firstAttribute="leading" secondItem="9aw-dB-4ZO" secondAttribute="leading" id="YNT-pg-BjQ"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="pZR-tz-xNS" secondAttribute="trailing" constant="122" id="Yqp-7D-RRA"/>
+                            <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="Okp-9e-KGx" secondAttribute="trailing" constant="3" id="ZkW-3b-DwG"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="bottom" secondItem="9aw-dB-4ZO" secondAttribute="bottom" constant="187" id="aFp-ss-PIO"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="bottom" secondItem="pZR-tz-xNS" secondAttribute="bottom" constant="15" id="ata-XJ-1PU"/>
                             <constraint firstItem="niX-Xp-yga" firstAttribute="top" secondItem="nkh-DR-4xB" secondAttribute="bottom" constant="8" id="bUr-5E-Qpw"/>
                             <constraint firstItem="niX-Xp-yga" firstAttribute="leading" secondItem="nkh-DR-4xB" secondAttribute="leading" id="cQ9-gb-wAK"/>
                             <constraint firstItem="Hf8-bS-nYH" firstAttribute="top" secondItem="V9F-n5-yRf" secondAttribute="top" constant="310" id="cS6-8B-vYV"/>
-                            <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="G59-oA-2bc" secondAttribute="trailing" constant="122" id="i6t-Qm-4hV"/>
                             <constraint firstItem="iET-iw-0Np" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" id="kDx-0Q-W5E"/>
                             <constraint firstItem="9aw-dB-4ZO" firstAttribute="top" secondItem="Hf8-bS-nYH" secondAttribute="bottom" constant="1" id="m3U-4N-SQH"/>
                             <constraint firstItem="vdl-Lv-IDp" firstAttribute="trailing" secondItem="niX-Xp-yga" secondAttribute="trailing" constant="44" id="mQw-as-akZ"/>
                             <constraint firstItem="9aw-dB-4ZO" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" constant="39" id="nnd-zA-Ohb"/>
-                            <constraint firstItem="G59-oA-2bc" firstAttribute="leading" secondItem="vdl-Lv-IDp" secondAttribute="leading" constant="122" id="pfk-5R-iBm"/>
+                            <constraint firstItem="Hf8-bS-nYH" firstAttribute="top" secondItem="G59-oA-2bc" secondAttribute="bottom" constant="40" id="tw5-2k-E5R"/>
                             <constraint firstItem="niX-Xp-yga" firstAttribute="trailing" secondItem="Hf8-bS-nYH" secondAttribute="trailing" id="xl9-xs-mt4"/>
+                            <constraint firstItem="Okp-9e-KGx" firstAttribute="top" secondItem="iET-iw-0Np" secondAttribute="bottom" id="yuM-4h-rqX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vdl-Lv-IDp"/>
                     </view>
                     <navigationItem key="navigationItem" id="TzO-ki-pEN">
                         <barButtonItem key="backBarButtonItem" title="pokedex" id="I3v-5F-Eq9"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="abilityLabel" destination="niX-Xp-yga" id="985-D2-XjV"/>
+                        <outlet property="idLabel" destination="9aw-dB-4ZO" id="88c-2p-5C9"/>
+                        <outlet property="imageView" destination="Hf8-bS-nYH" id="gaD-oG-IBs"/>
+                        <outlet property="pokemonLabel" destination="G59-oA-2bc" id="RNI-5T-17R"/>
+                        <outlet property="saveButton" destination="pZR-tz-xNS" id="M5o-zW-NtA"/>
+                        <outlet property="searchBar" destination="Okp-9e-KGx" id="JIR-bH-5Ht"/>
+                        <outlet property="typeLabel" destination="nkh-DR-4xB" id="RvS-I8-aK0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZg-RO-gm7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

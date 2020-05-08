@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-struct Pokemon: Decodable {
+struct Pokemon: Decodable, Equatable {
     
     let id: Int
     let name: String
