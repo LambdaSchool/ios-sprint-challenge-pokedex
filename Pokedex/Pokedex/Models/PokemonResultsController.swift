@@ -35,7 +35,7 @@ class PokemonResultsController {
     var savedPokemon: [Pokemon] = []
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
-    // PERSTISTENCE
+    // PERSTISTENCE FUNCTIONS
     func saveToPersistentStore() {
         
         //place to store the data
@@ -74,7 +74,7 @@ class PokemonResultsController {
             print("error loading data: \(error)")
         }
     }
-
+    
     // MARK: Functions
     
     
@@ -106,16 +106,6 @@ class PokemonResultsController {
             }
             
         }.resume()
-    }
-    
-    func delete(pokemon: Pokemon) {
-        guard let pokemonIndex = savedPokemon.firstIndex(of: pokemon) else { return }
-        savedPokemon.remove(at: pokemonIndex)
-    }
-    
-    func save (pokemon: Pokemon) {
-        let pokemon = Pokemon(name: pokemon.name, id: pokemon.id, types: pokemon.types, abilities: pokemon.abilities, sprites: pokemon.sprites)
-        savedPokemon.append(pokemon)
     }
     
     // Fetch Image

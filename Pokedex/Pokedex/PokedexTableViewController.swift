@@ -56,8 +56,6 @@ class PokedexTableViewController: UITableViewController {
                 let pokemon = pokemonController.savedPokemon[indexPath.row]
                 detailVC.pokemon = pokemon
                 detailVC.pokemonController = pokemonController
-                
-                
             }
         }
     }
