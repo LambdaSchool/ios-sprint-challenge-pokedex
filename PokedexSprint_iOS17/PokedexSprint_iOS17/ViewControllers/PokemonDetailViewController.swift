@@ -10,6 +10,9 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    var pokemonApiController: PokemonApiController?
+    var pokemon: Pokemon?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        searchbar.delegate = self

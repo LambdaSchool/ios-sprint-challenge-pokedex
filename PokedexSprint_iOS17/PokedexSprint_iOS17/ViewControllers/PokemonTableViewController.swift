@@ -30,16 +30,32 @@ class PokemonTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell() }
+        let pokemon = pokemonApiController.pokedex[indexPath.row]
+        cell.pokemon = pokemon
         return cell
     }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "PokemonSearchShowSegue" {
+            guard let destination = segue.destination as? PokemonDetailViewController else { return }
+            destination.pokemonApiController = pokemonApiController
+        } else if segue.identifier == "PokemonCellShowSegue" {
+            guard let destination = segue.destination as? PokemonDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            destination.pokemon = pokemonApiController.pokedex[indexPath.row]
+            
+        }
+    }
+}
+
+extension PokemonTableViewController {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonApiController.pokedex.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
     }
 }
