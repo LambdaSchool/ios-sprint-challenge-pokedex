@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Decodable, Equatable {
+struct Pokemon: Decodable {
     
     let id: Int
     let name: String
@@ -47,5 +47,11 @@ struct Picture: Decodable {
     
     enum SpriteKey: String, CodingKey {
         case url = "front_default"
+    }
+}
+
+extension Pokemon: Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        lhs.id == rhs.id
     }
 }

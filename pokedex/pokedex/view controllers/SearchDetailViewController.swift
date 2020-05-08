@@ -43,7 +43,15 @@ class SearchDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         updateViews()
+    }
+    
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     func updateViews() {
@@ -95,8 +103,6 @@ class SearchDetailViewController: UIViewController {
             saveButton.isHidden = true
         }
     }
-    
-
 }
 
 extension UIImageView {
