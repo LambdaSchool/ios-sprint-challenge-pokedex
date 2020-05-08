@@ -21,22 +21,61 @@ class DetailPokemonViewController: UIViewController {
     @IBOutlet weak var typesLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func updateViews() {
+        guard let pokemon = pokemon else {
+            print("no pokemon")
+            return
+        }
+        self.title = pokemon.name.capitalized
+        
+        guard let urlPath = pokemon.sprites["front_default"],
+            let spriteURL = urlPath else { return }
+        
+        spriteImageView.loadSprite(url: spriteURL)
+        nameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        
+        var typesIndex = 0
+        var abilitiesIndex = 0
+        
+        var abilities = pokemon.abilities.count > 1 ? "Abilities: " : "Ability "
+        while abilitiesIndex < pokemon.abilities.count {
+            if abilitiesIndex > 0 {
+                abilities.append(contentsOf: ", ")
+            }
+            
+            guard let ability = pokemon.abilities[abilitiesIndex].ability else { return }
+            var capitalizedName: String = ""
+            capitalizedName.append(contentsOf: ability.name!.prefix(1).uppercased())
+            capitalizedName.append(contentsOf: ability.name!.dropFirst())
+            abilities.append(contentsOf: capitalizedName)
+            abilitiesIndex += 1
+        }
+        
+        var pokeType = pokemon.types.count > 1 ? "Types: " : "Type: "
+        while typesIndex < pokemon.types.count {
+            if typesIndex > 0 {
+                pokeType.append(contentsOf: ", ")
+            }
+            
+            guard let types = pokemon.types[typesIndex].type else { return }
+            var capitalizedName: String = ""
+            capitalizedName.append(contentsOf: types.name!.prefix(1).uppercased())
+            capitalizedName.append(contentsOf: types.name!.dropFirst())
+            pokeType.append(contentsOf: capitalizedName)
+            typesIndex += 1
+        }
+        
+        typesLabel.text = pokeType
+        abilitiesLabel.text = abilities
+        
     }
-    */
-
 }
+
