@@ -51,6 +51,7 @@ class PokemonTableViewController: UITableViewController {
     }
 }
 
+// MARK: - TableView Extensions -
 extension PokemonTableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
