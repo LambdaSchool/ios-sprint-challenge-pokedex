@@ -36,3 +36,4 @@ struct Pokemon: Codable {
         let type: NestedString?
     }
 }
+

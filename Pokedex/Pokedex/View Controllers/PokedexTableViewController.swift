@@ -51,7 +51,22 @@ class PokedexTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "
+        if segue.identifier == "searchPokeSegue" {
+            guard let destinationVC = segue.destination as? SearchPokemonViewController else { return }
+            destinationVC.pokemonController = pokemonController
+        }
+        
+        if segue.identifier == "ShowPokeSegue" {
+            guard let cell = sender as? UITableViewCell,
+             let indexPath = tableView.indexPath(for: cell) else { return}
+            
+            let pokemon = self.pokemonController.pokeList[indexPath.row]
+            guard let destinationVC = segue.destination as? DetailPokemonViewController else { return }
+            destinationVC.pokemonController = pokemonController
+            destinationVC.pokemon = pokemon
+            
+        }
+        
     }
     
     

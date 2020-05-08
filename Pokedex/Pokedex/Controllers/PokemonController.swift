@@ -69,6 +69,5 @@ class PokemonController {
     func deletePokemon(index: Int) {
         pokeList.remove(at: index)
     }
-    
-    
 }
+
