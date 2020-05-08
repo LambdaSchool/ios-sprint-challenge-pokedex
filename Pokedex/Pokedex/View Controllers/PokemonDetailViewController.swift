@@ -9,12 +9,42 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
-
+    
+    var pokemonController: PokemonController? {
+        didSet {
+            //TODO
+        }
+    }
+    
+    var pokemon: Pokemon? {
+        didSet {
+            //TODO
+        }
+    }
+    
+    // MARK: - OUTLETS
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var id: UILabel!
+    @IBOutlet weak var type: UILabel!
+    
+    @IBOutlet weak var ability: UITextView!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // TODO
     }
+    
+    // MARK: - ACTION
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        // TODO
+    }
+    
     
 
     /*
@@ -26,5 +56,8 @@ class PokemonDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    //TODO - EXTENSION 4 SEARCH BAR?
+    func searchBarSearchButtonClicked(_ sender: UISearchBar) {
+        
+    }
 }

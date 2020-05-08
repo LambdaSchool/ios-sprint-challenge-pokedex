@@ -22,6 +22,30 @@ class PokemonController {
     var pokemonImages: [URL] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     
+   
+    // MARK: - FETCH POKEMON
+    func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let pokemonURL = baseURL.appendingPathComponent(name.lowercased())
+        
+        URLSession.shared.dataTask(with: baseURL) { data, _, error in
+            if let error = error {
+                print("Error fetching data: \(error)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data returned from data task.")
+                return
+            }
+            do {
+                let pokemonSearch = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(.success(pokemonSearch))
+            } catch {
+                print("Unable to decode data into object of type [Pokemon]: \(error)")
+            }
+        } .resume()
+        
+    
     // MARK: - FETCH IMAGE FUNCTION
     
     func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
@@ -32,22 +56,22 @@ class PokemonController {
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
         if let error = error {
-            NSLog("Error fetching pokemon image: \(error)")
+            print("Error fetching pokemon image: \(error)")
             completion(.failure(.noData))
             return
         }
         guard let data = data else {
-            NSLog("No data provided for image: \(error)")
+            print("No data provided for image: \(error)")
             completion(.failure(.noData))
             return
             }
         guard let image = UIImage(data: data) else {
-            NSLog("Data for image is broken")
+            print("Data for image is broken")
             completion(.failure(.incompleteData))
             return
                 
         }
-            completion(.sucess(.image))
+            completion(.sucess(image))
             .resume
         }
         
@@ -66,5 +90,6 @@ class PokemonController {
  
     // MARK: - TODO: ADD PERSISTENCE
 
+}
 }
 }
