@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class PokemonDetailViewController: UIViewController {
     
@@ -36,28 +37,65 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // TODO
     }
     
     // MARK: - ACTION
     @IBAction func saveButtonTapped(_ sender: Any) {
-        // TODO
+        guard let pokemon = pokemon else { return }
+        //TODO
+        //pokemonController?.(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
+    func getDetails() {
+        guard let pokemon = pokemon else {
+            //TODO - figure out what to input
+            pokemonController?.fetchPokemon(name: name, completion: { result in
+                if let animals = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.updateViews(with: animals)
+                    }
+                    self.apiController?.fetchImage(at: animals.imageURL, completion: { result in
+                        if let image = try? result.get() {
+                            DispatchQueue.main.async {
+                                self.animalImageView.image = image
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    }
     
-
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
     //TODO - EXTENSION 4 SEARCH BAR?
-    func searchBarSearchButtonClicked(_ sender: UISearchBar) {
-        
+    func searchBarsearchButtonTapped(_ sender: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        pokemonController?.fetchPokemon(name: searchTerm) { (pokemon) in
+            
+            guard let pokemon = try? pokemon.get() else { return }
+            DispatchQueue.main.async {
+                self.pokemon = pokemon
+            }
+        }
+        guard let pokemonImageURL = pokemon?.sprites.imageUrl else {return}
+        //TODO -- FIX
+        pokemonController?.fetchImage(from: pokemonURL, completion: { (pokemonImage) in
+            DispatchQueue.main.async {
+                self.image.image = pokemonImage
+            }
+        })
     }
 }
+
