@@ -8,11 +8,13 @@
 
 import Foundation
 
+protocol PokeDelegate {
+    func currentPokemon(_ pokemon: Pokemon)
+}
+
 class PokemonController {
     
-    typealias CompletionHandler = (Result<Bool, NetworkError>) -> Void
-    
-    enum HTTPmethod: String {
+        enum HTTPmethod: String {
         case get = "GET"
     }
     
@@ -23,11 +25,12 @@ class PokemonController {
         case badURL
     }
     
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    var delegate: PokeDelegate?
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
     var searchedPokemon: Pokemon?
     var pokeList: [Pokemon] = []
     
-    func fetchPokemon(searchTerm: String, completion: @escaping CompletionHandler) {
+    func fetchPokemon(searchTerm: String, completion: @escaping (NetworkError?) -> Void) {
         
         let query = searchTerm.lowercased()
         let url = baseURL.appendingPathComponent(query)
@@ -38,24 +41,27 @@ class PokemonController {
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 print("Error fetching data: \(error)")
-                completion(.failure(.failedFetch))
+                completion(.failedFetch)
                 return
             }
             
             guard let data = data else {
                 print("No data returned: \(String(describing: error))")
-                completion(.failure(.noData))
+                completion(.noData)
                 return
             }
+            
             let jsonDecoder = JSONDecoder()
+            print("no error has been returned")
             
             do {
                 let fetchedPokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 self.searchedPokemon = fetchedPokemon
-                completion(.success(true))
+                print(fetchedPokemon.name)
+                completion(nil)
             } catch {
                 print("No pokemon fetched: \(error)")
-                completion(.failure(.failedFetch))
+                completion(.failedFetch)
                 return
             }
         }

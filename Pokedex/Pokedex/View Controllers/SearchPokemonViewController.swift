@@ -22,7 +22,7 @@ class SearchPokemonViewController: UIViewController {
     
     // MARK: Outlets
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokeSearchBar: UISearchBar!
     @IBOutlet weak var pokeNameLabel: UILabel!
     @IBOutlet weak var spriteImageView: UIImageView!
     @IBOutlet weak var pokeIDLabel: UILabel!
@@ -43,25 +43,66 @@ class SearchPokemonViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
+        pokeSearchBar.delegate = self
     }
     
     func updateViews() {
+        guard let pokemon = displayPokemon else {
+            print("no pokemon")
+            return
+        }
+        guard let urlPath = pokemon.sprites["front_default"],
+            let spriteURL = urlPath else { return }
+        
+        spriteImageView.loadSprite(url: spriteURL)
+        pokeNameLabel.text = pokemon.name.capitalized
+        pokeIDLabel.text = "ID: \(pokemon.id)"
+        
+        var typesIndex = 0
+        var abilitiesIndex = 0
+        
+        var abilities = pokemon.abilities.count > 1 ? "Abilities: " : "Ability "
+        while abilitiesIndex < pokemon.abilities.count {
+            if abilitiesIndex > 0 {
+            abilities.append(contentsOf: ", ")
+        }
+        
+            guard let ability = pokemon.abilities[abilitiesIndex].ability else { return }
+            var capitalizedName: String = ""
+            capitalizedName.append(contentsOf: ability.name!.prefix(1).uppercased())
+            capitalizedName.append(contentsOf: ability.name!.dropFirst())
+            abilities.append(contentsOf: capitalizedName)
+            abilitiesIndex += 1
+        }
+        
+        var pokeType = pokemon.types.count > 1 ? "Types: " : "Type: "
+        while typesIndex < pokemon.types.count {
+            if typesIndex > 0 {
+                pokeType.append(contentsOf: ", ")
+            }
+            
+            guard let types = pokemon.types[typesIndex].type else { return }
+            var capitalizedName: String = ""
+            capitalizedName.append(contentsOf: types.name!.prefix(1).uppercased())
+            capitalizedName.append(contentsOf: types.name!.dropFirst())
+            pokeType.append(contentsOf: capitalizedName)
+            typesIndex += 1
+        }
+        
+        typesLabel.text = pokeType
+        abilitiesLabel.text = abilities
         
     }
-    
-
-
 }
 
 extension SearchPokemonViewController: UISearchBarDelegate {
-    func searchBarClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let search = searchBar.text,
             !search.isEmpty else { return }
         
-        pokemonController?.fetchPokemon(searchTerm: search) { error in
-            if error == error {
-                print("Pokemon could not be searched: \(error)")
+        self.pokemonController?.fetchPokemon(searchTerm: search) { (error) in
+            if let error = error {
+                print("Failure to search for pokmeon. Error: \(error)")
                 return
             }
             DispatchQueue.main.async {
