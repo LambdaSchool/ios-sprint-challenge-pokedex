@@ -9,9 +9,10 @@
 import Foundation
 
 struct Pokemon: Decodable {
+    
     let id: Int
     let name: String
-    let abilities: [Abilities]
+    let abilities: [AbilityName]
     let types: [Types]
     let picture: Picture
     
@@ -24,7 +25,7 @@ struct Pokemon: Decodable {
     }
 }
 
-struct Abilities: Decodable {
+struct AbilityName: Decodable {
     let ability: Ability
 }
 
