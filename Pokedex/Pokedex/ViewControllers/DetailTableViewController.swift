@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailTableViewController: UIViewController {
-
+    
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
@@ -18,60 +18,69 @@ class DetailTableViewController: UIViewController {
     @IBOutlet weak var detailNameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var saveButtonOutlet: UIButton!
-
+    
     var pokemonController: PokemonResultsController?
     var pokemon: Pokemon? {
         didSet {
             updateViews()
         }
     }
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-  
+        
     }
     
     func updateViews() {
-         guard let pokemon = pokemon else {
-             title = "Pokemon Search"
-             hideImageView()
-             return
-         }
-
-         showImageView()
-         searchBar.isHidden = true
-         pokemonNameLabel.text = pokemon.name.capitalized
-         guard let imageData = try? Data(contentsOf: pokemon.sprites.defaultImageURL) else { fatalError() }
-         imageView.image = UIImage(data: imageData)
-         idLabel.text = "ID: \(pokemon.id)"
-
-         var typesText: [String] = []
-         var abilitiesText: [String] = []
-
-         for pokemonType in pokemon.types {
-             typesText.append(pokemonType.type.name)
-         }
-         for pokemonAbility in pokemon.abilities {
-             abilitiesText.append(pokemonAbility.ability.name)
-         }
-
+        guard let pokemon = pokemon else {
+            title = "Pokemon Search"
+            hideImageView()
+            return
+        }
+        
+        showImageView()
+        pokemonNameLabel.text = pokemon.name.capitalized
+        guard let imageData = try? Data(contentsOf: pokemon.sprites.defaultImageURL) else { fatalError() }
+        imageView.image = UIImage(data: imageData)
+        idLabel.text = "ID: \(pokemon.id)"
+        
+        var typesText: [String] = []
+        var abilitiesText: [String] = []
+        
+        for pokemonType in pokemon.types {
+            typesText.append(pokemonType.type.name)
+        }
+        for pokemonAbility in pokemon.abilities {
+            abilitiesText.append(pokemonAbility.ability.name)
+        }
+        
         typeLabel.text = "Types: \(typesText.joined(separator: ", ").capitalized)"
         abilitiesLabel.text = "Abilities: \(abilitiesText.joined(separator: ", ").capitalized)"
-
-     }
+    }
     
     func hideImageView() {
+        pokemonNameLabel?.isHidden = true
+        idLabel?.isHidden = true
+        typeLabel?.isHidden = true
+        abilitiesLabel?.isHidden = true
         
     }
     
     func showImageView() {
+        pokemonNameLabel?.isHidden = false
+        idLabel?.isHidden = false
+        typeLabel?.isHidden = false
+        abilitiesLabel?.isHidden = false
         
     }
-
+    
     @IBAction func saveButtonFunc(_ sender: Any) {
-  
+        if let pokemonController = pokemonController,
+            let pokemon = pokemon {
+            pokemonController.save(pokemon: pokemon)
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
 extension DetailTableViewController: UISearchBarDelegate {

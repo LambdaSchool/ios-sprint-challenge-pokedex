@@ -9,7 +9,11 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
     let name: String
     let id: Int
     let types: [Types]

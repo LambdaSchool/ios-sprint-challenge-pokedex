@@ -15,8 +15,14 @@ class PokedexTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+        pokemonController.loadFromPersistentStore()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        pokemonController.loadFromPersistentStore()
+    }
     
     // MARK: - Table view data source
     
