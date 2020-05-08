@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="1052.1739130434783" y="-1.3392857142857142"/>
         </scene>
-        <!--Search Pokemon View Controller-->
+        <!--Search Pokemon-->
         <scene sceneID="GjO-XR-4cD">
             <objects>
                 <viewController id="IBX-Sk-PTx" customClass="SearchPokemonViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
@@ -73,8 +73,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQ1-K1-dte">
-                                <rect key="frame" x="155" y="832" width="104" height="30"/>
+                                <rect key="frame" x="100" y="832" width="214" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="IBX-Sk-PTx" eventType="touchUpInside" id="4mW-xs-1zG"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Eom-Ew-VyY">
                                 <rect key="frame" x="20" y="712.5" width="374" height="109.5"/>
@@ -111,9 +114,9 @@
                         <constraints>
                             <constraint firstItem="Eom-Ew-VyY" firstAttribute="leading" secondItem="HhR-iq-EGr" secondAttribute="leading" constant="20" id="0Hu-u3-boP"/>
                             <constraint firstItem="UJK-fL-KHw" firstAttribute="leading" secondItem="HhR-iq-EGr" secondAttribute="leading" constant="50" id="4x1-L1-b1a"/>
-                            <constraint firstItem="sQ1-K1-dte" firstAttribute="leading" secondItem="HhR-iq-EGr" secondAttribute="leading" constant="155" id="8GQ-NN-bB5"/>
+                            <constraint firstItem="sQ1-K1-dte" firstAttribute="leading" secondItem="HhR-iq-EGr" secondAttribute="leading" constant="100" id="8GQ-NN-bB5"/>
                             <constraint firstItem="HhR-iq-EGr" firstAttribute="trailing" secondItem="UJK-fL-KHw" secondAttribute="trailing" constant="50" id="Bl1-wV-eIO"/>
-                            <constraint firstItem="HhR-iq-EGr" firstAttribute="trailing" secondItem="sQ1-K1-dte" secondAttribute="trailing" constant="155" id="I8Z-yv-xrg"/>
+                            <constraint firstItem="HhR-iq-EGr" firstAttribute="trailing" secondItem="sQ1-K1-dte" secondAttribute="trailing" constant="100" id="I8Z-yv-xrg"/>
                             <constraint firstItem="xxj-lW-EFa" firstAttribute="trailing" secondItem="HhR-iq-EGr" secondAttribute="trailing" id="QD6-av-KeE"/>
                             <constraint firstItem="HhR-iq-EGr" firstAttribute="trailing" secondItem="Eom-Ew-VyY" secondAttribute="trailing" constant="20" id="Thi-xY-0Vv"/>
                             <constraint firstItem="UJK-fL-KHw" firstAttribute="top" secondItem="xxj-lW-EFa" secondAttribute="bottom" constant="20" id="Uh0-GB-vf5"/>
@@ -127,7 +130,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HhR-iq-EGr"/>
                     </view>
-                    <navigationItem key="navigationItem" id="cBc-hX-ZZm"/>
+                    <navigationItem key="navigationItem" title="Search Pokemon" id="cBc-hX-ZZm"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="Rv2-Ec-uK1" id="DHC-mK-IGX"/>
+                        <outlet property="pokeIDLabel" destination="g4i-US-JJw" id="KUH-e1-CjY"/>
+                        <outlet property="pokeNameLabel" destination="UJK-fL-KHw" id="ZYM-e6-csb"/>
+                        <outlet property="searchBar" destination="xxj-lW-EFa" id="62w-mu-zgQ"/>
+                        <outlet property="spriteImageView" destination="0hy-aP-fhv" id="62e-p0-5at"/>
+                        <outlet property="typesLabel" destination="qLK-fl-9es" id="PVG-7K-Tfu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmG-SP-v6j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -216,6 +227,13 @@
                         <viewLayoutGuide key="safeArea" id="q6w-je-2Ic"/>
                     </view>
                     <navigationItem key="navigationItem" id="bxB-32-hkT"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="GhM-eq-x0H" id="q9s-8E-FU4"/>
+                        <outlet property="idLabel" destination="1Gi-ed-ryG" id="mTT-fI-2CD"/>
+                        <outlet property="nameLabel" destination="cdi-Ey-nNu" id="nGT-3U-UlA"/>
+                        <outlet property="spriteImageView" destination="WCt-8J-1Qo" id="Uic-0o-Kxn"/>
+                        <outlet property="typesLabel" destination="0aa-fX-oI1" id="Rjz-by-Gqu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u08-b1-5x0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

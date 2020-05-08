@@ -9,6 +9,22 @@
 import UIKit
 
 class SearchPokemonViewController: UIViewController {
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pokeNameLabel: UILabel!
+    @IBOutlet weak var spriteImageView: UIImageView!
+    @IBOutlet weak var pokeIDLabel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    
+    // MARK: Actions
+    
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
