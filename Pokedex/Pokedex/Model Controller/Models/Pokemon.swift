@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Pokemon: Codable, Equatable {
     let name: String
@@ -24,7 +25,7 @@ struct Pokemon: Codable, Equatable {
     }
     
     struct TypeInfo: Codable, Equatable {
-        let type:TypeOfType
+        let type: TypeOfType
         
         struct TypeOfType: Codable, Equatable {
             let name: String

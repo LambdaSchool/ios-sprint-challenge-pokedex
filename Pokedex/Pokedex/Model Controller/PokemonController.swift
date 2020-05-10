@@ -14,21 +14,24 @@ enum HTTPMethod: String {
     case post = "POST"
     case delete = "DELETE"
 }
-enum NetworkError: Error {
-    case noData, noDecode, badURL, incompleteData, tryAgain
-}
 
 class PokemonController {
     var pokemonArray: [Pokemon] = []
     var pokemonImages: [URL] = []
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")!
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
+    enum NetworkError: Error {
+        case noData, noDecode, badURL, incompleteData, tryAgain
+    }
     
     // MARK: - FETCH POKEMON
     func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURL = baseURL.appendingPathComponent(name.lowercased())
+        let pokemonURL = baseURL?.appendingPathComponent(name.lowercased())
+        guard let pokemonsURL = pokemonURL else { return }
+        var request = URLRequest(url: pokemonsURL)
+        request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: baseURL) { data, _, error in
+        URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 print("Error fetching data: \(error)")
                 return
@@ -42,55 +45,58 @@ class PokemonController {
                 let pokemonSearch = try JSONDecoder().decode(Pokemon.self, from: data)
                 completion(.success(pokemonSearch))
             } catch {
-                print("Unable to decode data into object of type [Pokemon]: \(error)")
+                print("Unable to decode data of [Pokemon]: \(error)")
             }
         } .resume()
-        
-        
-        // MARK: - FETCH IMAGE FUNCTION
-        
-        func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-            let imageURL = URL(string: urlString)!
-            
-            var request = URLRequest(url: imageURL)
-            request.httpMethod = HTTPMethod.get.rawValue
-            
-            URLSession.shared.dataTask(with: request) { (data, _, error) in
-                if let error = error {
-                    print("Error fetching pokemon image: \(error)")
-                    completion(.failure(.noData))
-                    return
-                }
-                guard let data = data else {
-                    print("No data provided for image: \(error)")
-                    completion(.failure(.noData))
-                    return
-                }
-                guard let image = UIImage(data: data) else {
-                    print("Data for image is broken")
-                    completion(.failure(.incompleteData))
-                    return
-                    
-                }
-                completion(.success(image))
-                //TODO: .resume()
-            }
-            
-            
-            // MARK: ADD POKEMON
-            func addPokemon(pokemon: Pokemon) {
-                pokemonArray.append(pokemon)
-            }
-            // MARK: DELETE POKEMON
-            func delete(pokemon: Pokemon) {
-                guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
-                pokemonArray.remove(at: index)
-            }
-            
-            
-            
-            // MARK: - TODO: ADD PERSISTENCE
-            
-        }
     }
+    
+    
+    // MARK: - FETCH IMAGE FUNCTION
+    
+    func fetchImage(from imageURL: String, completion: @escaping(UIImage?) -> Void) {
+        //   (at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        guard let imageURL = URL(string: imageURL) else {
+            completion(nil)
+            return }
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                
+                print("Error grabbing image \(error)")
+                return
+            }
+            guard let data = data else {
+                print("no information given for image \(error)")
+                completion(nil)
+                return
+            }
+            let image = UIImage(data: data)
+            
+            completion(image)
+            
+        } .resume()
+        
+ 
+    }
+    
+    
+    // MARK: ADD POKEMON
+    func addPokemon(pokemon: Pokemon) {
+        pokemonArray.append(pokemon)
+    }
+    // MARK: DELETE POKEMON
+    func delete(pokemon: Pokemon) {
+        guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
+        pokemonArray.remove(at: index)
+    }
+    
+    
+    
+    // MARK: - TODO: ADD PERSISTENCE
+    
 }
+
+

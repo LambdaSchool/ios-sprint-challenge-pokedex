@@ -13,9 +13,24 @@ class PokemonTableViewController: UITableViewController {
     
     var pokemonController = PokemonController()
     
+    var pokemon: Pokemon! {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     //TODO - VIEW WILL APPEAR FUNC
@@ -25,22 +40,20 @@ class PokemonTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemonArray.count
     }
     
-    /*
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-     
-     // Configure the cell...
-     
-     return cell
-     }
-     */
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemon Cell", for: indexPath)
+        
+        let pokemonName = pokemonController.pokemonArray[indexPath.row]
+        cell.detailTextLabel?.text = pokemonName.name
+        
+        return cell
+    }
     
     // MARK: - Navigation
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailsSegue" {
@@ -48,14 +61,10 @@ class PokemonTableViewController: UITableViewController {
                 let indexPath = tableView.indexPathForSelectedRow else {return}
             detailVC.pokemonController = pokemonController
             detailVC.pokemon = pokemonController.pokemonArray[indexPath.row]
-            print("DetailViewSegue hit")
-            
         }else if segue.identifier == "SearchSegue" {
             if let searchSegue = segue.destination as? PokemonDetailViewController {
                 searchSegue.pokemonController = pokemonController
             }
         }
     }
-    
-    
 }
