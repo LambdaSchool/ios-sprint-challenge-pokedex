@@ -26,7 +26,7 @@ class PokemonController {
     
     // MARK: - FETCH POKEMON
     func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURL = baseURL?.appendingPathComponent(name.lowercased())
+        let pokemonURL = baseURL?.appendingPathComponent(name.uppercased())
         guard let pokemonsURL = pokemonURL else { return }
         var request = URLRequest(url: pokemonsURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -61,14 +61,14 @@ class PokemonController {
             return }
         var request = URLRequest(url: imageURL)
         request.httpMethod = HTTPMethod.get.rawValue
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
+        //MARK: - CHANGE -- CHANGED DATA TO IMAGEDATA
+        URLSession.shared.dataTask(with: request) { (imageData, _, error) in
             if let error = error {
                 
                 print("Error grabbing image \(error)")
                 return
             }
-            guard let data = data else {
+            guard let data = imageData else {
                 print("no information given for image \(error)")
                 completion(nil)
                 return
@@ -78,8 +78,6 @@ class PokemonController {
             completion(image)
             
         } .resume()
-        
- 
     }
     
     

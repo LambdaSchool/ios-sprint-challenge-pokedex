@@ -25,7 +25,6 @@ class PokemonTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,15 +36,13 @@ class PokemonTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+
         return pokemonController.pokemonArray.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemon Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
         let pokemonName = pokemonController.pokemonArray[indexPath.row]
         cell.detailTextLabel?.text = pokemonName.name
@@ -58,10 +55,10 @@ class PokemonTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailsSegue" {
             guard let detailVC = segue.destination as? PokemonDetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow else {return}
+                let indexPath = tableView.indexPathForSelectedRow else { return }
             detailVC.pokemonController = pokemonController
             detailVC.pokemon = pokemonController.pokemonArray[indexPath.row]
-        }else if segue.identifier == "SearchSegue" {
+        } else if segue.identifier == "SearchSegue" {
             if let searchSegue = segue.destination as? PokemonDetailViewController {
                 searchSegue.pokemonController = pokemonController
             }
