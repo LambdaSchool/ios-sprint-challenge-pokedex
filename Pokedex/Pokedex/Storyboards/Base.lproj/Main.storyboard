@@ -16,15 +16,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailSegue" rowHeight="72" id="Qs7-OY-a9e">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" rowHeight="72" id="Qs7-OY-a9e" customClass="PokemonCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qs7-OY-a9e" id="Rs7-5a-Xbj">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOk-4E-7SA">
+                                            <rect key="frame" x="20" y="26" width="374" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="xOk-4E-7SA" secondAttribute="bottom" constant="14" id="M2W-hj-p4m"/>
+                                        <constraint firstItem="xOk-4E-7SA" firstAttribute="top" secondItem="Rs7-5a-Xbj" secondAttribute="topMargin" constant="15" id="TWf-v1-O5N"/>
+                                        <constraint firstItem="xOk-4E-7SA" firstAttribute="leading" secondItem="Rs7-5a-Xbj" secondAttribute="leadingMargin" id="gq9-EI-dUB"/>
+                                        <constraint firstItem="xOk-4E-7SA" firstAttribute="trailing" secondItem="Rs7-5a-Xbj" secondAttribute="trailingMargin" id="yF7-zT-ESQ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Wau-aq-sgf" kind="showDetail" id="y1j-fX-GZr"/>
+                                    <outlet property="pokemonLabelName" destination="xOk-4E-7SA" id="FIK-Zj-u9U"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -40,6 +54,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Wau-aq-sgf" kind="show" identifier="DetailSegue" id="FEd-zP-MfD"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H63-1a-ucF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -95,7 +112,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5RA-C0-i6t">
-                                <rect key="frame" x="170" y="161" width="75" height="36"/>
+                                <rect key="frame" x="20" y="161" width="374" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -114,14 +131,14 @@
                             <constraint firstItem="K3v-v0-Pt1" firstAttribute="bottom" secondItem="nra-nY-fbt" secondAttribute="bottom" constant="33" id="fOW-sX-j2k"/>
                             <constraint firstItem="4XI-7y-Cre" firstAttribute="top" secondItem="K3v-v0-Pt1" secondAttribute="top" id="kUa-j9-Gf4"/>
                             <constraint firstItem="4rD-ii-cC8" firstAttribute="leading" secondItem="K3v-v0-Pt1" secondAttribute="leading" id="ks9-Q6-RUH"/>
-                            <constraint firstItem="5RA-C0-i6t" firstAttribute="leading" secondItem="K3v-v0-Pt1" secondAttribute="leading" constant="170" id="lhi-NX-ein"/>
                             <constraint firstItem="nra-nY-fbt" firstAttribute="leading" secondItem="K3v-v0-Pt1" secondAttribute="leading" constant="157" id="m0K-FO-nSB"/>
+                            <constraint firstItem="K3v-v0-Pt1" firstAttribute="trailing" secondItem="5RA-C0-i6t" secondAttribute="trailing" constant="20" id="mJg-nW-i0W"/>
                             <constraint firstItem="K3v-v0-Pt1" firstAttribute="trailing" secondItem="vGs-Ju-7W2" secondAttribute="trailing" constant="35" id="qwK-An-ntT"/>
                             <constraint firstItem="4rD-ii-cC8" firstAttribute="top" secondItem="5RA-C0-i6t" secondAttribute="bottom" constant="8" id="sy9-vn-Qf9"/>
+                            <constraint firstItem="5RA-C0-i6t" firstAttribute="leading" secondItem="K3v-v0-Pt1" secondAttribute="leading" constant="20" id="uLc-XH-e5L"/>
                             <constraint firstItem="4rD-ii-cC8" firstAttribute="trailing" secondItem="K3v-v0-Pt1" secondAttribute="trailing" id="uo6-qg-nVR"/>
                             <constraint firstItem="vGs-Ju-7W2" firstAttribute="top" secondItem="4rD-ii-cC8" secondAttribute="bottom" constant="24" id="vQh-HW-VoH"/>
                             <constraint firstItem="K3v-v0-Pt1" firstAttribute="trailing" secondItem="gcd-nh-Xhc" secondAttribute="trailing" constant="50" id="vxO-3B-6FS"/>
-                            <constraint firstItem="K3v-v0-Pt1" firstAttribute="trailing" secondItem="5RA-C0-i6t" secondAttribute="trailing" constant="169" id="zu5-4n-NsH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="K3v-v0-Pt1"/>
                     </view>
@@ -160,6 +177,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wsk-qt-R5J"/>
+        <segue reference="FEd-zP-MfD"/>
     </inferredMetricsTieBreakers>
 </document>
