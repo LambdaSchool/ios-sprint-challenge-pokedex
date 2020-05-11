@@ -24,14 +24,12 @@ class PokemonController {
     var pokemonImages: [URL] = []
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon")
     
-    
     // MARK: - FETCH POKEMON
     func fetchPokemon(name: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
         let pokemonURL = baseURL?.appendingPathComponent(name.lowercased())
         guard let pokemonsURL = pokemonURL else { return }
         var request = URLRequest(url: pokemonsURL)
         request.httpMethod = HTTPMethod.get.rawValue
-        
         
         URLSession.shared.dataTask(with: request) { data, respnse, error in
             if let error = error {
@@ -52,7 +50,6 @@ class PokemonController {
             }
         } .resume()
     }
-        
         
         // MARK: - FETCH IMAGE FUNCTION
         
@@ -78,7 +75,6 @@ class PokemonController {
             } .resume()
         }
         
-        
         // MARK: ADD POKEMON
         func addPokemon(pokemon: Pokemon) {
             pokemonArray.append(pokemon)
@@ -88,9 +84,6 @@ class PokemonController {
             guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
             pokemonArray.remove(at: index)
             
-            // MARK: - TODO: ADD PERSISTENCE
-            
+        // MARK: - TODO: ADD PERSISTENCE
         }
-        
-    
 }

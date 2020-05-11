@@ -30,8 +30,7 @@ struct Pokemon: Codable, Equatable {
             let name: String
         }
     }
-    
-    
+        
     struct SpriteFront: Codable, Equatable {
         let imageUrl: String
         

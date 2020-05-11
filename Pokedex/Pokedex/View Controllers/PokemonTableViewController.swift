@@ -33,7 +33,6 @@ class PokemonTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,22 +54,16 @@ class PokemonTableViewController: UITableViewController {
         performSegue(withIdentifier: "DetailSegue", sender: pokemon)
     }
     
-    
     // MARK: - Navigation
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailSegue" {
             
-            if let detailVC = segue.destination as? PokemonDetailViewController
-            {
-                if let pokemon = sender as? Pokemon
-                {
+            if let detailVC = segue.destination as? PokemonDetailViewController {
+                if let pokemon = sender as? Pokemon {
                     detailVC.pokemonController = pokemonController
                     detailVC.pokemon = pokemon
-                    
                 }
-                
             }
         }
         else if segue.identifier == "SearchSegue" {

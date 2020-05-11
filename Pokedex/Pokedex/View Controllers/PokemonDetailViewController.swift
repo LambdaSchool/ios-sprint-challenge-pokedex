@@ -43,13 +43,13 @@ class PokemonDetailViewController: UIViewController {
     // MARK: - ACTION
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
-      
+        
         pokemonController?.addPokemon(pokemon: pokemon)
         //GO TO POI PROJECT TO PASS INFO FROM VC TO TV
         
         navigationController?.popViewController(animated: true)
-}
-
+    }
+    
     func updateViews() {
         guard isViewLoaded else { return }
         guard let pokemonLiteral = pokemon else {
@@ -75,7 +75,7 @@ class PokemonDetailViewController: UIViewController {
         })
     }
 }
-    
+
 // MARK: - EXTENSION
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ sender: UISearchBar) {
