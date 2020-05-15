@@ -13,6 +13,7 @@ struct Pokemon : Codable {
     //pokemon: name, ID, ability, types
     let name: String
     let id: Int
+    let sprites: String
     let abilities: [String]
     let types: [String]
     
@@ -20,6 +21,7 @@ struct Pokemon : Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case id
+        case sprites
         case abilities
         case types
         
@@ -30,6 +32,10 @@ struct Pokemon : Codable {
             enum AbilityKeys: String, CodingKey {
                 case name
             }
+        }
+        
+        enum SpriteKeys: String, CodingKey {
+            case frontDefault = "front_default"
         }
         
         enum TypeDescriptionKeys: String, CodingKey {
@@ -48,7 +54,10 @@ struct Pokemon : Codable {
         name = try container.decode(String.self, forKey: .name)
         
         id = try container.decode(Int.self, forKey: .id)
-
+        
+        let spriteContainer = try container.nestedContainer(keyedBy: CodingKeys.SpriteKeys.self, forKey: .sprites)
+        sprites = try spriteContainer.decode(String.self, forKey: .frontDefault)
+        
         //Ability
         var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
         var abilityNames: [String] = []
@@ -74,14 +83,6 @@ struct Pokemon : Codable {
             typesArray.append(typeName)
             
         }
-        
         types = typesArray
-        
     }
-    
-}
-
-struct PokemonResults: Codable {
-    
-    let results: [Pokemon]
 }
