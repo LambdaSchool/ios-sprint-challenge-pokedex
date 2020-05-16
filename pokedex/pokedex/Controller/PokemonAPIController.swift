@@ -22,12 +22,12 @@ class PokemonAPIController {
     }
     var pokedex: [Pokemon] = []
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    private lazy var decoder = JSONDecoder()
     
-    
-    func fetchPokemon(for text: String, completion: @escaping (Result <Pokemon, NetworkError>) -> Void) {
+    func fetchPokemon(searchTerm: String, completion: @escaping (Result <Pokemon, NetworkError>) -> Void) {
         
-        let requestURL = baseURL.appendingPathComponent("pokemon/\(text.lowercased())")
+        let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         var request = URLRequest(url: requestURL)
         print("getPokemonURL = \(requestURL.absoluteString)")
         
@@ -52,8 +52,7 @@ class PokemonAPIController {
                 return
             }
             do {
-                let decoder = JSONDecoder()
-                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                let pokemon = try self.decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
             } catch {
                 print("Error decoding pokemon: \(error)")

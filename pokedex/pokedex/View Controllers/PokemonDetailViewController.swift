@@ -69,7 +69,7 @@ class PokemonDetailViewController: UIViewController {
 extension PokemonDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBarText = searchBar.text else { return }
-        pokemonAPIController?.fetchPokemon(for: searchBarText) { results in
+        pokemonAPIController?.fetchPokemon(searchTerm: searchBarText) { results in
             switch results {
             case .success(let pokemon):
                 print(pokemon)

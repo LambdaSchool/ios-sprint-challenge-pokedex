@@ -22,7 +22,10 @@ class PokemonTableViewController: UITableViewController {
     
 
     // MARK: - Table view data source
-
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+        
+    }
 // 1
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -55,6 +58,7 @@ class PokemonTableViewController: UITableViewController {
             guard let detailVC = segue.destination as? PokemonDetailViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             detailVC.pokemon = pokemonAPIController.pokedex[indexPath.row]
+            detailVC.pokemonAPIController = pokemonAPIController
         }
     }
 }
