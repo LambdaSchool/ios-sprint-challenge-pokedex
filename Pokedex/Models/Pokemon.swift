@@ -14,7 +14,7 @@ struct Pokemon: Codable {
     var abilities: [Ability]
     var types: [Types]
     let sprites: Sprites
-   
+    var image: Data?
 }
 
 struct Ability: Codable {

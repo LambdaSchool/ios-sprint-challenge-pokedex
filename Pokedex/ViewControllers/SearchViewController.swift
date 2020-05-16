@@ -40,7 +40,8 @@ class SearchViewController: UIViewController {
         pokemonController?.fetchImage(urlString: pokemon.sprites.frontDefault, completion: { (result) in
             if let pokemonSearchResult = try? result.get() {
                 DispatchQueue.main.async {
-                    self.pokemonImageView.image = pokemonSearchResult
+                    pokemon.image = pokemonSearchResult
+                    self.pokemonImageView.image = pokemon.image
                 }
             }
         })

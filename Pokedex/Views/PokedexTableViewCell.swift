@@ -14,9 +14,18 @@ class PokedexTableViewCell: UITableViewCell {
     @IBOutlet weak var pokemonImageView: UIImageView!
     
     var pokemonController: PokemonController?
+    var pokemonImage: UIImage?
     var pokemon: Pokemon? {
         didSet {
             updateViews()
+            pokemonController?.fetchImage(urlString: pokemon?.sprites.frontDefault ?? "", completion: { (result) in
+                       if let pokemonSearchResult = try? result.get() {
+                           DispatchQueue.main.async {
+                            self.pokemonImage = pokemonSearchResult
+                            self.updateViews()
+                           }
+                       }
+                   })
         }
     }
     
@@ -25,14 +34,7 @@ class PokedexTableViewCell: UITableViewCell {
             let pokemonController = pokemonController else { return }
         
         pokemonNameLabel.text = pokemon.name
-        let image: UIImage = pokemonController.fetchImage(urlString: pokemon.sprites.frontDefault, completion: { (result) -> Void in
-            if let pokemonSearchResult = try? result.get() {
-                DispatchQueue.main.async {
-                    self.pokemonImageView.image = pokemonSearchResult
-                }
-            }
-        }) ?? UIImage()
-        pokemonImageView.image = image
+        self.pokemonImageView.image = pokemonImage
     }
 
 }

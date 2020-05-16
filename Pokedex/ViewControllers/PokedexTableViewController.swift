@@ -12,10 +12,6 @@ class PokedexTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
     
-    @IBOutlet weak var pokemonNameLabel: UILabel!
-    @IBOutlet weak var pokemonImageView: UIImageView!
-    
-    
     private var pokemons: [Pokemon] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -42,16 +38,16 @@ class PokedexTableViewController: UITableViewController {
         return pokemonController.pokemonArray.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokedexTableViewCell else { return UITableViewCell() }
+        /* guard */ let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) /* as? PokedexTableViewCell else { return UITableViewCell() } */
     
         let pokemon = pokemonController.pokemonArray[indexPath.row]
-        cell.pokemon = pokemon
-        cell.pokemonController = pokemonController
-//        let name = pokemon.name.capitalized
-//        let id = String(pokemonController.pokemonArray[indexPath.row].id)
-//        cell.pokemonNameLabel.text = name
+//        cell.pokemon = pokemon
+//        cell.pokemonController = pokemonController
+        let name = pokemon.name.capitalized
+        let id = String(pokemonController.pokemonArray[indexPath.row].id)
+        cell.textLabel?.text = name
+        // cell.imageView.image = 
 
         return cell
     }
