@@ -22,6 +22,7 @@ class PokemonTableViewCell: UITableViewCell {
     func updateViews() {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name
+        pokemonNameLabel.textColor = .red
     }
 
 }

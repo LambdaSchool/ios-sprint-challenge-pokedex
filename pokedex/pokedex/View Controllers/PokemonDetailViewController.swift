@@ -25,26 +25,63 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updateViews()
         pokemonSearchBar.becomeFirstResponder()
     }
     
     
     // Mark: IBActions
     @IBAction func saveButtonTapped(_ sender: Any) {
-        
+        guard let pokemon = pokemon else { return }
+        pokemonAPIController?.savePokemon(pokemon: pokemon)
+        navigationController?.popToRootViewController(animated: true)
     }
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateViews() {
+        if let pokemon = pokemon {
+            pokemonNameLabel.text = pokemon.name
+            var abilitiesText = ""
+            for ability in pokemon.abilities {
+                abilitiesText += "\(ability.ability.name)"
+            }
+            pokemonAbilitiesLabel.text = "Abilities: \(abilitiesText)"
+            
+            var typesText = ""
+            for type in pokemon.types {
+                typesText += "\(type.type.name)"
+            }
+            pokemonTypesLabel.text = typesText
+            pokemonIdLabel.text = "ID#: \(pokemon.id)"
+            
+            do {
+                guard let url = URL(string: pokemon.sprites.frontDefault) else { return }
+                let data = try Data(contentsOf: url)
+                let image = UIImage(data: data)
+                pokemonImageView.image = image
+            } catch {
+                print(error)
+            }
+        }
     }
-    */
+    
+}
 
+extension PokemonDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchBarText = searchBar.text else { return }
+        pokemonAPIController?.fetchPokemon(for: searchBarText) { results in
+            switch results {
+            case .success(let pokemon):
+                print(pokemon)
+                self.pokemon = pokemon
+                
+                
+                DispatchQueue.main.async {
+                    self.updateViews()
+                }
+            case .failure(let error):
+                print("Error fetching pokemon: \(error)")
+            }
+        }
+    }
 }

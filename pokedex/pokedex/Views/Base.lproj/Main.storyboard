@@ -38,6 +38,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="pokemonNameLabel" destination="Y1h-c9-GaL" id="7nG-cY-2mj"/>
+                                    <segue destination="guZ-ZO-Wtp" kind="show" identifier="PokemonDetailSegue" id="ahC-y6-y2T"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -46,7 +47,13 @@
                             <outlet property="delegate" destination="ziL-kY-mGG" id="I9m-K8-69i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="6RD-uk-xzj"/>
+                    <navigationItem key="navigationItem" id="6RD-uk-xzj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="S4Y-HS-LgO">
+                            <connections>
+                                <segue destination="guZ-ZO-Wtp" kind="show" identifier="SearchSegue" id="qug-n2-QT6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NSz-9e-ED7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,11 +68,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="fsI-ov-1N8">
-                                <rect key="frame" x="0.0" y="111" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="155" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZf-9i-Ccf">
-                                <rect key="frame" x="20" y="199" width="374" height="36"/>
+                                <rect key="frame" x="20" y="243" width="374" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="bky-SK-VoX"/>
                                 </constraints>
@@ -74,13 +81,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GiZ-9O-27N">
-                                <rect key="frame" x="72" y="270" width="271" height="196"/>
+                                <rect key="frame" x="72" y="314" width="271" height="196"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="196" id="c0n-NP-40u"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="i7J-vH-lHE">
-                                <rect key="frame" x="41" y="700" width="83" height="106.5"/>
+                                <rect key="frame" x="41" y="610" width="83" height="106.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMw-8s-tLB">
                                         <rect key="frame" x="0.0" y="0.0" width="83" height="26.5"/>
@@ -108,7 +115,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51K-kV-aXK">
-                                <rect key="frame" x="186" y="817" width="42" height="35"/>
+                                <rect key="frame" x="186" y="787" width="42" height="35"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
@@ -122,13 +129,13 @@
                             <constraint firstItem="lZf-9i-Ccf" firstAttribute="leading" secondItem="n7n-c3-2ol" secondAttribute="leading" constant="20" id="4o8-Cq-9yl"/>
                             <constraint firstItem="fsI-ov-1N8" firstAttribute="top" secondItem="n7n-c3-2ol" secondAttribute="top" constant="67" id="6T7-jg-eC5"/>
                             <constraint firstItem="fsI-ov-1N8" firstAttribute="trailing" secondItem="n7n-c3-2ol" secondAttribute="trailing" id="A7e-q6-xC5"/>
-                            <constraint firstItem="n7n-c3-2ol" firstAttribute="bottom" secondItem="51K-kV-aXK" secondAttribute="bottom" constant="10" id="Dns-W9-sQc"/>
+                            <constraint firstItem="n7n-c3-2ol" firstAttribute="bottom" secondItem="51K-kV-aXK" secondAttribute="bottom" constant="40" id="Dns-W9-sQc"/>
                             <constraint firstItem="fsI-ov-1N8" firstAttribute="leading" secondItem="n7n-c3-2ol" secondAttribute="leading" id="E2C-El-2tG"/>
                             <constraint firstItem="n7n-c3-2ol" firstAttribute="trailing" secondItem="GiZ-9O-27N" secondAttribute="trailing" constant="71" id="WeW-Jq-lhs"/>
                             <constraint firstItem="n7n-c3-2ol" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="i7J-vH-lHE" secondAttribute="trailing" constant="20" id="X2f-n0-qVd"/>
                             <constraint firstItem="GiZ-9O-27N" firstAttribute="top" secondItem="lZf-9i-Ccf" secondAttribute="bottom" constant="35" id="ZwV-yr-4jb"/>
                             <constraint firstItem="n7n-c3-2ol" firstAttribute="trailing" secondItem="51K-kV-aXK" secondAttribute="trailing" constant="186" id="cWU-Tu-hdX"/>
-                            <constraint firstItem="i7J-vH-lHE" firstAttribute="top" secondItem="GiZ-9O-27N" secondAttribute="bottom" constant="234" id="iTb-GY-jLb"/>
+                            <constraint firstItem="i7J-vH-lHE" firstAttribute="top" secondItem="GiZ-9O-27N" secondAttribute="bottom" constant="100" id="iTb-GY-jLb"/>
                             <constraint firstItem="51K-kV-aXK" firstAttribute="leading" secondItem="n7n-c3-2ol" secondAttribute="leading" constant="186" id="jB7-Gd-ADa"/>
                             <constraint firstItem="i7J-vH-lHE" firstAttribute="leading" secondItem="n7n-c3-2ol" secondAttribute="leading" constant="41" id="lwj-iu-AZT"/>
                             <constraint firstItem="n7n-c3-2ol" firstAttribute="trailing" secondItem="lZf-9i-Ccf" secondAttribute="trailing" constant="20" id="qeU-iw-Jzi"/>
@@ -136,6 +143,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="n7n-c3-2ol"/>
                     </view>
+                    <navigationItem key="navigationItem" id="8d1-8w-6Ea"/>
                     <connections>
                         <outlet property="pokemonAbilitiesLabel" destination="ado-aH-dSO" id="oWZ-0s-Vgg"/>
                         <outlet property="pokemonIdLabel" destination="XMw-8s-tLB" id="VuN-CO-XDp"/>
@@ -154,8 +162,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nyh-LM-XVV" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="DF1-dM-vrf">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DF1-dM-vrf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -168,4 +176,7 @@
             <point key="canvasLocation" x="-223.18840579710147" y="154.6875"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="qug-n2-QT6"/>
+    </inferredMetricsTieBreakers>
 </document>

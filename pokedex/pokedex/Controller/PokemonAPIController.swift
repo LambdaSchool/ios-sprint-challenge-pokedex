@@ -22,14 +22,17 @@ class PokemonAPIController {
     }
     var pokedex: [Pokemon] = []
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
     
     
-    func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+    func fetchPokemon(for text: String, completion: @escaping (Result <Pokemon, NetworkError>) -> Void) {
+        
+        let requestURL = baseURL.appendingPathComponent("pokemon/\(text.lowercased())")
         var request = URLRequest(url: requestURL)
-        request.httpMethod = HTTPMethod.get.rawValue
         print("getPokemonURL = \(requestURL.absoluteString)")
+        
+        request.httpMethod = HTTPMethod.get.rawValue
+        
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
@@ -59,6 +62,7 @@ class PokemonAPIController {
         }
         task.resume()
     }
+    
     func savePokemon(pokemon: Pokemon) {
         pokedex.append(pokemon)
     }
