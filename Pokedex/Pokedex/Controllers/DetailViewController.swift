@@ -10,6 +10,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var pokemonImageView: UIImageView!
+    @IBOutlet var idLabel: UILabel!
+    @IBOutlet var typeLabel: UILabel!
+    @IBOutlet var abilitiesLabel: UILabel!
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

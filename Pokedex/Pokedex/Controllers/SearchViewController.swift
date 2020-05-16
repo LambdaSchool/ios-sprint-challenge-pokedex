@@ -10,13 +10,28 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    @IBOutlet var pokemonSearchBar: UISearchBar!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var pokemonImageView: UIImageView!
+    @IBOutlet var idLabel: UILabel!
+    @IBOutlet var typeLabel: UILabel!
+    @IBOutlet var abilitiesLabel: UILabel!
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func saveButtonaTapped(_ sender: Any) {
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
