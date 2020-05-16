@@ -39,13 +39,13 @@ struct Pokemon: Decodable {
                 case name
             }
         }
-
+        
     }
     
     let id: Int
     let name: String
     let abilities: [String]
-    let sprites: URL
+    let sprites: String
     let types: [String]
     
     
@@ -65,7 +65,7 @@ struct Pokemon: Decodable {
         
         let spritesContainer = try container.nestedContainer(keyedBy: PokemonCodinKeys.SpriteKeys.self, forKey: .sprites)
         let spriteString = try spritesContainer.decode(String.self, forKey: .frontDefault)
-        self.sprites = URL(string: spriteString)!
+        self.sprites = spriteString
         
         var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
         var typesArray: [String] = []
@@ -79,8 +79,13 @@ struct Pokemon: Decodable {
         
     }
     
+    init(id: Int, name: String, abilities: [String], types: [String], sprites: String) {
+        self.id = id
+        self.name = name
+        self.abilities = abilities
+        self.types = types
+        self.sprites = sprites
+    }
 }
 
-struct PokemonSearch: Decodable {
-    let results: [Pokemon]
-}
+

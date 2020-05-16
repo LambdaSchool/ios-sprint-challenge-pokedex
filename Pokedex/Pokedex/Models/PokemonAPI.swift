@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 
-final class PokemonAPI {
+class PokemonAPI {
     
     var pokemon: [Pokemon] = []
+    init() {
+        
+    }
     
     enum HTTPMethod: String {
            case get = "GET"
@@ -51,9 +54,8 @@ final class PokemonAPI {
             do {
                 let decoder = JSONDecoder()
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                self.pokemon.append(pokemon)
-                
-//                self.pokemon.append(contentsOf: pokemon.results)
+               // self.pokemon.append(pokemon)
+                print(pokemon)
                 completion(.success(pokemon))
             } catch {
                 print("Erorr decoding pokemon with error: \(error)")
@@ -65,13 +67,13 @@ final class PokemonAPI {
     
 }
     
-    func fetchImage(at url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-//          let imageURL = URL(string: urlString)!
-          
-          var request = URLRequest(url: url)
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+
+        guard let imageURL = URL(string: urlString) else { completion(.failure(.noData)); return }
+          var request = URLRequest(url: imageURL)
           request.httpMethod = HTTPMethod.get.rawValue
           
-          let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+          let task = URLSession.shared.dataTask(with: request) { (data, _ , error) in
               if let error = error {
                   print("Error receiving pokemon image with error \(error)")
                   completion(.failure(.tryAgain))
@@ -88,4 +90,9 @@ final class PokemonAPI {
           }
           task.resume()
       }
+    
+    func addPokimon(pokemon: Pokemon) {
+        let pokemon = Pokemon(id: pokemon.id, name: pokemon.name, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
+        self.pokemon.append(pokemon)
+    }
 }
