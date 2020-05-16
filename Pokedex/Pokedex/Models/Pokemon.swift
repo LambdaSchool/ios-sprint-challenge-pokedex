@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
     let name: String
     let id: Int
     let ability: [String]
@@ -70,6 +70,14 @@ struct Pokemon: Codable {
         self.sprites = try spriteContainer.decode(String.self, forKey: .sprite)
         self.ability = abilityNames
         self.types = typeNames
+    }
+    
+    init(name: String, id: Int, ability: [String], types: [String], sprites: String) {
+        self.name = name
+        self.id = id
+        self.ability = ability
+        self.types = types
+        self.sprites = sprites
     }
 
 }
