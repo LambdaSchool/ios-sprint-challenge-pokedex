@@ -11,7 +11,7 @@ import UIKit
 
 final class PokemonAPI {
     
-    
+    var pokemon: [Pokemon] = []
     
     enum HTTPMethod: String {
            case get = "GET"
@@ -26,9 +26,10 @@ final class PokemonAPI {
     private lazy var pokemonURL = baseURL.appendingPathComponent("/v2/pokemon/")
     
     func getPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let pokemonURLName = baseURL.appendingPathComponent(name)
+        let pokemonURLName = pokemonURL.appendingPathComponent(name)
         
         var request = URLRequest(url: pokemonURLName)
+        print(pokemonURLName)
          request.httpMethod = HTTPMethod.get.rawValue
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -50,6 +51,9 @@ final class PokemonAPI {
             do {
                 let decoder = JSONDecoder()
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
+                self.pokemon.append(pokemon)
+                
+//                self.pokemon.append(contentsOf: pokemon.results)
                 completion(.success(pokemon))
             } catch {
                 print("Erorr decoding pokemon with error: \(error)")
@@ -61,10 +65,10 @@ final class PokemonAPI {
     
 }
     
-    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-          let imageURL = URL(string: urlString)!
+    func fetchImage(at url: URL, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+//          let imageURL = URL(string: urlString)!
           
-          var request = URLRequest(url: imageURL)
+          var request = URLRequest(url: url)
           request.httpMethod = HTTPMethod.get.rawValue
           
           let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

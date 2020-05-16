@@ -81,3 +81,6 @@ struct Pokemon: Decodable {
     
 }
 
+struct PokemonSearch: Decodable {
+    let results: [Pokemon]
+}
