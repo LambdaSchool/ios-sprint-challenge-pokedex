@@ -11,39 +11,49 @@ import UIKit
 class PokedexTableViewController: UITableViewController {
     
     //MARK: - Properties
+    let pokemonController = PokemonController()
+    
     
     //MARK: - LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.myPokemon.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         
-        // Configure the cell...
-        
+        let pokemon = pokemonController.myPokemon[indexPath.row]
+        cell.textLabel?.text = pokemon.name.capitalizingFirstLetter()
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            pokemonController.deletePokemon(pokemon: pokemonController.myPokemon[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        
-        
-        // MARK: - Navigation
-        //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //
-        //    }
+    }
+    
+    //MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchPokemonSegue"{
+            guard let searchVC = segue.destination as? PokemonDetailViewController else { return }
+            searchVC.pokemonController = pokemonController
+            searchVC.title = "Pokémon Search"
+        } else if segue.identifier == "PokemonDetailSegue"{
+            guard let detailVC = segue.destination as? PokemonDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            let pokemon = pokemonController.myPokemon[indexPath.row]
+            detailVC.title = "Pokemon"
+            detailVC.pokemonController = pokemonController
+            detailVC.pokemon = pokemon
+        }
     }
 }
