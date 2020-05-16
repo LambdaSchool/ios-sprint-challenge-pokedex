@@ -10,7 +10,7 @@
         <!--Pokédex-->
         <scene sceneID="End-wz-J5h">
             <objects>
-                <tableViewController id="zKH-oe-tFH" sceneMemberID="viewController">
+                <tableViewController id="zKH-oe-tFH" customClass="PokedexTableViewController" customModule="PokedexSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dOJ-WG-gp4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,7 +57,7 @@
         <!--Title-->
         <scene sceneID="dXG-T5-vBI">
             <objects>
-                <viewController id="JYI-yu-Y6P" sceneMemberID="viewController">
+                <viewController id="JYI-yu-Y6P" customClass="PokemonDetailViewController" customModule="PokedexSprint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zE1-ea-9Mg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,6 +128,14 @@
                         <viewLayoutGuide key="safeArea" id="khY-kt-jMN"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Nk2-Ms-0TM"/>
+                    <connections>
+                        <outlet property="pokemonAbilityLabel" destination="oNc-F9-MIb" id="Y6o-Ar-cgp"/>
+                        <outlet property="pokemonIdLabel" destination="cgv-Nk-oYb" id="qS7-HH-C8Z"/>
+                        <outlet property="pokemonNameLabel" destination="vl1-eb-7pk" id="r8a-mE-zdb"/>
+                        <outlet property="pokemonSearchBar" destination="59K-QE-1Ma" id="9po-pm-OtH"/>
+                        <outlet property="pokemonSpriteImage" destination="eDw-2a-7iP" id="x8d-1i-Tq6"/>
+                        <outlet property="pokemonTypeLabel" destination="swx-4U-CnX" id="wTG-As-dCJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yil-S7-dob" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -139,7 +147,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kiB-Ag-8NO" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="1Th-Id-cFk">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="104.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
