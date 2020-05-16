@@ -7,7 +7,8 @@
 //
 
 import Foundation
-struct Pokemon: Decodable, Equatable{
+
+struct Pokemon: Codable, Equatable{
     //Keys for JSON Decoding
     enum PokemonKeys: String, CodingKey{
         case name, id, abilities, types, sprites

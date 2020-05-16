@@ -26,6 +26,10 @@ class PokemonController {
     var myPokemon: [Pokemon] = []
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")
     
+    init(){
+        loadFromPersistentStore()
+    }
+    
     //MARK: - Functions
     //Function to let us search for pokemon with our search parameters, and return decoded JSON data
     func searchForPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void){
@@ -95,11 +99,47 @@ class PokemonController {
     func savePokemon(pokemon: Pokemon){
         let newPokemon = Pokemon(name: pokemon.name, id: pokemon.id, sprites: pokemon.sprites, ability: pokemon.ability, types: pokemon.types)
         myPokemon.append(newPokemon)
+        saveToPersistentStore()
     }
     
     //Function to find the index of the pokemon we are deleting and remove it from the array
     func deletePokemon(pokemon: Pokemon){
         guard let index = myPokemon.firstIndex(of: pokemon) else { return }
         myPokemon.remove(at: index)
+        saveToPersistentStore()
+    }
+    
+    //MARK: - Persistence
+    //Tried to create persistence, but for some reason getting error "The file “pokemon.plist” couldn’t be opened because there is no such file."
+    //Also getting an error: "Expected to decode Dictionary<String, Any> but found a string/data instead."
+    var pokemonURL: URL?{
+        let fm = FileManager.default
+        guard let directory = fm.urls(for: .documentDirectory, in: .userDomainMask) .first else { return nil }
+        return directory.appendingPathComponent("pokemon.plist")
+    }
+
+    private func saveToPersistentStore(){
+        guard let url = pokemonURL else { return }
+        do{
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(myPokemon)
+            try data.write(to: url)
+        } catch {
+            print("Error saving pokemon: \(error)")
+        }
+    }
+
+    private func loadFromPersistentStore(){
+        do{
+            let fm = FileManager.default
+            guard let url = pokemonURL,
+                fm.fileExists(atPath: url.path) else { return }
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            let decodedPoekmon = try decoder.decode([Pokemon].self, from: data)
+            self.myPokemon = decodedPoekmon
+        } catch{
+            print("Pokemon could not be loaded: \(error)")
+        }
     }
 }

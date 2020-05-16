@@ -28,7 +28,6 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         pokemonSearchBar.delegate = self
-        
     }
     
     //MARK: - IBActions
