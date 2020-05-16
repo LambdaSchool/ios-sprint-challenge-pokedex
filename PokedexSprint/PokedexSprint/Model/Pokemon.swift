@@ -7,9 +7,9 @@
 //
 
 import Foundation
-struct Pokemon: Decodable{
+struct Pokemon: Decodable, Equatable{
     //Keys for JSON Decoding
-    enum PokemonKeys: CodingKey{
+    enum PokemonKeys: String, CodingKey{
         case name, id, abilities, types, sprites
         
        enum AbilityDescriptionsKeys: String, CodingKey {
@@ -20,14 +20,14 @@ struct Pokemon: Decodable{
             }
         }
         
-        enum SpriteKeys: String, CodingKey{
+        enum SpriteKeys:String, CodingKey{
             case sprite = "front_default"
         }
         
-        enum TypeDescriptionKey: CodingKey {
+        enum TypeDescriptionKey:String, CodingKey {
             case type
             
-            enum TypeKeys: CodingKey{
+            enum TypeKeys:String, CodingKey{
                 case name
             }
         }
@@ -39,6 +39,15 @@ struct Pokemon: Decodable{
     let sprites: String
     let ability: [String]
     let types: [String]
+    
+    //Initalizer for our object when saving one
+    init(name: String, id: Int, sprites: String, ability: [String], types: [String]){
+        self.name = name
+        self.id = id
+        self.sprites = sprites
+        self.ability = ability
+        self.types = types
+    }
     
     //Custom Decoder
     init(from decoder: Decoder) throws{

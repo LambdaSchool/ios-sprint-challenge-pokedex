@@ -19,11 +19,22 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonAbilityLabel: UILabel!
     
     //MARK: - Properties
+    var pokemonController: PokemonController?
+    var pokemon: Pokemon?
+    
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+    
+    //MARK: - IBActions
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else{ return }
+        pokemonController?.savePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
+        
     }
     
     //MARK: - HelperFunctions
