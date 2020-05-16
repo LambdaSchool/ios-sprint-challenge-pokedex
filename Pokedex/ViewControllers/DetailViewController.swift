@@ -31,13 +31,15 @@ class DetailViewController: UIViewController {
         pokemonIDLabel.text = "\(pokemon!.id)"
         pokemonAbilitiesLabel.text = pokemon?.abilities.map({$0.ability.name}).joined(separator: ", ")
         pokemonTypesLabel.text = pokemon?.types.map({$0.type.name}).joined(separator: ", ")
-        pokemonController?.fetchImage(urlString: pokemon?.sprites.frontDefault ?? "Womp", completion: { (result) in
-            if let pokemonSearchResult = try? result.get() {
-                DispatchQueue.main.async {
-                    self.pokemonImageView.image = pokemonSearchResult
-                }
-            }
-        })
+//        pokemonController?.fetchImage(urlString: pokemon?.sprites.frontDefault ?? "Womp", completion: { (result) in
+//            if let pokemonSearchResult = try? result.get() {
+//                DispatchQueue.main.async {
+//                    self.pokemonImageView.image = UIImage(data: pokemonSearchResult)
+//                }
+//            }
+//        })
+        guard let pokemonImageData = pokemon?.image else { return }
+        pokemonImageView.image = UIImage(data: pokemonImageData)
     }
     
 //    func updateViews() {

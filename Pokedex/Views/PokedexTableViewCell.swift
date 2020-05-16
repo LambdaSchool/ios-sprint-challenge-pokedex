@@ -18,23 +18,15 @@ class PokedexTableViewCell: UITableViewCell {
     var pokemon: Pokemon? {
         didSet {
             updateViews()
-            pokemonController?.fetchImage(urlString: pokemon?.sprites.frontDefault ?? "", completion: { (result) in
-                       if let pokemonSearchResult = try? result.get() {
-                           DispatchQueue.main.async {
-                            self.pokemonImage = pokemonSearchResult
-                            self.updateViews()
-                           }
-                       }
-                   })
         }
     }
     
     private func updateViews() {
-        guard let pokemon = pokemon,
-            let pokemonController = pokemonController else { return }
-        
+        guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name
-        self.pokemonImageView.image = pokemonImage
+        guard let pokemonImageData = pokemon.image else { return }
+        self.pokemonImageView.image = UIImage(data: pokemonImageData)
+        
     }
 
 }

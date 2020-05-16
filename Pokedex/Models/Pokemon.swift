@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Pokemon: Codable {
     var name: String

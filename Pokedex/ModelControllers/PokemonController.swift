@@ -65,7 +65,7 @@ class PokemonController {
         }.resume()
     }
     
-    func fetchImage(urlString: String, completion: @escaping (Result<UIImage?, NetworkError>) -> Void) {
+    func fetchImage(urlString: String, completion: @escaping (Result<Data?, NetworkError>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.noData))
             return
@@ -83,8 +83,7 @@ class PokemonController {
                 return
             }
             
-            let image = UIImage(data: data)
-            completion(.success(image))
+            completion(.success(data))
             
         }.resume()
     }

@@ -32,7 +32,7 @@ class SearchViewController: UIViewController {
     }
     
     func updateViews() {
-        guard let pokemon = pokemon else { return }
+        guard var pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name.capitalized
         pokemonIDLabel.text = "\(pokemon.id)"
         pokemonAbilitiesLabel.text = pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
@@ -40,8 +40,10 @@ class SearchViewController: UIViewController {
         pokemonController?.fetchImage(urlString: pokemon.sprites.frontDefault, completion: { (result) in
             if let pokemonSearchResult = try? result.get() {
                 DispatchQueue.main.async {
+                    // pokemon.image = pokemonSearchResult
+                    self.pokemonImageView.image = UIImage(data: pokemonSearchResult)
                     pokemon.image = pokemonSearchResult
-                    self.pokemonImageView.image = pokemon.image
+                    self.pokemon = pokemon 
                 }
             }
         })

@@ -12,13 +12,13 @@ class PokedexTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
     
-    private var pokemons: [Pokemon] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+//    private var pokemons: [Pokemon] = [] {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         print("viewDidLoad was called.")
@@ -39,15 +39,16 @@ class PokedexTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /* guard */ let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) /* as? PokedexTableViewCell else { return UITableViewCell() } */
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)  as? PokedexTableViewCell else { return UITableViewCell() } 
     
         let pokemon = pokemonController.pokemonArray[indexPath.row]
-//        cell.pokemon = pokemon
-//        cell.pokemonController = pokemonController
-        let name = pokemon.name.capitalized
-        let id = String(pokemonController.pokemonArray[indexPath.row].id)
-        cell.textLabel?.text = name
-        // cell.imageView.image = 
+        cell.pokemon = pokemon
+        print(pokemon.image!)
+        cell.pokemonController = pokemonController
+//        let name = pokemon.name.capitalized
+//        let id = String(pokemonController.pokemonArray[indexPath.row].id)
+//        cell.textLabel?.text = name
+        
 
         return cell
     }
