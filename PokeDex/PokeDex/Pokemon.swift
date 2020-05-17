@@ -70,11 +70,8 @@ struct Pokemon: Decodable {
         }
         self.types = typeNames
     }
-    
-   // let url = URL(string: "https://pokeapi.co/api/v2/pokemon/4")!
-   // let data = try! Data(contentsOf: url)
-//
-//    let decoder = JSONDecoder()
-//    let charmander = try decoder.decode(Pokemon.self, from: data)
 }
 
+struct PokemonSearch: Decodable {
+    let results: [Pokemon]
+}

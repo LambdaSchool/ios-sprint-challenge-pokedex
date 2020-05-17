@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--PokeDex-->
         <scene sceneID="thy-3V-q8r">
             <objects>
-                <tableViewController id="ZIN-47-vjX" sceneMemberID="viewController">
+                <tableViewController id="ZIN-47-vjX" customClass="PokeDexTableViewController" customModule="PokeDex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pD0-ja-r6D">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
                             <outlet property="delegate" destination="ZIN-47-vjX" id="Jkn-OA-u4B"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="TC3-SW-hJn">
+                    <navigationItem key="navigationItem" title="PokeDex" id="TC3-SW-hJn">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="luU-nc-V1X">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" identifier="SearchPokemonSegue" id="aH8-mZ-4qP"/>
@@ -46,8 +46,8 @@
         <scene sceneID="7R5-B5-aSp">
             <objects>
                 <navigationController id="34S-7r-ZGZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mpq-Kd-QAQ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="mpq-Kd-QAQ">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -58,20 +58,20 @@
             </objects>
             <point key="canvasLocation" x="-1658" y="153"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon Search View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PokeDex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PokemonSearchViewController" customModule="PokeDex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iYN-N8-eOw">
-                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6e-Li-GOp">
-                                <rect key="frame" x="0.0" y="179" width="414" height="36"/>
+                                <rect key="frame" x="0.0" y="231" width="414" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -102,6 +102,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfQ-ld-5Br">
                                 <rect key="frame" x="156.5" y="832" width="101" height="30"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="savePokemonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6bi-8p-GZZ"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ChO-Rh-ha0">
                                 <rect key="frame" x="87" y="328" width="240" height="240"/>
@@ -131,6 +134,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="3Tv-tM-fwd"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="zVx-mG-iSz" id="jQM-MZ-Nyz"/>
+                        <outlet property="idLabel" destination="Dc9-rW-CgC" id="FWP-rM-dHv"/>
+                        <outlet property="pokemonImageView" destination="ChO-Rh-ha0" id="n41-g2-ory"/>
+                        <outlet property="pokemonNameLabel" destination="b6e-Li-GOp" id="n2T-YV-gvE"/>
+                        <outlet property="saveButton" destination="GfQ-ld-5Br" id="YBl-F3-VsM"/>
+                        <outlet property="searchBar" destination="iYN-N8-eOw" id="dlV-R2-Hle"/>
+                        <outlet property="typesLabel" destination="db9-HZ-LfO" id="uPY-bk-zH5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
