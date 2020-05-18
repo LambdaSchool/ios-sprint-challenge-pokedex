@@ -13,6 +13,7 @@ class PokemonTableViewController: UITableViewController {
     
     let pokemonAPI = PokemonAPI()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
@@ -31,27 +32,22 @@ class PokemonTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as! PokemonTableViewCell
         let pokemon = pokemonAPI.pokemon[indexPath.row]
-        print(pokemon)
-        cell.textLabel?.text = pokemon.name
+        cell.pokemon = pokemon
+        cell.pokemonAPI = self.pokemonAPI
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.pokemonAPI.pokemon.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
-    }
-    
-    
-    
-    
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToSearchVC" {
             if let searchVC = segue.destination as? SearchViewController {
@@ -62,11 +58,10 @@ class PokemonTableViewController: UITableViewController {
             if let detailVC = segue.destination as? SearchViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 let pokemon = pokemonAPI.pokemon[indexPath.row]
+                detailVC.title = pokemon.name.capitalizingFirstLetter()
                 detailVC.pokemon = pokemon
                 detailVC.pokemonAPI = pokemonAPI
             }
-            
-            
         }
     }
 }

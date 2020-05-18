@@ -13,8 +13,6 @@ class SearchViewController: UIViewController {
     var pokemon: Pokemon?
     var pokemonAPI: PokemonAPI?
     
-    
-    
     @IBOutlet var pokemonSearchBar: UISearchBar!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var pokemonImageView: UIImageView!
@@ -27,6 +25,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         pokemonSearchBar.delegate = self
+       
     }
     
     
@@ -41,10 +40,11 @@ class SearchViewController: UIViewController {
     
     private func updateViews() {
         guard let pokemon = pokemon else { return }
-        nameLabel.text = pokemon.name
+        self.title = pokemon.name.capitalizingFirstLetter()
+        nameLabel.text = pokemon.name.capitalizingFirstLetter()
         idLabel.text = String(pokemon.id)
-        typeLabel.text = pokemon.types.map { ($0 as String) }.compactMap({$0}).joined(separator: ", ")
-        abilitiesLabel.text = pokemon.abilities.map { ($0 as String) }.compactMap({$0}).joined(separator: ", ")
+        typeLabel.text = pokemon.types.map { ($0 as String) }.compactMap({$0}).joined(separator: ", ").capitalizingFirstLetter()
+        abilitiesLabel.text = pokemon.abilities.map { ($0 as String) }.compactMap({$0}).joined(separator: ", ").capitalizingFirstLetter()
         self.pokemonAPI?.fetchImage(at: pokemon.sprites, completion: { (result) in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
