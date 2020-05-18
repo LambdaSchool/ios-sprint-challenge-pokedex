@@ -24,7 +24,7 @@ class PokemonController {
     var pokemon: [Pokemon] = []
     
     func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let searchURL = baseURL.appendingPathComponent(searchTerm)
+        let searchURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         
         var request = URLRequest(url: searchURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -51,7 +51,6 @@ class PokemonController {
             do {
                 let decoder = JSONDecoder()
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
-                self.pokemon.append(pokemon)
                 completion(.success(pokemon))
             } catch {
                 print("Error decoding Pokemon data: \(error)")

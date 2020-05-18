@@ -48,8 +48,7 @@ struct Pokemon: Codable {
         
         name = try container.decode(String.self, forKey: .name)
         
-        let idString = try container.decode(String.self, forKey: .id)
-        id = Int(idString) ?? 0
+        id = try container.decode(Int.self, forKey: .id)
         
         let spriteContainer = try container.nestedContainer(keyedBy: PokemonKeys.SpriteKeys.self, forKey: .sprites)
         sprite = try spriteContainer.decode(URL.self, forKey: .sprite)

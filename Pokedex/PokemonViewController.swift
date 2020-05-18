@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonViewController: UIViewController {
+class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonLabel: UILabel!
@@ -21,28 +21,55 @@ class PokemonViewController: UIViewController {
     var pokemonController: PokemonController!
     var pokemon: Pokemon?
     
+    var buttonHidden = true
+    var searchBarHidden = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        searchBar.delegate = self
         updateViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !searchBar.isHidden {
+            searchBar.becomeFirstResponder()
+        }
+    }
+    
     @IBAction func saveTapped(_ sender: Any) {
+        guard let pokemon = pokemon else { return }
+        pokemonController.pokemon.append(pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
     private func updateViews() {
         if let pokemon = pokemon {
-            title = pokemon.name
-            searchBar.isHidden = true
-            saveButton.isHidden = true
-            pokemonLabel.text = pokemon.name
-            idLabel.text = String(pokemon.id)
+            title = pokemon.name.capitalizingFirstLetter()
+            pokemonLabel.text = pokemon.name.capitalizingFirstLetter()
+            idLabel.text = "ID: \(pokemon.id)"
             downloadImage(from: pokemon.sprite)
+            displayArrayData(for: "types", in: typeLabel, from: pokemon.types)
+            displayArrayData(for: "abilities", in: abilityLabel, from: pokemon.abilities)
         } else {
             title = "Pokemon Search"
-            searchBar.isHidden = false
-            saveButton.isHidden = false
         }
+        
+        searchBar.isHidden = searchBarHidden
+        saveButton.isHidden = buttonHidden
+    }
+    
+    private func displayArrayData(for type: String, in label: UILabel, from data: [String]) {
+        var finalString = "\(type.capitalizingFirstLetter()): "
+        itemLoop: for item in data {
+            while item != data.last {
+                finalString += "\(item.capitalizingFirstLetter()), "
+                continue itemLoop
+            }
+            finalString += "\(item.capitalizingFirstLetter())"
+        }
+        label.text = finalString
     }
     
     private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -50,25 +77,32 @@ class PokemonViewController: UIViewController {
     }
     
     private func downloadImage(from url: URL) {
-        print("Download Started")
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
             DispatchQueue.main.async() { [weak self] in
                 self?.spriteView.image = UIImage(data: data)
             }
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        searchBar.resignFirstResponder()
+        
+        self.pokemonController.fetchPokemon(searchTerm: searchTerm) { (result) in
+            DispatchQueue.main.async {
+                do {
+                    self.pokemon = try result.get()
+                    self.buttonHidden = false
+                    self.updateViews()
+                } catch {
+                    let alertController = UIAlertController(title: "No Data", message: "This Pokemon doesn't exist.", preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                    alertController.addAction(alertAction)
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
     }
-    */
 
 }
