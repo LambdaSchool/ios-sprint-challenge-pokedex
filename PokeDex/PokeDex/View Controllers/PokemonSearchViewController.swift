@@ -24,8 +24,7 @@ class PokemonSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        [pokemonNameLabel, pokemonImageView, idLabel, typesLabel, abilitiesLabel, saveButton].forEach { $0?.isHidden = true}
-        
+       
         searchBar.delegate = self
         
     }
@@ -42,6 +41,7 @@ class PokemonSearchViewController: UIViewController {
     */
 
     @IBAction func savePokemonTapped(_ sender: Any) {
+        
     }
 }
 
