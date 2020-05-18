@@ -54,6 +54,10 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             displayArrayData(for: "abilities", in: abilityLabel, from: pokemon.abilities)
         } else {
             title = "Pokemon Search"
+            pokemonLabel.text = ""
+            idLabel.text = ""
+            typeLabel.text = ""
+            abilityLabel.text = ""
         }
         
         searchBar.isHidden = searchBarHidden
