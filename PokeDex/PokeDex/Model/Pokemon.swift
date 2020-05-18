@@ -37,7 +37,3 @@ struct Pokemon: Decodable, Equatable {
         }
     }
 }
-
-//struct PokemonSearch: Decodable {
-//    let results: [Pokemon]
-//}

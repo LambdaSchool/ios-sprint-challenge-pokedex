@@ -19,7 +19,11 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     private var pokedexController = PokedexController()
-    private var pokemon: [Pokemon] = [] 
+    private var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -40,6 +44,31 @@ class PokemonSearchViewController: UIViewController {
     }
     */
 
+    func updateViews() {
+        guard let pokemon = pokemon else { return }
+        pokemonNameLabel.text = pokemon.name
+        idLabel.text = String(pokemon.id)
+        let url = String("\(pokemon.sprite)")
+   //     downloadImage(from: url)
+//        typesLabel.text = pokemon.types
+//        abilitiesLabel.text = pokemon.abilities
+//        pokemonImageView.image = pokemon.sprite
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            DispatchQueue.main.async() { [weak self] in
+                self?.pokemonImageView.image = UIImage(data: data)
+            }
+        }
+    }
+    
     @IBAction func savePokemonTapped(_ sender: Any) {
     
      //   pokedexController.savePokemon(with: <#T##Pokemon#>)
@@ -51,7 +80,7 @@ extension PokemonSearchViewController: UISearchBarDelegate {
         guard let searchTerm = searchBar.text else { return }
         pokedexController.searchForPokemonWith(searchTerm: searchTerm) { (newPokemon) in
             DispatchQueue.main.async {
-            self.pokemon = newPokemon
+                self.pokemon = self.pokemon
             }
         }
     }
