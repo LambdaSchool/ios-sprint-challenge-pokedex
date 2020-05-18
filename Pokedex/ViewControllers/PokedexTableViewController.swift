@@ -12,14 +12,6 @@ class PokedexTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
     
-//    private var pokemons: [Pokemon] = [] {
-//        didSet {
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//        }
-//    }
-    
     override func viewDidLoad() {
         print("viewDidLoad was called.")
         super.viewDidLoad()
@@ -45,12 +37,16 @@ class PokedexTableViewController: UITableViewController {
         cell.pokemon = pokemon
         print(pokemon.image!)
         cell.pokemonController = pokemonController
-//        let name = pokemon.name.capitalized
-//        let id = String(pokemonController.pokemonArray[indexPath.row].id)
-//        cell.textLabel?.text = name
-        
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.pokemonArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        // From Paul Hudson at https://www.hackingwithswift.com/example-code/uikit/how-to-swipe-to-delete-uitableviewcells
     }
     
     // MARK: - Navigation
@@ -67,6 +63,4 @@ class PokedexTableViewController: UITableViewController {
             destinationVC.pokemonController = pokemonController
         }
     }
-    
-    
 }
