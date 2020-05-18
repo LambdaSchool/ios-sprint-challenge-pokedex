@@ -10,7 +10,7 @@
         <!--Pokedex-->
         <scene sceneID="rPP-57-hHg">
             <objects>
-                <tableViewController id="7GM-zc-gTU" sceneMemberID="viewController">
+                <tableViewController id="7GM-zc-gTU" customClass="PokedexTableViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cb5-9h-Aeh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="860.86956521739137" y="144.64285714285714"/>
         </scene>
-        <!--View Controller-->
+        <!--Pokemon View Controller-->
         <scene sceneID="T0d-gZ-CSe">
             <objects>
-                <viewController id="dGa-q0-BhT" sceneMemberID="viewController">
+                <viewController id="dGa-q0-BhT" customClass="PokemonViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uPm-rE-Nra">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,6 +118,9 @@
                                 <rect key="frame" x="20" y="759" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="dGa-q0-BhT" eventType="touchUpInside" id="7SG-2A-Nio"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -153,6 +156,15 @@
                         <viewLayoutGuide key="safeArea" id="Naq-px-yP2"/>
                     </view>
                     <navigationItem key="navigationItem" id="N02-1l-eua"/>
+                    <connections>
+                        <outlet property="abilityLabel" destination="kLS-sy-Sqa" id="LEt-an-whA"/>
+                        <outlet property="idLabel" destination="2Lh-wb-VoI" id="BZq-qe-S0y"/>
+                        <outlet property="pokemonLabel" destination="OIi-6Q-UXb" id="2jH-Bb-QZM"/>
+                        <outlet property="saveButton" destination="sGi-ay-L9S" id="o6W-uR-2Q9"/>
+                        <outlet property="searchBar" destination="DrC-pg-wd0" id="pw2-ar-yZO"/>
+                        <outlet property="spriteView" destination="bt7-94-0ci" id="emM-1Q-IVW"/>
+                        <outlet property="typeLabel" destination="6zB-ER-HoD" id="r1z-d0-AAm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6jF-1r-h41" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
