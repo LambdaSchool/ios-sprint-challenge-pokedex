@@ -48,11 +48,13 @@ class PokemonSearchViewController: UIViewController {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
-        let url = String("\(pokemon.sprite)")
-   //     downloadImage(from: url)
+     
+        let url = URL(string: "\(pokemon.sprite)")!
+        downloadImage(from: url)
+        
 //        typesLabel.text = pokemon.types
 //        abilitiesLabel.text = pokemon.abilities
-//        pokemonImageView.image = pokemon.sprite
+
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
