@@ -43,14 +43,20 @@ class PokedexController {
               }
               
               let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
               do {
-                  let personSearch = try jsonDecoder.decode(PokemonSearch.self, from: data)
-                  completion(personSearch.results)
+                  let pokemonSearch = try jsonDecoder.decode(Pokemon.self, from: data)
+                  completion([pokemonSearch])
               } catch {
-                  print("Unable to decode date: \(error)")
+                  print("Unable to decode search: \(error)")
                   completion([])
               }
           }.resume()
       }
+    
+    func savePokemon(with newPokemon: Pokemon) {
+        
+    }
+    
     
 }
