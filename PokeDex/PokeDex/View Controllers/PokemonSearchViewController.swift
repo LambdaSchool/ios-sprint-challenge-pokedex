@@ -19,7 +19,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     private var pokedexController = PokedexController()
-    private var pokemon: [Pokemon] = []
+    private var pokemon: [Pokemon] = [] 
     
     
     override func viewDidLoad() {
