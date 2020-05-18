@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PokemonController {
     
@@ -38,6 +39,7 @@ class PokemonController {
         let url = baseURL.appendingPathComponent(name.lowercased())
         
         var request = URLRequest(url: url)
+        print("This is the request: \(request)")
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -62,4 +64,28 @@ class PokemonController {
             }
         }.resume()
     }
+    
+    func fetchImage(urlString: String, completion: @escaping (Result<Data?, NetworkError>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.noData))
+            return
+        }
+        print("This is the request: \(url)")
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                completion(.failure(.otherError(error!)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            completion(.success(data))
+            
+        }.resume()
+    }
+    
 }

@@ -12,35 +12,49 @@ class PokedexTableViewController: UITableViewController {
     
     let pokemonController = PokemonController()
     
-    private var pokemons: [Pokemon] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+//    private var pokemons: [Pokemon] = [] {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
+        print("viewDidLoad was called.")
         super.viewDidLoad()
+        title = "Pokedex"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear was called.")
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemonController.pokemonArray.count
     }
-
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
-        cell.textLabel?.text = pokemonController.pokemonArray[indexPath.row].name.capitalized
-        cell.detailTextLabel?.text = String(pokemonController.pokemonArray[indexPath.row].id)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)  as? PokedexTableViewCell else { return UITableViewCell() } 
+    
+        let pokemon = pokemonController.pokemonArray[indexPath.row]
+        cell.pokemon = pokemon
+        print(pokemon.image!)
+        cell.pokemonController = pokemonController
+//        let name = pokemon.name.capitalized
+//        let id = String(pokemonController.pokemonArray[indexPath.row].id)
+//        cell.textLabel?.text = name
+        
+
         return cell
     }
-
+    
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToSearch" {
             guard let destinationVC = segue.destination as? SearchViewController else { return }
@@ -50,8 +64,9 @@ class PokedexTableViewController: UITableViewController {
                 let index = tableView.indexPathForSelectedRow else { return }
             let pokemon = pokemonController.pokemonArray[index.row]
             destinationVC.pokemon = pokemon
+            destinationVC.pokemonController = pokemonController
         }
     }
-
-
+    
+    
 }
