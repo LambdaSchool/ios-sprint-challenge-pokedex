@@ -69,8 +69,8 @@ class PokemonSearchViewController: UIViewController {
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-        
-        //   pokedexController.savePokemon(with: <#T##Pokemon#>)
+        guard let pokemon = pokemon else { return }
+        pokemonController.savePokemon(with: pokemon)
     }
 }
 
