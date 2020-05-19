@@ -20,11 +20,11 @@ class PokedexController {
         case decodeFailure
     }
     
-    
-    
     enum HTTPMethod: String {
            case get = "GET"
     }
+    var pokemon: [Pokemon] = []
+    
     
    // private let baseURL = URL(string: "https://lambdapokeapi.herokuapp.com/")!
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
@@ -61,10 +61,6 @@ class PokedexController {
       }
     
     func savePokemon(with newPokemon: Pokemon) {
-        
+        pokemon.append(newPokemon)
     }
-    
-    
-    
-    
 }

@@ -9,12 +9,16 @@
 import UIKit
 
 class PokeDexTableViewController: UITableViewController {
-    
-    var pokemon: [Pokemon] = []
+        
+    var pokemonController = PokedexController()
+//    var pokemon: [Pokemon] = [] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -22,26 +26,24 @@ class PokeDexTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return pokemon.count
+       
+        return pokemonController.pokemon.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as! PokemonTableViewCell
 
-        let aPokemon = pokemon[indexPath.row]
-        cell.pokemon = aPokemon
+        let aPokemon = pokemonController.pokemon[indexPath.row]
+       
+        cell.textLabel?.text = aPokemon.name
         
-
         return cell
     }
    
@@ -54,7 +56,7 @@ class PokeDexTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -64,7 +66,7 @@ class PokeDexTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
