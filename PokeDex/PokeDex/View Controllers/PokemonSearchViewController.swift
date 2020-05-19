@@ -50,7 +50,7 @@ class PokemonSearchViewController: UIViewController {
     //    downloadImage(from: url)
         
         typesLabel.text = pokemon.types.map({$0.type.name}).joined(separator: " ,")
-       // abilitiesLabel.text = pokemon.abilities.map({$0.abilities.ability}).joined(separator: " ,")
+        abilitiesLabel.text = pokemon.abilities.map({$0.ability.name}).joined(separator: " ,")
         
     }
     
