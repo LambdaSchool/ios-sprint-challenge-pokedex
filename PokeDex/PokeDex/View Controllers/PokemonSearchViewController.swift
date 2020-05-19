@@ -49,8 +49,8 @@ class PokemonSearchViewController: UIViewController {
       //  let url = URL(string: "\(pokemon.sprites)")!
     //    downloadImage(from: url)
         
-        //        typesLabel.text = pokemon.types
-       // abilitiesLabel.text = pokemon.abilities.map({ $0 })
+        typesLabel.text = pokemon.types.map({$0.type.name}).joined(separator: " ,")
+       // abilitiesLabel.text = pokemon.abilities.map({$0.abilities.ability}).joined(separator: " ,")
         
     }
     
