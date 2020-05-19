@@ -49,7 +49,7 @@ class PokemonSearchViewController: UIViewController {
         pokemonNameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
      
-        let url = URL(string: "\(pokemon.sprite)")!
+        let url = URL(string: "\(pokemon.sprites)")!
         downloadImage(from: url)
         
 //        typesLabel.text = pokemon.types
