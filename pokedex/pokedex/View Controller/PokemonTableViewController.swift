@@ -9,6 +9,9 @@
 import UIKit
 
 class PokemonTableViewController: UITableViewController {
+    
+    let reuseIdentifier = "PokemonCell"
+    let apiController: APIController = APIController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
