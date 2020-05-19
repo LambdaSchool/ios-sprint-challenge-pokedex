@@ -40,6 +40,7 @@ class PokeDexTableViewController: UITableViewController {
 
         let aPokemon = pokemon[indexPath.row]
         cell.pokemon = aPokemon
+        
 
         return cell
     }

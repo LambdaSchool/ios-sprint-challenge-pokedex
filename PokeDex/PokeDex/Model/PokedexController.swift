@@ -29,13 +29,9 @@ class PokedexController {
    // private let baseURL = URL(string: "https://lambdapokeapi.herokuapp.com/")!
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-   // func searchForPokemonWith(searchTerm: String, completion: @escaping ([Pokemon]) -> Void) {
     func searchForPokemonWith(searchTerm: String, completion: @escaping (Result<Pokemon, NewtworkError>) -> Void) {
-          //var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-        //  let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
         let searchTermQueryItem = baseURL.appendingPathComponent(searchTerm.lowercased())
-         // urlComponents?.queryItems = [searchTermQueryItem]
-        //let searchTermQueryItem =   let requestURL = URLRequest(url: searchTermQueryItem)
+        
           var request = URLRequest(url: searchTermQueryItem)
           request.httpMethod = HTTPMethod.get.rawValue
           
