@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct Pokemon: Decodable {
+struct Pokemon: Codable, Equatable {
     
     enum PokemonCodinKeys: String, CodingKey {
         case id

@@ -25,14 +25,14 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         updateViews()
         pokemonSearchBar.delegate = self
-       
+        
     }
     
     
     @IBAction func saveButtonaTapped(_ sender: Any) {
         if let pokemonAPI = pokemonAPI,
             let pokemon = pokemon {
-            pokemonAPI.addPokimon(pokemon: pokemon)
+            pokemonAPI.addPokimon(pokemons: pokemon)
             navigationController?.popViewController(animated: true)
             
         }
@@ -59,12 +59,11 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchName = searchBar.text else { return }
         searchBar.resignFirstResponder()
-      pokemonAPI?.getPokemon(with: searchName) { (result) in
-             let pokemon = try? result.get()
+        pokemonAPI?.getPokemon(with: searchName) { (result) in
+            let pokemon = try? result.get()
             if let pokemon = pokemon {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
-                    print(pokemon)
                     self.updateViews()
                 }
             }

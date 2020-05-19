@@ -28,7 +28,6 @@ class PokemonTableViewCell: UITableViewCell {
     private func updateViews() {
         guard let pokemon = pokemon else {return}
         nameLabel.text = pokemon.name.capitalizingFirstLetter()
-        print(pokemon)
         
         self.pokemonAPI?.fetchImage(at: pokemon.sprites, completion: { (result) in
             if let image = try? result.get() {

@@ -9,11 +9,12 @@
 import Foundation
 import UIKit
 
-class PokemonAPI {
+class PokemonAPI: Codable {
     
-    var pokemon: [Pokemon] = []
+   private(set)var pokemon: [Pokemon] = []
+    
     init() {
-        
+        loadFromPersistentStore()
     }
     
     enum HTTPMethod: String {
@@ -88,9 +89,67 @@ class PokemonAPI {
         task.resume()
     }
     
-    func addPokimon(pokemon: Pokemon) {
-        let pokemon = Pokemon(id: pokemon.id, name: pokemon.name, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
-        self.pokemon.append(pokemon)
+    func addPokimon(pokemons: Pokemon) {
+        let newPokemon = Pokemon(id: pokemons.id, name: pokemons.name, abilities: pokemons.abilities, types: pokemons.types, sprites: pokemons.sprites)
+        pokemon.append(newPokemon)
+        print(newPokemon)
+        saveToPersistentStore()
+    }
+    
+    func deletePokemon(pokemons: Pokemon) {
+        guard let index = pokemon.firstIndex(of: pokemons) else { return }
+        pokemon.remove(at: index)
+        print(pokemons)
+        saveToPersistentStore()
+    }
+    
+    // MARK: Persistant
+    
+    private var pokemonListURL: URL? {
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        
+        let fileName = "PokemonList.plist"
+        
+        return documentDirectory?.appendingPathComponent(fileName)
+    }
+    
+    private func loadFromPersistentStore() {
+            
+           
+        
+        
+        do {
+            guard let fileURL = pokemonListURL else { return }
+          
+            
+            let pokemonData = try Data(contentsOf: fileURL)
+           
+            print(pokemonData)
+            
+            let plistDecoder = PropertyListDecoder()
+
+            
+            self.pokemon = try plistDecoder.decode([Pokemon].self, from: pokemonData)
+           
+        } catch {
+            NSLog("Error decoding memories from property list: \(error)")
+        }
+    }
+    
+    private func saveToPersistentStore() {
+        
+        let plistEncoder = PropertyListEncoder()
+        plistEncoder.outputFormat = .xml
+        
+        do {
+            let pokemonData = try plistEncoder.encode(pokemon)
+            
+            guard let fileURL = pokemonListURL else { return }
+            
+            try pokemonData.write(to: fileURL)
+        } catch {
+            NSLog("Error encoding memories to property list: \(error)")
+        }
     }
 }
 
