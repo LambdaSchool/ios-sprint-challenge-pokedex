@@ -25,36 +25,33 @@ class PokemonSearchViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        searchBar.delegate = self
         
+        searchBar.delegate = self
     }
     
-
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
     func updateViews() {
         guard let pokemon = pokemon else { return }
         pokemonNameLabel.text = pokemon.name
         idLabel.text = String(pokemon.id)
-     
-        let url = URL(string: "\(pokemon.sprites)")!
-        downloadImage(from: url)
         
-//        typesLabel.text = pokemon.types
-//        abilitiesLabel.text = pokemon.abilities
-
+      //  let url = URL(string: "\(pokemon.sprites)")!
+    //    downloadImage(from: url)
+        
+        //        typesLabel.text = pokemon.types
+       // abilitiesLabel.text = pokemon.abilities.map({ $0 })
+        
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -72,18 +69,20 @@ class PokemonSearchViewController: UIViewController {
     }
     
     @IBAction func savePokemonTapped(_ sender: Any) {
-    
-     //   pokedexController.savePokemon(with: <#T##Pokemon#>)
+        
+        //   pokedexController.savePokemon(with: <#T##Pokemon#>)
     }
 }
 
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        pokemonController.searchForPokemonWith(searchTerm: searchTerm) { (newPokemon) in
-            DispatchQueue.main.async {
-                self.pokemon = self.pokemon
+        pokemonController.searchForPokemonWith(searchTerm: searchTerm, completion: { (newPokemon) in
+            if let someName = try? newPokemon.get() {
+                DispatchQueue.main.async {
+                    self.pokemon = someName
+                }
             }
-        }
+        })
     }
 }

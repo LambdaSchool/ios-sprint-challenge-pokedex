@@ -38,16 +38,19 @@ struct Pokemon: Equatable, Decodable {
     let name: String
     let id: Int
     let abilities: [Ability]
+    
     struct Ability: Equatable, Decodable {
         let ability: SubAbility
         struct SubAbility: Equatable, Decodable {
             let name: String
         }
     }
+    
     let sprites: Sprite
     struct Sprite: Equatable, Decodable {
         let frontDefault: String
     }
+    
     let types: [PokemonType]
     struct PokemonType: Equatable, Decodable {
         let type: SubPokemonType
