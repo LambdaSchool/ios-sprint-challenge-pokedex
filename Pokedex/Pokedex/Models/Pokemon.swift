@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class Pokemon: Codable {
+
+    var name: String
+    var id: Int
+    var type: String
+    var abilites: String
+
+}
