@@ -37,3 +37,4 @@ struct Pokemon: Decodable, Equatable {
         }
     }
 }
+

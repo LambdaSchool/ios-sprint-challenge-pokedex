@@ -18,7 +18,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     
-    private var pokedexController = PokedexController()
+    private var pokemonController = PokedexController()
     private var pokemon: Pokemon? {
         didSet {
             updateViews()
@@ -80,7 +80,7 @@ class PokemonSearchViewController: UIViewController {
 extension PokemonSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        pokedexController.searchForPokemonWith(searchTerm: searchTerm) { (newPokemon) in
+        pokemonController.searchForPokemonWith(searchTerm: searchTerm) { (newPokemon) in
             DispatchQueue.main.async {
                 self.pokemon = self.pokemon
             }

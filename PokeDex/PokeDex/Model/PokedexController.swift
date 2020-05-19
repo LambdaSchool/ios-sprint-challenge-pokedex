@@ -15,7 +15,8 @@ class PokedexController {
            case get = "GET"
     }
     
-    private let baseURL = URL(string: "https://lambdapokeapi.herokuapp.com/")!
+   // private let baseURL = URL(string: "https://lambdapokeapi.herokuapp.com/")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     func searchForPokemonWith(searchTerm: String, completion: @escaping ([Pokemon]) -> Void) {
           var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
