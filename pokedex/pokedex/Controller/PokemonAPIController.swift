@@ -6,8 +6,8 @@
 //  Copyright © 2020 Robs Creations. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
+let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 class PokemonAPIController {
     
     
@@ -20,21 +20,18 @@ class PokemonAPIController {
         case failedFetching
         
     }
-    var pokedex: [Pokemon] = []
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    
+    
     private lazy var decoder = JSONDecoder()
     
     func fetchPokemon(searchTerm: String, completion: @escaping (Result <Pokemon, NetworkError>) -> Void) {
         
         let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
-        var request = URLRequest(url: requestURL)
-        print("getPokemonURL = \(requestURL.absoluteString)")
-        
-        request.httpMethod = HTTPMethod.get.rawValue
+//        request.httpMethod = HTTPMethod.get.rawValue
         
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
             if let error = error {
                 print("Failed fetching pokemon: \(error)")
                 completion(.failure(.failedFetching))
@@ -52,6 +49,8 @@ class PokemonAPIController {
                 return
             }
             do {
+                self.decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
                 let pokemon = try self.decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
             } catch {
@@ -62,7 +61,30 @@ class PokemonAPIController {
         task.resume()
     }
     
+    func fetchImage(at urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if let error = error {
+                print("Failed fetching image: \(error)")
+                return
+            }
+            guard let data = data else {
+                print("Error no data received")
+                completion(nil)
+                return
+            }
+            let image = UIImage(data: data)
+            completion(image)
+        }
+        task.resume()
+    }
+    
     func savePokemon(pokemon: Pokemon) {
         pokedex.append(pokemon)
     }
+    var pokedex: [Pokemon] = []
 }

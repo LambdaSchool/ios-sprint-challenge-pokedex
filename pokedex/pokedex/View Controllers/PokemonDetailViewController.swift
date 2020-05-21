@@ -8,25 +8,31 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController, UISearchBarDelegate {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+        pokemonSearchBar.delegate = self
+        pokemonSearchBar.becomeFirstResponder()
+    }
+    
+    
     // Mark: IBOutlets
     @IBOutlet weak var pokemonSearchBar: UISearchBar!
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var pokemonImageView: UIImageView!
     @IBOutlet weak var pokemonIdLabel: UILabel!
     @IBOutlet weak var pokemonTypesLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var pokemonAbilitiesLabel: UILabel!
     
     // Properties
     var pokemonAPIController: PokemonAPIController?
-    var pokemon: Pokemon?
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateViews()
-        pokemonSearchBar.becomeFirstResponder()
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
     }
     
     
@@ -37,51 +43,44 @@ class PokemonDetailViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+         guard let searchBarText = searchBar.text else { return }
+        pokemonAPIController?.fetchPokemon(searchTerm: searchBarText, completion: { (results) in
+            guard let pokemon = try? results.get() else { return }
+            
+            DispatchQueue.main.sync {
+                self.pokemon = pokemon
+                self.saveButton.isHidden = false
+            }
+     })
+    }
+    
     func updateViews() {
+        guard isViewLoaded else { return }
         if let pokemon = pokemon {
+            title = "Pokemon Search"
+            
+            
             pokemonNameLabel.text = pokemon.name
-            var abilitiesText = ""
-            for ability in pokemon.abilities {
-                abilitiesText += "\(ability.ability.name)"
-            }
-            pokemonAbilitiesLabel.text = "Abilities: \(abilitiesText)"
             
-            var typesText = ""
-            for type in pokemon.types {
-                typesText += "\(type.type.name)"
-            }
-            pokemonTypesLabel.text = typesText
-            pokemonIdLabel.text = "ID#: \(pokemon.id)"
+            pokemonAbilitiesLabel.text = ""
             
-            do {
-                guard let url = URL(string: pokemon.sprites.frontDefault) else { return }
-                let data = try Data(contentsOf: url)
-                let image = UIImage(data: data)
-                pokemonImageView.image = image
-            } catch {
-                print(error)
-            }
+            
+            pokemonAbilitiesLabel.text = "Abilities: " + pokemon.abilities.map({$0.ability.name}).joined(separator: ", ")
+            
+            pokemonTypesLabel.text = ""
+            pokemonTypesLabel.text = "Types: " + pokemon.types.map({$0.type.name}).joined(separator: ", ")
+            pokemonIdLabel.text = "ID: \(pokemon.id)"
+            
+            self.pokemonAPIController?.fetchImage(at: pokemon.sprites.frontDefault, completion: { (image) in
+                DispatchQueue.main.sync {
+                    self.pokemonImageView.image = image
+                }
+            })
+            
+            
         }
     }
     
 }
 
-extension PokemonDetailViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchBarText = searchBar.text else { return }
-        pokemonAPIController?.fetchPokemon(searchTerm: searchBarText) { results in
-            switch results {
-            case .success(let pokemon):
-                print(pokemon)
-                self.pokemon = pokemon
-                
-                
-                DispatchQueue.main.async {
-                    self.updateViews()
-                }
-            case .failure(let error):
-                print("Error fetching pokemon: \(error)")
-            }
-        }
-    }
-}
