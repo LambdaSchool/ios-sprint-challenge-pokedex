@@ -24,8 +24,15 @@ struct Pokemon: Decodable {
                 case name
             }
         }
-        enum SpritesKeys: String, CodingKeys {
+        enum SpritesKeys: String, CodingKey {
             case sprite = "front_default"
+        }
+        enum TypesDescriptionKeys: String, CodingKey {
+            case type
+            
+            enum TypeKeys: String, CodingKey {
+            case name
+            }
         }
     }
     
@@ -33,15 +40,19 @@ struct Pokemon: Decodable {
     let name: String
     let abilites: [String]
     let sprites: URL
-    let type: String
+    let types: [String]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.id = try container.decode(Int.self, forKey: .id)
         
+        //ID
+        self.id = try container.decode(Int.self, forKey: .id)
+       
+        //NAME
         self.name = try container.decode(String.self, forKey: .name)
         
+        //ABILITIES
         var abilitiesContainer = try container.nestedUnkeyedContainer (forKey: .abilities)
         
         var abilityNames: [String] = []
@@ -54,9 +65,26 @@ struct Pokemon: Decodable {
         }
         self.abilites = abilityNames
         
-        self.sprites = try container.decode
+        //SPRITE
+        let spriteContainer = try container.nestedContainer(keyedBy: CodingKeys.SpritesKeys.self, forKey: .sprites)
+        self.sprites = try spriteContainer.decode(URL.self, forKey: .sprite)
+        
+        //TYPE
+        var typesContainer = try container.nestedUnkeyedContainer (forKey: .types)
+        
+        var typesNames: [String] = []
+        
+        while typesContainer.isAtEnd == false {
+            let typesDescriptionContainer = try typesContainer.nestedContainer(keyedBy: CodingKeys.TypesDescriptionKeys.self)
+            let typesContainer = try typesDescriptionContainer.nestedContainer(keyedBy: CodingKeys.TypesDescriptionKeys.TypeKeys.self, forKey: .type)
+            let typesName = try typesContainer.decode(String.self, forKey: .name)
+            typesNames.append(typesName)
+        }
+        self.types = typesNames
+        
     }
+    
     
 }
 
-let url = URL
+
