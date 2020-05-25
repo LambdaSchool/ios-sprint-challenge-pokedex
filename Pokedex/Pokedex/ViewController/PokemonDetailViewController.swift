@@ -9,6 +9,13 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    @IBOutlet weak var pokemonName :UILabel!
+    @IBOutlet weak var pokemonImage :UIImageView!
+    @IBOutlet weak var pokemonID :UILabel!
+    @IBOutlet weak var pokemonType :UILabel!
+    @IBOutlet weak var pokemonAblilities :UILabel!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

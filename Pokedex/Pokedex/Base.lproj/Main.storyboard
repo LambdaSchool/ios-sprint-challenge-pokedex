@@ -16,14 +16,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mdg-No-Jte" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="yQ6-Dz-2Uj" style="IBUITableViewCellStyleDefault" id="mdg-No-Jte" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mdg-No-Jte" id="of9-bx-JOX">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yQ6-Dz-2Uj">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="nameLabel" destination="yQ6-Dz-2Uj" id="eW7-kJ-ixj"/>
                                     <segue destination="Ieq-ZN-hR9" kind="show" identifier="showDetailSegue" id="FmF-cX-n5N"/>
                                 </connections>
                             </tableViewCell>
@@ -58,11 +68,62 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="BMH-aj-Vz2">
+                                <rect key="frame" x="82" y="217" width="250" height="557"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8N-4N-Yr4">
+                                        <rect key="frame" x="0.0" y="0.0" width="135.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4x9-Q3-ZAc">
+                                        <rect key="frame" x="0.0" y="59.5" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="Qnb-PV-AQE"/>
+                                            <constraint firstAttribute="width" constant="250" id="hD5-Du-8qS"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQy-IB-QwQ">
+                                        <rect key="frame" x="0.0" y="348.5" width="104" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON TYPE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZ9-pC-7kC">
+                                        <rect key="frame" x="0.0" y="408" width="129" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON ABILITIES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dce-M3-rsc">
+                                        <rect key="frame" x="0.0" y="467.5" width="162" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KnE-Ra-fIz">
+                                        <rect key="frame" x="0.0" y="527" width="101" height="30"/>
+                                        <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="vsG-bg-Y5B" eventType="touchUpInside" id="TUi-RE-c5X"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="rLU-2H-dzn"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="xKH-nT-yNL"/>
+                    <connections>
+                        <outlet property="pokemonAblilities" destination="dce-M3-rsc" id="w3k-s6-fZB"/>
+                        <outlet property="pokemonID" destination="LQy-IB-QwQ" id="ipV-q6-fwj"/>
+                        <outlet property="pokemonImage" destination="4x9-Q3-ZAc" id="slZ-pf-dJ1"/>
+                        <outlet property="pokemonName" destination="V8N-4N-Yr4" id="1mU-mz-AEr"/>
+                        <outlet property="pokemonType" destination="tZ9-pC-7kC" id="J6s-LB-Hwc"/>
+                        <outlet property="searchBar" destination="j0f-x8-i82" id="vVT-e1-Ora"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yIO-Vb-wX4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -77,7 +138,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="lhQ-U0-efz">
-                                <rect key="frame" x="81.254628886248611" y="164" width="250" height="557"/>
+                                <rect key="frame" x="81.254628886248611" y="164" width="250" height="488"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POKEMON NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diY-ll-k9R">
                                         <rect key="frame" x="0.0" y="0.0" width="135.5" height="20.5"/>
@@ -110,10 +171,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGr-PL-GAC">
-                                        <rect key="frame" x="0.0" y="527" width="101" height="30"/>
-                                        <state key="normal" title="Save Pokemon"/>
-                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -121,6 +178,13 @@
                         <viewLayoutGuide key="safeArea" id="PkQ-rq-1an"/>
                     </view>
                     <navigationItem key="navigationItem" id="sxl-dd-BqR"/>
+                    <connections>
+                        <outlet property="pokemonAblilities" destination="Vqn-ju-Pcl" id="xyS-5c-ag6"/>
+                        <outlet property="pokemonID" destination="fHg-w0-66z" id="amz-8s-iPN"/>
+                        <outlet property="pokemonImage" destination="Z9N-17-mta" id="9Zj-XA-YIL"/>
+                        <outlet property="pokemonName" destination="diY-ll-k9R" id="ek1-ti-pKB"/>
+                        <outlet property="pokemonType" destination="yAS-Rq-MUh" id="Nt3-6e-7aH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PgG-Yr-3rs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

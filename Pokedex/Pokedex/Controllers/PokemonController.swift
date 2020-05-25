@@ -12,66 +12,44 @@ struct PokemonController: Decodable {
     
     var pokemonList: [Pokemon] = []
     
-     // var crew: [Person] = []
     
     enum HTTPMethod: String {
         case get = "GET"
        
     }
     
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    private let pokemonURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
 
-    
-    mutating func searchPokemon(searchTerm: String, completion: @escaping () -> Void ) {
-        
-        // Step 1: Build endpoint URL with query items
-            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+    func searchForPokemonWith(searchTerm: String, completion: @escaping () -> Void) {
+        var urlComponents = URLComponents(url: pokemonURL, resolvingAgainstBaseURL: true)
         let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
         urlComponents?.queryItems = [searchTermQueryItem]
         
-        guard let requestURL = urlComponents?.url else {
-            print("request URL is nil")
-            completion()
+        guard let requestURL = URLComponents?.url else {
+            print("request URL is nill")
+            completion
             return
         }
-        // Step 2: Create URL request
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        // Step 3: Create URL task
-        
-        let task = URLSession.shared.dataTask(with: request) { [self] data, _, error in
-            // Handle error first
+        let task = URLSession.shared.dataTask(with: request) { ([weak self] data, _, error) in
             if let error = error {
-                print("Error fetching data: \(error)")
+                print("fetching data error: \(error) ")
                 completion()
                 return
             }
+            guard let self = self else {completion(); return}
             
-            // Handle Data Optionanlity
             guard let data = data else {
                 print("no data returned from data task")
                 completion()
                 return
             }
-            // Create Decoder
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            let jsonDecoder = JSONDecoder
             
-            
-            //Decode and adding objects to array
-            do {
-                let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
-                self.pokemon.append(contentsOf: pokemon.results)
-            } catch {
-                print("Unable to decode data into object of type person search: \(error)")
-            }
-            
-            completion()
         }
         
-        
-        // Step 4: Run URL task
-        task.resume()
     }
+ 
 }
