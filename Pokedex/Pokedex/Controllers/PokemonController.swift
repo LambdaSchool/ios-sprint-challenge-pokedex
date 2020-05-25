@@ -15,41 +15,50 @@ struct PokemonController: Decodable {
     
     enum HTTPMethod: String {
         case get = "GET"
-       
+    }
+    enum NetworkError: Error{
+        case tryAgain
+        case noData
+        case networkFailure
     }
     
-    private let pokemonURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-
-    func searchForPokemonWith(searchTerm: String, completion: @escaping () -> Void) {
-        var urlComponents = URLComponents(url: pokemonURL, resolvingAgainstBaseURL: true)
-        let searchTermQueryItem = URLQueryItem(name: "search", value: searchTerm)
-        urlComponents?.queryItems = [searchTermQueryItem]
+    
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    
+    func searchForPokemonWith(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let searchURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         
-        guard let requestURL = URLComponents?.url else {
-            print("request URL is nill")
-            completion
-            return
-        }
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = HTTPMethod.get.rawValue
+        var requestURL = URLRequest(url: searchURL)
+        requestURL.httpMethod = HTTPMethod.get.rawValue
         
-        let task = URLSession.shared.dataTask(with: request) { ([weak self] data, _, error) in
+        let task = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
             if let error = error {
-                print("fetching data error: \(error) ")
-                completion()
+                print("error requesting data: \(error)")
+                completion(.failure(.tryAgain))
                 return
             }
-            guard let self = self else {completion(); return}
-            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode == 401 {
+                completion(.failure(.networkFailure))
+                return
+            }
             guard let data = data else {
-                print("no data returned from data task")
-                completion()
+                print("error receiving data")
+                completion(.failure(.noData))
                 return
             }
-            let jsonDecoder = JSONDecoder
             
+            do {
+                let decoder = JSONDecoder()
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemon))
+            } catch {
+                print ("error decoding data: \(error)")
+                completion(.failure(.tryAgain))
+                return
+            }
         }
-        
+        task.resume()
     }
- 
+    
 }

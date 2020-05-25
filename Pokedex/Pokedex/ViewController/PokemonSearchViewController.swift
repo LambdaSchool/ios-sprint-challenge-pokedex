@@ -22,12 +22,22 @@ class PokemonSearchViewController: UIViewController {
         
     }
     
+    let pokemonController = PokemonController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         
-        // Do any additional setup after loading the view.
     }
+    private fun updateViews() {
+    if let pokemon = pokemonController.pokemonList[indexPath.row]
+    pokemonName.text = "NAME: \(pokemon.name)"
+    pokemonImage =
+    
+    
+    
+    }
+    
     
     
     /*
