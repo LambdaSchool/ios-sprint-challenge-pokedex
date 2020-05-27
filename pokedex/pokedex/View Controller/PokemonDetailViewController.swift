@@ -9,6 +9,10 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+    
+    var apiController: APIController?
+    var pokemonName: String?
+    
     @IBOutlet weak var pokemonNameLabel: UILabel!
     @IBOutlet weak var pokemonImageView: UIImageView!
     @IBOutlet weak var idNumberLabel: UILabel!
@@ -21,15 +25,25 @@ class PokemonDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func getPokeDetails() {
+        guard let apiController = apiController,
+            let pokemonName = self.pokemonName else { return }
+        apiController.fetchPokemon(searchTerm: pokemonName) { (result) in
+            if let pokemon = try? result.get() {
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+            
+            }
+        }
     }
-    */
+    
+    private func updateViews( with pokemon: Pokemon) {
+        title = pokemon.name
+        idNumberLabel.text = "ID: \(pokemon.id)"
+        typeLabel.text = "Type: \(pokemon.types)"
+        abilitiesLabel.text = "Abilites: \(pokemon.abilites)"
+    }
+    
 
 }

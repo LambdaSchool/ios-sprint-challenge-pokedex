@@ -7,22 +7,112 @@
 //
 
 import Foundation
+import UIKit
+
 
 class APIController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/4")!
-    var searchResults: [SearchResult] = []
+    var searchResults: [Pokemon] = []
     
-    enum HTTPMethod: String {
-        case get = "Get"
-        case post = "Post"
-    }
+//    enum HTTPMethod: String {
+//        case get = "Get"
+//        case post = "Post"
+//    }
+//
+//    enum NetworkError: Error {
+//        case invalidURL
+//    }
     
-    enum NetworkError: Error {
-        
+     func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+            
+            //Append search term to URL
+            let pokemonURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+                   URLSession.shared.dataTask(with: pokemonURL) { (data, _, error) in
+                       
+                       // Error handling
+                       if let error = error {
+                           print("Error getting pokemon: \(error)")
+                           completion(.failure(error))
+                           return
+                       }
+                       guard let data = data else {
+                           print("Error getting dtat from data task: ")
+                           completion(.failure(NSError()))
+                           return
+                       }
+                       
+                       // Decoding The Jason Data Pokemon
+                       do {
+                           let decoder = JSONDecoder()
+                           decoder.keyDecodingStrategy = .convertFromSnakeCase
+                           let pokemon = try decoder.decode(Pokemon.self, from: data)
+                           print(pokemon)
+                           completion(.success(pokemon))
+                       } catch {
+                           print("Error decoding data to type Pokemon: \(error)")
+                           completion(.failure(error))
+               }
+                   }  .resume()
+               
+           }
     }
 
-    
-}
+ 
+
+/*
+ class PokemonController {
+
+     var pokemonTeam: [Pokemon] = []
+
+     let baseURL = URL(string: "https://pokeapi.co//api/v2/pokemon/")!
+
+     func getPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>)-> Void){
+
+         //Append search Term to url
+         let requestURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+
+
+         URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+
+            //Error Handling
+             if let error = error {
+                 print("Error getting pokemon: \(error)")
+                 completion(.failure(error))
+                 return
+             }
+             guard let data = data else {
+                 print("Error getting data from data task: ")
+                 completion(.failure(NSError()))
+                 return
+             }
+             
+             
+             //Decode the JSON data Pokemon
+             do {
+                 let decoder = JSONDecoder()
+                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                 let pokemon = try decoder.decode(Pokemon.self, from: data)
+                 print(pokemon)
+                 completion(.success(pokemon))
+             } catch {
+                 print("Error decoding data to type Pokemon: \(error)")
+                 completion(.failure(error))
+                 
+             }
+             
+         }.resume()
+         
+     }
+     
+     func addPokemon(pokemon: Pokemon){
+         pokemonTeam.append(pokemon)
+     }
+     
+ }
+ 
+ */
+
+ 
 
 

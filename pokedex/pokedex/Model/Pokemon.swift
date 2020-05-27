@@ -8,43 +8,92 @@
 
 import Foundation
 
+
 struct Pokemon: Decodable {
     // Top Levels
     let id: Int
     let name: String
     // They have sublevels
-    let types: [String]
-    let abilites: [String]
-    
-    // This is my top levels
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case types
-        case abilites
-        
-        enum TypeDescriptionKeys: String, CodingKey {
-            case type
-            
-            enum Typeskeys: String, CodingKey {
-                case name
-            }
-        }
-        
-        enum AbilityDescriptionsKeys: String, CodingKey {
-            case ability
-            
-            enum AbilityKeys: String, CodingKey {
-                case name
-            }
-        }
-    }
-    
+    let sprites: Sprite
+    let types: String
+    let abilites: String
 }
 
-struct SearchResult: Codable {
-    let results: [SearchResult]
+struct Sprite: Decodable {
+    let frontDefault: URL
 }
+
+struct Ability: Equatable, Codable {
+    let ability: Species
+}
+
+struct Type: Decodable, Equatable {
+    let type: Species
+}
+
+struct Species: Equatable, Codable {
+    let name: String
+}
+    
+/*
+ // Austins Example
+ 
+ struct Pokemonw: Decodable {
+     let name: String
+     let id: Int
+     let sprites: Sprite
+     let types: [Type]
+ }
+
+
+ struct Sprite: Decodable {
+     let frontDefault: URL
+ }
+
+ struct Ability: Equatable, Codable {
+     let ability: Species
+ }
+
+ struct Type: Decodable, Equatable {
+     let type: Species
+ }
+ struct Species: Equatable, Codable {
+     let name: String
+ }
+ */
+ 
+
+  // This is my top levels
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case name
+//        case types
+//        case abilites
+//
+//        enum TypeDescriptionKeys: String, CodingKey {
+//            case type
+//
+//            enum Typeskeys: String, CodingKey {
+//                case name
+//            }
+//        }
+//
+//        enum AbilityDescriptionsKeys: String, CodingKey {
+//            case ability
+//
+//            enum AbilityKeys: String, CodingKey {
+//                case name
+//            }
+//        }
+//    }
+//
+//}
+//
+//struct SearchResult: Codable {
+//    let results: [SearchResult]
+//}
+
+
 
 /*
  
