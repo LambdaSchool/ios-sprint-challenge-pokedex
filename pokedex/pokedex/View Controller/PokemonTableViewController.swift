@@ -11,7 +11,7 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     let reuseIdentifier = "PokemonCell"
-    let apiController: APIController = APIController()
+    let apiController = APIController()
     
     private var pokemonName: [String] = [] {
         didSet {
@@ -31,19 +31,39 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonName.count
+        return apiController.searchResults.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        
+        let pokemon = apiController.searchResults[indexPath.row]
+        
+        
+        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {fatalError()}
 
         // Configure the cell...
-         cell.textLabel?.text = pokemonName[indexPath.row]
+        cell.imageView?.image = UIImage(data: pokemonImageData)
+        cell.textLabel?.text = pokemon.name.capitalized
+        
+        
 
         return cell
     }
     
+    // Allow you to send the data into
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchPokemonSegue" {
+            guard let searchVC = segue.destination as? PokemonSearchViewController else {return}
+            searchVC.apiController = apiController
+        } else if segue.identifier == "ShowPokemonSegue"{
+            guard let detailVC = segue.destination as? PokemonDetailViewController else {return}
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            let pokemon = apiController.searchResults[indexPath.row]
+            detailVC.pokemon = pokemon
+        }
+    }
 
 
 }

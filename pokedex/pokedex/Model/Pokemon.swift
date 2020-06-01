@@ -10,27 +10,17 @@ import Foundation
 
 
 struct Pokemon: Decodable {
-    // Top Levels
-    let id: Int
     let name: String
-    // They have sublevels
+    let id: Int
     let sprites: Sprite
-    let types: String
-    let abilites: String
+    let types: [Type]
 }
-
 struct Sprite: Decodable {
     let frontDefault: URL
 }
-
-struct Ability: Equatable, Codable {
-    let ability: Species
-}
-
 struct Type: Decodable, Equatable {
     let type: Species
 }
-
 struct Species: Equatable, Codable {
     let name: String
 }

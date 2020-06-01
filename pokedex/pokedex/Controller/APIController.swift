@@ -24,39 +24,44 @@ class APIController {
 //        case invalidURL
 //    }
     
-     func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+    func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+        
+        //Append search term to URL
+        // Retrevieting the pokemon terms, Lowercase is due to the data being lowercase in API
+        let pokemonURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+        URLSession.shared.dataTask(with: pokemonURL) { (data, _, error) in
             
-            //Append search term to URL
-            let pokemonURL = baseURL.appendingPathComponent(searchTerm.lowercased())
-                   URLSession.shared.dataTask(with: pokemonURL) { (data, _, error) in
-                       
-                       // Error handling
-                       if let error = error {
-                           print("Error getting pokemon: \(error)")
-                           completion(.failure(error))
-                           return
-                       }
-                       guard let data = data else {
-                           print("Error getting dtat from data task: ")
-                           completion(.failure(NSError()))
-                           return
-                       }
-                       
-                       // Decoding The Jason Data Pokemon
-                       do {
-                           let decoder = JSONDecoder()
-                           decoder.keyDecodingStrategy = .convertFromSnakeCase
-                           let pokemon = try decoder.decode(Pokemon.self, from: data)
-                           print(pokemon)
-                           completion(.success(pokemon))
-                       } catch {
-                           print("Error decoding data to type Pokemon: \(error)")
-                           completion(.failure(error))
-               }
-                   }  .resume()
-               
-           }
+            // Error handling
+            if let error = error {
+                print("Error getting pokemon: \(error)")
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else {
+                print("Error getting dtat from data task: ")
+                completion(.failure(NSError()))
+                return
+            }
+            
+            // Decoding The Jason Data Pokemon
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                print(pokemon)
+                completion(.success(pokemon))
+            } catch {
+                print("Error decoding data to type Pokemon: \(error)")
+                completion(.failure(error))
+            }
+        }  .resume()
+        
     }
+    
+    func addPokemon(pokemon: Pokemon){
+            searchResults.append(pokemon)
+        }
+}
 
  
 

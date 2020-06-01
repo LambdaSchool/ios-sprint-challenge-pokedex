@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     
     var apiController: APIController?
 
@@ -18,27 +18,59 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var pokemonImageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var typesLabel: UILabel!
-    @IBOutlet weak var abilitiesLabel: UILabel!
-    @IBOutlet weak var savePokemonButton: UIButton!
+   
     
-
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+//        hideViews()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else {return}
+        apiController?.fetchPokemon(searchTerm: searchTerm) { (pokemon) in
+            guard let searchedPokemon = try? pokemon.get() else {return}
+            DispatchQueue.main.async {
+                self.pokemon = searchedPokemon
+            }
+        }
+    }
+    //Hide storyboard items not needed to show on initial view
+//    func hideViews() {
+//        saveButton.isEnabled = false
+//        pokemonName.isHidden = true
+//        pokemonIDLabel.isHidden = true
+//        pokemonTypeLabel.isHidden = true
+//    }
+    func updateViews() {
+        guard isViewLoaded else {return}
+        guard let pokemon = pokemon else {return}
+//        saveButton.isEnabled = true
+//        pokemonName.isHidden = false
+//        pokemonIDLabel.isHidden = false
+//        pokemonTypeLabel.isHidden = false
+        title = pokemon.name.capitalized
+        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites.frontDefault) else {return}
+        pokemonImageView.image = UIImage(data: pokemonImageData)
+        pokemonNameLabel.text = pokemon.name.capitalized
+        idLabel.text = "ID: \(pokemon.id)"
+        var types = ""
+        let typeArray = pokemon.types
+        for type in typeArray {
+            types.append("Type: \(type.type.name.capitalized)")
+        }
+        typesLabel.text = types
+    }
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        guard let pokemonToBeSaved = pokemon else {return}
+        apiController?.addPokemon(pokemon: pokemonToBeSaved)
+        navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func saveButtonTapped(_ sender: Any) {
-    }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
