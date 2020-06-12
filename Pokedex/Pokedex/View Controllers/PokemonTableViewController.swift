@@ -40,6 +40,7 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            pokemonController.pokemonList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             pokemonController.saveToPersistentStore()
         }
@@ -51,6 +52,7 @@ class PokemonTableViewController: UITableViewController {
         if segue.identifier == "SearchPokemonSegue",
             let searchVC = segue.destination as? PokemonSearchViewController {
             searchVC.pokemonController = pokemonController
+            searchVC.delegate = self
         } else if segue.identifier == "PokemonDetailSegue",
             let detailVC = segue.destination as? PokemonSearchViewController,
             let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -59,5 +61,11 @@ class PokemonTableViewController: UITableViewController {
             detailVC.pokemon = pokemonController.pokemonList[selectedIndexPath.row]
             print("\(pokemonController.pokemonList[selectedIndexPath.row])")
         }
+    }
+}
+
+extension PokemonTableViewController : PokemonDelegate {
+    func pokemonSaved() {
+        tableView.reloadData()
     }
 }

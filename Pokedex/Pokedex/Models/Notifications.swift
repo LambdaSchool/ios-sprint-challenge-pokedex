@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+extension NSNotification.Name {
+    static var pokemonSaved = NSNotification.Name(rawValue: "pokemonSaved")
+}

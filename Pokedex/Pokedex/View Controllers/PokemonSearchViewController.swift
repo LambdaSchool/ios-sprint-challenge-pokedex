@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PokemonDelegate {
+    func pokemonSaved()
+}
+
 class PokemonSearchViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -20,6 +24,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properites
+    var delegate: PokemonDelegate!
     var pokemonController: PokemonController?
     var pokemon: Pokemon? {
         didSet {
@@ -38,6 +43,9 @@ class PokemonSearchViewController: UIViewController {
         DispatchQueue.main.async {
             self.navigationController?.popToRootViewController(animated: true)
         }
+        
+        delegate.pokemonSaved()
+        NotificationCenter.default.post(name: .pokemonSaved, object: sender)
     }
     
     
@@ -70,6 +78,35 @@ class PokemonSearchViewController: UIViewController {
             }
         }
     }
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        guard let existingPokemon = pokemon else { return }
+        
+        do {
+            let pokemonData = try PropertyListEncoder().encode(existingPokemon)
+        } catch {
+            print(error)
+            return
+        }
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        guard let pokemonData = coder.decodeObject(forKey: "existingPokemon") as? Data else { return }
+        
+        do {
+            let savedPokemon = try PropertyListDecoder().decode(Pokemon.self, from: pokemonData)
+            pokemon = savedPokemon
+        } catch {
+            print(error)
+            return
+        }
+        
+    }
+    
 }
 
 

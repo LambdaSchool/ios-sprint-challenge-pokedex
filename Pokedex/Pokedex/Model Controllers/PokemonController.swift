@@ -28,6 +28,7 @@ class PokemonController {
     
     // MARK: - Public Properites
     var pokemonList: [Pokemon] = []
+    static let shared = PokemonController()
     
     // MARK: - Private Methods
     
