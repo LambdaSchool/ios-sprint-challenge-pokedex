@@ -30,8 +30,9 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - IBActions
-    @IBAction func saveButtonTapped(_ sender: Any) {
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon else { return }
+        NotificationCenter.default.post(name: .pokemonSaved, object: sender.isSelected)
         
         pokemonController?.addPokemon(pokemon: pokemon)
         DispatchQueue.main.async {
@@ -67,6 +68,35 @@ class PokemonSearchViewController: UIViewController {
             DispatchQueue.main.async {
                 self.spriteImage.image = image
             }
+        }
+    }
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        // Our super class to encode and info it needs
+        super.encodeRestorableState(with: coder)
+        // Make sure you have something to save.
+        // Property list is a file that is helpful in saving configurations (XML)
+        guard let existingPokemon = pokemon else { return }
+        
+        do {
+            let pokemonData = try PropertyListEncoder().encode(existingPokemon)
+            coder.encode(pokemonData, forKey: "pokemonData")
+        } catch {
+            print(error)
+            return
+        }
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        guard let pokemonData = coder.decodeObject(forKey: "pokemonData") as? Data else { return }
+        
+        do {
+            let savedPokemon = try PropertyListDecoder().decode(Pokemon.self, from: pokemonData)
+            pokemon = savedPokemon
+        } catch {
+            print(error)
         }
     }
 }
