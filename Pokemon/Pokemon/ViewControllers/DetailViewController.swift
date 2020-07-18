@@ -19,6 +19,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilityLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class DetailViewController: UIViewController {
         if let pokemon = pokemon {
             self.updateViews(with: pokemon)
             searchBar.isHidden = true
+            saveButton.isHidden = true
         }
     }
     
