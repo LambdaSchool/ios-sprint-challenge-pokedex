@@ -11,10 +11,20 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     let pokemonDataController = PokemonDataController()
+    let pokemonController = PokemonController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokemonDataController.loadFromPersistenceStore()
+        self.tableView.reloadData()
+        print("\(pokemonDataController.pokemonArray)")
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        pokemonDataController.loadFromPersistenceStore()
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -28,7 +38,7 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-//        cell.textLabel?.text = pokemonController.pokemonResults[indexPath.row].name
+        cell.textLabel?.text = pokemonDataController.pokemonArray[indexPath.row].pokemonName
 
         return cell
     }
@@ -40,8 +50,10 @@ class PokemonTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "search" {
-            guard let destinationVC = segue.destination as? PokeSearchViewController else {return}
-//            destinationVC.pokemonController = pokemonController
+            let destinationVC = segue.destination as? PokeSearchViewController
+            print("Success Segue")
+            destinationVC?.pokemonDataController = pokemonDataController
+            destinationVC?.pokemonController = pokemonController
         }
     }
 

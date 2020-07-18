@@ -10,7 +10,7 @@ import UIKit
 
 class PokeSearchViewController: UIViewController, UISearchBarDelegate {
     
-    let pokemonController = PokemonController()
+    var pokemonController : PokemonController?
     var pokemonDataController : PokemonDataController?
     var pokemon : PokemonSearchResult?
 
@@ -22,7 +22,7 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var abilitiesLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         searchBar.delegate = self
         hideViews()
         
@@ -33,8 +33,7 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
         print("search tapped")
         
         print("\(searchBar.text)")
-        print("\(self.pokemonController.baseURL)")
-        guard let searchText = searchBar.text else {return}
+        guard let searchText = searchBar.text, let pokemonController = pokemonController else {return}
         pokemonController.searchPokemonByName(searchText: searchText.lowercased(), completion: {(result) in
             let pokemonInfo = try? result.get()
             if let pokemon = pokemonInfo {
@@ -64,8 +63,14 @@ class PokeSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        print("button tapped. \(pokemonDataController?.pokemonArray.first)")
+        guard let pokemonDataController = pokemonDataController, let pokemonName = searchBar.text else {return}
         
-        guard let pokemonDataController = pokemonDataController, let pokemonName = nameLabel.text else {return}
+        print(pokemonName)
+        pokemonDataController.pokemonArray.append(Pokemon(pokemonName: pokemonName))
+        
+        pokemonDataController.saveToPersistenceStore()
+        self.navigationController?.popViewController(animated: true)
         
         
     }

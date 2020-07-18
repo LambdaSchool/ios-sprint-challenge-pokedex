@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class PokemonDataController {
-    let pokemonBool : Bool = UserDefaults.standard.bool(forKey: "pokemonInitializedKey")
+    let pokemonBool : Bool = UserDefaults.standard.bool(forKey: .pokemonIntializedKey)
     
-    var pokemonArray : [PokemonSearchResult] = []
+    var pokemonArray : [Pokemon] = [Pokemon(pokemonName: "Venasaur")]
     
     var pokemonURL : URL? {
         let fm = FileManager.default
@@ -52,7 +52,7 @@ class PokemonDataController {
         do {
             let data = try Data(contentsOf: url)
             let decoder = PropertyListDecoder()
-            pokemonArray = try decoder.decode([PokemonSearchResult].self, from: data)
+            pokemonArray = try decoder.decode([Pokemon].self, from: data)
         } catch {
             print("Not able to decode the data")
         }
@@ -60,5 +60,5 @@ class PokemonDataController {
 }
 
 extension String {
-    static let pokemonIntializedKey = "pokemonIntitializedKey"
+    static let pokemonIntializedKey = "pokemonInitializedKey"
 }
