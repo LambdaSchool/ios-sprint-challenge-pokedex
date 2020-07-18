@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cora Jacobson. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PokemonController {
     
@@ -24,7 +24,7 @@ class PokemonController {
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
     func getPokemon(_ searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let searchURL = baseURL.appendingPathComponent(searchTerm)
+        let searchURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         var request = URLRequest(url: searchURL)
         request.httpMethod = HTTPMethod.get.rawValue
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -34,12 +34,15 @@ class PokemonController {
                 return
             }
             if let response = response as? HTTPURLResponse {
-//                if response.statusCode != <#200#> {
-//                    print(response)
-//                    completion(.failure(.tryAgain))
-//                    return
-//                }
-                print(response)
+                if response.statusCode == 404 {
+                    completion(.failure(.noData))
+                    return
+                }
+                if response.statusCode != 200 {
+                    print(response)
+                    completion(.failure(.tryAgain))
+                    return
+                }
             }
             guard let data = data else {
                 print("No data received from getPokemon")
@@ -48,7 +51,6 @@ class PokemonController {
             }
             do {
                 let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-                self.pokemonArray.append(pokemon)
                 completion(.success(pokemon))
             } catch {
                 print("Error decoding Pokemon data: \(error)")
@@ -57,5 +59,26 @@ class PokemonController {
         }
         task.resume()
     }
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageURL = URL(string: urlString)!
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error receiving pokemon image: \(urlString), error: \(error)")
+                completion(.failure(.tryAgain))
+                return
+            }
+            guard let data = data else {
+                print("No data received from fetchImage")
+                completion(.failure(.noData))
+                return
+            }
+            let image = UIImage(data: data)!
+                completion(.success(image))
+        }
+        task.resume()
+        }
     
 }
