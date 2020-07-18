@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bXk-6J-ubz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bXk-6J-ubz">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Pokemon Search View Controller-->
         <scene sceneID="d2u-Hl-dwL">
             <objects>
-                <viewController id="kXG-qI-tbu" sceneMemberID="viewController">
+                <viewController id="kXG-qI-tbu" customClass="PokemonSearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m5k-yH-cai">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,6 +24,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="WuG-0X-Wik"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Nhi-0t-GOM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rmd-G3-xBS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -32,21 +33,32 @@
         <!--Pokedex-->
         <scene sceneID="TUf-zk-2WF">
             <objects>
-                <viewController id="Iqs-lc-n4q" sceneMemberID="viewController">
+                <viewController id="Iqs-lc-n4q" customClass="PokedexViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wa7-fe-q5a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iiz-vC-A0l">
-                                <rect key="frame" x="60" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iiz-vC-A0l">
+                                <rect key="frame" x="20" y="180" width="374" height="662"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="iiz-vC-A0l" firstAttribute="top" secondItem="9bo-3d-8lW" secondAttribute="top" constant="40" id="EWg-pU-l2r"/>
+                            <constraint firstItem="9bo-3d-8lW" firstAttribute="bottom" secondItem="iiz-vC-A0l" secondAttribute="bottom" constant="20" id="Ux7-xb-C5S"/>
+                            <constraint firstItem="iiz-vC-A0l" firstAttribute="leading" secondItem="9bo-3d-8lW" secondAttribute="leading" constant="20" id="bLs-dY-dyH"/>
+                            <constraint firstItem="9bo-3d-8lW" firstAttribute="trailing" secondItem="iiz-vC-A0l" secondAttribute="trailing" constant="20" id="fu3-IL-rEQ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="9bo-3d-8lW"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Pokedex" id="Baf-YN-N5t"/>
+                    <navigationItem key="navigationItem" title="Pokedex" id="Baf-YN-N5t">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="Vs0-QP-uCe">
+                            <connections>
+                                <segue destination="kXG-qI-tbu" kind="show" id="dMS-yt-iFR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0J-1K-9xV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -71,4 +83,7 @@
             <point key="canvasLocation" x="882.60869565217399" y="110.49107142857143"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+    </resources>
 </document>

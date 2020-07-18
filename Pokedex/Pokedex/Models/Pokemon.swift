@@ -10,8 +10,31 @@ import Foundation
 
 struct Pokemon: Codable {
     let name: String
-    
+    let id: Int
+    let types: [Type]
+    let sprites: Sprite 
     
 }
 
-
+/*
+ struct Pokemon: Decodable {
+     let name: String
+     let id: Int
+     let sprites: Sprite
+     let types: [Type]
+     
+ }
+ struct Sprite: Decodable {
+     let frontDefault: URL
+     
+ }
+ struct Type: Decodable, Equatable {
+     let type: Species
+ }
+ struct Species: Equatable, Codable {
+     let name: String
+ }
+ 
+ need to comment explaining this setup. 
+ 
+ */
