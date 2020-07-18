@@ -25,7 +25,7 @@ class PokemonController {
     var allPokemon: [Pokemon] = []
     
     init() {
-        
+        loadFromPersistentStore()
     }
     
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
@@ -96,6 +96,12 @@ class PokemonController {
     func savePokemon(pokemon: Pokemon) {
         let newPokemon = Pokemon(name: pokemon.name, id: pokemon.id, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
         allPokemon.append(newPokemon)
+        saveToPersistentStore()
+    }
+    
+    func removePokemon(pokemon: Pokemon) {
+        guard let pokemonIndex = allPokemon.firstIndex(of: pokemon) else { return }
+        allPokemon.remove(at: pokemonIndex)
         saveToPersistentStore()
     }
     
