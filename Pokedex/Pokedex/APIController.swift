@@ -9,7 +9,15 @@
 import Foundation
 
 
-
+class PokemonAPI {
+    var pokemonCrew: [Pokemon] = []
+    
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/")
+    
+    func findPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+        
+    }
+}
 
 
 
