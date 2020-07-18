@@ -49,6 +49,7 @@ class DetailViewController: UIViewController {
         if let pokemonController = pokemonController,
             let pokemon = pokemon {
             pokemonController.pokemonArray.append(pokemon)
+            pokemonController.saveToPersistentStore()
             navigationController?.popViewController(animated: true)
         }
     }

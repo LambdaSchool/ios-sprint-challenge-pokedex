@@ -43,6 +43,7 @@ class PokedexTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             pokemonController.pokemonArray.remove(at: indexPath.row)
+            pokemonController.saveToPersistentStore()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

@@ -10,6 +10,10 @@ import UIKit
 
 class PokemonController {
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
     enum HTTPMethod: String {
         case get = "GET"
     }
@@ -80,5 +84,50 @@ class PokemonController {
         }
         task.resume()
         }
+    
+    // MARK: Persistence
+    
+    struct PokemonPersistence: Codable {
+        var name: String
+        var id: Int
+        var types: [String]
+        var abilities: [String]
+        var imageString: String
+    }
+    
+    private var pokemonURL: URL? {
+        let fm = FileManager.default
+        let filename = "pokemon.plist"
+        guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return dir.appendingPathComponent(filename)
+    }
+
+    func saveToPersistentStore() {
+        guard let url = pokemonURL else { return }
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(pokemonArray)
+            try data.write(to: url)
+        } catch {
+            NSLog("Was not able to encode data: \(error)")
+        }
+    }
+
+    private func loadFromPersistentStore() {
+        let fm = FileManager.default
+        guard let url = pokemonURL,
+        fm.fileExists(atPath: url.path) else { return }
+        do {
+            let data = try Data(contentsOf: url)
+            let plistDecoder = PropertyListDecoder()
+            let decodedPokemon = try plistDecoder.decode([PokemonPersistence].self, from: data)
+            for pokemon in decodedPokemon {
+                let mon = Pokemon(pokemon.name, pokemon.id, pokemon.types, pokemon.abilities, pokemon.imageString)
+                pokemonArray.append(mon)
+            }
+        } catch {
+            NSLog("No data was saved: \(error)")
+        }
+    }
     
 }
