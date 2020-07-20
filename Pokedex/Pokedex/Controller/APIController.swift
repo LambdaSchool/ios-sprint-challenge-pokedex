@@ -41,6 +41,7 @@ final class APIController {
 
             do {
                 let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
             } catch {
