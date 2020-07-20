@@ -10,11 +10,17 @@ import UIKit
 
 class PokemonSearchViewController: UIViewController {
 
+    @IBOutlet weak var pokemonSearchBar: UISearchBar!
+
+    let apiController = APIController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+
+    
     
 
     /*
