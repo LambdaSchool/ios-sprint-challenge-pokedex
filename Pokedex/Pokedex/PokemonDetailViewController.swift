@@ -45,6 +45,7 @@ class PokemonDetailViewController: UIViewController {
 
             pokemonController.savePokemon(pokemon: pokemon)
             navigationController?.popViewController(animated: true)
+            print("Pokemon Count: \(pokemonController.savedPokemon.count)")
         
     }
     

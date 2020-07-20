@@ -28,8 +28,6 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.reloadData()
     }
 

@@ -23,9 +23,9 @@ enum NetworkError: Error {
 
 class PokemonController {
     // MARK: - init
-    init() {
-        loadFromPersistentStore()
-    }
+//    init() {
+//        loadFromPersistentStore()
+//    }
 
     // MARK: - Properties
     var savedPokemon: [Pokemon] = []
@@ -111,17 +111,17 @@ class PokemonController {
         return documents.appendingPathComponent("Pokemon.plist")
     }
 
-    func loadFromPersistentStore() {
-        guard let pokemonURL = persistentFileURL else { return }
-
-        do {
-            let data = try Data(contentsOf: pokemonURL)
-            let decoder = PropertyListDecoder()
-            savedPokemon = try decoder.decode([Pokemon].self, from: data)
-        } catch {
-            NSLog("Error loading pokemon: \(error)")
-        }
-    }
+//    func loadFromPersistentStore() {
+//        guard let pokemonURL = persistentFileURL else { return }
+//
+//        do {
+//            let data = try Data(contentsOf: pokemonURL)
+//            let decoder = PropertyListDecoder()
+//            savedPokemon = try decoder.decode([Pokemon].self, from: data)
+//        } catch {
+//            NSLog("Error loading pokemon: \(error)")
+//        }
+//    }
 
     func saveToPersistentStore() {
         guard let pokemonURL = persistentFileURL else { return }
