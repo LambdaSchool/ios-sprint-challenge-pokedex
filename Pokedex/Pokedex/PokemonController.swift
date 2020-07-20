@@ -29,7 +29,7 @@ class PokemonController {
 
     // MARK: - Properties
     var savedPokemon: [Pokemon] = []
-    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
 
     // MARK: - Pokemon Functions
     func fetchPokemon(with pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {

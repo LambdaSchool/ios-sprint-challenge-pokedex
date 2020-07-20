@@ -10,8 +10,8 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
     
-    var pokemonController: PokemonController?
-    var pokemon: Pokemon?
+    var pokemonController = PokemonController()
+    var pokemon: Pokemon!
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameLabel: UILabel!
@@ -26,15 +26,26 @@ class PokemonDetailViewController: UIViewController {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        updateViews()
+//        updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     @IBAction func saveButton(_ sender: Any) {
-        if let pokemonController = pokemonController,
-            let pokemon = pokemon {
+        
+        guard let pokemon = pokemon else {
+            print("Pokemon does not exist!")
+            return
+            
+        }
+        
+
             pokemonController.savePokemon(pokemon: pokemon)
             navigationController?.popViewController(animated: true)
-        }
+        
     }
     
     func updateViews() {
@@ -44,11 +55,16 @@ class PokemonDetailViewController: UIViewController {
         }
     
         
-        title = pokemon.name.capitalized
-        idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = "Types: \(pokemon.types.joined(separator: ", "))"
-        abilitiesLabel.text = "Abilities: \(pokemon.ability.joined(separator: ", "))"
-        self.pokemonController?.fetchSprite(at: pokemon.sprites, completion: { (result) in
+        DispatchQueue.main.async {
+            self.title = self.pokemon.name.capitalized
+            self.nameLabel.text = self.pokemon.name.capitalized
+            self.idLabel.text = "ID: \(self.pokemon.id)"
+            self.typesLabel.text = "Types: \(self.pokemon.types.joined(separator: ", "))"
+            self.abilitiesLabel.text = "Abilities: \(self.pokemon.ability.joined(separator: ", "))"
+        }
+        
+        
+        self.pokemonController.fetchSprite(at: pokemon.sprites, completion: { (result) in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
                     self.imageView.image = image
@@ -56,23 +72,6 @@ class PokemonDetailViewController: UIViewController {
             }
         })
         
-        func hideUI() {
-            idLabel.isHidden = true
-            typesLabel.isHidden = true
-            abilitiesLabel.isHidden = true
-            saveButton.isHidden = true
-        }
-        
-        hideUI()
-        
-        func showUI() {
-            idLabel.isHidden = false
-            typesLabel.isHidden = false
-            abilitiesLabel.isHidden = false
-            saveButton.isHidden = false
-        }
-        
-        showUI()
     /*
     // MARK: - Navigation
 
@@ -90,14 +89,19 @@ extension PokemonDetailViewController: UISearchBarDelegate {
 
      func searchBarSearchButtonClicked(_ sender: UISearchBar) {
         guard let pokemonName = searchBar.text else { return }
-        pokemonController?.fetchPokemon(with: pokemonName, completion: { (result) in
-            let pokemon = try? result.get()
-            if let pokemon = pokemon {
-                DispatchQueue.main.async {
-                    self.pokemon = pokemon
-                    self.updateViews()
-                    }
-                }
-            })
+        
+        pokemonController.fetchPokemon(with: pokemonName, completion: { result in
+            switch result {
+              case .success(let pokemon):
+                
+                self.pokemon = pokemon
+                
+                self.updateViews()
+                
+                self.pokemonController.savePokemon(pokemon: pokemon)
+              case .failure(let error):
+                print(error.localizedDescription)
+            }
+          })
         }
     }

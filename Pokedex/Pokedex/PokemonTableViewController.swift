@@ -28,6 +28,8 @@ class PokemonTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
     }
 
@@ -35,7 +37,7 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return pokemonController.savedPokemon.count
+        return pokemonController.savedPokemon.count ?? 0
     }
 
     
