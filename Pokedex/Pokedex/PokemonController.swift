@@ -12,88 +12,127 @@ import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
-    case push = "PUSH"
 }
 
-enum NetworkError: Error {  //Added this
-    case otherError
-    case badData
-    case noDecode
+enum NetworkError: Error {
     case noData
+    case noImage
+    case tryAgain
+    case decodeFailed
 }
 
 class PokemonController {
+    // MARK: - init
+    init() {
+        loadFromPersistentStore()
+    }
 
-   var pokemonArray: [Pokemon] = []
-    var pokemonImages: [URL] = []
-    let baseURL = URL(string: "https://pokeapi.co/api/v2/ability/1/")
+    // MARK: - Properties
+    var savedPokemon: [Pokemon] = []
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
 
-     // MARK: PokemonSearch
-    
-        func fetchPokemon(pokemonName: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
-        let pokemonUrl = baseURL?.appendingPathComponent(pokemonName.lowercased())
-        guard let pokeUrl = pokemonUrl else { return }
-        var request = URLRequest(url: pokeUrl)
+    // MARK: - Pokemon Functions
+    func fetchPokemon(with pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let fetchPokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemon.lowercased())")
+
+        var request = URLRequest(url: fetchPokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
 
-         URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                print("Error fetching data: \(error)")
+                NSLog("Error fetching: \(error)")
+                completion(.failure(.tryAgain))
                 return
             }
 
-             guard let data = data else {
-                print("No data returned from data task.")
+            guard let data = data else {
+                NSLog("Error: No data")
+                completion(.failure(.noData))
                 return
             }
 
-             do {
-                let pokemonSearch = try JSONDecoder().decode(Pokemon.self, from: data)
-                completion(.success(pokemonSearch))
+            let decoder = JSONDecoder()
+
+            do {
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(.success(pokemon))
             } catch {
-                print("Unable to decode data into object of type [Pokemon]: \(error)")
+                NSLog("Could not decode pokemon \(pokemon)")
+                completion(.failure(.decodeFailed))
+                return
             }
-        }.resume()
+        } .resume()
     }
 
-     // MARK: Fetch Sprite
-    
-    func fetchImage(from imageURL: String, completion: @escaping(UIImage?) -> Void) {
+    func fetchSprite(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        guard let imageURL = URL(string: urlString) else { completion(.failure(.noImage)); return }
 
-         guard let imageURL = URL(string: imageURL) else {
-            completion(nil)
-            return }
-
-         var request = URLRequest(url: imageURL)
+        var request = URLRequest(url: imageURL)
         request.httpMethod = HTTPMethod.get.rawValue
 
-         URLSession.shared.dataTask(with: request) { (imageData, _, error) in
-
-             if let error = error {
-
-                 NSLog("Error fetching image: \(error)")
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(.failure(.noImage))
                 return
             }
 
-             guard let data = imageData else {
-                NSLog("No data provided for image: \(imageURL)")
-                completion(nil)
+            guard let imageData = data else {
+                completion(.failure(.noData))
                 return
             }
 
-             let image = UIImage(data: data)
+            if let image = UIImage(data: imageData) {
+                completion(.success(image))
+            } else {
+                completion(.failure(.noImage))
+                return
+            }
+        } .resume()
 
-             completion(image)
-        }.resume()
     }
 
-     // MARK: - Pokemon Functions
-        func addPokemon(pokemon: Pokemon) {
-            pokemonArray.append(pokemon)
-        }
+    func savePokemon(pokemon: Pokemon) {
+        let pokemon = Pokemon(name: pokemon.name, id: pokemon.id, ability: pokemon.ability, types: pokemon.types, sprites: pokemon.sprites)
+        savedPokemon.append(pokemon)
+        saveToPersistentStore()
+    }
 
-         func delete(pokemon: Pokemon) {
-            guard let index = pokemonArray.firstIndex(of: pokemon) else { return }
-            pokemonArray.remove(at: index)
+    func removePokemon(pokemon: Pokemon) {
+        guard let pokemonIndex = savedPokemon.firstIndex(of: pokemon) else { return }
+        savedPokemon.remove(at: pokemonIndex)
+        saveToPersistentStore()
+    }
+
+    // MARK: - Persistence Functions
+    private var persistentFileURL: URL? {
+        let fm = FileManager.default
+        guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documents.appendingPathComponent("Pokemon.plist")
+    }
+
+    func loadFromPersistentStore() {
+        guard let pokemonURL = persistentFileURL else { return }
+
+        do {
+            let data = try Data(contentsOf: pokemonURL)
+            let decoder = PropertyListDecoder()
+            savedPokemon = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            NSLog("Error loading pokemon: \(error)")
         }
-} 
+    }
+
+    func saveToPersistentStore() {
+        guard let pokemonURL = persistentFileURL else { return }
+
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(savedPokemon)
+            try data.write(to: pokemonURL)
+        } catch {
+            NSLog("Error saving pokemon: \(error)")
+        }
+    }
+
+}

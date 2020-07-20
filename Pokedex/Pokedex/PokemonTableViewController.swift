@@ -10,7 +10,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
-    let apiController = PokemonController()
+    var pokemonController = PokemonController()
     
     var pokemon: Pokemon! {
         didSet {
@@ -35,14 +35,14 @@ class PokemonTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return apiController.pokemonArray.count
+        return pokemonController.savedPokemon.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pokemonCell", for: indexPath)
         
-        let pokemonCharacter = apiController.pokemonArray[indexPath.row]
+        let pokemonCharacter = pokemonController.savedPokemon[indexPath.row]
         cell.textLabel?.text = pokemonCharacter.name
         
 
@@ -51,7 +51,7 @@ class PokemonTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.apiController.pokemonArray.remove(at: indexPath.row)
+            self.pokemonController.savedPokemon.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -60,17 +60,18 @@ class PokemonTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailsSegue" {
-            guard let detailVC = segue.destination as? SearchViewController,
-                let indexPath = tableView.indexPathForSelectedRow else { return }
-            detailVC.apiController = apiController
-            detailVC.pokemon = apiController.pokemonArray[indexPath.row]
-            print("DetailViewSegue hit")
-            
-        } else if segue.identifier == "SearchSegue" {
-            if let searchVC = segue.destination as? SearchViewController {
-                searchVC.apiController = apiController
+        if segue.identifier == "AddPokemon" {
+                if let searchVC = segue.destination as? PokemonDetailViewController {
+                    searchVC.pokemonController = pokemonController
+                }
+            } else if segue.identifier == "PokemonDetail" {
+                if let detailVC = segue.destination as? PokemonDetailViewController,
+                    let indexPath = tableView.indexPathForSelectedRow {
+                    let pokemon = pokemonController.savedPokemon[indexPath.row]
+                    detailVC.pokemon = pokemon
+                    detailVC.pokemonController = pokemonController
+                }
             }
         }
-    }
+
 }
