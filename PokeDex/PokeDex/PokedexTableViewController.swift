@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PokemonTableViewController: UITableViewController {
+class PokedexTableViewController: UITableViewController {
 
    
     let pokemonController = PokemonController()

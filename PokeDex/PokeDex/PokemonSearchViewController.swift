@@ -31,7 +31,7 @@ class PokemonSearchViewController: UIViewController {
             !pokemonController.pokemonList.contains(pokemon) else { return }
 
         pokemonController.pokemonList.append(pokemon)
-
+print(pokemonController.pokemonList)
         DispatchQueue.main.async {
             self.navigationController?.popViewController(animated: true)
         }
