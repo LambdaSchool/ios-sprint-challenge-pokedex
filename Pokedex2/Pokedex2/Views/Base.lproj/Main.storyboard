@@ -10,13 +10,13 @@
         <!--Pokedex-->
         <scene sceneID="7US-5a-Jic">
             <objects>
-                <tableViewController id="obZ-DR-Sqy" sceneMemberID="viewController">
+                <tableViewController id="obZ-DR-Sqy" customClass="PokemonTableViewController" customModule="Pokedex2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uPc-ox-uIo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="19" textLabel="ORd-M2-ofH" rowHeight="54" style="IBUITableViewCellStyleDefault" id="1PP-Oq-dmu">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="19" reuseIdentifier="PokemonCell" textLabel="ORd-M2-ofH" rowHeight="54" style="IBUITableViewCellStyleDefault" id="1PP-Oq-dmu">
                                 <rect key="frame" x="0.0" y="28" width="414" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1PP-Oq-dmu" id="b6t-gG-SeF">
@@ -33,7 +33,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Uwu-2t-ydp" kind="show" identifier="showDetailSegue" id="60k-f4-82D"/>
+                                    <segue destination="Uwu-2t-ydp" kind="show" identifier="ShowDetailSegue" id="60k-f4-82D"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" title="Pokedex" id="AKe-mb-hG8">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="boa-XK-74h">
                             <connections>
-                                <segue destination="Uwu-2t-ydp" kind="show" identifier="searchPokemonSegue" id="2rF-t5-gtU"/>
+                                <segue destination="Uwu-2t-ydp" kind="show" identifier="SearchPokemonSegue" id="2rF-t5-gtU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -120,6 +120,16 @@
                         <viewLayoutGuide key="safeArea" id="GyV-Af-TXF"/>
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" id="Nsq-4i-vAi"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="WKv-aU-b0y" id="vW1-tj-7Zx"/>
+                        <outlet property="idLabel" destination="7Kz-Rc-sfO" id="pwZ-iI-L3O"/>
+                        <outlet property="imageView" destination="Ana-hH-dtL" id="MiB-DH-SKP"/>
+                        <outlet property="nameLabel" destination="523-Yq-V38" id="mP7-qc-DhJ"/>
+                        <outlet property="saveButtom" destination="wei-2g-B2j" id="3Jb-3V-WRZ"/>
+                        <outlet property="saveButton" destination="wei-2g-B2j" id="0Fu-O5-NYb"/>
+                        <outlet property="searchBar" destination="oxl-yV-NvM" id="ANM-9i-rmM"/>
+                        <outlet property="typeLabel" destination="bkI-j7-NbS" id="Q91-fy-SFP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dlj-yF-9Fc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -145,6 +155,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2rF-t5-gtU"/>
+        <segue reference="60k-f4-82D"/>
     </inferredMetricsTieBreakers>
 </document>

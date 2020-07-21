@@ -27,8 +27,8 @@ final class PokemonController {
     
     var savedPokemon: [Pokemon] = []
     
-    func fetchPokemon(with searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        let requestUrl = baseURL.appendingPathComponent(searchTerm)
+    func fetchPokemon(_ searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let requestUrl = baseURL.appendingPathComponent(searchTerm.lowercased())
         
         // REQUEST
         var request = URLRequest(url: requestUrl)
