@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 class PokemonDataController {
+    
+    //Properties
     let pokemonBool : Bool = UserDefaults.standard.bool(forKey: .pokemonIntializedKey)
-    
-    var pokemonArray : [Pokemon] = [Pokemon(pokemonName: "Venasaur")]
-    
+    var pokemonArray : [Pokemon] = []
     var pokemonURL : URL? {
         let fm = FileManager.default
         guard let dir = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        return dir.appendingPathComponent("PokemonResults.plist")
+        return dir.appendingPathComponent("Pokemon.plist")
     }
     
     init() {
@@ -29,6 +29,7 @@ class PokemonDataController {
         }
     }
     
+    // Persistence Functions
     func createData() {
         saveToPersistenceStore()
     }
@@ -57,6 +58,44 @@ class PokemonDataController {
             print("Not able to decode the data")
         }
     }
+    
+    func removePokemon(pokemon: Pokemon) {
+        guard let pokemonIndex = pokemonArray.firstIndex(of: pokemon) else { return }
+        pokemonArray.remove(at: pokemonIndex)
+        saveToPersistenceStore()
+    }
+    
+    // Helper functions to get the ability/type strings out of the array
+    func getAbilitiesString(pokemon: Pokemon) -> String{
+        var string = "Abilities: "
+        for ability in pokemon.pokemonAbilities {
+            if ability == pokemon.pokemonAbilities.last || ability == pokemon.pokemonAbilities.first {
+                string += "\(ability)"
+            }
+            string += ", \(ability)"
+        }
+        
+        return string
+    }
+    
+    func getTypesString(pokemon: Pokemon) -> String {
+        
+        var string = "Types: "
+        if pokemon.types.count == 1 {
+            if let pokemonFirst = pokemon.types.first {
+               return "Type: \(pokemonFirst)"
+            }
+             }
+        else {
+        for type in pokemon.types {
+            if type == pokemon.types.last || type == pokemon.types.first {
+                string += "\(type)"
+            }
+            string += ", \(type)"
+        }
+    }
+        return string
+}
 }
 
 extension String {

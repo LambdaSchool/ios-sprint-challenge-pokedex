@@ -10,6 +10,7 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+    //Properties
     let pokemonDataController = PokemonDataController()
     let pokemonController = PokemonController()
 
@@ -17,7 +18,6 @@ class PokemonTableViewController: UITableViewController {
         super.viewDidLoad()
         pokemonDataController.loadFromPersistenceStore()
         self.tableView.reloadData()
-        print("\(pokemonDataController.pokemonArray)")
 
     }
     
@@ -38,15 +38,22 @@ class PokemonTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        cell.textLabel?.text = pokemonDataController.pokemonArray[indexPath.row].pokemonName
+        cell.textLabel?.text = pokemonDataController.pokemonArray[indexPath.row].pokemonName.capitalizingFirstLetter()
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let pokemon = pokemonDataController.pokemonArray[indexPath.row]
+        
+         if editingStyle == .delete {
+             pokemonDataController.removePokemon(pokemon: pokemon)
+         }
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+     }
 
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "search" {
@@ -54,8 +61,14 @@ class PokemonTableViewController: UITableViewController {
             print("Success Segue")
             destinationVC?.pokemonDataController = pokemonDataController
             destinationVC?.pokemonController = pokemonController
+        } else if segue.identifier == "detail" {
+            guard let destinationVC = segue.destination as? PokeSearchViewController, let indexPath = tableView.indexPathForSelectedRow else {return}
+            destinationVC.pokemonDataController = pokemonDataController
+            destinationVC.pokemonController = pokemonController
+            let pokemon = self.pokemonDataController.pokemonArray[indexPath.row]
+            destinationVC.pokemon = pokemon
         }
+        
     }
-
 
 }
