@@ -9,9 +9,10 @@
 import UIKit
 
 class PokemonSearchViewController: UIViewController {
-
     
-    var pokemonController: PokemonController!
+   
+   
+    var pokemonController = PokemonController()
     var pokemonDetailViewController: PokemonDetailViewController?
 
     var pokemon: Pokemon? {
@@ -24,7 +25,7 @@ class PokemonSearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar?
     @IBOutlet weak var savePokemonButton: UIButton?
 
-   
+    
     @IBAction func savePokemonButtonTapped(_ sender: UIButton) {
         guard let pokemon = pokemon,
             !pokemonController.pokemonList.contains(pokemon) else { return }
@@ -36,7 +37,7 @@ class PokemonSearchViewController: UIViewController {
         }
     }
 
-
+   
     
     private func updateNavigationItemTitle() {
         DispatchQueue.main.async {
@@ -44,7 +45,7 @@ class PokemonSearchViewController: UIViewController {
         }
     }
 
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -20,7 +20,6 @@ enum NetworkError: Error {
 }
 
 class PokemonController {
-
   
     var pokemonList: [Pokemon] = []
     private let baseUrl = URL(fileURLWithPath: "https://pokeapi.co/api/v2")
@@ -55,6 +54,7 @@ class PokemonController {
         }.resume()
     }
 
+    
     
     func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         guard let imageUrl = URL(string: urlString) else {
