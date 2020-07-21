@@ -10,7 +10,7 @@ import UIKit
 
 class SearchDetailViewController: UIViewController, UISearchBarDelegate {
 
-    var pokemonController : PokedexController?
+    var pokemonController : PokemonController?
     var pokemon : Pokemon?
     
     

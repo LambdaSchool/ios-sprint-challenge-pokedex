@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PokedexController {
+class PokemonController {
     
     enum HTTPMethod: String {
         case get = "GET"

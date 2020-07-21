@@ -10,19 +10,24 @@ import Foundation
 import UIKit
 
 struct Pokemon: Codable {
-    
-    let name: String
-    let id: Int
-    let type: String
-    let abilities: [String]
-    
+
     //Coding Keys
     enum Keys: String, CodingKey {
         case id
         case name
-        case type
+        case types
         case abilities
-                
+        case image
+        
+        enum TypesDescriptionKeys: String, CodingKey {
+            case type
+            
+            enum TypeKeys: String, CodingKey {
+                case name
+            }
+            
+        }
+        
         enum AbilityDescriptionKeys: String, CodingKey {
             case ability
             
@@ -32,6 +37,14 @@ struct Pokemon: Codable {
         }
     }
     
+  
+    
+    let name: String
+    let id: Int
+    let types: [String]
+    let abilities: [String]
+
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         
@@ -39,7 +52,23 @@ struct Pokemon: Codable {
         
         id = try container.decode(Int.self, forKey: .id)
         
-        type = try container.decode(String.self, forKey: .type)
+        var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
+        
+        var typeNames: [String] = []
+        
+        while typesContainer.isAtEnd == false {
+            let typesDescriptionContainer = try typesContainer.nestedContainer(keyedBy: Keys.TypesDescriptionKeys.self)
+            
+            let typeContainer = try typesDescriptionContainer.nestedContainer(keyedBy: Keys.TypesDescriptionKeys.TypeKeys.self, forKey: .type)
+            
+            let typeName = try typeContainer.decode(String.self, forKey: .name)
+            typeNames.append(typeName)
+        }
+        
+        types = typeNames
+        
+
+        
         
         var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
         
