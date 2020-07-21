@@ -6,6 +6,7 @@
 //  Copyright © 2020 Norlan Tibanear. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 enum HTTPMethod: String {
@@ -14,37 +15,37 @@ enum HTTPMethod: String {
 
 enum NetworkError: Error {
     case noData
-    case noImageData
-    case FailedDecoding
     case noImage
+    case tryAgain
+    case decodeFailed
 }
 
-
 class PokemonController {
-    
-    var allPokemon: [Pokemon] = []
     
     init() {
         loadFromPersistentStore()
     }
     
+ 
+    var savedPokemon: [Pokemon] = []
     private let baseURL = URL(string: "https://pokeapi.co/api/v2")!
-    private lazy var pokemonURL = baseURL.appendingPathComponent("pokemon/")
-    
-    
-    
-    func fetchingPokemon(with pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+//    private lazy var pokemonURL = baseURL.appendingPathComponent("pokemon/")
+ 
+    func fetchPokemon(with pokemon: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let fetchPokemonURL = baseURL.appendingPathComponent("pokemon/\(pokemon.lowercased())")
         
-        var request = URLRequest(url: pokemonURL)
+        var request = URLRequest(url: fetchPokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                print("Error fetching data: \(error)")
+                NSLog("Error fetching: \(error)")
+                completion(.failure(.tryAgain))
+                return
             }
             
             guard let data = data else {
-                print("No Data")
+                NSLog("Error: No data")
                 completion(.failure(.noData))
                 return
             }
@@ -55,24 +56,25 @@ class PokemonController {
                 let pokemon = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemon))
             } catch {
-                print("Failed decoding pokemon \(pokemon)")
-                completion(.failure(.FailedDecoding))
+                NSLog("Could not decode pokemon \(pokemon)")
+                completion(.failure(.decodeFailed))
                 return
             }
-            
-        }.resume()
-    } //
+        } .resume()
+    }
     
-    
-    func fetchingSprite(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
-        guard let imageURL = URL(string: urlString) else { completion(.failure(.noImage)); return }
+    func fetchSprite(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        guard let imageURL = URL(string: urlString) else {
+            completion(.failure(.noImage))
+            return
+        }
         
         var request = URLRequest(url: imageURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
-                print("Error fetching image: \(error)")
+                NSLog("Error fetching image: \(error)")
                 completion(.failure(.noImage))
                 return
             }
@@ -92,20 +94,19 @@ class PokemonController {
         
     }
     
-    
     func savePokemon(pokemon: Pokemon) {
-        let newPokemon = Pokemon(name: pokemon.name, id: pokemon.id, abilities: pokemon.abilities, types: pokemon.types, sprites: pokemon.sprites)
-        allPokemon.append(newPokemon)
+        let pokemon = Pokemon(name: pokemon.name, id: pokemon.id, ability: pokemon.ability, types: pokemon.types, sprites: pokemon.sprites)
+        savedPokemon.append(pokemon)
         saveToPersistentStore()
     }
     
     func removePokemon(pokemon: Pokemon) {
-        guard let pokemonIndex = allPokemon.firstIndex(of: pokemon) else { return }
-        allPokemon.remove(at: pokemonIndex)
+        guard let pokemonIndex = savedPokemon.firstIndex(of: pokemon) else { return }
+        savedPokemon.remove(at: pokemonIndex)
         saveToPersistentStore()
     }
     
-// Persistence
+ // Persistence
     private var persistentFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -116,9 +117,9 @@ class PokemonController {
         guard let pokemonURL = persistentFileURL else { return }
         
         do {
-            let decoder = PropertyListDecoder()
             let data = try Data(contentsOf: pokemonURL)
-            allPokemon = try decoder.decode([Pokemon].self, from: data)
+            let decoder = PropertyListDecoder()
+            savedPokemon = try decoder.decode([Pokemon].self, from: data)
         } catch {
             NSLog("Error loading pokemon: \(error)")
         }
@@ -129,12 +130,11 @@ class PokemonController {
         
         do {
             let encoder = PropertyListEncoder()
-            let data = try encoder.encode(allPokemon)
+            let data = try encoder.encode(savedPokemon)
             try data.write(to: pokemonURL)
         } catch {
             NSLog("Error saving pokemon: \(error)")
         }
     }
     
-    
-} //
+}

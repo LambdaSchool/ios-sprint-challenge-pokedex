@@ -9,21 +9,17 @@
 import Foundation
 
 struct Pokemon: Codable, Equatable {
-    
     let name: String
     let id: Int
-    let abilities: [String]
+    let ability: [String]
     let types: [String]
     let sprites: String
     
+    // Coding Keys
     enum PokemonKeys: String, CodingKey {
-        case name
-        case id
-        case abilities
-        case types
-        case sprites
+        case name, id, abilities, types, sprites
         
-        enum AbilitiyDescriptionKeys: String, CodingKey {
+        enum AbilityDescriptionKeys: String, CodingKey {
             case ability
             
             enum AbilityKeys: String, CodingKey {
@@ -42,50 +38,48 @@ struct Pokemon: Codable, Equatable {
         enum SpriteKeys: String, CodingKey {
             case sprite = "front_default"
         }
-    }//
-    
-    
+    }
+
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: PokemonKeys.self)
+        var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
+        var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
         
         var abilityNames: [String] = []
-        var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
         
         while !abilitiesContainer.isAtEnd {
-            let abilityDescriptionContainer = try abilitiesContainer.nestedContainer(keyedBy: PokemonKeys.AbilitiyDescriptionKeys.self)
-            let abilityContainer = try abilityDescriptionContainer.nestedContainer(keyedBy: PokemonKeys.AbilitiyDescriptionKeys.AbilityKeys.self, forKey: .ability)
+            let abilityDescriptionContainer = try abilitiesContainer.nestedContainer(keyedBy: PokemonKeys.AbilityDescriptionKeys.self)
+            let abilityContainer = try abilityDescriptionContainer.nestedContainer(keyedBy: PokemonKeys.AbilityDescriptionKeys.AbilityKeys.self, forKey: .ability)
             let abilityName = try abilityContainer.decode(String.self, forKey: .name)
             abilityNames.append(abilityName)
         }
         
-        var typesNames: [String] = []
-        var typesContainer = try container.nestedUnkeyedContainer(forKey: .types)
+        var typeNames: [String] = []
         
         while !typesContainer.isAtEnd {
             let typeDescriptionContainer = try typesContainer.nestedContainer(keyedBy: PokemonKeys.TypeDescriptionKeys.self)
             let typeContainer = try typeDescriptionContainer.nestedContainer(keyedBy: PokemonKeys.TypeDescriptionKeys.TypeKeys.self, forKey: .type)
             let typeName = try typeContainer.decode(String.self, forKey: .name)
-            typesNames.append(typeName)
+            typeNames.append(typeName)
         }
         
         let spriteContainer = try container.nestedContainer(keyedBy: PokemonKeys.SpriteKeys.self, forKey: .sprites)
         
+        // Decode
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(Int.self, forKey: .id)
         self.sprites = try spriteContainer.decode(String.self, forKey: .sprite)
-        self.abilities = abilityNames
-        self.types = typesNames
-        
-    }//
+        self.ability = abilityNames
+        self.types = typeNames
+    }
     
-    init(name: String, id: Int, abilities: [String], types: [String], sprites: String) {
+    init(name: String, id: Int, ability: [String], types: [String], sprites: String) {
         self.name = name
         self.id = id
-        self.abilities = abilities
+        self.ability = ability
         self.types = types
         self.sprites = sprites
     }
-    
-    
-} //
+
+}
