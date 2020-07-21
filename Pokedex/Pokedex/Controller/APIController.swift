@@ -27,7 +27,7 @@ final class APIController {
 
     func fetchPokemon(for searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
 
-        let request = baseURL.appendingPathComponent(searchTerm)
+        let request = baseURL.appendingPathComponent(searchTerm.lowercased())
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
 
