@@ -8,12 +8,13 @@
 
 import UIKit
 
-class PokemonViewController: UIViewController, UITableViewDelegate {
+class PokemonViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
     var saveToPS: SavedPokedex?
-    var pokemonNames: String?
+    var pokemonNames: Pokemon?
     
+    @IBOutlet weak var searchforPokemon: UISearchBar!
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonID: UILabel!
     @IBOutlet weak var pokemonType: UILabel!
@@ -28,10 +29,11 @@ class PokemonViewController: UIViewController, UITableViewDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
         getPokemonDetails()
+        searchforPokemon.delegate = self
         
         // Do any additional setup after loading the view.
     }
@@ -43,15 +45,15 @@ class PokemonViewController: UIViewController, UITableViewDelegate {
             switch result {
             case .success(let xyz):
                 DispatchQueue.main.async {
-                    self.updateViews(with: xyz)
+                    self.updateViews()
                 }
-                pokemonController.fetchImage(at: xyz.imageURL ) { (result) in
-                 if let image = try? result.get() {
-                 DispatchQueue.main.async {
-                 self.pokemonImage.image = image
-                 }
-                 }
-                 }
+                pokemonController.fetchImage(at: xyz.image) { (result) in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.pokemonImage.image = image
+                        }
+                    }
+                }
             case .failure(let error):
                 print("Error \(error)")
                 
@@ -59,15 +61,38 @@ class PokemonViewController: UIViewController, UITableViewDelegate {
         }
     }
     
-    func updateViews(with pokemon: Pokemon) {
+    func updateViews() {
+        guard let pokemon = pokemonNames else { return }
         title = pokemon.name
         pokemonName.text = pokemon.name
-       //  pokemonID.text = pokemon.id
-        //   pokemonType.text = pokemon.types
-        //   pokemonAbilities.text = pokemon.abilities
-        //   pokemonImage.image =
-        
+        pokemonID.text = "ID: \(pokemon.id)"
+        pokemonType.text = "Type: \(pokemon.types)"
+        pokemonAbilities.text = "Abilities: \(pokemon.abilities)"
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let names = pokemonNames else {return}
+        guard searchforPokemon.text != nil else {return}
+        guard let pokemonAPI = pokemonController else {return}
+        pokemonAPI.searchPokemon(for: names) { (result) in
+            switch result {
+            case .success(let thisResult):
+                DispatchQueue.main.async {
+                    self.updateViews()
+                    print(thisResult)
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+    }
+    /*
+     let x : Int = 45
+     let xNSNumber = x as NSNumber
+     let xString : String = xNSNumber.stringValue
+     let characterArray: [Character] = ["J", "o", "h", "n"]
+     let string = String(characterArray)
+     */
     /*
      // MARK: - Navigation
      
