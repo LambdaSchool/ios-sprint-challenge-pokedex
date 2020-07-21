@@ -11,6 +11,7 @@ import UIKit
 class PokemonDetailViewController: UIViewController {
 
     var apiController: APIController?
+    var pokemonNames: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()

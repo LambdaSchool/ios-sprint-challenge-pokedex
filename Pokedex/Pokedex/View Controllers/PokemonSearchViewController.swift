@@ -55,7 +55,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.updateViews(with: pokemon)
                 }
-                apiController.fetchPokemonImage(at: pokemon.sprites) { (result) in
+                apiController.fetchPokemonImage(at: pokemon.sprites.absoluteString) { (result) in
                     if let image = try? result.get() {
                         DispatchQueue.main.async {
                             self.pokemonImageView.image = image
@@ -77,18 +77,15 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews(with pokemon: Pokemon) {
-//        guard isViewLoaded,
-//            let pokemon = Pokemon.self else { return }
+        guard isViewLoaded else { return }
 
         saveButton.isEnabled = true
         nameLabel.isHidden = false
         idLablel.isHidden = false
         abilitiesLabel.isHidden = false
         title = pokemon.name.capitalized
-//        guard let pokemonImage = try? Data(contentsOf: Pokemon.PokemonKeys.imageKeys.frontDefault) else { return }
-//        pokemonImageView.image = UIImage(data: pokemonImage)
-//        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites) else {return}
-//        imageView.image = UIImage(data: pokemonImageData)
+        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites) else {return}
+        pokemonImageView.image = UIImage(data: pokemonImageData)
         nameLabel.text = pokemon.name.capitalized
         idLablel.text = "ID: \(String(pokemon.id))"
         
@@ -115,11 +112,18 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
     }
 
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-}
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "reuseIdentifiter",
+//            let searchVC = segue.destination as? PokemonTableViewController {
+//            if let indexPath = UITableView.numberOfRowsInSection {
+//                searchVC.pokemonN = pokemonNames[indexPath.row]
+//            }
+//            searchVC.apiController = apiController
+//        }
+//    }
+
+}
 

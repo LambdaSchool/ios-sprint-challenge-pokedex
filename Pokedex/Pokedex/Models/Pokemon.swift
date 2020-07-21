@@ -13,7 +13,7 @@ struct Pokemon: Decodable {
 
     let name: String
     let id: Int
-    let sprites: String
+    let sprites: URL
     let types: [String]
     let abilities: [String]
 
@@ -51,7 +51,7 @@ struct Pokemon: Decodable {
         id = idString
 
         let imageContainer = try container.nestedContainer(keyedBy: PokemonKeys.imageKeys.self, forKey: .sprites)
-        sprites = try imageContainer.decode(String.self, forKey: .frontDefault)
+        sprites = try imageContainer.decode(URL.self, forKey: .frontDefault)
 
         var typeContainer = try container.nestedUnkeyedContainer(forKey: .types)
         var typeNames: [String] = []
