@@ -10,7 +10,6 @@ import UIKit
 
 class PokedexTableViewController: UITableViewController {
 
-    
     let pokemonController = PokemonController()
     let reuseIdentifier = "PokemonCell"
     private var pokemonNames: [String] = [] {
@@ -18,7 +17,7 @@ class PokedexTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    
+       
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -93,11 +92,11 @@ class PokedexTableViewController: UITableViewController {
         if segue.identifier == "ShowPokemon",
             let detailVC = segue.destination as? PokemonViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
-                detailVC.namePokemon = pokemonNames[indexPath.row]
+                detailVC.pokemonNames = pokemonNames[indexPath.row]
             }
             detailVC.pokemonController = pokemonController
         }
-        else if segue.identifier == "Search Pokemon" {
+        else if segue.identifier == "SearchPokemon" {
             if let searchVC = segue.destination as? PokemonSearchViewController {
                 searchVC.pokemonController = pokemonController
             }

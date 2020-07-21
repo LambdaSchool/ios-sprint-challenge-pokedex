@@ -12,7 +12,7 @@ class PokemonSearchViewController: UIViewController {
     
     @IBOutlet weak var searchPokemon: UISearchBar!
     
-    var pokemonController = PokemonController()
+    var pokemonController = PokemonController(decoder: Decoder)
     
     override func viewDidLoad() {
         super.viewDidLoad()
