@@ -8,10 +8,12 @@
 
 import UIKit
 
-class SearchDetailViewController: UIViewController, UISearchBarDelegate {
-
-    var pokemonController : PokemonController?
-    var pokemon : Pokemon?
+class SearchDetailViewController: UIViewController {
+    
+    var pokemonController: PokemonController?
+    var pokemonName: String?
+    var pokemon: Pokemon?
+    
     
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -21,27 +23,51 @@ class SearchDetailViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var abilitiesLabel: UILabel!
     
-    
-    
     override func viewDidLoad() {
-            super.viewDidLoad()
-            
-           
-           
-            
-            
+        super.viewDidLoad()
+        searchBar.delegate = self
+        if let pokemon = pokemon {
+            self.updateViews(with: pokemon)
+            searchBar.isHidden = true
         }
-        
+    
+    }
+    
+    func updateViews(with: Pokemon) {
+        title = pokemon?.name.capitalized
+        nameLabel.text = pokemon?.name.capitalized
      
-    
-    
-    
         
-        @IBAction func saveButtonTapped(_ sender: UIButton) {
     }
     
     
-    
+}
+
+extension SearchDetailViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        searchBar.resignFirstResponder()
+        guard let pokemonController = pokemonController else { return }
+        pokemonController.searchForPokemon(searchTerm) { result in
+            switch result {
+            case .success(let pokemon):
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                    self.searchBar.isHidden = true
+                    self.pokemon = pokemon
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("error: \(error)")
+                }
+            }
+        }
+       
+        
+    }
     
     
 }
+
+
+

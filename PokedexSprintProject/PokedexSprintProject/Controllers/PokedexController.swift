@@ -21,9 +21,9 @@ class PokemonController {
     var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     var pokemonResults : [Pokemon] = []
     
-    func searchPokemonByName(searchText: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func searchForPokemon(_ searchText: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
         
-        let searchURL = baseURL.appendingPathComponent("pokemon/\(searchText)")
+        let searchURL = baseURL.appendingPathComponent(searchText.lowercased())
         
         var request = URLRequest(url: searchURL)
         request.httpMethod = HTTPMethod.get.rawValue
@@ -37,8 +37,8 @@ class PokemonController {
             }
             
             //Handle Response
-            if let response = response {
-                print("Response error")
+            if let response = response as? HTTPURLResponse {
+                print("Response error: \(response)")
                 completion(.failure(.noData))
                 return
             }
@@ -49,10 +49,10 @@ class PokemonController {
                 return
             }
             
-            let jsonDecoder = JSONDecoder()
+//            let jsonDecoder = JSONDecoder()
             
             do {
-                let pokemonResult = try jsonDecoder.decode(Pokemon.self, from: data)
+                let pokemonResult = try JSONDecoder().decode(Pokemon.self, from: data)
                 completion(.success(pokemonResult))
             } catch {
                 print("Unable to decode the pokemon \(searchText)")
