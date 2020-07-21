@@ -14,7 +14,7 @@ struct Pokemon: Decodable {
     let name: String
     let sprite: URL
     let abilities: [String]
-
+    
     enum Keys: String, CodingKey {
         case name
         case abilities
@@ -26,14 +26,14 @@ struct Pokemon: Decodable {
         }
         enum AbilityDescriptionKeys: String, CodingKey {
             case ability
-    
+            
             enum AbilityKeys: String, CodingKey {
                 case name
             }
         }
     }
     
-   
+    
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
@@ -60,4 +60,5 @@ struct Pokemon: Decodable {
         
         abilities = abilityNames
     }
+  
 }
