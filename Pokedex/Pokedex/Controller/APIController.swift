@@ -43,9 +43,12 @@ final class APIController {
                 return
             }
 
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+
             do {
                 let jsonDecoder = JSONDecoder()
-//                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                //                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
                 print("Was able to retreve \(pokemon)")
                 completion(.success(pokemon))

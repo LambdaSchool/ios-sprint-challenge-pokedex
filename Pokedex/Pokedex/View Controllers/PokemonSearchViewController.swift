@@ -82,6 +82,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         saveButton.isEnabled = true
         nameLabel.isHidden = false
         idLablel.isHidden = false
+        typesLabel.isHidden = false
         abilitiesLabel.isHidden = false
         title = pokemon.name.capitalized
         guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites) else {return}
