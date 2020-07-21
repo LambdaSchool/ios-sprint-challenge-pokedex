@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 final class APIController {
+
     enum HTTPMethod: String {
         case get = "GET"
     }
@@ -17,16 +18,19 @@ final class APIController {
     enum NetworkError: Error {
         case tryAgain
         case noData
+        case noURL
+        case noSelf
     }
 
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    var newPokemon: [Pokemon] = []
 
-    func fetchPokemonDetails(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func fetchPokemon(for searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
 
-        var request = URLRequest(url: baseURL)
-        request.httpMethod = HTTPMethod.get.rawValue
+        let request = baseURL.appendingPathComponent(searchTerm)
 
-        let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+
             if let error = error {
                 print("Error failed to fetch pokemon data: \(error)")
                 completion(.failure(.tryAgain))
@@ -41,11 +45,13 @@ final class APIController {
 
             do {
                 let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+//                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 let pokemon = try jsonDecoder.decode(Pokemon.self, from: data)
+                print("Was able to retreve \(pokemon)")
                 completion(.success(pokemon))
             } catch {
                 print("Error occurred when decoiding Pokemon detail data (Pokemon name = \(searchTerm)): \(error)")
+                completion(.failure(.tryAgain))
             }
         }
         task.resume()
@@ -53,7 +59,6 @@ final class APIController {
 
     func fetchPokemonImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
         let image = URL(string: urlString)!
-
         var request = URLRequest(url: image)
         request.httpMethod = HTTPMethod.get.rawValue
 
@@ -71,6 +76,10 @@ final class APIController {
             completion(.success(image))
         }
         task.resume()
+    }
+
+    func addPokemon(pokemon: Pokemon) {
+        newPokemon.append(pokemon)
     }
 
 }

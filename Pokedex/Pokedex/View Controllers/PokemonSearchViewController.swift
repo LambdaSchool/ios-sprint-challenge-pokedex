@@ -8,29 +8,118 @@
 
 import UIKit
 
-class PokemonSearchViewController: UIViewController {
+class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var pokemonImageView: UIImageView!
+    @IBOutlet weak var idLablel: UILabel!
+    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet weak var abilitiesLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    var apiController: APIController?
+    var pokemonN: String?
 
-    @IBOutlet weak var pokemonSearchBar: UISearchBar!
-
-    let apiController = APIController()
-
+    var pokemon: Pokemon? {
+        didSet {
+            updateViews(with: pokemon!)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        hiddenView()
     }
 
-    
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        searchBar.resignFirstResponder()
 
-    /*
-    // MARK: - Navigation
+        apiController?.fetchPokemon(for: searchTerm) { (pokemon) in
+            guard let searchedPokemon = try? pokemon.get() else { return }
+            DispatchQueue.main.async {
+                self.pokemon = searchedPokemon
+            }
+        }
+    }
+
+    func getDetails() {
+        guard let apiController = apiController,
+            let animalName = pokemonN else { return }
+
+        apiController.fetchPokemon(for: animalName) { (result) in
+            switch result {
+            case .success(let pokemon):
+                DispatchQueue.main.async {
+                    self.updateViews(with: pokemon)
+                }
+                apiController.fetchPokemonImage(at: pokemon.sprites) { (result) in
+                    if let image = try? result.get() {
+                        DispatchQueue.main.async {
+                            self.pokemonImageView.image = image
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Error Fetching pokemon Detials \(error)")
+            }
+        }
+    }
+    
+    func hiddenView() {
+        saveButton.isEnabled = false
+        nameLabel.isHidden = true
+        idLablel.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
+    }
+    
+    func updateViews(with pokemon: Pokemon) {
+//        guard isViewLoaded,
+//            let pokemon = Pokemon.self else { return }
+
+        saveButton.isEnabled = true
+        nameLabel.isHidden = false
+        idLablel.isHidden = false
+        abilitiesLabel.isHidden = false
+        title = pokemon.name.capitalized
+//        guard let pokemonImage = try? Data(contentsOf: Pokemon.PokemonKeys.imageKeys.frontDefault) else { return }
+//        pokemonImageView.image = UIImage(data: pokemonImage)
+//        guard let pokemonImageData = try? Data(contentsOf: pokemon.sprites) else {return}
+//        imageView.image = UIImage(data: pokemonImageData)
+        nameLabel.text = pokemon.name.capitalized
+        idLablel.text = "ID: \(String(pokemon.id))"
+        
+        var types = " "
+        let typeArray = pokemon.types
+        for type in typeArray {
+            types.append(type.capitalized)
+        }
+        typesLabel.text = "Types: \(types)"
+        
+        var abilities = " "
+        let abilityArray = pokemon.abilities
+        for ability in abilityArray {
+            abilities.append(ability.capitalized)
+        }
+        abilitiesLabel.text = "Abilities: \(abilities)"
+        
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemonSaved = pokemon else { return }
+        apiController?.addPokemon(pokemon: pokemonSaved)
+        navigationController?.popToRootViewController(animated: true)
+    }
+
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
-
 }
+
+

@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import UIKit
 
-struct Pokemon: Codable {
+struct Pokemon: Decodable {
 
     let name: String
     let id: Int
-    let image: URL
+    let sprites: String
     let types: [String]
     let abilities: [String]
 
     enum PokemonKeys: String, CodingKey {
         case name, id, types, abilities
-        case image = "sprites"
+        case sprites
 
         enum imageKeys: String, CodingKey {
             case frontDefault = "front_default"
@@ -49,9 +50,8 @@ struct Pokemon: Codable {
         let idString = try container.decode(Int.self, forKey: .id)
         id = idString
 
-        let imageContainer = try container.nestedContainer(keyedBy: PokemonKeys.imageKeys.self, forKey: .image)
-        image = try imageContainer.decode(URL.self, forKey: .frontDefault)
-
+        let imageContainer = try container.nestedContainer(keyedBy: PokemonKeys.imageKeys.self, forKey: .sprites)
+        sprites = try imageContainer.decode(String.self, forKey: .frontDefault)
 
         var typeContainer = try container.nestedUnkeyedContainer(forKey: .types)
         var typeNames: [String] = []

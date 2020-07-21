@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonDetailViewController: UIViewController {
 
+    var apiController: APIController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

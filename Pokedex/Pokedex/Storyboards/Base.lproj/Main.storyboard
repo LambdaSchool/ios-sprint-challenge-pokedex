@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" id="RSG-vD-Kyh" customClass="PokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" id="RSG-vD-Kyh">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RSG-vD-Kyh" id="Jj9-XA-3Qf">
@@ -53,16 +53,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="olk-G4-jqN">
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="olk-G4-jqN">
                                 <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5Y-8o-r2f">
-                                <rect key="frame" x="162" y="218" width="236" height="40"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V4n-L6-YId">
                                 <rect key="frame" x="57" y="351" width="300" height="250"/>
                             </imageView>
@@ -84,26 +78,42 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMJ-JX-szA">
+                                <rect key="frame" x="130" y="816" width="154" height="30"/>
+                                <state key="normal" title="Save Pokemon"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="lSk-ej-pg8" eventType="touchUpInside" id="kYL-mf-vFW"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5Y-8o-r2f">
+                                <rect key="frame" x="111" y="226" width="196" height="40"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="YBH-AE-iGz" firstAttribute="top" secondItem="V4n-L6-YId" secondAttribute="bottom" constant="92" id="0MO-At-Ffu"/>
-                            <constraint firstItem="NeQ-5v-ubQ" firstAttribute="bottom" secondItem="soS-Dv-3Yr" secondAttribute="bottom" constant="65" id="9oM-ZG-UF3"/>
+                            <constraint firstItem="eMJ-JX-szA" firstAttribute="top" secondItem="soS-Dv-3Yr" secondAttribute="bottom" constant="19" id="300-XP-enq"/>
                             <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" secondItem="V4n-L6-YId" secondAttribute="trailing" constant="57" id="9wI-tp-DVH"/>
+                            <constraint firstItem="V4n-L6-YId" firstAttribute="top" secondItem="Q5Y-8o-r2f" secondAttribute="bottom" constant="85" id="Cdw-Hm-EkB"/>
+                            <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q5Y-8o-r2f" secondAttribute="trailing" constant="16" id="F1s-4u-LS8"/>
                             <constraint firstItem="olk-G4-jqN" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" id="GGM-ix-BFE"/>
                             <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YBH-AE-iGz" secondAttribute="trailing" constant="16" id="Ilc-iF-Sng"/>
+                            <constraint firstItem="Q5Y-8o-r2f" firstAttribute="top" secondItem="olk-G4-jqN" secondAttribute="bottom" constant="30" id="Mz4-eM-Oe5"/>
                             <constraint firstItem="pyX-Np-NZt" firstAttribute="top" secondItem="YBH-AE-iGz" secondAttribute="bottom" constant="8" id="RlU-ZH-h6u"/>
                             <constraint firstItem="olk-G4-jqN" firstAttribute="trailing" secondItem="NeQ-5v-ubQ" secondAttribute="trailing" id="SNC-iP-viw"/>
                             <constraint firstItem="soS-Dv-3Yr" firstAttribute="top" secondItem="pyX-Np-NZt" secondAttribute="bottom" constant="8" id="U8e-pK-tQo"/>
-                            <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Q5Y-8o-r2f" secondAttribute="trailing" constant="16" id="ZC7-nQ-LK4"/>
+                            <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" secondItem="eMJ-JX-szA" secondAttribute="trailing" constant="130" id="aVS-sA-3IA"/>
                             <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="soS-Dv-3Yr" secondAttribute="trailing" constant="16" id="bqd-NN-LHh"/>
                             <constraint firstItem="V4n-L6-YId" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="57" id="d72-3u-CVO"/>
-                            <constraint firstItem="Q5Y-8o-r2f" firstAttribute="top" secondItem="olk-G4-jqN" secondAttribute="bottom" constant="22" id="hLU-h8-Lvz"/>
+                            <constraint firstItem="eMJ-JX-szA" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="130" id="fyk-39-JG6"/>
                             <constraint firstItem="YBH-AE-iGz" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="20" id="j8I-OF-qPQ"/>
-                            <constraint firstItem="Q5Y-8o-r2f" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="162" id="kDn-iY-z15"/>
                             <constraint firstItem="pyX-Np-NZt" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="20" id="o56-Vr-BtH"/>
+                            <constraint firstItem="Q5Y-8o-r2f" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="111" id="ojb-bf-ekw"/>
+                            <constraint firstItem="NeQ-5v-ubQ" firstAttribute="bottom" secondItem="eMJ-JX-szA" secondAttribute="bottom" constant="16" id="q4I-vn-S3g"/>
                             <constraint firstItem="pyX-Np-NZt" firstAttribute="top" secondItem="YBH-AE-iGz" secondAttribute="bottom" constant="8" id="upE-7V-YTa"/>
-                            <constraint firstItem="V4n-L6-YId" firstAttribute="top" secondItem="Q5Y-8o-r2f" secondAttribute="bottom" constant="93" id="vfh-I5-P2l"/>
                             <constraint firstItem="NeQ-5v-ubQ" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="pyX-Np-NZt" secondAttribute="trailing" constant="16" id="w2s-RZ-gB8"/>
                             <constraint firstItem="soS-Dv-3Yr" firstAttribute="leading" secondItem="NeQ-5v-ubQ" secondAttribute="leading" constant="20" id="wdd-2h-TPf"/>
                             <constraint firstItem="soS-Dv-3Yr" firstAttribute="top" secondItem="pyX-Np-NZt" secondAttribute="bottom" constant="8" id="y3H-Di-Edy"/>
@@ -113,7 +123,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Pokemon Search" leftItemsSupplementBackButton="YES" id="kRs-P8-Xp0"/>
                     <connections>
-                        <outlet property="pokemonSearchBar" destination="olk-G4-jqN" id="nHk-Vs-xS7"/>
+                        <outlet property="abilitiesLabel" destination="soS-Dv-3Yr" id="q09-wB-Q7j"/>
+                        <outlet property="idLablel" destination="YBH-AE-iGz" id="kMt-z8-wS3"/>
+                        <outlet property="nameLabel" destination="Q5Y-8o-r2f" id="fgS-N1-0w7"/>
+                        <outlet property="pokemonImageView" destination="V4n-L6-YId" id="EEA-vJ-GWQ"/>
+                        <outlet property="saveButton" destination="eMJ-JX-szA" id="cvH-jy-uqS"/>
+                        <outlet property="searchBar" destination="olk-G4-jqN" id="4om-2t-4OR"/>
+                        <outlet property="typesLabel" destination="pyX-Np-NZt" id="5da-Lh-AqQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iRT-xh-pds" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -123,17 +139,12 @@
         <!--Pokemon Detail View Controller-->
         <scene sceneID="c1K-t6-qDe">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AmQ-tP-nEz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="IUI-9J-7Kg" customClass="PokemonDetailViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QpL-Zh-3qM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asd-Py-uAo">
-                                <rect key="frame" x="158" y="159" width="236" height="40"/>
-                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GNy-WQ-69S">
                                 <rect key="frame" x="53" y="292" width="300" height="250"/>
                             </imageView>
@@ -155,33 +166,38 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asd-Py-uAo">
+                                <rect key="frame" x="109" y="140" width="196" height="40"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="g7y-uU-vWI" firstAttribute="top" secondItem="loc-Sy-ei1" secondAttribute="bottom" constant="8" id="02x-Qc-sA8"/>
-                            <constraint firstItem="GNy-WQ-69S" firstAttribute="top" secondItem="asd-Py-uAo" secondAttribute="bottom" constant="93" id="0oX-5N-k16"/>
                             <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" secondItem="loc-Sy-ei1" secondAttribute="trailing" constant="20" id="0us-qk-ybP"/>
                             <constraint firstItem="g7y-uU-vWI" firstAttribute="top" secondItem="loc-Sy-ei1" secondAttribute="bottom" constant="8" id="2VY-pZ-SSs"/>
                             <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" secondItem="GNy-WQ-69S" secondAttribute="trailing" constant="61" id="5Gh-m9-x01"/>
+                            <constraint firstItem="GNy-WQ-69S" firstAttribute="top" secondItem="asd-Py-uAo" secondAttribute="bottom" constant="112" id="8S1-mO-v7d"/>
                             <constraint firstItem="loc-Sy-ei1" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="16" id="G0d-gc-J3z"/>
                             <constraint firstItem="loc-Sy-ei1" firstAttribute="top" secondItem="GNy-WQ-69S" secondAttribute="bottom" constant="92" id="HcW-xt-hVM"/>
+                            <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="asd-Py-uAo" secondAttribute="trailing" constant="16" id="IN9-SK-B90"/>
                             <constraint firstItem="uYA-oc-W6Q" firstAttribute="bottom" secondItem="VCS-iH-jnV" secondAttribute="bottom" constant="124" id="Iz9-xR-jtK"/>
                             <constraint firstItem="VCS-iH-jnV" firstAttribute="top" secondItem="g7y-uU-vWI" secondAttribute="bottom" constant="8" id="NMl-CV-UMG"/>
                             <constraint firstItem="GNy-WQ-69S" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="53" id="Ws5-7u-ytv"/>
                             <constraint firstItem="VCS-iH-jnV" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="16" id="YCC-yF-RhO"/>
+                            <constraint firstItem="asd-Py-uAo" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="109" id="a9H-yi-xpd"/>
                             <constraint firstItem="VCS-iH-jnV" firstAttribute="top" secondItem="g7y-uU-vWI" secondAttribute="bottom" constant="8" id="bOm-kJ-kGV"/>
                             <constraint firstItem="g7y-uU-vWI" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="16" id="bhW-yT-G3y"/>
                             <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" secondItem="VCS-iH-jnV" secondAttribute="trailing" constant="20" id="cB8-SZ-lzl"/>
-                            <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" secondItem="asd-Py-uAo" secondAttribute="trailing" constant="20" id="f5b-YA-98B"/>
-                            <constraint firstItem="asd-Py-uAo" firstAttribute="top" secondItem="uYA-oc-W6Q" secondAttribute="top" constant="19" id="kz8-g1-vQW"/>
-                            <constraint firstItem="asd-Py-uAo" firstAttribute="leading" secondItem="uYA-oc-W6Q" secondAttribute="leading" constant="158" id="rlW-1L-TYf"/>
+                            <constraint firstItem="asd-Py-uAo" firstAttribute="top" secondItem="uYA-oc-W6Q" secondAttribute="top" id="p5J-9S-gmW"/>
                             <constraint firstItem="uYA-oc-W6Q" firstAttribute="trailing" secondItem="g7y-uU-vWI" secondAttribute="trailing" constant="20" id="s6x-KX-L3p"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uYA-oc-W6Q"/>
                     </view>
                     <navigationItem key="navigationItem" id="35H-sk-swC"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AmQ-tP-nEz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2167" y="660"/>
         </scene>
