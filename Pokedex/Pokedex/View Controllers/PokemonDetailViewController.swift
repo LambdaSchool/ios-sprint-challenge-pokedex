@@ -26,35 +26,9 @@ class PokemonDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchDetail()
+        updateViews()
         // Do any additional setup after loading the view.
     }
-
-
-
-//    func fetchDetail() {
-//        guard let apiController = apiController,
-//            let pokemonName = pokemon else { return }
-//
-//        apiController.fetchPokemon(for: pokemonName) { (result) in
-//            switch result {
-//            case .success(let pokemon):
-//                DispatchQueue.main.async {
-//                    self.updateViews(with: pokemon)
-//                }
-//                apiController.fetchPokemonImage(at: pokemon.sprites.absoluteString) { (result) in
-//                    if let image = try? result.get() {
-//                        DispatchQueue.main.async {
-//                            self.imageLabel.image = image
-//                        }
-//                    }
-//                }
-//            case .failure(let error):
-//                print("Error Fetching pokemon Detials \(error)")
-//            }
-//        }
-//    }
-//    updateViews(with pokemon: Pokemon)
 
     func updateViews() {
         guard isViewLoaded else { return }

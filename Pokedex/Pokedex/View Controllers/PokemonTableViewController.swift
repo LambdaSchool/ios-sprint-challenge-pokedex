@@ -20,8 +20,14 @@ class PokemonTableViewController: UITableViewController {
 
      let apiController = APIController()
 
+    override func viewWillAppear(_ animated: Bool) {
+           super.viewWillAppear(animated)
+           tableView.reloadData()
+       }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

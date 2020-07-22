@@ -23,7 +23,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
 
     var pokemon: Pokemon? {
         didSet {
-            updateViews(with: pokemon!)
+            updateViews()
         }
     }
     
@@ -31,6 +31,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         hiddenView()
+        updateViews()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -53,7 +54,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             switch result {
             case .success(let pokemon):
                 DispatchQueue.main.async {
-                    self.updateViews(with: pokemon)
+                    self.updateViews()
                 }
                 apiController.fetchPokemonImage(at: pokemon.sprites.absoluteString) { (result) in
                     if let image = try? result.get() {
@@ -76,8 +77,9 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         abilitiesLabel.isHidden = true
     }
     
-    func updateViews(with pokemon: Pokemon) {
+    func updateViews() {
         guard isViewLoaded else { return }
+        guard let pokemon = pokemon else { return }
 
         saveButton.isEnabled = true
         nameLabel.isHidden = false
@@ -103,6 +105,8 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
             abilities.append(ability.capitalized)
         }
         abilitiesLabel.text = "Abilities: \(abilities)"
+
+
         
     }
     
@@ -110,6 +114,7 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         guard let pokemonSaved = pokemon else { return }
         apiController?.addPokemon(pokemon: pokemonSaved)
         navigationController?.popToRootViewController(animated: true)
+
     }
 
 }
