@@ -8,43 +8,52 @@
 
 import UIKit
 
-enum PokedexType {
-    case search
-    case saved
-}
-
 class PokemonTableViewController: UITableViewController {
     
     //MARK: - IBOutlets
-    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK: - Properties
-    var pokedexType: PokedexType?
+    let pokemonController = PokemonController()
     
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if pokedexType == .saved {
-            searchBar.isHidden = true
-        }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return pokemonController.capturedPokemon.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath) as? PokemonTableViewCell else { return UITableViewCell()}
 
-        // Configure the cell...
+        let index = indexPath.row
+        let pokemon = pokemonController.capturedPokemon[index]
+        
+        cell.pokemonNameLabel.text = pokemon.name.capitalized
+        
+        var typesLabelText: String = ""
+        for type in pokemon.types {
+            typesLabelText.append(contentsOf: type.type.name)
+        }
+        
+        pokemonController.getSprite(from: pokemon.sprites.front_default) { (image) in
+            guard let image = image else {
+                print("Error retrieving Sprite from server.")
+                return
+            }
+            
+            cell.spriteImageView.image = image
+        }
 
         return cell
     }
-    */
 
     /*
     // Override to support editing the table view.
@@ -58,14 +67,13 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "PokemonSearchShowSegue" {
+            if let destinationVC = segue.destination as? PokemonViewController {
+                destinationVC.pokemonController = pokemonController
+            }
+        }
     }
-    */
 
 }

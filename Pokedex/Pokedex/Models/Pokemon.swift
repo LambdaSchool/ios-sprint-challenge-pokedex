@@ -13,25 +13,25 @@ struct AbilityJSONObject: Codable {
 }
 
 struct AbilityRAWObject: Codable {
-    let abilityName: String
-}
-
-struct PokemonImage: Codable {
-    let frontDefault: String
-}
-
-struct PokemonTypeJSONObject: Codable {
     let name: String
 }
 
+struct PokemonImage: Codable {
+    let front_default: String
+}
+
+struct PokemonTypeJSONObject: Codable {
+    let type: PokemonTypeRAWObject
+}
+
 struct PokemonTypeRAWObject: Codable {
-    let type: PokemonTypeJSONObject
+    let name: String
 }
 
 struct Pokemon: Codable {
-    let pokemonName: String
-    let pokemonID: Int
-    let abilities: [AbilityRAWObject]
-    let image: PokemonImage
-    let types: [PokemonTypeRAWObject]
+    let name: String
+    let id: Int
+    let abilities: [AbilityJSONObject]
+    let sprites: PokemonImage
+    let types: [PokemonTypeJSONObject]
 }
