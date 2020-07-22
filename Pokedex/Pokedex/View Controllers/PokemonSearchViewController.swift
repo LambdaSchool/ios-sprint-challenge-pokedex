@@ -106,25 +106,11 @@ class PokemonSearchViewController: UIViewController, UISearchBarDelegate {
         
     }
     
-    @IBAction func saveButtonTapped(_ sender: Any) {
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
         guard let pokemonSaved = pokemon else { return }
         apiController?.addPokemon(pokemon: pokemonSaved)
         navigationController?.popToRootViewController(animated: true)
     }
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "reuseIdentifiter",
-//            let searchVC = segue.destination as? PokemonTableViewController {
-//            if let indexPath = UITableView.numberOfRowsInSection {
-//                searchVC.pokemonN = pokemonNames[indexPath.row]
-//            }
-//            searchVC.apiController = apiController
-//        }
-//    }
 
 }
 
