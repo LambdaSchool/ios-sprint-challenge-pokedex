@@ -27,7 +27,7 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.reloadData()
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -50,6 +50,14 @@ class PokemonTableViewController: UITableViewController {
         let pokemon = apiController.newPokemon[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            apiController.newPokemon.remove(at: indexPath.row)
+            tableView.reloadData()
+            
+        }
     }
 
     // MARK: - Navigation
