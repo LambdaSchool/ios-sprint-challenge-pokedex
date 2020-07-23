@@ -44,11 +44,13 @@ class PokemonTableViewController: UITableViewController {
     // SEGUE NAVIGATION 
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowDetailSegue",
-            let detailVC = segue.destination as? PokemonDetailViewController {
+        if segue.identifier == "ShowDetailSegue"{
+            if let detailVC = segue.destination as? PokemonDetailViewController {
+                detailVC.pokemonController = pokemonController
             if let indexPath = tableView.indexPathForSelectedRow {
                 detailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
             }
+        }
         }
         else if segue.identifier == "SearchPokemonSegue" {
             // inject dependencies

@@ -12,7 +12,7 @@ struct Pokemon: Decodable {
     
     let id: Int
     let name: String
-    let sprite: URL
+    let sprite: String
     let abilities: [String]
     
     enum Keys: String, CodingKey {
@@ -42,7 +42,7 @@ struct Pokemon: Decodable {
         id = try container.decode(Int.self, forKey: .id)
         
         let spritesContainer = try container.nestedContainer(keyedBy: Keys.SpriteKeys.self, forKey: .sprites)
-        sprite = try spritesContainer.decode(URL.self, forKey: .front_default)
+        sprite = try spritesContainer.decode(String.self, forKey: .front_default)
         
         
         var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)

@@ -66,20 +66,20 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tFN-z6-iJX">
-                                <rect key="frame" x="0.0" y="218" width="408.5" height="659"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tFN-z6-iJX">
+                                <rect key="frame" x="20" y="216" width="374" height="626"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="pokemonNameLabel" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="523-Yq-V38">
-                                        <rect key="frame" x="0.0" y="0.0" width="408.5" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="39.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="pokemonImageView" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ana-hH-dtL">
-                                        <rect key="frame" x="0.0" y="59.5" width="408.5" height="408.5"/>
+                                        <rect key="frame" x="0.0" y="59.5" width="374" height="174"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="URA-9c-I0Y">
-                                        <rect key="frame" x="0.0" y="488" width="408.5" height="121"/>
+                                        <rect key="frame" x="0.0" y="253.5" width="374" height="121"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="pokemonIdLabel" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kz-Rc-sfO">
                                                 <rect key="frame" x="0.0" y="0.0" width="23.5" height="30"/>
@@ -102,18 +102,22 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wei-2g-B2j">
-                                        <rect key="frame" x="0.0" y="629" width="408.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="394.5" width="374" height="231.5"/>
                                         <state key="normal" title="Save Pokemon"/>
+                                        <connections>
+                                            <action selector="SaveButton:" destination="Uwu-2t-ydp" eventType="touchUpInside" id="gps-ol-lU0"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="Ana-hH-dtL" firstAttribute="width" secondItem="Ana-hH-dtL" secondAttribute="height" multiplier="1:1" id="BO1-7Y-lXC"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="GyV-Af-TXF" firstAttribute="bottom" secondItem="tFN-z6-iJX" secondAttribute="bottom" constant="20" id="1Of-Ke-9NE"/>
+                            <constraint firstItem="tFN-z6-iJX" firstAttribute="top" secondItem="oxl-yV-NvM" secondAttribute="bottom" constant="20" id="3v8-Kv-3d7"/>
+                            <constraint firstItem="GyV-Af-TXF" firstAttribute="trailing" secondItem="tFN-z6-iJX" secondAttribute="trailing" constant="20" id="6Vs-1e-HFY"/>
                             <constraint firstItem="oxl-yV-NvM" firstAttribute="top" secondItem="GyV-Af-TXF" secondAttribute="top" id="SPL-fd-CeH"/>
+                            <constraint firstItem="tFN-z6-iJX" firstAttribute="leading" secondItem="GyV-Af-TXF" secondAttribute="leading" constant="20" id="Tgw-Sk-D7u"/>
                             <constraint firstItem="oxl-yV-NvM" firstAttribute="trailing" secondItem="GyV-Af-TXF" secondAttribute="trailing" id="urd-Or-pVp"/>
                             <constraint firstItem="oxl-yV-NvM" firstAttribute="leading" secondItem="GyV-Af-TXF" secondAttribute="leading" id="w2K-qP-CPx"/>
                         </constraints>
@@ -125,7 +129,6 @@
                         <outlet property="idLabel" destination="7Kz-Rc-sfO" id="pwZ-iI-L3O"/>
                         <outlet property="imageView" destination="Ana-hH-dtL" id="MiB-DH-SKP"/>
                         <outlet property="nameLabel" destination="523-Yq-V38" id="mP7-qc-DhJ"/>
-                        <outlet property="saveButtom" destination="wei-2g-B2j" id="3Jb-3V-WRZ"/>
                         <outlet property="saveButton" destination="wei-2g-B2j" id="0Fu-O5-NYb"/>
                         <outlet property="searchBar" destination="oxl-yV-NvM" id="ANM-9i-rmM"/>
                         <outlet property="typeLabel" destination="bkI-j7-NbS" id="Q91-fy-SFP"/>
@@ -155,6 +158,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="60k-f4-82D"/>
+        <segue reference="2rF-t5-gtU"/>
     </inferredMetricsTieBreakers>
 </document>
