@@ -6,63 +6,87 @@
 //  Copyright © 2020 Lambda. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PokemonController {
     
     enum HTTPMethod: String {
         case get = "GET"
     }
-
+    
     enum NetworkError: Error {
         case noData
         case tryAgain
     }
-    var baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
-    var pokemonResults : [Pokemon] = []
     
-    func searchForPokemon(_ searchText: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
-        
-        let searchURL = baseURL.appendingPathComponent(searchText.lowercased())
-        
+    var pokemonResults: [Pokemon] = []
+    
+    private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
+    
+    func searchForPokemon(_ searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+        let searchURL = baseURL.appendingPathComponent(searchTerm.lowercased())
+       
         var request = URLRequest(url: searchURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            //Handle Error
+       URLSession.shared.dataTask(with: request) { (data, response, error) in
+           //Handle Error
             if let error = error {
-                print("Error \(error)")
+                print("Error receiving Pokemon data: \(error)")
                 completion(.failure(.noData))
+                return
             }
-            
+        
             //Handle Response
             if let response = response as? HTTPURLResponse {
-                print("Response error: \(response)")
-                completion(.failure(.noData))
-                return
+                if response.statusCode == 404 {
+                    completion(.failure(.noData))
+                    return
+                }
+                if response.statusCode != 200 {
+                    print(response)
+                    completion(.failure(.tryAgain))
+                    return
+                }
             }
-            
-            //Handle Data
             guard let data = data else {
+                print("No data received from getPokemon")
                 completion(.failure(.noData))
                 return
             }
-            
-//            let jsonDecoder = JSONDecoder()
-            
             do {
-                let pokemonResult = try JSONDecoder().decode(Pokemon.self, from: data)
-                completion(.success(pokemonResult))
+                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                completion(.success(pokemon))
             } catch {
-                print("Unable to decode the pokemon \(searchText)")
+                print("Error decoding Pokemon data: \(error)")
                 completion(.failure(.tryAgain))
+                return
             }
-            } .resume()
- 
+        } .resume()
+       
     }
     
-    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let imageURL = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+       URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error receiving pokemon image: \(urlString), error: \(error)")
+                completion(.failure(.tryAgain))
+                return
+            }
+            guard let data = data else {
+                print("No data received from fetchImage")
+                completion(.failure(.noData))
+                return
+            }
+            let image = UIImage(data: data)!
+                completion(.success(image))
+        }
+        .resume()
+        }
     
 }
-

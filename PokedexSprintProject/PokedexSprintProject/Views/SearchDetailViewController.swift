@@ -11,7 +11,6 @@ import UIKit
 class SearchDetailViewController: UIViewController {
     
     var pokemonController: PokemonController?
-    var pokemonName: String?
     var pokemon: Pokemon?
     
     
@@ -30,25 +29,44 @@ class SearchDetailViewController: UIViewController {
             self.updateViews(with: pokemon)
             searchBar.isHidden = true
         }
-    
     }
-    
-    func updateViews(with: Pokemon) {
-        title = pokemon?.name.capitalized
-        nameLabel.text = pokemon?.name.capitalized
-     
+        
+        func updateViews(with pokemon: Pokemon) {
+            title = pokemon.name.capitalized
+            nameLabel.text = pokemon.name.capitalized
+            idLabel.text = "ID: \(pokemon.id)"
+            typeLabel.text = "Types: \(pokemon.types.joined(separator: ", "))"
+            abilitiesLabel.text = "Abilities: \(pokemon.abilities.joined(separator: ", "))"
+            guard let pokemonController = pokemonController else { return }
+            pokemonController.fetchImage(at: pokemon.imageString) { (result) in
+                if let image = try? result.get() {
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
+                }
+            }
+        }
+        
+
+    @IBAction func SaveButton(_ sender: UIButton) {
+            if let pokemonController = pokemonController,
+                let pokemon = pokemon {
+                pokemonController.pokemonResults.append(pokemon)
+                navigationController?.popViewController(animated: true)
+            }
+        }
         
     }
-    
-    
-}
 
 extension SearchDetailViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("searching")
         guard let searchTerm = searchBar.text else { return }
-        searchBar.resignFirstResponder()
+        
         guard let pokemonController = pokemonController else { return }
+        
         pokemonController.searchForPokemon(searchTerm) { result in
+            
             switch result {
             case .success(let pokemon):
                 DispatchQueue.main.async {
@@ -58,16 +76,10 @@ extension SearchDetailViewController: UISearchBarDelegate {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("error: \(error)")
+                    print("Error: \(error)")
                 }
             }
         }
-       
-        
     }
     
-    
 }
-
-
-

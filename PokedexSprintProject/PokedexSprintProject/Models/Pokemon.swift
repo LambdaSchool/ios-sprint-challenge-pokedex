@@ -9,23 +9,23 @@
 import Foundation
 import UIKit
 
-struct Pokemon: Codable {
-
+struct Pokemon: Decodable {
+    
     //Coding Keys
     enum Keys: String, CodingKey {
-        case id
         case name
+        case id
         case types
         case abilities
-        case image
+        case imageURL = "sprites"
         
-        enum TypesDescriptionKeys: String, CodingKey {
+        
+        enum TypeDescriptionKeys: String, CodingKey {
             case type
             
             enum TypeKeys: String, CodingKey {
                 case name
             }
-            
         }
         
         enum AbilityDescriptionKeys: String, CodingKey {
@@ -35,16 +35,19 @@ struct Pokemon: Codable {
                 case name
             }
         }
+        
+        enum SpritesKey: String, CodingKey {
+            case front_default
+        }
+        
     }
     
-  
+    var name: String
+    var id: Int
+    var types: [String]
+    var abilities: [String]
+    var imageString: String
     
-    let name: String
-    let id: Int
-    let types: [String]
-    let abilities: [String]
-
-
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         
@@ -57,9 +60,9 @@ struct Pokemon: Codable {
         var typeNames: [String] = []
         
         while typesContainer.isAtEnd == false {
-            let typesDescriptionContainer = try typesContainer.nestedContainer(keyedBy: Keys.TypesDescriptionKeys.self)
+            let typeDescriptionContainer = try typesContainer.nestedContainer(keyedBy: Keys.TypeDescriptionKeys.self)
             
-            let typeContainer = try typesDescriptionContainer.nestedContainer(keyedBy: Keys.TypesDescriptionKeys.TypeKeys.self, forKey: .type)
+            let typeContainer = try typeDescriptionContainer.nestedContainer(keyedBy: Keys.TypeDescriptionKeys.TypeKeys.self, forKey: .type)
             
             let typeName = try typeContainer.decode(String.self, forKey: .name)
             typeNames.append(typeName)
@@ -67,16 +70,11 @@ struct Pokemon: Codable {
         
         types = typeNames
         
-
-        
-        
         var abilitiesContainer = try container.nestedUnkeyedContainer(forKey: .abilities)
         
         var abilityNames: [String] = []
         
         while abilitiesContainer.isAtEnd == false {
-            // abilitiesContainer points to the "n"th item in the array
-            
             let abilityDescriptionContainer = try abilitiesContainer.nestedContainer(keyedBy: Keys.AbilityDescriptionKeys.self)
             
             let abilityContainer = try abilityDescriptionContainer.nestedContainer(keyedBy: Keys.AbilityDescriptionKeys.AbilityKeys.self, forKey: .ability)
@@ -84,9 +82,10 @@ struct Pokemon: Codable {
             let abilityName = try abilityContainer.decode(String.self, forKey: .name)
             abilityNames.append(abilityName)
         }
-        
         abilities = abilityNames
+        
+        let spritesContainer = try container.nestedContainer(keyedBy: Keys.SpritesKey.self, forKey: .imageURL)
+        imageString = try spritesContainer.decode(String.self, forKey: .front_default)
     }
     
-   
 }
