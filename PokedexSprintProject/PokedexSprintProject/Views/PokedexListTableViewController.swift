@@ -20,10 +20,14 @@ class PokedexListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         pokemons = pokemonController.pokemonResults
     }
 
+    
+    
     // MARK: - Table view data source
 
     
