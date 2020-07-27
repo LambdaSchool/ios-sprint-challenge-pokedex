@@ -49,29 +49,37 @@ class PokemonTableViewController: UITableViewController {
                 return
             }
             
-            cell.spriteImageView.image = image
+            DispatchQueue.main.async {
+                cell.spriteImageView.image = image
+            }
         }
 
         return cell
     }
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            let index = indexPath.row
+            pokemonController.capturedPokemon.remove(at: index)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PokemonSearchShowSegue" {
             if let destinationVC = segue.destination as? PokemonViewController {
                 destinationVC.pokemonController = pokemonController
+                destinationVC.title = "Search"
+                destinationVC.pokedexViewType = .search
+            }
+        } else {
+            if let destinationVC = segue.destination as? PokemonViewController {
+                destinationVC.pokemonController = pokemonController
+                destinationVC.title = "Captured"
+                destinationVC.pokedexViewType = .saved
+                destinationVC.pokemonIndex = tableView.indexPathForSelectedRow?.row
             }
         }
     }

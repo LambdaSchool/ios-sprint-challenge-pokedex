@@ -12,7 +12,7 @@ class PokemonController {
     
     //MARK: - Properties
     let baseUrl = URL(string: "https://pokeapi.co/api/v2/pokemon/")
-    let capturedPokemon: [Pokemon] = []
+    var capturedPokemon: [Pokemon] = []
     
     //MARK: - Public Functions
     func searchForPokemon(with name: String, completion: @escaping (Result<Pokemon, Error>) -> Void) {
@@ -68,11 +68,18 @@ class PokemonController {
                 return
             }
             
-            //TODO: - Create UIImage object from retrieved data.
             let sprite = UIImage(data: data)
             completion(sprite)
             
         }.resume()
+    }
+    
+    func capturePokemon(pokemon: Pokemon) {
+        capturedPokemon.append(pokemon)
+    }
+    
+    func releasePokemon(index: Int) {
+        capturedPokemon.remove(at: index)
     }
     
 }

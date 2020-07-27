@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum PokedexViewType {
+    case search
+    case saved
+}
+
 class PokemonViewController: UIViewController, UISearchBarDelegate {
 
     //MARK: - IBOutlets
@@ -21,48 +26,56 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     
     //MARK: - Properties
     var pokemonController: PokemonController?
+    var pokedexViewType: PokedexViewType?
+    var pokemonIndex: Int?
+    var pokemon: Pokemon?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    /*func displayPokemon(with pokemon: Pokemon) {
-        pokemonNameLabel.text = pokemon.name.capitalized
-        idLabel.text = "ID: \(pokemon.id)"
         
-        var typesText = "Types: "
-        for type in pokemon.types {
-            typesText.append(contentsOf: type.type.name)
-        }
-        typesLabel.text = typesText
-        
-        var abilitiesText = "Abilities: "
-        for ability in pokemon.abilities {
-            abilitiesText.append(contentsOf: ability.ability.name)
-        }
-        
-        pokemonController?.getSprite(from: pokemon.sprites.front_default, completion: { (image) in
-            guard let image = image else {
-                print("Error retrieving spirte from server")
-                return
+        if pokedexViewType == .saved {
+            searchBar.isHidden = true
+            saveButton.isHidden = true
+            
+            if let index = pokemonIndex{
+                if let pokemon = pokemonController?.capturedPokemon[index] {
+                    pokemonNameLabel.text = pokemon.name.capitalized
+                    idLabel.text = "ID: \(pokemon.id)"
+                           
+                    var typesText = "Types: "
+                    for type in pokemon.types {
+                        typesText.append(contentsOf: type.type.name.capitalized)
+                    }
+                    typesLabel.text = typesText
+                           
+                    var abilitiesText = "Abilities: "
+                    for ability in pokemon.abilities {
+                        abilitiesText.append(contentsOf: ability.ability.name.capitalized)
+                    }
+                    abilitiesLabel.text = abilitiesText
+                    
+                    self.pokemonController?.getSprite(from: pokemon.sprites.front_default, completion: { (image) in
+                        guard let image = image else {
+                            print("Error retrieving spirte from server")
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.spriteImageView.image = image
+                        }
+                    })
+                }
             }
-            
-            
-            self.spriteImageView.image = image
-        })
-    }*/
+        } else if pokedexViewType == .search {
+            pokemonNameLabel.isHidden = true
+            spriteImageView.isHidden = true
+            idLabel.isHidden = true
+            typesLabel.isHidden = true
+            abilitiesLabel.isHidden = true
+            saveButton.isHidden = true
+        }
+    }
     
     //MARK: - SearchBarDelegate Methods
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -76,22 +89,27 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
                 return
             }
             
+            self.pokemon = pokemon
+            
             DispatchQueue.main.async {
                 self.pokemonNameLabel.text = pokemon.name.capitalized
                 self.idLabel.text = "ID: \(pokemon.id)"
+                self.pokemonNameLabel.isHidden = false
+                self.idLabel.isHidden = false
                        
                 var typesText = "Types: "
                 for type in pokemon.types {
-                    typesText.append(contentsOf: type.type.name)
+                    typesText.append(contentsOf: type.type.name.capitalized)
                 }
                 self.typesLabel.text = typesText
+                self.typesLabel.isHidden = false
                        
                 var abilitiesText = "Abilities: "
                 for ability in pokemon.abilities {
-                    abilitiesText.append(contentsOf: ability.ability.name)
+                    abilitiesText.append(contentsOf: ability.ability.name.capitalized)
                 }
-                
-                var sprite = UIImage()
+                self.abilitiesLabel.text = abilitiesText
+                self.abilitiesLabel.isHidden = false
                 
                 self.pokemonController?.getSprite(from: pokemon.sprites.front_default, completion: { (image) in
                     guard let image = image else {
@@ -99,14 +117,28 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
                         return
                     }
                     
-                    sprite = image
+                    DispatchQueue.main.async {
+                        self.spriteImageView.image = image
+                        self.spriteImageView.isHidden = false
+                    }
+                    
                 })
                 
-                self.spriteImageView.image = sprite
+                self.saveButton.isHidden = false
             }
             
         }
         
+    }
+    
+    //MARK: - IBActions
+    @IBAction func captureButtonTapped(_ sender: Any) {
+        guard let pokemon = pokemon else {
+            return
+        }
+        
+        pokemonController?.capturePokemon(pokemon: pokemon)
+        navigationController?.popViewController(animated: true)
     }
     
 }
