@@ -39,18 +39,25 @@ class PokemonTableViewController: UITableViewController {
         let pokemon = pokemonController.savedPokemon[indexPath.row]
         cell.textLabel?.text = pokemon.name.capitalized
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            pokemonController.savedPokemon.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
         
         
-    // SEGUE NAVIGATION 
+        // SEGUE NAVIGATION
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetailSegue"{
             if let detailVC = segue.destination as? PokemonDetailViewController {
                 detailVC.pokemonController = pokemonController
-            if let indexPath = tableView.indexPathForSelectedRow {
-                detailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    detailVC.pokemon = pokemonController.savedPokemon[indexPath.row]
+                }
             }
-        }
         }
         else if segue.identifier == "SearchPokemonSegue" {
             // inject dependencies
@@ -60,8 +67,8 @@ class PokemonTableViewController: UITableViewController {
         }
     }
     
-  
     
     
-
+    
+    
 }
