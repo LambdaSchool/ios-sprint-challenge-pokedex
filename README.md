@@ -1,6 +1,7 @@
 # Pokedex
 
 Pokedex search app 
+
 Allows adding pokemon and viewing different attributes 
 
 # Tech/framework used
