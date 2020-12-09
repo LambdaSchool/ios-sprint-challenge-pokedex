@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pokemon: Codable {
+struct PokemonRepresentation: Codable {
     let id: Int
     let name: String
     let types: [String]
@@ -23,7 +23,7 @@ struct Pokemon: Codable {
         case sprites
         
         enum SpriteKeys: String, CodingKey {
-            case sprite = "front_default"
+            case sprite = "front_shiny"
         }
         
         enum AbilityDescriptionKeys: String, CodingKey {
@@ -42,7 +42,10 @@ struct Pokemon: Codable {
             }
         }
     }
-    
+}
+
+
+extension PokemonRepresentation {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PokemonKeys.self)
         

@@ -21,9 +21,9 @@ class PokemonController {
 
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-    var pokemon: [Pokemon] = []
+    var pokemon: [PokemonRepresentation] = [] // Do I need this? Yes, I'm using it in both view controllers to store and display the saved pokemon. Actually maybe no, because I'm going to be saving and loading with the Core Data and NSFetchedResultsController instead. I'll keep it until I make the needed changes.
     
-    func fetchPokemon(searchTerm: String, completion: @escaping (Result<Pokemon, NetworkError>) -> Void) {
+    func fetchPokemon(searchTerm: String, completion: @escaping (Result<PokemonRepresentation, NetworkError>) -> Void) {
         let searchURL = baseURL.appendingPathComponent(searchTerm.lowercased())
         
         var request = URLRequest(url: searchURL)
@@ -50,7 +50,7 @@ class PokemonController {
             
             do {
                 let decoder = JSONDecoder()
-                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                let pokemon = try decoder.decode(PokemonRepresentation.self, from: data)
                 completion(.success(pokemon))
             } catch {
                 print("Error decoding Pokemon data: \(error)")

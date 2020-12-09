@@ -19,7 +19,9 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var saveButton: UIButton!
     
     var pokemonController: PokemonController!
-    var pokemon: Pokemon?
+    var pokemon: PokemonRepresentation?
+    var savedPokemon: Pokemon?
+    var sprite: Data?
     
     var buttonHidden = true
     var searchBarHidden = true
@@ -38,9 +40,17 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    @IBAction func saveTapped(_ sender: Any) {
+    @IBAction func savePokemon(_ sender: Any) {
         guard let pokemon = pokemon else { return }
-        pokemonController.pokemon.append(pokemon)
+        
+        Pokemon(id: pokemon.id, name: pokemon.name, types: pokemon.types, abilities: pokemon.abilities, sprite: sprite)
+        
+        do {
+            try CoreDataStack.shared.mainContext.save()
+        } catch {
+            NSLog("Error saving managed object context: \(error)")
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -52,6 +62,17 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             downloadImage(from: pokemon.sprite)
             displayArrayData(for: "types", in: typeLabel, from: pokemon.types)
             displayArrayData(for: "abilities", in: abilityLabel, from: pokemon.abilities)
+        } else if let pokemon = savedPokemon,
+                  let name = pokemon.name,
+                  let sprite = pokemon.sprite,
+                  let types = pokemon.types,
+                  let abilities = pokemon.abilities {
+            title = name.capitalizingFirstLetter()
+            pokemonLabel.text = name.capitalizingFirstLetter()
+            idLabel.text = "ID: \(pokemon.id)"
+            spriteView.image = UIImage(data: sprite)
+            displayArrayData(for: "types", in: typeLabel, from: types)
+            displayArrayData(for: "abilities", in: abilityLabel, from: abilities)
         } else {
             title = "Pokemon Search"
             pokemonLabel.text = ""
@@ -84,6 +105,7 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() { [weak self] in
+                self?.sprite = UIImage(data: data)?.pngData()
                 self?.spriteView.image = UIImage(data: data)
             }
         }
@@ -108,5 +130,4 @@ class PokemonViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
-
 }
