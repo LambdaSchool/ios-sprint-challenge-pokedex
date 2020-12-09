@@ -9,22 +9,22 @@
 import UIKit
 
 class PokemonSearchTableViewController: UITableViewController {
+    
+    // MARK: - Properties
+    
+    var pokedexController: PokedexController!
+    var matchedPokemon: [String] = []
+    var delegate: SavePokemon?
 
+    // MARK: - IBOutlets
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
-    // MARK: - IBOutlets
-    
-    @IBOutlet weak var searchBar: UISearchBar!
-
-    // MARK: - Properties
-    
-    var pokedexController: PokedexController?
-    var matchedPokemon: [String] = []
-    var delegate: SavePokemon?
     
     // MARK: - Table view data source
 
@@ -48,22 +48,25 @@ class PokemonSearchTableViewController: UITableViewController {
         guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
         guard let cell = sender as? MatchedPokemonTableViewCell else { return }
         guard let pokemonName = cell.matchedPokemonLabel.text else { return }
-        guard let pokemon = pokedexController!.pokedex[pokemonName] else { return }
+        guard let pokemon = self.pokedexController.fetchPokemon(pokemonName:pokemonName) else { return }
         
-        pokemonDetailVC.pokedexController = pokedexController
+        pokemonDetailVC.pokedexController = self.pokedexController
         pokemonDetailVC.pokemon = pokemon
         pokemonDetailVC.delegate = delegate
     }
-
 }
-extension PokemonSearchTableViewController: UISearchBarDelegate{
+
+extension PokemonSearchTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchBarText = searchBar.text else { return }
         guard !searchBarText.isEmpty else { return }
-        var pokemon = (pokedexController?.performSearch(searchBarText))!
+        let pokemonNames = self.pokedexController.fetchPokemonNames(user: false, cached: true)
+        let matchedPokemon = pokemonNames.filter { name in
+            name.localizedCaseInsensitiveContains(searchBarText)
+        }
         
-        matchedPokemon = pokemon.sorted()
+        self.matchedPokemon = matchedPokemon.sorted()
         tableView.reloadData()
     }
 }

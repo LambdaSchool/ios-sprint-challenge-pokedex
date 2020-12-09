@@ -2,38 +2,40 @@
 //  Pokedex.swift
 //  Pokedex
 //
-//  Created by alfredo on 1/26/20.
+//  Created by Alfredo Colon on 12/8/20.
 //  Copyright © 2020 Alfredo. All rights reserved.
 //
 
 import Foundation
 
-struct PokedexEntry: Codable{
-    var abilities: [Ability]
-    var favorite: Bool = false
-    var height: Int
-    var id: Int
-    var images: Sprites
-    let name: String
-    var species: PokemonNameAndURL
-    var types: [Type]
-    let url: URL!
-    var weight: Int
+class Pokedex {
     
-    func getAbilitiesAsString() -> String{
-        var abilitiesArray: [String] = []
-        
-        for ability in abilities {
-            abilitiesArray.append(ability.ability.name)
-        }
-        return abilitiesArray.joined(separator: ", ")
+    // MARK: - Properties
+    
+    private var pokemon: [String: Pokemon]
+    
+    // MARK: - Init
+    
+    init() {
+        self.pokemon = [ : ]
     }
-    func getTypesString() -> String{
-        var typesArray: [String] = []
-        for type in types{
-            typesArray.append(type.type.name)
-        }
-        return typesArray
-            .joined(separator: ", ")
+    
+    // MARK: - Methods
+    
+    func add(pokemon: Pokemon) {
+        self.pokemon[pokemon.name] = pokemon
+    }
+    
+    func fetchPokemonNames() -> [String] {
+        return self.pokemon.keys.sorted()
+    }
+    
+    func remove(pokemon: Pokemon) {
+        self.pokemon.removeValue(forKey: pokemon.name)
+    }
+    
+    func fetchPokemon(pokemonName: String) -> Pokemon? {
+        guard let pokemon = self.pokemon[pokemonName] else { return nil }
+        return pokemon
     }
 }

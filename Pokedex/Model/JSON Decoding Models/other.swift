@@ -8,17 +8,15 @@
 
 import Foundation
 
-
-
-struct Types: Codable{
+struct Types: Codable {
     let slot: Int
     let type: [PokemonNameAndURL]
 }
-struct Type: Codable{
+struct Type: Codable {
     let slot: Int
     let type: PokemonNameAndURL
 }
-struct PokemonInformation: Codable{
+struct PokemonInformation: Codable {
     var abilities: [Ability]
     var height: Int
     var id: Int

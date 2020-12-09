@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Ability: Codable{
+struct Ability: Codable {
     let ability: PokemonNameAndURL
     let is_hidden: Bool
     let slot: Int

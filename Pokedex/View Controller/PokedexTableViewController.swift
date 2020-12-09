@@ -9,31 +9,40 @@
 import UIKit
 
 class PokedexTableViewController: UITableViewController {
+
+    // MARK: - Properties
+    
+    var pokedexController: PokedexController!
+    var userPokemonNamesSorted: [String]!
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokedexController = PokedexController()
+        self.updateProperties()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
-    // MARK: - Properties
     
-    var pokedexController: PokedexController!
-    var savedPokemon: [String] = []
+    // MARK: - Methods
+    
+    private func updateProperties() {
+        self.pokedexController = PokedexController()
+        self.userPokemonNamesSorted = self.pokedexController.fetchPokemonNames(user: true, cached: false)
+    }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedPokemon.count
+        return userPokemonNamesSorted.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SavedPokemonCell", for: indexPath) as? SavedPokemonTableViewCell else { return UITableViewCell() }
         let row = indexPath.row
-        let pokemonName = savedPokemon[row]
+        let pokemonName = userPokemonNamesSorted[row]
         
         cell.pokemonLabel.text = pokemonName
         return cell
@@ -48,22 +57,22 @@ class PokedexTableViewController: UITableViewController {
             searchVC.pokedexController = self.pokedexController
             searchVC.delegate = self
         case "PokemonDetailSegue":
-            guard let pokemonDetailVC = segue.destination as? PokemonDetailViewController else { return }
-            guard let cell = sender as? SavedPokemonTableViewCell else { return }
-            guard let pokemonName = cell.pokemonLabel.text else { return }
-            guard let pokemon = pokedexController.pokedex[pokemonName] else { return }
-            pokemonDetailVC.pokemon = pokemon
-            pokemonDetailVC.delegate = self
-            pokemonDetailVC.pokedexController = self.pokedexController
+            guard segue.destination is PokemonDetailViewController else { return }
+//            guard let cell = sender as? SavedPokemonTableViewCell else { return }
+//            guard let pokemonName = cell.pokemonLabel.text else { return }
+//            guard let pokemon = pokedexController.userPokedex[pokemonName] else { return }
+//            pokemonDetailVC.pokemon = pokemon
+//            pokemonDetailVC.delegate = self
+//            pokemonDetailVC.pokedexController = self.pokedexController
         default:
             break
         }
     }
 }
 
-extension PokedexTableViewController: SavePokemon{
+extension PokedexTableViewController: SavePokemon {
     func updateSavedPokemon(){
-        savedPokemon = pokedexController.getSavedPokemon()
+//        userPokedexPokemonNamesSorted = pokedexController.getUserPokemonNamesSorted()
         tableView.reloadData()
     }
 }

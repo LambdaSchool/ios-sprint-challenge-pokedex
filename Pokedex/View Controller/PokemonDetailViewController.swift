@@ -9,14 +9,14 @@
 import UIKit
 
 class PokemonDetailViewController: UIViewController {
+
+    // MARK: - Properties
     
-    //MARK: - View Life Cycle
+    var pokedexController: PokedexController?
+    var pokemon: Pokemon?
+    var delegate: SavePokemon?
     
-    override func viewDidLoad() {
-        updateViews()
-    }
-    
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
@@ -24,27 +24,30 @@ class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var abilitiesLabel: UILabel!
     @IBOutlet weak var navigationBar: UINavigationItem!
     
-     //MARK: - IBActions
+    // MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        updateViews()
+    }
+    
+     // MARK: - IBActions
      
     @IBAction func saveButtonTapped(_ sender: UIButton) {
-        pokedexController?.pokedex[pokemon!.name]?.favorite.toggle()
-        delegate?.updateSavedPokemon()
+        guard let pokemon = self.pokemon else { return }
         switch true{
         case sender.titleLabel?.text == "Save Pokemon":
             sender.setTitle("Unsave Pokemon", for: .normal)
+            self.pokedexController?.remove(pokemon: pokemon)
         case sender.titleLabel?.text == "Unsave Pokemon":
             sender.setTitle("Save Pokemon", for: .normal)
+            self.pokedexController?.add(pokemon: pokemon)
         default:
             break
         }
+        delegate?.updateSavedPokemon()
     }
-    //MARK: - Properties
     
-    var pokedexController: PokedexController?
-    var pokemon: PokedexEntry?
-    var delegate: SavePokemon?
-    
-    //MARK: - Methods
+    // MARK: - Methods
     
     func updateViews(){
         guard let _ = pokemon else { return }
@@ -88,7 +91,7 @@ class PokemonDetailViewController: UIViewController {
         default:
             return nil
         }
-        let url = NSURL(string: urlString) as! URL
+        let url = NSURL(string: urlString)! as URL
         if let imageData: NSData = NSData(contentsOf: url) {
             image = UIImage(data: imageData as Data)
         }

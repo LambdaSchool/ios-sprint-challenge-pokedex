@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct APIPokedexRequestContainer: Codable{
+struct APIPokedexRequestContainer: Codable {
     let count: Int
     let results: [PokemonNameAndURL]
 }

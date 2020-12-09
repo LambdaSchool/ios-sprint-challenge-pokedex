@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Sprites: Codable{
+struct Sprites: Codable {
     let back_default: String?
     let back_female: String?
     let back_shiny: String?

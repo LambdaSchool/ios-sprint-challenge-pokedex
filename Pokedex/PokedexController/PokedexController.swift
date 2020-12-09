@@ -9,45 +9,43 @@
 import Foundation
 
 
-class PokedexController{
+class PokedexController {
     
-    init(){
-        getPokemonNamesAndURLS()
+    // MARK: - Properties
+    
+    private let apiController = APIController()
+    private let cachedPokedex: Pokedex
+    private let userPokedex: Pokedex
+    
+    // MARK: - Init
+    
+    init() {
+        self.cachedPokedex = Pokedex()
+        self.userPokedex = Pokedex()
+        self.getPokemonNamesAndURLS()
+    }
+
+    // MARK: - Methods
+    
+    func add(pokemon: Pokemon) {
+        self.userPokedex.add(pokemon: pokemon)
     }
     
-    //MARK: - Properties
-    
-    let apiController = APIController()
-    var pokedex: [String : PokedexEntry] = [:]
-    var savedPokemon: [String] {
-        return getSavedPokemon()
+    func remove(pokemon: Pokemon) {
+        self.userPokedex.remove(pokemon: pokemon)
     }
     
-    //MARK: - Methods
-    
-    func getPokemonNames()->[String]{
-        var pokemonNames: [String] = []
-        for (key,value) in pokedex{
-            pokemonNames.append(value.name)
+    func fetchPokemonNames(user: Bool, cached: Bool) -> [String] {
+        if user {
+            return self.userPokedex.fetchPokemonNames()
         }
-        
-        return pokemonNames
-    }
-    
-    func getSavedPokemon() -> [String] {
-        var savedPokemon: [String] = []
-        
-        for (key, _) in pokedex {
-            if let pokemon = pokedex[key]{
-                if pokemon.favorite == true{
-                    savedPokemon.append(pokemon.name)
-                }
-            }
+        if cached {
+            return self.cachedPokedex.fetchPokemonNames()
         }
-        return savedPokemon.sorted()
+        return []
     }
     
-    func addRemainingPokemonInformationToPokedex(_ pokemonInfo: PokemonInformation, _ name: String, _ url: URL!){
+    func addRemainingPokemonInformationToPokedex(_ pokemonInfo: PokemonInformation, _ name: String, _ url: URL!) {
         let abilites = pokemonInfo.abilities
         let height = pokemonInfo.height
         let species = pokemonInfo.species
@@ -55,12 +53,16 @@ class PokedexController{
         let images = pokemonInfo.sprites
         let weight = pokemonInfo.weight
         let type = pokemonInfo.types
-        let pokedexEntry = PokedexEntry(abilities: abilites, favorite: false, height: height, id: id, images: images, name: name, species: species, types: type, url: url, weight: weight)
+        let pokemon = Pokemon(abilities: abilites, addedToUserPokedex: false, height: height, id: id, images: images, name: name, species: species, types: type, url: url, weight: weight)
         
-        pokedex[name] = pokedexEntry
+        self.cachedPokedex.add(pokemon: pokemon)
+    }
+    
+    func fetchPokemon(pokemonName: String) -> Pokemon? {
+        return self.cachedPokedex.fetchPokemon(pokemonName: pokemonName)
     }
 
-    func getInfo(_ url: URL!, _ name: String){
+    func getInfo(_ url: URL!, _ name: String) {
         apiController.fetchPokemonInformation(url) { result in
             do {
                 let pokeInfo = try result.get()
@@ -84,15 +86,15 @@ class PokedexController{
         }
     }
     
-    func beginCreatingPokedex(_ allPokemon: APIPokedexRequestContainer){
+    func beginCreatingPokedex(_ allPokemon: APIPokedexRequestContainer) {
         for pokemon in allPokemon.results{
             let name = pokemon.name
             let url = URL(string: pokemon.url)
-            getInfo(url, name)
+            self.getInfo(url, name)
         }
     }
     
-    func getPokemonNamesAndURLS(){
+    func getPokemonNamesAndURLS() {
         apiController.fetchAllPokemonNamesAndUrls { (result) in
             do {
                 let allPokemon = try result.get()

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3QI-YS-8Yt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3QI-YS-8Yt">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,17 +16,17 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yqv-a0-0o0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SavedPokemonCell" id="A4v-rL-2gs" customClass="SavedPokemonTableViewCell" customModule="Pokedex" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A4v-rL-2gs" id="Rbc-Pp-7nF">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zLq-Gi-JvT">
-                                            <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -49,7 +51,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Pokedex" largeTitleDisplayMode="always" id="W1x-0N-yEi">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="8bo-6e-WWG">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="search" id="8bo-6e-WWG">
                             <connections>
                                 <segue destination="Q32-He-eQp" kind="show" identifier="SearchSegue" id="deY-ZR-b2s"/>
                             </connections>
@@ -67,7 +69,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kvI-q8-JJb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="rda-FD-HU2">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -157,11 +159,8 @@
                                     <constraint firstAttribute="width" constant="240" id="kZ5-da-c7q"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qwT-P9-LIg">
-                                <rect key="frame" x="57" y="685" width="300" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="A5b-4N-fvQ"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qwT-P9-LIg">
+                                <rect key="frame" x="142" y="685" width="130" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Save Pokemon"/>
                                 <connections>
@@ -169,7 +168,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="56o-wk-Lag"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="56o-wk-Lag" firstAttribute="trailing" secondItem="N0b-Vg-Mtx" secondAttribute="trailing" constant="20" id="0hI-OR-7pk"/>
                             <constraint firstItem="rMu-rX-YI2" firstAttribute="centerX" secondItem="xhT-1Z-K5t" secondAttribute="centerX" id="Xpz-fA-COO"/>
@@ -179,7 +179,6 @@
                             <constraint firstItem="qwT-P9-LIg" firstAttribute="centerX" secondItem="56o-wk-Lag" secondAttribute="centerX" id="kLO-sn-IA2"/>
                             <constraint firstItem="N0b-Vg-Mtx" firstAttribute="leading" secondItem="56o-wk-Lag" secondAttribute="leading" constant="20" id="nc5-8G-mdW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="56o-wk-Lag"/>
                     </view>
                     <navigationItem key="navigationItem" title="Matched Pokemon" id="dyU-1h-76k"/>
                     <connections>
@@ -213,10 +212,13 @@
             <point key="canvasLocation" x="-88.405797101449281" y="39.508928571428569"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="exclamationmark.triangle" catalog="system" width="64" height="56"/>
-    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sSr-AP-U6K"/>
+        <segue reference="Xm1-C8-Rag"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="exclamationmark.triangle" catalog="system" width="128" height="112"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

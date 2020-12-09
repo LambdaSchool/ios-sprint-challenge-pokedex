@@ -10,7 +10,7 @@ import UIKit
 
 class MatchedPokemonTableViewCell: UITableViewCell {
     
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     
     @IBOutlet weak var matchedPokemonLabel: UILabel!
     
