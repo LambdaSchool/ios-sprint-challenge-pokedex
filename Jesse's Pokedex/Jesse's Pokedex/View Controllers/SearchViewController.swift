@@ -23,8 +23,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var saveButton: UIButton!
     
-    
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -37,7 +36,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         pokemonController.savePokemon(pokemon: pokemon)
         navigationController?.popViewController(animated: true)
     }
-    
     
     // MARK: - Methods
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -64,19 +62,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func updateViews(with pokemon: Pokemon) {
-        title = pokemon.name
-        pokemonNameLabel.text = pokemon.name
+        pokemonNameLabel.text = pokemon.name.capitalized
         pokemonID.text = String(pokemon.id)
         pokemonType.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
         pokemonAbility.text = pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")
         
         pokemonNameLabel.isHidden = false
-        pokemonID.isHidden = false
-        pokemonType.isHidden = false
-        pokemonAbility.isHidden = false
         saveButton.isHidden = false
     }
-    
-    
-    
 }

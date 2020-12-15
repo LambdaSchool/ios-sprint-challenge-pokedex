@@ -35,11 +35,3 @@ struct Pokemon: Codable, Equatable {
         let front_default: String
     }
 }
-
-//struct Pokemon: Codable {
-//    let name: String
-//    let image: String
-//    let id: Int
-//    let type: String
-//    let ability: String
-//}

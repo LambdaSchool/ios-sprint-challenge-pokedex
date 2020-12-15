@@ -10,30 +10,24 @@ import UIKit
 
 class PokemonTableViewController: UITableViewController {
     
+    // MARK: - Properties
     let pokemonController = PokemonController()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //tableView.reloadData()
-    }
-    
+    // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
     // MARK: - Table view data source
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return pokemonController.savedPokemon.count
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
         let pokemon = pokemonController.savedPokemon[indexPath.row]
-        cell.textLabel?.text = pokemon.name
+        cell.textLabel?.text = pokemon.name.capitalized
         return cell
     }
     
@@ -51,4 +45,3 @@ class PokemonTableViewController: UITableViewController {
         }
     }
 }
-

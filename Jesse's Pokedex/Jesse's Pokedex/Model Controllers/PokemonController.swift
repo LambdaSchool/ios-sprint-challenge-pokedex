@@ -6,7 +6,6 @@
 //  Copyright © 2019 Lambda School. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 enum HTTPMethod: String {
@@ -46,9 +45,6 @@ class PokemonController {
         var request = URLRequest(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        //        request.setValue(HeaderNames.applicationJSON.rawValue,
-        //                         forHTTPHeaderField: HeaderNames.contentType.rawValue)
-        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
@@ -70,7 +66,6 @@ class PokemonController {
             }
             
             let decoder = JSONDecoder()
-            
             do {
                 let pokemonSearch = try decoder.decode(Pokemon.self, from: data)
                 completion(.success(pokemonSearch))
@@ -104,7 +99,6 @@ class PokemonController {
             
             let image = UIImage(data: data)
             completion(image)
-            
             }.resume()
     }
     
@@ -112,16 +106,3 @@ class PokemonController {
         savedPokemon.append(pokemon)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
