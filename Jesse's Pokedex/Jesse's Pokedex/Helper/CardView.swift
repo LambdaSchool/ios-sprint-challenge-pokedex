@@ -31,5 +31,4 @@ class CardView: UIView {
         
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
 }

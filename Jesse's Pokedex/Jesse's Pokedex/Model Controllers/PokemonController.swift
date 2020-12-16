@@ -32,6 +32,18 @@ enum HeaderNames: String {
 
 class PokemonController {
     
+    init() {
+        loadFromPersistentStore()
+    }
+    
+    private var persistentFileURL: URL? {
+        let fileManager = FileManager.default
+        
+        guard let documents = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return documents.appendingPathComponent("pokemon.plist")
+        
+    }
+    
     private let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
     
     var savedPokemon: [Pokemon] = []
@@ -104,5 +116,31 @@ class PokemonController {
     
     func savePokemon(pokemon: Pokemon) {
         savedPokemon.append(pokemon)
+        saveToPersistentStore()
+    }
+    
+    func saveToPersistentStore() {
+        guard let url = persistentFileURL else { return }
+        
+        do {
+            let encoder = PropertyListEncoder()
+            let data = try encoder.encode(savedPokemon)
+            try data.write(to: url)
+        } catch {
+            NSLog("Error saving pokemon data: \(error)")
+        }
+    }
+    
+    func loadFromPersistentStore() {
+        let fileManager = FileManager.default
+        guard let url = persistentFileURL, fileManager.fileExists(atPath: url.path) else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = PropertyListDecoder()
+            savedPokemon = try decoder.decode([Pokemon].self, from: data)
+        } catch {
+            NSLog("Error loading pokemon data: \(error)")
+        }
     }
 }

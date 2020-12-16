@@ -10,16 +10,16 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    // MARK: - Properties
+    var pokemonController: PokemonController!
+    var pokemon: Pokemon?
+    
     // MARK: - Outlets
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var pokemonID: UILabel!
     @IBOutlet weak var pokemonType: UILabel!
     @IBOutlet weak var pokemonAbility: UILabel!
-    
-    // MARK: - Properties
-    var pokemonController: PokemonController!
-    var pokemon: Pokemon?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -28,9 +28,9 @@ class DetailViewController: UIViewController {
         updateViews(with: pokemon)
     }
     
+    // MARK: - Methods
     func updateViews(with pokemon: Pokemon) {
-        
-        title = pokemon.name
+        title = pokemon.name.capitalized
         pokemonID.text = String(pokemon.id)
         pokemonType.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
         pokemonAbility.text = pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")

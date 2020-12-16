@@ -8,11 +8,12 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController {
     
     // MARK: - Properties
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var matchingPokemon = [Pokemon]()
     
     // MARK: - Outlets
     @IBOutlet weak var pokemonNameLabel: UILabel!
@@ -38,6 +39,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     // MARK: - Methods
+    func updateViews(with pokemon: Pokemon) {
+        pokemonNameLabel.text = pokemon.name.capitalized
+        pokemonID.text = String(pokemon.id)
+        pokemonType.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
+        pokemonAbility.text = pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")
+        
+        pokemonNameLabel.isHidden = false
+        saveButton.isHidden = false
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text,
                 let pokemonController = pokemonController else { return }
@@ -59,15 +73,5 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 NSLog("Error fetching pokemon details: \(error)")
             }
         }
-    }
-    
-    func updateViews(with pokemon: Pokemon) {
-        pokemonNameLabel.text = pokemon.name.capitalized
-        pokemonID.text = String(pokemon.id)
-        pokemonType.text = pokemon.types.map({ $0.type.name.capitalized }).joined(separator: ", ")
-        pokemonAbility.text = pokemon.abilities.map({ $0.ability.name.capitalized }).joined(separator: ", ")
-        
-        pokemonNameLabel.isHidden = false
-        saveButton.isHidden = false
     }
 }
