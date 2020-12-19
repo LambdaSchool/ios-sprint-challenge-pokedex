@@ -1,3 +1,7 @@
+# About
+
+This is a project I created a Lambda School student. We had 3 hours to complete the challenge.
+
 # Networking Sprint Challenge: Pokedex
 
 This Sprint explored material related to networking and asynchronous tasks on iOS. During this Sprint, you studied dispatch, REST, URL Sessions, completion handlers and more. In your challenge this week, you demonstrate proficiency in these topics by creating an application that uses a free Pokemon API to allow users to search for their favorite monsters.
