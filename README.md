@@ -1,6 +1,6 @@
 # About
 
-This is a project I created a Lambda School student. We had 3 hours to complete the challenge.
+This is a project I created as a Lambda School student. We had 3 hours to complete the challenge.
 
 # Networking Sprint Challenge: Pokedex
 
