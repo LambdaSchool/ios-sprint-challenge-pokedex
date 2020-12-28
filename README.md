@@ -8,7 +8,7 @@ UIKit | Storyboard | RESTful API | URLSession | Dispatch Queue | UISearchBar | L
 This project uses the **pokeapi.co API** ([API Documentation](https://pokeapi.co/docs/v2.html)).
 
 ___
-### Screen Recording
+### Screen Recording 📱
 This screen recording previews the look and feel of the project
 
 ![pokedex GIF](https://github.com/jesseleeruiz/ios-sprint-challenge-pokedex/blob/master/pokedexRec.gif)
