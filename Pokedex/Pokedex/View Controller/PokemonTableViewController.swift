@@ -10,15 +10,13 @@ import UIKit
 class PokemonTableViewController: UITableViewController {
     
     var pokemonController = PokemonController()
-    private var pokemon: [Pokemon] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source

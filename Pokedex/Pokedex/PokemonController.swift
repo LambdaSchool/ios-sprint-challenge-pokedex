@@ -11,6 +11,7 @@ class PokemonController {
     enum NetworkError: Error {
         case tryAgain
         case otherError
+        case noData
     }
    
 //        init() {
@@ -26,33 +27,28 @@ class PokemonController {
     
     let baseURL = URL(string: "https://pokeapi.co/api/v2/pokemon/")!
     
-//    private var persistentFileURL: URL? {
-//        let fm = FileManager.default
-//        guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-//        return documents.appendingPathComponent("Pokemon.plist")
-//    }
-    
-    func fetchPokemon(with name: String, completion: @escaping (Error?) -> ()) {
+    func fetchPokemon(with name: String, completion: @escaping (Result<Pokemon, NetworkError>) -> ()) {
         let searchURL = baseURL.appendingPathComponent("\(name)".lowercased())
         var request = URLRequest(url: searchURL)
         request.httpMethod = "GET"
         
         let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error{
-                completion(error)
+                completion(.failure(.tryAgain))
+                print("Error \(error)")
             }
             
             guard let data = data else {
-                completion(NSError(domain: "fetch error with data", code: -1, userInfo: nil))
+                completion(.failure(.noData))
                 return
             }
             
             do {
                 let result = try JSONDecoder().decode(Pokemon.self, from: data)
                 print(result)
-                completion(nil)
+                completion(.success(result))
             } catch {
-                completion(error)
+                completion(.failure(.otherError))
             }
             
         }
