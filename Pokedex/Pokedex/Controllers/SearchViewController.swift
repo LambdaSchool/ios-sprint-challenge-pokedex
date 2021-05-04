@@ -36,14 +36,24 @@ class SearchViewController: UIViewController {
         if selectedPokemon != nil {
             navItem.title = "Pokemon Detail"
             navItem.backBarButtonItem?.tintColor = UIColor.black
-            clearView()
+            fetchPokemon(pokemon: selectedPokemon?.name ?? "ditto")
         } else {
             navItem.title = "Pokemon Search"
             navItem.backBarButtonItem?.tintColor = UIColor.black
         }
     }
     
- 
+    func fetchPokemon(pokemon: String) {
+        apiController.performSearch(searchTerm: pokemon) { error in
+            if let error = error {
+                print("There was an error: \(error)")
+                return
+            }
+            DispatchQueue.main.async {
+                self.updateViews()
+            }
+        }
+    }
 
 
     @IBAction func savePokemonTapped(_ sender: Any) {
@@ -112,17 +122,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return }
-        let lowercase = searchTerm.lowercased()
-        apiController.performSearch(searchTerm: lowercase) { error in
-            if let error = error {
-                print("There was an error: \(error)")
-                return
-            }
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
-        }
-       
+        fetchPokemon(pokemon: searchTerm.lowercased())
     }
     
 }
