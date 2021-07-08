@@ -1,0 +1,92 @@
+//
+//  PokemonController.swift
+//  Pokedex
+//
+//  Created by Dillon McElhinney on 9/14/18.
+//  Copyright © 2018 Dillon McElhinney. All rights reserved.
+//
+
+import Foundation
+
+class PokemonController {
+    
+    // MARK: - Properties
+    private(set) var pokedex: [Pokemon] = []
+    
+    var pokedexSortedByID: [Pokemon] {
+        return pokedex.sorted() { $0.id < $1.id }
+    }
+    
+    let baseURL = URL(string: "https://pokeapi.co/api/v2/")!
+    
+    // MARK: - CRUD Methods
+    func createPokemon(_ pokemon: Pokemon) {
+        pokedex.append(pokemon)
+    }
+    
+    func deletePokemon(_ pokemon: Pokemon) {
+        guard let index = pokedex.index(of: pokemon) else { return }
+        
+        pokedex.remove(at: index)
+    }
+    
+    // MARK: - Networking
+    /// Makes a GET request to the API with the given string, returning an error to the completion handler if there is a problem and a pokemon if there isn't.
+    func searchForPokemon(searchText: String, completion: @escaping (Error?, Pokemon?) -> Void ) {
+        var requestURl = baseURL.appendingPathComponent("pokemon")
+        requestURl.appendPathComponent(searchText)
+        
+        URLSession.shared.dataTask(with: requestURl) { (data, _, error) in
+            if let error = error {
+                NSLog("Error searching for Pokemon: \(error)")
+                completion(error, nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
+                return
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            do {
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                completion(nil, pokemon)
+            } catch {
+                NSLog("Error decoding data: \(error)")
+                completion(error, nil)
+                return
+            }
+            
+        }.resume()
+    }
+    
+    func fetchImageFor(pokemon: Pokemon, completion: @escaping (Error?, Pokemon?) -> Void ){
+        guard let requestURL = URL(string: pokemon.sprites.frontDefault) else {
+            NSLog("Was unable to make URL from sprite string")
+            completion(NSError(), nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching image: \(error)")
+                completion(error, nil)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data was returned.")
+                completion(NSError(), nil)
+                return
+            }
+            
+            pokemon.imageData = data
+            completion(nil, pokemon)
+            return
+            
+        }.resume()
+    }
+}
